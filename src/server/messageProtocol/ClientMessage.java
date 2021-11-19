@@ -23,7 +23,29 @@ public class ClientMessage {
     private LocalDate dueDate;
 
     // Constructor
-    public ClientMessage(){
+    public ClientMessage(String[] messageComponents){
+
+        // Read out components
+        ClientMessageType messageType = ClientMessageType.valueOf(messageComponents[0]);
+        switch (messageType) {
+
+            case LOGIN -> {
+                break;
+            }
+
+            case LOGOUT -> {
+                break;
+            }
+
+            case CREATE_LOGIN -> {
+                break;
+            }
+
+        }
+
+        // Based on components, create according ServerMessage object
+
+
 
     }
 

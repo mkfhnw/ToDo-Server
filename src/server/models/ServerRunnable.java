@@ -1,5 +1,7 @@
 package server.models;
 
+import server.messageProtocol.ClientMessage;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -12,7 +14,7 @@ import java.util.ArrayList;
  * thread of the server. The purpose of this class therefore is to manage each incoming client connection to the server
  * as a separate thread. It represents the connection between the server and the client.
  */
-public class ClientRunnable implements Runnable {
+public class ServerRunnable implements Runnable {
 
     // Fields
     private Socket clientSocket;
@@ -20,7 +22,7 @@ public class ClientRunnable implements Runnable {
     private PrintWriter outputWriter;
 
     // Constructor
-    public ClientRunnable(Socket clientSocket) {
+    public ServerRunnable(Socket clientSocket) {
         this.clientSocket = clientSocket;
         this.inputReader = this.getInputReader(clientSocket);
         this.outputWriter = this.getOutputWriter(clientSocket);
@@ -59,9 +61,14 @@ public class ClientRunnable implements Runnable {
         // If we don't have 3 components therefore, the message is invalid.
         if(!(messageComponents.length == 3)) {
             this.outputWriter.println("Result|False");
+            return;
         }
 
         // Create a clientMessage object. If the received data is somewhat invalid, the
+        ClientMessage clientMessage = new ClientMessage(messageComponents);
+
+        // Send response
+        // ... clientMessage.getResponse() -> Client
 
 
     }

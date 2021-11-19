@@ -2,7 +2,7 @@ package main;
 
 import server.models.ToDoServer;
 
-public class Runner {
+public class ServerRunner {
 
     public static void main(String[] args) {
 

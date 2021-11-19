@@ -27,8 +27,8 @@ public class ToDoServer {
         try (Socket clientSocket = this.serverSocket.accept()) {
 
             // Create new thread out of clientRunnable & append it to the threadList
-            ClientRunnable clientRunnable = new ClientRunnable(clientSocket);
-            Thread clientThread = new Thread(clientRunnable);
+            ServerRunnable serverRunnable = new ServerRunnable(clientSocket);
+            Thread clientThread = new Thread(serverRunnable);
             this.clientThreads.add(clientThread);
 
             clientThread.setDaemon(true);
