@@ -1,0 +1,24 @@
+package server.messageProtocol;
+
+/* The ServerMessage class
+ * This class represents a valid message from the server to the client, which the client is able to parse.
+ * An object of this class is always tied to a ClientMessage. Upon creation of a ClientMessage, an instance of an
+ * object of this class is always generated
+ */
+
+public class ServerMessage {
+
+    // Fields
+    private ServerMessageType messageType;
+    private boolean isSuccessful;
+    private String returnData;
+    private String token;
+
+    // Constructor
+    public ServerMessage() {
+
+    }
+
+    // Getter
+
+}
