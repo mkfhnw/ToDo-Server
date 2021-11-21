@@ -20,7 +20,7 @@ public class ServerRunnable implements Runnable {
     // Fields
     private Socket clientSocket;
     private BufferedReader inputReader;
-    private OutputStreamWriter outputWriter;
+    private PrintWriter outputWriter;
 
     // Constructor
     public ServerRunnable(Socket clientSocket) {
@@ -42,9 +42,9 @@ public class ServerRunnable implements Runnable {
             return null;
         }
     }
-    private OutputStreamWriter getOutputWriter(Socket clientSocket) {
+    private PrintWriter getOutputWriter(Socket clientSocket) {
         try {
-            return new OutputStreamWriter(clientSocket.getOutputStream());
+            return new PrintWriter(clientSocket.getOutputStream());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
