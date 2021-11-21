@@ -3,7 +3,6 @@ package server.messageProtocol;
 public enum ClientMessageType {
 
     // Enum values represent all valid message types from client to server
-
     LOGIN,
     LOGOUT,
     CREATE_LOGIN,

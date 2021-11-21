@@ -4,6 +4,7 @@ import server.messageProtocol.ClientMessage;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -19,15 +20,15 @@ public class ServerRunnable implements Runnable {
     // Fields
     private Socket clientSocket;
     private BufferedReader inputReader;
-    private PrintWriter outputWriter;
+    private OutputStreamWriter outputWriter;
 
     // Constructor
     public ServerRunnable(Socket clientSocket) {
         this.clientSocket = clientSocket;
-        this.inputReader = this.getInputReader(clientSocket);
-        this.outputWriter = this.getOutputWriter(clientSocket);
+        this.inputReader = this.getInputReader(this.clientSocket);
+        this.outputWriter = this.getOutputWriter(this.clientSocket);
 
-        System.out.println("[CLIENT CONNECTED] "
+        System.out.println("[SERVER] Client connected: "
                 + clientSocket.getInetAddress().getHostAddress()
                 + ":" + clientSocket.getPort());
     }
@@ -41,17 +42,24 @@ public class ServerRunnable implements Runnable {
             return null;
         }
     }
-    private PrintWriter getOutputWriter(Socket clientSocket) {
+    private OutputStreamWriter getOutputWriter(Socket clientSocket) {
         try {
-            return new PrintWriter(clientSocket.getOutputStream());
+            return new OutputStreamWriter(clientSocket.getOutputStream());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
     }
+    private void sendMessage(String message) {
+        try{
+            this.outputWriter.write(message);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     // Message reading method
-    private void parseMessage(String message) {
+    private ClientMessage parseMessage(String message) {
 
         // Split message by separator
         // SAMPLE MESSAGE: MessageType|Token|Data
@@ -60,16 +68,16 @@ public class ServerRunnable implements Runnable {
         // A token always gets transmitted, even with ping-messages.
         // If we don't have 3 components therefore, the message is invalid.
         if(!(messageComponents.length == 3)) {
-            this.outputWriter.println("Result|False");
-            return;
+            this.sendMessage("Result|False");
+            return null;
         }
 
-        // Create a clientMessage object. If the received data is somewhat invalid, the
+        // Create a clientMessage object
         ClientMessage clientMessage = new ClientMessage(messageComponents);
 
-        // Send response
-        // ... clientMessage.getResponse() -> Client
+        // Check if thread needs to exit
 
+        return clientMessage;
 
     }
 
@@ -77,13 +85,23 @@ public class ServerRunnable implements Runnable {
     public void run() {
 
         try {
+            System.out.println("[SERVER-RUNNABLE] Listening for messages...");
 
-            // Read messages and react accordingly
-            String message = "";
-            while (message != null) {
-                message = this.inputReader.readLine();
-                this.parseMessage(message);
+            // Build string from sent message
+            StringBuilder stringBuilder = new StringBuilder();
+            String inputString;
+            while((inputString = this.inputReader.readLine()) != null && inputString.length() != 0) {
+                stringBuilder.append(inputString);
             }
+            String message = stringBuilder.toString();
+            System.out.println("[SERVER-RUNNABLE] Received message: " + message);
+
+            // Parse message & answer request
+            ClientMessage clientMessage = this.parseMessage(message);
+            this.outputWriter.write(clientMessage.getResponse().toString());
+            this.outputWriter.flush();
+            System.out.println("[SERVER-RUNNABLE] Sent message: " + clientMessage.getResponse().toString());
+
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

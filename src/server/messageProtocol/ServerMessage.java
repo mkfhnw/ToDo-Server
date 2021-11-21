@@ -15,10 +15,22 @@ public class ServerMessage {
     private String token;
 
     // Constructor
-    public ServerMessage() {
-
+    public ServerMessage(boolean isSuccessful, String returnData, String token) {
+        this.messageType = ServerMessageType.RESULT;
+        this.isSuccessful = isSuccessful;
+        this.returnData = returnData;
+        this.token = token;
     }
 
     // Getter
+
+    // ToString
+    @Override
+    public String toString() {
+        return this.messageType.toString()
+                + "|" + this.token
+                + "|" + String.valueOf(this.isSuccessful)
+                + "|" + this.returnData;
+    }
 
 }

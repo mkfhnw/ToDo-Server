@@ -18,6 +18,7 @@ public class ToDoServer {
         this.createServerSocket();
         this.isActive = false;
         this.clientThreads = new ArrayList<>();
+        System.out.println("[SERVER] New ToDoServer created.");
     }
 
     // Run method
