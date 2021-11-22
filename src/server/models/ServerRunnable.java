@@ -87,6 +87,7 @@ public class ServerRunnable implements Runnable {
         try {
             System.out.println("[SERVER-RUNNABLE] Listening for messages...");
 
+
             // Build string from sent message
             StringBuilder stringBuilder = new StringBuilder();
             String inputString;

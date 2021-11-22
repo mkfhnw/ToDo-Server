@@ -31,20 +31,6 @@ public class ToDoClient {
         }
         System.out.println("[CLIENT] New ToDoClient created.");
 
-//        // Creates new Socket to the server and prints its output
-//        try(Socket socket = new Socket("localhost", PORT)) {
-//
-//            // Get socket input & output
-//            BufferedReader inputReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//            PrintWriter outputWriter = new PrintWriter(socket.getOutputStream());
-//
-//
-//        } catch (UnknownHostException e) {
-//            System.out.println(e.getMessage());
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        }
-
     }
 
     // Private helper methods to keep constructor clean of try/catch-clauses
@@ -72,7 +58,7 @@ public class ToDoClient {
         ClientMessage message = new ClientMessage(command, this.defaultToken);
 
         // Send message
-        this.outputWriter.print(message.getMessageString());
+        this.outputWriter.println(message.getMessageString());
         this.outputWriter.flush();
         System.out.println("[CLIENT] Sent message: " + message.getMessageString());
     }
