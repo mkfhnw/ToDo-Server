@@ -1,6 +1,7 @@
 package server.models;
 
-import server.messageProtocol.ClientMessage;
+
+import common.Message;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -59,27 +60,27 @@ public class ServerRunnable implements Runnable {
     }
 
     // Message reading method
-    private ClientMessage parseMessage(String message) {
-
-        // Split message by separator
-        // SAMPLE MESSAGE: MessageType|Token|Data
-        String[] messageComponents = message.split("\\|");
-
-        // A token always gets transmitted, even with ping-messages.
-        // If we don't have 3 components therefore, the message is invalid.
-        if(!(messageComponents.length == 3)) {
-            this.sendMessage("Result|False");
-            return null;
-        }
-
-        // Create a clientMessage object
-        ClientMessage clientMessage = new ClientMessage(messageComponents);
-
-        // Check if thread needs to exit
-
-        return clientMessage;
-
-    }
+//    private Message parseMessage(String message) {
+//
+//        // Split message by separator
+//        // SAMPLE MESSAGE: MessageType|Token|Data
+//        String[] messageComponents = message.split("\\|");
+//
+//        // A token always gets transmitted, even with ping-messages.
+//        // If we don't have 3 components therefore, the message is invalid.
+//        if(!(messageComponents.length == 3)) {
+//            this.sendMessage("Result|False");
+//            return null;
+//        }
+//
+//        // Create a clientMessage object
+////        Message clientMessage = new Message();
+//
+//        // Check if thread needs to exit
+//
+////        return clientMessage;
+//
+//    }
 
     @Override
     public void run() {
@@ -98,10 +99,10 @@ public class ServerRunnable implements Runnable {
             System.out.println("[SERVER-RUNNABLE] Received message: " + message);
 
             // Parse message & answer request
-            ClientMessage clientMessage = this.parseMessage(message);
-            this.outputWriter.write(clientMessage.getResponse().toString());
-            this.outputWriter.flush();
-            System.out.println("[SERVER-RUNNABLE] Sent message: " + clientMessage.getResponse().toString());
+//            ClientMessage clientMessage = this.parseMessage(message);
+//            this.outputWriter.write(clientMessage.getResponse().toString());
+//            this.outputWriter.flush();
+//            System.out.println("[SERVER-RUNNABLE] Sent message: " + clientMessage.getResponse().toString());
 
 
         } catch (Exception e) {

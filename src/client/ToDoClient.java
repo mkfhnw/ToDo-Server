@@ -1,6 +1,6 @@
 package client;
 
-import server.messageProtocol.ClientMessage;
+import common.Message;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class ToDoClient {
 
@@ -18,6 +19,8 @@ public class ToDoClient {
     private PrintWriter outputWriter;
     private String token;
     private final String defaultToken = "3963c9cae5c5aeaa71f287190774db4d354287c7973e969e9d6c5722c1037a33";
+    private final String sender = "Client";
+    private final String recipient = "Server";
 
     // Constructor
     public ToDoClient() {
@@ -52,15 +55,15 @@ public class ToDoClient {
     }
 
     // Message sending method
-    public void sendMessage(String command) {
+    public void sendMessage(String command, ArrayList<String> data) {
 
         // Create cient message based on input
-        ClientMessage message = new ClientMessage(command, this.defaultToken);
+        Message clientMessage = new Message(this.sender, this.recipient, this.defaultToken, command, data);
 
         // Send message
-        this.outputWriter.println(message.getMessageString());
+        this.outputWriter.println(clientMessage.getMessageString());
         this.outputWriter.flush();
-        System.out.println("[CLIENT] Sent message: " + message.getMessageString());
+        System.out.println("[CLIENT] Sent message: " + clientMessage.getMessageString());
     }
 
     // Message reading method

@@ -2,6 +2,8 @@ package main;
 
 import client.ToDoClient;
 
+import java.util.ArrayList;
+
 public class ClientRunner {
 
     public static void main(String[] args) {
@@ -12,8 +14,9 @@ public class ClientRunner {
         // Create client
         ToDoClient toDoClient = new ToDoClient();
 
-        // Send message
-        toDoClient.sendMessage("PING");
+        // Send PING message
+        ArrayList<String> data = new ArrayList<>();
+        toDoClient.sendMessage("PING", data);
 
         // Read incoming response
         toDoClient.parseResponse();
