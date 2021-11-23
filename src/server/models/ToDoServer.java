@@ -9,7 +9,7 @@ public class ToDoServer {
 
     // Fields
     private ServerSocket serverSocket;
-    private final int PORT = 9999;
+    private final int PORT = 50001;
     private boolean isActive;
     private ArrayList<Thread> clientThreads;
 

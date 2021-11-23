@@ -22,6 +22,9 @@ public class ServerRunnable implements Runnable {
     private Socket clientSocket;
     private BufferedReader inputReader;
     private PrintWriter outputWriter;
+    private final String defaultToken = "3963c9cae5c5aeaa71f287190774db4d354287c7973e969e9d6c5722c1037a33";
+    private final String sender = "Server";
+    private final String recipient = "Client";
 
     // Constructor
     public ServerRunnable(Socket clientSocket) {
@@ -29,7 +32,7 @@ public class ServerRunnable implements Runnable {
         this.inputReader = this.getInputReader(this.clientSocket);
         this.outputWriter = this.getOutputWriter(this.clientSocket);
 
-        System.out.println("[SERVER] Client connected: "
+        System.out.println("[SERVER-RUNNABLE] Client connected: "
                 + clientSocket.getInetAddress().getHostAddress()
                 + ":" + clientSocket.getPort());
     }
@@ -59,50 +62,20 @@ public class ServerRunnable implements Runnable {
         }
     }
 
-    // Message reading method
-//    private Message parseMessage(String message) {
-//
-//        // Split message by separator
-//        // SAMPLE MESSAGE: MessageType|Token|Data
-//        String[] messageComponents = message.split("\\|");
-//
-//        // A token always gets transmitted, even with ping-messages.
-//        // If we don't have 3 components therefore, the message is invalid.
-//        if(!(messageComponents.length == 3)) {
-//            this.sendMessage("Result|False");
-//            return null;
-//        }
-//
-//        // Create a clientMessage object
-////        Message clientMessage = new Message();
-//
-//        // Check if thread needs to exit
-//
-////        return clientMessage;
-//
-//    }
-
     @Override
     public void run() {
 
         try {
+
             System.out.println("[SERVER-RUNNABLE] Listening for messages...");
 
-
             // Build string from sent message
-            StringBuilder stringBuilder = new StringBuilder();
-            String inputString;
-            while((inputString = this.inputReader.readLine()) != null && inputString.length() != 0) {
-                stringBuilder.append(inputString);
-            }
-            String message = stringBuilder.toString();
-            System.out.println("[SERVER-RUNNABLE] Received message: " + message);
+            System.out.println("Is bufferedReader ready? Answer: " + this.inputReader.ready());
+            String inputString = this.inputReader.readLine();
+            System.out.println("[SERVER-RUNNABLE] Received message: " + inputString);
 
-            // Parse message & answer request
-//            ClientMessage clientMessage = this.parseMessage(message);
-//            this.outputWriter.write(clientMessage.getResponse().toString());
-//            this.outputWriter.flush();
-//            System.out.println("[SERVER-RUNNABLE] Sent message: " + clientMessage.getResponse().toString());
+            // Parse message
+            Message clientMessage = new Message(this.recipient, this.sender, this.defaultToken, inputString);
 
 
         } catch (Exception e) {

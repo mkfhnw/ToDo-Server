@@ -18,6 +18,8 @@ public class ClientRunner {
         ArrayList<String> data = new ArrayList<>();
         toDoClient.sendMessage("PING", data);
 
+        try{ Thread.sleep(5000); } catch (Exception e) { System.out.println(e.getMessage()); }
+
         // Read incoming response
         toDoClient.parseResponse();
 

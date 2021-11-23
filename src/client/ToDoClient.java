@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ToDoClient {
 
     // Fields
-    private final int PORT = 9999;
+    private final int PORT = 50001;
     private Socket clientSocket;
     private BufferedReader inputReader;
     private PrintWriter outputWriter;
@@ -61,7 +61,7 @@ public class ToDoClient {
         Message clientMessage = new Message(this.sender, this.recipient, this.defaultToken, command, data);
 
         // Send message
-        this.outputWriter.println(clientMessage.getMessageString());
+        this.outputWriter.write(clientMessage.getMessageString());
         this.outputWriter.flush();
         System.out.println("[CLIENT] Sent message: " + clientMessage.getMessageString());
     }

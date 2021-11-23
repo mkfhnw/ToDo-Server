@@ -42,6 +42,7 @@ public class Message {
 
     }
 
+
     // Custom methods
     private String buildMessageString(MessageType messageType, String token, ArrayList<String> data) {
 
