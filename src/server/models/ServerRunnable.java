@@ -74,10 +74,18 @@ public class ServerRunnable implements Runnable {
             String inputString = this.inputReader.readLine();
             System.out.println("[SERVER-RUNNABLE] Received message: " + inputString);
 
-            // Parse message
+            // Parse messageString to a "message"
             Message clientMessage = new Message(this.recipient, this.sender, this.defaultToken, inputString);
 
-            // Do stuff
+            switch (clientMessage.getMessageType()) {
+
+                // Perform action based on messageType
+                case LOGIN -> {
+                    // this.reactToLogin()
+                    break;
+                }
+
+            }
 
             this.clientSocket.close();
             System.out.println(clientSocket.isClosed());

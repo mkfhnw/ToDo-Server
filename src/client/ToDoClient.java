@@ -61,7 +61,7 @@ public class ToDoClient {
         Message clientMessage = new Message(this.sender, this.recipient, this.defaultToken, command, data);
 
         // Send message
-        this.outputWriter.write(clientMessage.getMessageString() + '\n');
+        this.outputWriter.write(clientMessage.getMessageString());
         this.outputWriter.flush();
         System.out.println("[CLIENT] Sent message: " + clientMessage.getMessageString());
     }
@@ -77,8 +77,11 @@ public class ToDoClient {
                 stringBuilder.append(inputString);
                 System.out.println("inputString = " + inputString);
             }
-            String message = stringBuilder.toString();
-            System.out.println("[CLIENT] Received message: " + message);
+            String messageString = stringBuilder.toString();
+            System.out.println("[CLIENT] Received message: " + messageString);
+
+            // Create Message
+//            Message message = new Message(messageString);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
