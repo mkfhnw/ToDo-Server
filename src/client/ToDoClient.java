@@ -61,7 +61,7 @@ public class ToDoClient {
         Message clientMessage = new Message(this.sender, this.recipient, this.defaultToken, command, data);
 
         // Send message
-        this.outputWriter.write(clientMessage.getMessageString());
+        this.outputWriter.write(clientMessage.getMessageString() + '\n');
         this.outputWriter.flush();
         System.out.println("[CLIENT] Sent message: " + clientMessage.getMessageString());
     }

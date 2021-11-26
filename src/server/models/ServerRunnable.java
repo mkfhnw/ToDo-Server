@@ -28,6 +28,7 @@ public class ServerRunnable implements Runnable {
 
     // Constructor
     public ServerRunnable(Socket clientSocket) {
+
         this.clientSocket = clientSocket;
         this.inputReader = this.getInputReader(this.clientSocket);
         this.outputWriter = this.getOutputWriter(this.clientSocket);
@@ -40,7 +41,8 @@ public class ServerRunnable implements Runnable {
     // Private helper methods to keep constructor clean of try/catch-clauses
     private BufferedReader getInputReader(Socket clientSocket) {
         try{
-            return new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            return bufferedReader;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -66,23 +68,25 @@ public class ServerRunnable implements Runnable {
     public void run() {
 
         try {
-
             System.out.println("[SERVER-RUNNABLE] Listening for messages...");
 
             // Build string from sent message
-            System.out.println("Is bufferedReader ready? Answer: " + this.inputReader.ready());
             String inputString = this.inputReader.readLine();
             System.out.println("[SERVER-RUNNABLE] Received message: " + inputString);
 
             // Parse message
             Message clientMessage = new Message(this.recipient, this.sender, this.defaultToken, inputString);
 
+            // Do stuff
 
+            this.clientSocket.close();
+            System.out.println(clientSocket.isClosed());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
 
+        // Socket gets closed
     }
 
 

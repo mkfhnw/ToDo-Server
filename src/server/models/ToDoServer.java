@@ -1,6 +1,8 @@
 package server.models;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -25,7 +27,8 @@ public class ToDoServer {
     public void listen() {
 
         // Listens for new incoming connections as long as isActive is true
-        try (Socket clientSocket = this.serverSocket.accept()) {
+        try {
+            Socket clientSocket = this.serverSocket.accept();
 
             // Create new thread out of clientRunnable & append it to the threadList
             ServerRunnable serverRunnable = new ServerRunnable(clientSocket);
@@ -34,6 +37,7 @@ public class ToDoServer {
 
             clientThread.setDaemon(true);
             clientThread.start();
+
 
         } catch (Exception e) {
             // "Crashes" the listening method on any exception

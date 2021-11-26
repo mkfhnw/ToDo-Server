@@ -75,5 +75,5 @@ public class Message {
     public MessageType getMessageType() { return messageType; }
     public String getToken() { return token; }
     public ArrayList<String> getDataParts() { return dataParts; }
-    public String getMessageString() { return messageString; }
+    public String getMessageString() { return messageString + "\n"; }
 }
