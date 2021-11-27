@@ -42,6 +42,25 @@ public class Message {
 
     }
 
+    // Constructor used to parse message from a messageString
+    public Message(String messageString) {
+        String[] stringParts = messageString.split("\\|");
+        this.messageString = messageString;
+        this.messageType = MessageType.valueOf(stringParts[0]);
+        this.messageParts = new ArrayList<>(Arrays.asList(stringParts));
+        this.dataParts = new ArrayList<>(this.messageParts.subList(2, (this.messageParts.size() -1)));
+        this.token = stringParts[1];
+        
+        // Parse sender & Recipient
+        if (this.messageType == MessageType.RESULT) {
+            this.sender = Addressor.SERVER;
+            this.recipient = Addressor.CLIENT;
+        } else {
+            this.sender = Addressor.CLIENT;
+            this.recipient = Addressor.SERVER;
+        }
+    }
+
 
     // Custom methods
     private String buildMessageString(MessageType messageType, String token, ArrayList<String> data) {
