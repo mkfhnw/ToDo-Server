@@ -89,6 +89,7 @@ public class ServerRunnable implements Runnable {
 
             }
 
+         // Socket gets closed
            this.clientSocket.close();
            // System.out.println(clientSocket.isClosed());
         } catch (Exception e) {
@@ -97,7 +98,7 @@ public class ServerRunnable implements Runnable {
 
     	}
 
-        // Socket gets closed
+        
     }
 
 

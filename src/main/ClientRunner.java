@@ -80,8 +80,10 @@ public class ClientRunner {
     }
     
     public void logout() {
-    	// toDoClient.sendMessage("LOGOUT", data);
-    	// Token
+    	
+    	// Token must be invalid
+    	
+    	// DELETE toDoClient.sendMessage("LOGOUT", data);
     }
     
     
