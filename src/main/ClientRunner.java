@@ -89,35 +89,56 @@ public class ClientRunner {
     	// Username
     	// Password
     	// (Lastname, Surname)
-    	// Password validation)
+    	// (Password validation)
     	// (Token)
     	
     	// toDoClient.sendMessage("CREATE_LOGIN", data);
     }
     
     public void createToDo() {
-    	// title
-    	// ...
+    	// title (+ validation)
+    	// description (+ validation)
+    	// duedate (with and without)
+    	// Priority
+    	// Token-Validation
+    	
     	// toDoClient.sendMessage("CREATE_TODO", data);
     }
 
     public void changePassword() {
+    	// password
+    	// (password validation)
+    	// (Token)
+    	// Validation (Password length + Token valid)
+    	
     	// toDoClient.sendMessage("CHANGE_PASSWORD", data);
     }
     
     public void getToDo() {
+    	// ID
+    	// Token-Validation
+    	
     	// toDoClient.sendMessage("GET_TODO", data);
     }
     
     public void deleteToDo() {
+    	// getToDo();
+    	// clear(); / remove();
+    	// Token-Validation
+    	
     	// toDoClient.sendMessage("DELETE_TODO", data);
     }
     
     public void listToDos() {
+    	// ArrayList data
+    	// Token-Validation
+    	
     	// toDoClient.sendMessage("LIST_TODOS", data);
     }
     
     public void ping() {
+    	// Token
+    	
     	// toDoClient.sendMessage("PING", data);
     }
     
