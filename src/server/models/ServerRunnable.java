@@ -67,6 +67,8 @@ public class ServerRunnable implements Runnable {
     @Override
     public void run() {
 
+    	while (true) {
+    	
         try {
             System.out.println("[SERVER-RUNNABLE] Listening for messages...");
 
@@ -87,12 +89,13 @@ public class ServerRunnable implements Runnable {
 
             }
 
-            this.clientSocket.close();
-            System.out.println(clientSocket.isClosed());
+           this.clientSocket.close();
+           // System.out.println(clientSocket.isClosed());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
+    	}
 
         // Socket gets closed
     }
