@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import client.view.LoginView;
@@ -26,6 +27,7 @@ public class ToDoClient {
     private final String sender = "Client";
     private final String recipient = "Server";
     private ArrayList<String> logins;
+    // private ArrayList<ToDo> toDo;
 
     // Constructor
     public ToDoClient() {
@@ -43,6 +45,9 @@ public class ToDoClient {
         
         // ArrayList for Logins
         this.logins = new ArrayList<>();
+        
+        // ArrayList for ToDos
+      //  this.toDo = new ArrayList<>();
 
     }
 
@@ -138,6 +143,8 @@ public class ToDoClient {
             
         	
         	sendMessage("LOGIN", this.logins);
+        	
+        	// In Controller
         	String emailLogin = loginView.getUserField().getText();
         	this.logins.add(emailLogin);
         	
@@ -152,7 +159,8 @@ public class ToDoClient {
         
         public void logout() {
         	
-        	// Token must be invalid
+        	// No Data must be sent 
+        	// Never fails; token becomes invalid
         	
         	// DELETE toDoClient.sendMessage("LOGOUT", data);
         }
@@ -161,6 +169,7 @@ public class ToDoClient {
         public void createLogin() {
         	RegistrationView registrationView = new RegistrationView();
         	
+        	// In Controller
         	sendMessage("CREATE_LOGIN", this.logins);
         	String emailCreateLogin = registrationView.getEmailField().getText();
         	this.logins.add(emailCreateLogin);
@@ -170,48 +179,70 @@ public class ToDoClient {
         	
         	// Fails if name already taken, or invalid
         	// After creating an account, you still have to login
-        	// (Password validation)
+        	// (Password validation) -- if we want
         	// (Token)
         	
         	
         }
         
         public void createToDo() {
-        	// title (+ validation)
-        	// description (+ validation)
-        	// duedate (with and without)
-        	// Priority
+//        	AddToDoDialogPane toDoDialogPane = new AddToDoDialogPane();
+        	
+//        	sendMessage("CREATE_TODO", toDoController.updateToDo());
+        	
+        	
+        	// title (+ validation) --> Controller
+        	// description (+ validation) --> Controller 
+        	// duedate (with and without) --> controller
+        	// Priority --> Controller and AddToDoDialogPane
         	// Token-Validation
         	
+        /*
+         * For Controller, if not existing yet: LocalDate today = LocalDate.now();
+         * 
+        	if (toDoTitle.length() >= 3 && toDoTitle.length() <= 20 
+        		&& !toDoDialogPane.getDatePicker().isBefore(today) 
+        		&& toDoDialogPane.getMessageTextArea().length() <= 255) {
+        		
+        		ToDo toDo = new ToDo(title, messageTextArea, priority, dueDate);
+        		
+        		toDo.getToDoID()++;
+        	
+        	this.toDo.add()
+         */
+        
+        
         	// toDoClient.sendMessage("CREATE_TODO", data);
-        }
+		}
 
         public void changePassword() {
         	// password
         	// (password validation)
         	// (Token)
-        	// Validation (Password length + Token valid)
+        	// Validation (Password length + Token valid) --> controller
         	
         	// toDoClient.sendMessage("CHANGE_PASSWORD", data);
         }
         
         public void getToDo() {
-        	// ID
+        	// int ID = toDo.getID();
         	// Token-Validation
         	
-        	// toDoClient.sendMessage("GET_TODO", data);
+        	// toDoClient.sendMessage("GET_TODO", ID);
         }
         
         public void deleteToDo() {
-        	// getToDo();
-        	// clear(); / remove();
+        	// toDoController.deleteToDo();
+        	
+        	
+        	
         	// Token-Validation
         	
-        	// toDoClient.sendMessage("DELETE_TODO", data);
+        	// toDoClient.sendMessage("DELETE_TODO", toDo);
         }
         
         public void listToDos() {
-        	// ArrayList data
+
         	// Token-Validation
         	
         	// toDoClient.sendMessage("LIST_TODOS", data);
