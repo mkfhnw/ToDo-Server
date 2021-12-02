@@ -88,8 +88,48 @@ public class ServerRunnable implements Runnable {
 
                     // Perform action based on messageType
                     case LOGIN -> {
-                        // this.reactToLogin()
+                        this.reactToLogin();
                         break;
+                    }
+                    
+                    case LOGOUT -> {
+                    	this.reactToLogout();
+                    	break;
+                    }
+                    
+                    case CREATE_LOGIN -> {
+                    	this.reactToCreateLogin();
+                    	break;
+                    }
+                    
+                    case CREATE_TODO -> {
+                    	this.reactToCreateToDo();
+                    	break;
+                    }
+                    
+                    case CHANGE_PASSWORD -> {
+                    	this.reactToChangePassword();
+                    	break;
+                    }
+                    
+                    case GET_TODO -> {
+                    	this.reactToGetToDo();
+                    	break;
+                    }
+                    
+                    case DELETE_TODO -> {
+                    	this.reactToDeleteToDo();
+                    	break;
+                    }
+                    
+                    case LIST_TODOS -> {
+                    	this.reactToListToDos();
+                    	break;
+                    }
+                    
+                    case PING -> {
+                    	this.reactToPing();
+                    	break;
                     }
 
                 }
@@ -105,6 +145,53 @@ public class ServerRunnable implements Runnable {
 
 
     }
+
+	private void reactToLogin() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void reactToLogout() {
+    	System.out.println("Auf Logout reagiert");
+		// TODO Auto-generated method stub
+		
+	}
+    
+    private void reactToCreateLogin() {
+		// TODO Auto-generated method stub
+		
+	}
+    
+    private void reactToCreateToDo() {
+		// TODO Auto-generated method stub
+		
+	}
+    
+    private void reactToChangePassword() {
+		// TODO Auto-generated method stub
+		
+	}
+    
+    private void reactToGetToDo() {
+		// TODO Auto-generated method stub
+		
+	}
+    
+    private void reactToDeleteToDo() {
+		// TODO Auto-generated method stub
+		
+	}
+    
+    private void reactToListToDos() {
+		// TODO Auto-generated method stub
+		
+	}
+    
+    private void reactToPing() {
+    	System.out.println("Auf Ping reagiert");
+		// TODO Auto-generated method stub
+		
+	}
 
 
 }
