@@ -40,7 +40,7 @@ public class ServerRunnable implements Runnable {
 
     // Private helper methods to keep constructor clean of try/catch-clauses
     private BufferedReader getInputReader(Socket clientSocket) {
-        try{
+        try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             return bufferedReader;
         } catch (Exception e) {
@@ -48,6 +48,7 @@ public class ServerRunnable implements Runnable {
             return null;
         }
     }
+
     private PrintWriter getOutputWriter(Socket clientSocket) {
         try {
             return new PrintWriter(clientSocket.getOutputStream());
@@ -56,8 +57,9 @@ public class ServerRunnable implements Runnable {
             return null;
         }
     }
+
     private void sendMessage(String message) {
-        try{
+        try {
             this.outputWriter.write(message);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -67,40 +69,42 @@ public class ServerRunnable implements Runnable {
     @Override
     public void run() {
 
-    	while (true) {
-    	
-        try {
-            System.out.println("[SERVER-RUNNABLE] Listening for messages...");
+        while (true) {
 
-            // Build string from sent message
-            String inputString = this.inputReader.readLine();
-            System.out.println("[SERVER-RUNNABLE] Received message: " + inputString);
+            try {
+                System.out.println("[SERVER-RUNNABLE] Listening for messages...");
 
-            // Parse messageString to a "message"
-            Message clientMessage = new Message(this.recipient, this.sender, this.defaultToken, inputString);
+                // Build string from sent message
+                String inputString = this.inputReader.readLine();
+                System.out.println("[SERVER-RUNNABLE] Received message: " + inputString);
 
-            switch (clientMessage.getMessageType()) {
+                // Parse messageString to a "message"
+                Message clientMessage = new Message(this.recipient, this.sender, this.defaultToken, inputString);
+                System.out.println("[SERVER-RUNNABLE] Built message string: " + clientMessage.getMessageString());
 
-                // Perform action based on messageType
-                case LOGIN -> {
-                    // this.reactToLogin()
-                    break;
+                Thread.sleep(5000);
+
+                switch (clientMessage.getMessageType()) {
+
+                    // Perform action based on messageType
+                    case LOGIN -> {
+                        // this.reactToLogin()
+                        break;
+                    }
+
                 }
 
+                // Socket gets closed
+                this.clientSocket.close();
+
+            } catch (Exception e) {
+                System.out.println("[SERVER-RUNNABLE] EXCEPTION: " + e.getMessage());
             }
 
-         // Socket gets closed
-           this.clientSocket.close();
-           // System.out.println(clientSocket.isClosed());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
 
-    	}
 
-        
     }
-
 
 
 }

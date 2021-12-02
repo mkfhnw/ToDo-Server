@@ -34,7 +34,13 @@ public class Message {
         this.token = token;
         this.messageString = messageString;
         this.messageParts = new ArrayList<>(Arrays.asList(this.messageString.split("\\|")));
-        this.dataParts = new ArrayList<>(this.messageParts.subList(2, (this.messageParts.size() -1)));
+
+        // Parse data parts - but only if message has more than 2 parts (the first 2 parts are always MessageType & Token - at least for now)
+        if(messageParts.size() > 2) {
+            this.dataParts = new ArrayList<>(this.messageParts.subList(2, (this.messageParts.size() -1)));
+        } else {
+            this.dataParts = new ArrayList<>();
+        }
 
         // Enforce server message type, since only server can send messages of type RESULT
         if(this.sender == Addressor.SERVER) { this.messageType = MessageType.RESULT; }
