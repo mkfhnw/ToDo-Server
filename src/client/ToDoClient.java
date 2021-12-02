@@ -11,6 +11,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import client.view.LoginView;
+import client.view.RegistrationView;
+
 public class ToDoClient {
 
     // Fields
@@ -22,6 +25,7 @@ public class ToDoClient {
     private final String defaultToken = "3963c9cae5c5aeaa71f287190774db4d354287c7973e969e9d6c5722c1037a33";
     private final String sender = "Client";
     private final String recipient = "Server";
+    private ArrayList<String> logins;
 
     // Constructor
     public ToDoClient() {
@@ -34,6 +38,11 @@ public class ToDoClient {
             System.out.println(e.getMessage());
         }
         System.out.println("[CLIENT] New ToDoClient created.");
+        
+        
+        
+        // ArrayList for Logins
+        this.logins = new ArrayList<>();
 
     }
 
@@ -125,12 +134,18 @@ public class ToDoClient {
         }
         
         public void login() {
-        	ToDoClient toDoClient = new ToDoClient();
-            ArrayList<String> data = new ArrayList<>();
+        	LoginView loginView = new LoginView();
+            
         	
-        	toDoClient.sendMessage("LOGIN", data);
-        	data.add("Username");
-        	data.add("Password");
+        	sendMessage("LOGIN", this.logins);
+        	String emailLogin = loginView.getUserField().getText();
+        	this.logins.add(emailLogin);
+        	
+        	String passwordLogin = loginView.getPasswordField().getText();
+        	this.logins.add(passwordLogin);
+        	
+        	
+        	// Fails if name/password do not match
         	
         	// Token
         }
@@ -144,13 +159,21 @@ public class ToDoClient {
         
         
         public void createLogin() {
-        	// Username
-        	// Password
-        	// (Lastname, Surname)
+        	RegistrationView registrationView = new RegistrationView();
+        	
+        	sendMessage("CREATE_LOGIN", this.logins);
+        	String emailCreateLogin = registrationView.getEmailField().getText();
+        	this.logins.add(emailCreateLogin);
+        	
+        	String passwordCreateLogin = registrationView.getPasswordField().getText();
+        	this.logins.add(passwordCreateLogin);
+        	
+        	// Fails if name already taken, or invalid
+        	// After creating an account, you still have to login
         	// (Password validation)
         	// (Token)
         	
-        	// toDoClient.sendMessage("CREATE_LOGIN", data);
+        	
         }
         
         public void createToDo() {
@@ -200,4 +223,5 @@ public class ToDoClient {
         	// toDoClient.sendMessage("PING", data);
         }
     
+        
 }
