@@ -112,6 +112,166 @@ public class LoginView extends BorderPane {
 	this.setBottom(buttonVBox);
 	
 	}
+
+
+	public Label getUserLabel() {
+		return userLabel;
+	}
+
+
+	public Label getPasswordLabel() {
+		return passwordLabel;
+	}
+
+
+	public TextField getUserField() {
+		return userField;
+	}
+
+
+	public TextField getPasswordField() {
+		return passwordField;
+	}
+
+
+	public Button getSignInButton() {
+		return signInButton;
+	}
+
+
+	public Button getRegisterButton() {
+		return registerButton;
+	}
+
+
+	public Label getChangePassword() {
+		return changePassword;
+	}
+
+
+	public ImageView getImage() {
+		return image;
+	}
+
+
+	public VBox getUserVBox() {
+		return userVBox;
+	}
+
+
+	public VBox getPasswordVBox() {
+		return passwordVBox;
+	}
+
+
+	public VBox getButtonVBox() {
+		return buttonVBox;
+	}
+
+
+	public VBox getLoginVBox() {
+		return loginVBox;
+	}
+
+
+	public VBox getSpaceVBox() {
+		return spaceVBox;
+	}
+
+
+	public VBox getImageVBox() {
+		return imageVBox;
+	}
+
+
+	public int getSPACING_BUTTON_VBOX() {
+		return SPACING_BUTTON_VBOX;
+	}
+
+
+	public int getSPACING_LOGIN_VBOX() {
+		return SPACING_LOGIN_VBOX;
+	}
+
+
+	public int getSPACING_IMAGE_VBOX() {
+		return SPACING_IMAGE_VBOX;
+	}
+
+
+	public int getSPACING() {
+		return SPACING;
+	}
+
+
+	public void setUserLabel(Label userLabel) {
+		this.userLabel = userLabel;
+	}
+
+
+	public void setPasswordLabel(Label passwordLabel) {
+		this.passwordLabel = passwordLabel;
+	}
+
+
+	public void setUserField(TextField userField) {
+		this.userField = userField;
+	}
+
+
+	public void setPasswordField(TextField passwordField) {
+		this.passwordField = passwordField;
+	}
+
+
+	public void setSignInButton(Button signInButton) {
+		this.signInButton = signInButton;
+	}
+
+
+	public void setRegisterButton(Button registerButton) {
+		this.registerButton = registerButton;
+	}
+
+
+	public void setChangePassword(Label changePassword) {
+		this.changePassword = changePassword;
+	}
+
+
+	public void setImage(ImageView image) {
+		this.image = image;
+	}
+
+
+	public void setUserVBox(VBox userVBox) {
+		this.userVBox = userVBox;
+	}
+
+
+	public void setPasswordVBox(VBox passwordVBox) {
+		this.passwordVBox = passwordVBox;
+	}
+
+
+	public void setButtonVBox(VBox buttonVBox) {
+		this.buttonVBox = buttonVBox;
+	}
+
+
+	public void setLoginVBox(VBox loginVBox) {
+		this.loginVBox = loginVBox;
+	}
+
+
+	public void setSpaceVBox(VBox spaceVBox) {
+		this.spaceVBox = spaceVBox;
+	}
+
+
+	public void setImageVBox(VBox imageVBox) {
+		this.imageVBox = imageVBox;
+	}
 	
 
 }
