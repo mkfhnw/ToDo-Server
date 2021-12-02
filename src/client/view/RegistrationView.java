@@ -60,4 +60,172 @@ public class RegistrationView extends DialogPane {
 		
 	}
 
+
+
+	public Label getTitle() {
+		return title;
+	}
+
+
+
+	public BorderPane getBorderPane() {
+		return borderPane;
+	}
+
+
+
+	public Label getFirstnameLabel() {
+		return firstnameLabel;
+	}
+
+
+
+	public TextField getFirstnameField() {
+		return firstnameField;
+	}
+
+
+
+	public Label getSurnameLabel() {
+		return surnameLabel;
+	}
+
+
+
+	public TextField getSurnameField() {
+		return surnameField;
+	}
+
+
+
+	public Label getEmailLabel() {
+		return emailLabel;
+	}
+
+
+
+	public TextField getEmailField() {
+		return emailField;
+	}
+
+
+
+	public Label getPasswordLabel() {
+		return passwordLabel;
+	}
+
+
+
+	public TextField getPasswordField() {
+		return passwordField;
+	}
+
+
+
+	public Label getRepeatPasswordLabel() {
+		return repeatPasswordLabel;
+	}
+
+
+
+	public TextField getRepeatPasswordField() {
+		return repeatPasswordField;
+	}
+
+
+
+	public ButtonType getOkButtonType() {
+		return okButtonType;
+	}
+
+
+
+	public ButtonType getCancelButtonType() {
+		return cancelButtonType;
+	}
+
+
+
+	public void setTitle(Label title) {
+		this.title = title;
+	}
+
+
+
+	public void setBorderPane(BorderPane borderPane) {
+		this.borderPane = borderPane;
+	}
+
+
+
+	public void setFirstnameLabel(Label firstnameLabel) {
+		this.firstnameLabel = firstnameLabel;
+	}
+
+
+
+	public void setFirstnameField(TextField firstnameField) {
+		this.firstnameField = firstnameField;
+	}
+
+
+
+	public void setSurnameLabel(Label surnameLabel) {
+		this.surnameLabel = surnameLabel;
+	}
+
+
+
+	public void setSurnameField(TextField surnameField) {
+		this.surnameField = surnameField;
+	}
+
+
+
+	public void setEmailLabel(Label emailLabel) {
+		this.emailLabel = emailLabel;
+	}
+
+
+
+	public void setEmailField(TextField emailField) {
+		this.emailField = emailField;
+	}
+
+
+
+	public void setPasswordLabel(Label passwordLabel) {
+		this.passwordLabel = passwordLabel;
+	}
+
+
+
+	public void setPasswordField(TextField passwordField) {
+		this.passwordField = passwordField;
+	}
+
+
+
+	public void setRepeatPasswordLabel(Label repeatPasswordLabel) {
+		this.repeatPasswordLabel = repeatPasswordLabel;
+	}
+
+
+
+	public void setRepeatPasswordField(TextField repeatPasswordField) {
+		this.repeatPasswordField = repeatPasswordField;
+	}
+
+
+
+	public void setOkButtonType(ButtonType okButtonType) {
+		this.okButtonType = okButtonType;
+	}
+
+
+
+	public void setCancelButtonType(ButtonType cancelButtonType) {
+		this.cancelButtonType = cancelButtonType;
+	}
+
 }
