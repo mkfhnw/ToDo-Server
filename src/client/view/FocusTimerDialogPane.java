@@ -124,6 +124,122 @@ public class FocusTimerDialogPane extends DialogPane {
 	public Button getReplayButton() {
 		return replayButton;
 	}
+
+	public FocusTimerModel getModel() {
+		return model;
+	}
+
+	public ImageView getPlayIcon() {
+		return playIcon;
+	}
+
+	public ImageView getStopIcon() {
+		return stopIcon;
+	}
+
+	public ImageView getReplayIcon() {
+		return replayIcon;
+	}
+
+	public Label getCounterLabel() {
+		return counterLabel;
+	}
+
+	public BorderPane getTimerBorderPane() {
+		return timerBorderPane;
+	}
+
+	public VBox getvBoxText() {
+		return vBoxText;
+	}
+
+	public HBox gethBoxButtons() {
+		return hBoxButtons;
+	}
+
+	public VBox getvBoxPlay() {
+		return vBoxPlay;
+	}
+
+	public VBox getvBoxStop() {
+		return vBoxStop;
+	}
+
+	public VBox getvBoxReplay() {
+		return vBoxReplay;
+	}
+
+	public Timeline getTimeline() {
+		return timeline;
+	}
+
+	public ButtonType getCloseButtonType() {
+		return closeButtonType;
+	}
+
+	public void setModel(FocusTimerModel model) {
+		this.model = model;
+	}
+
+	public void setPlayButton(Button playButton) {
+		this.playButton = playButton;
+	}
+
+	public void setStopButton(Button stopButton) {
+		this.stopButton = stopButton;
+	}
+
+	public void setReplayButton(Button replayButton) {
+		this.replayButton = replayButton;
+	}
+
+	public void setPlayIcon(ImageView playIcon) {
+		this.playIcon = playIcon;
+	}
+
+	public void setStopIcon(ImageView stopIcon) {
+		this.stopIcon = stopIcon;
+	}
+
+	public void setReplayIcon(ImageView replayIcon) {
+		this.replayIcon = replayIcon;
+	}
+
+	public void setCounterLabel(Label counterLabel) {
+		this.counterLabel = counterLabel;
+	}
+
+	public void setTimerBorderPane(BorderPane timerBorderPane) {
+		this.timerBorderPane = timerBorderPane;
+	}
+
+	public void setvBoxText(VBox vBoxText) {
+		this.vBoxText = vBoxText;
+	}
+
+	public void sethBoxButtons(HBox hBoxButtons) {
+		this.hBoxButtons = hBoxButtons;
+	}
+
+	public void setvBoxPlay(VBox vBoxPlay) {
+		this.vBoxPlay = vBoxPlay;
+	}
+
+	public void setvBoxStop(VBox vBoxStop) {
+		this.vBoxStop = vBoxStop;
+	}
+
+	public void setvBoxReplay(VBox vBoxReplay) {
+		this.vBoxReplay = vBoxReplay;
+	}
+
+	public void setTimeline(Timeline timeline) {
+		this.timeline = timeline;
+	}
+
+	public void setCloseButtonType(ButtonType closeButtonType) {
+		this.closeButtonType = closeButtonType;
+	}
 	
 	
 	

@@ -18,7 +18,6 @@ import javafx.util.Duration;
 import client.model.FocusTimerModel;
 import client.model.ToDo;
 import client.model.ToDoList;
-import services.SqliteManager;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -64,39 +63,39 @@ public class ToDoController implements Serializable {
         plannedBarView.getComboBox().setOnAction(this::changeCombo);
         plannedBarView.getTableView().setOnMouseClicked(this::updateToDo);
         this.linkTableViewListeners(plannedBarView.getTableView().getItems());
-        toDoView.borderPane.setCenter(plannedBarView);
+        toDoView.getBorderPane().setCenter(plannedBarView);
 
         // Register buttons EventHandling
-        this.toDoView.listView.setOnMouseClicked(this::changeCenterBar);
+        this.toDoView.getListView().setOnMouseClicked(this::changeCenterBar);
 
         // Focus timer button EventHandling
-        this.toDoView.openFocusTimer.setOnMouseClicked(this::createFocusTimer);
+        this.toDoView.getOpenFocusTimer().setOnMouseClicked(this::createFocusTimer);
 
         // Add focus timer dialog and model 
         this.dialog = new FocusTimerDialogPane();
         this.focusModel = new FocusTimerModel(null);
         
         // HowTo Button EventHandling
-        this.toDoView.howTo.setOnMouseClicked(this::createHowTo);
+        this.toDoView.getHowTo().setOnMouseClicked(this::createHowTo);
         
         // EventHandling for play, stop or replay How-To Video
-        this.toDoView.howToDialogPane.getPlayButton().setOnMouseClicked(this::playMedia);
-        this.toDoView.howToDialogPane.getStopButton().setOnMouseClicked(this::stopMedia);
-        this.toDoView.howToDialogPane.getReplayButton().setOnMouseClicked(this::replayMedia);
+        this.toDoView.getHowToDialogPane().getPlayButton().setOnMouseClicked(this::playMedia);
+        this.toDoView.getHowToDialogPane().getStopButton().setOnMouseClicked(this::stopMedia);
+        this.toDoView.getHowToDialogPane().getReplayButton().setOnMouseClicked(this::replayMedia);
 
         // Instantiate barchart with utils
         Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(0.3), new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                toDoView.serie1.getData().clear();
-                toDoView.serie2.getData().clear();
-                toDoView.serie1.getData().add(new XYChart.Data<String, Number>("Erledigt", toDoList.getToDoListDone().size()));
-                toDoView.serie2.getData().add(new XYChart.Data<String, Number>("Geplant", toDoList.getToDoListPlanned().size()));
+                toDoView.getSerie1().getData().clear();
+                toDoView.getSerie2().getData().clear();
+                toDoView.getSerie1().getData().add(new XYChart.Data<String, Number>("Erledigt", toDoList.getToDoListDone().size()));
+                toDoView.getSerie2().getData().add(new XYChart.Data<String, Number>("Geplant", toDoList.getToDoListPlanned().size()));
             }
         }));
 
         Updater.setCycleCount(Timeline.INDEFINITE);
         Updater.play();
-        toDoView.bc.getData().addAll(toDoView.serie1, toDoView.serie2);
+        toDoView.getBc().getData().addAll(toDoView.getSerie1(), toDoView.getSerie2());
     }
 
 
@@ -131,9 +130,6 @@ public class ToDoController implements Serializable {
     public FocusTimerModel getModel() {
         return focusModel;
     }
-    public SqliteManager getSqliteManager() {
-        return sqliteManager;
-    }
 
     // ---------------------------------- CRUD-Methods
     /* Create method
@@ -143,7 +139,6 @@ public class ToDoController implements Serializable {
     public void createToDo(String title, String message, LocalDate dueDate, String category, ArrayList<String> tags) {
         ToDo toDo = new ToDo(title, message, dueDate, category, tags);
         this.toDoList.addToDo(toDo);
-        this.sqliteManager.writeItem(toDo);
         this.toDoList.updateSublists();
     }
 
@@ -165,18 +160,18 @@ public class ToDoController implements Serializable {
 
             // Get clicked item
             MainBarView activeMidView = (MainBarView) this.getActiveMidView();
-            int index = activeMidView.tableView.getSelectionModel().getSelectedIndex();
+            int index = activeMidView.getTableView().getSelectionModel().getSelectedIndex();
 
             // Don't run if double click on table head
             if (index != -1) {
-                ObservableList<ToDo> items = activeMidView.tableView.getItems();
+                ObservableList<ToDo> items = activeMidView.getTableView().getItems();
                 ToDo itemToUpdate = items.get(index);
 
                 // Open new dialogPane to make it editable
-                this.toDoView.addToDoDialog = new Dialog<ButtonType>();
-                this.toDoView.toDoDialogPane = new AddToDoDialogPane(this.toDoView.listView.getItems(), itemToUpdate);
-                this.toDoView.addToDoDialog.setDialogPane(this.toDoView.toDoDialogPane);
-                Optional<ButtonType> result = this.toDoView.addToDoDialog.showAndWait();
+                this.toDoView.setAddToDoDialog(new Dialog<ButtonType>());
+                this.toDoView.setToDoDialogPane(new AddToDoDialogPane(this.toDoView.getListView().getItems(), itemToUpdate));
+                this.toDoView.getAddToDoDialog().setDialogPane(this.toDoView.getToDoDialogPane());
+                Optional<ButtonType> result = this.toDoView.getAddToDoDialog().showAndWait();
 
                 // Parse only positive result, ignore CANCEL_CLOSE
                 if (result.isPresent() && result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
@@ -188,11 +183,11 @@ public class ToDoController implements Serializable {
                         // this.toDoList.removeToDo(itemToUpdate);
 
                         // Parse out data
-                        String title = this.toDoView.toDoDialogPane.titleTextfield.getText();
-                        String category = this.toDoView.toDoDialogPane.categoryComboBox.getValue();
-                        String message = this.toDoView.toDoDialogPane.messageTextArea.getText();
-                        String dueDateString = this.toDoView.toDoDialogPane.datePicker.getValue().toString();
-                        String tags = this.toDoView.toDoDialogPane.tagsTextfield.getText();
+                        String title = this.toDoView.getToDoDialogPane().getTitleTextfield().getText();
+                        String category = this.toDoView.getToDoDialogPane().getCategoryComboBox().getValue();
+                        String message = this.toDoView.getToDoDialogPane().getMessageTextArea().getText();
+                        String dueDateString = this.toDoView.getToDoDialogPane().getDatePicker().getValue().toString();
+                        String tags = this.toDoView.getToDoDialogPane().getTagsTextfield().getText();
 
 
                         String[] tagArray = tags.replaceAll("\\s", "").split(";");
@@ -203,7 +198,6 @@ public class ToDoController implements Serializable {
                         ToDo updatedItem = new ToDo(itemToUpdate.getID(), title, message, LocalDate.parse(dueDateString),
                                 itemToUpdate.getDateOfCreation(), category, tagArrayList, true);
                         this.toDoList.updateToDo(itemToUpdate, updatedItem);
-                        this.sqliteManager.updateItem(itemToUpdate, updatedItem);
 
                     }
 
@@ -237,10 +231,8 @@ public class ToDoController implements Serializable {
         // TODO: Either write new constructor for a ToDo where we pass in an existing instance of a ToDo together with
         // a string that is being set as category. Or use an existing constructor and pass in all the elements
         // so we have an old and a new item to pass into the sqliteManager.update() method.
-        this.sqliteManager.deleteItem(toDo);
         toDo.setCategory("Erledigt");
         toDo.setDone(true);
-        this.sqliteManager.writeItem(toDo);
         this.updateInstancedSublists();
     }
 
@@ -249,9 +241,7 @@ public class ToDoController implements Serializable {
      */
     private void setToDoAsImportant(MouseEvent e) {
         ToDo toDo = toDoList.getToDo((Button) e.getSource());
-        this.sqliteManager.deleteItem(toDo);
         toDo.setCategory("Wichtig");
-        this.sqliteManager.writeItem(toDo);
         this.updateInstancedSublists();
     }
 
@@ -261,9 +251,7 @@ public class ToDoController implements Serializable {
      */
     private void setToDoAsGarbage(MouseEvent e) {
         ToDo toDo = toDoList.getToDo((Button) e.getSource());
-        this.sqliteManager.deleteItem(toDo);
         toDo.setCategory("Papierkorb");
-        this.sqliteManager.writeItem(toDo);
         this.updateInstancedSublists();
 
     }
@@ -277,16 +265,16 @@ public class ToDoController implements Serializable {
 
         // Fetch input
         MainBarView midView = (MainBarView) this.getActiveMidView();
-        String searchString = midView.searchField.getText();
+        String searchString = midView.getSearchField().getText();
 
         // Clear pane
-        ((MainBarView) this.getActiveMidView()).tableView.getItems().clear();
+        ((MainBarView) this.getActiveMidView()).getTableView().getItems().clear();
 
         // Search items
         ArrayList<ToDo> searchList = this.toDoList.searchItem(searchString);
 
         // Populate list
-        ((MainBarView) this.getActiveMidView()).tableView.getItems().addAll(searchList);
+        ((MainBarView) this.getActiveMidView()).getTableView().getItems().addAll(searchList);
 
     }
 
@@ -297,7 +285,7 @@ public class ToDoController implements Serializable {
 
         // Fetch input
         MainBarView midView = (MainBarView) this.getActiveMidView();
-        String searchString = midView.searchField.getText();
+        String searchString = midView.getSearchField().getText();
 
         // Only go ahead if input is not empty
         if (searchString.length() != 0) {
@@ -308,13 +296,13 @@ public class ToDoController implements Serializable {
 
             // Generate new searchView
             this.searchBarView = new SearchBarView(observableSearchList);
-            this.searchBarView.createToDo.setOnMouseClicked(this::createToDoDialog);
-            this.linkTableViewListeners(searchBarView.tableView.getItems());
-            this.searchBarView.tableView.setOnMouseClicked(this::updateToDo);
-            this.searchBarView.searchButton.setOnMouseClicked(this::searchItem);
+            this.searchBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
+            this.linkTableViewListeners(searchBarView.getTableView().getItems());
+            this.searchBarView.getTableView().setOnMouseClicked(this::updateToDo);
+            this.searchBarView.getSearchButton().setOnMouseClicked(this::searchItem);
 
             // Put it on main view
-            toDoView.borderPane.setCenter(this.searchBarView);
+            toDoView.getBorderPane().setCenter(this.searchBarView);
 
         }
 
@@ -327,7 +315,7 @@ public class ToDoController implements Serializable {
 
     	 // Fetch input
         MainBarView midView = (MainBarView) this.getActiveMidView();
-        String searchString = midView.searchField.getText();
+        String searchString = midView.getSearchField().getText();
 
         // Only go ahead if input is not empty
         if (searchString.length() != 0) {
@@ -338,13 +326,13 @@ public class ToDoController implements Serializable {
 
             // Generate new searchView
             this.searchBarView = new SearchBarView(observableSearchList);
-            this.searchBarView.createToDo.setOnMouseClicked(this::createToDoDialog);
-            this.linkTableViewListeners(searchBarView.tableView.getItems());
-            this.searchBarView.tableView.setOnMouseClicked(this::updateToDo);
-            this.searchBarView.searchButton.setOnMouseClicked(this::searchItem);
+            this.searchBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
+            this.linkTableViewListeners(searchBarView.getTableView().getItems());
+            this.searchBarView.getTableView().setOnMouseClicked(this::updateToDo);
+            this.searchBarView.getSearchButton().setOnMouseClicked(this::searchItem);
 
             // Put it on main view
-            toDoView.borderPane.setCenter(this.searchBarView);
+            toDoView.getBorderPane().setCenter(this.searchBarView);
 
         }
 
@@ -362,27 +350,27 @@ public class ToDoController implements Serializable {
 
         // Update sublists in each view
         if (this.importantBarView != null) {
-            this.importantBarView.tableView.getItems().clear();
-            this.importantBarView.tableView.getItems().addAll(this.toDoList.getToDoListImportant());
-            this.linkTableViewListeners(this.importantBarView.tableView.getItems());
+            this.importantBarView.getTableView().getItems().clear();
+            this.importantBarView.getTableView().getItems().addAll(this.toDoList.getToDoListImportant());
+            this.linkTableViewListeners(this.importantBarView.getTableView().getItems());
         }
 
         if (this.garbageBarView != null) {
-            this.garbageBarView.tableView.getItems().clear();
-            this.garbageBarView.tableView.getItems().addAll(this.toDoList.getToDoListGarbage());
-            this.linkTableViewListeners(this.garbageBarView.tableView.getItems());
+            this.garbageBarView.getTableView().getItems().clear();
+            this.garbageBarView.getTableView().getItems().addAll(this.toDoList.getToDoListGarbage());
+            this.linkTableViewListeners(this.garbageBarView.getTableView().getItems());
         }
 
         if (this.plannedBarView != null) {
-            this.plannedBarView.tableView.getItems().clear();
-            this.plannedBarView.tableView.getItems().addAll(this.toDoList.getToDoListPlanned());
-            this.linkTableViewListeners(this.plannedBarView.tableView.getItems());
+            this.plannedBarView.getTableView().getItems().clear();
+            this.plannedBarView.getTableView().getItems().addAll(this.toDoList.getToDoListPlanned());
+            this.linkTableViewListeners(this.plannedBarView.getTableView().getItems());
         }
 
         if (this.doneBarView != null) {
-            this.doneBarView.tableView.getItems().clear();
-            this.doneBarView.tableView.getItems().addAll(this.toDoList.getToDoListDone());
-            this.linkTableViewListeners(this.doneBarView.tableView.getItems());
+            this.doneBarView.getTableView().getItems().clear();
+            this.doneBarView.getTableView().getItems().addAll(this.toDoList.getToDoListDone());
+            this.linkTableViewListeners(this.doneBarView.getTableView().getItems());
         }
     }
 
@@ -390,7 +378,7 @@ public class ToDoController implements Serializable {
      *
      */
     private Node getActiveMidView() {
-        return this.toDoView.borderPane.getCenter();
+        return this.toDoView.getBorderPane().getCenter();
     }
 
     /* Method to set event handlers for the tableView Items
@@ -418,52 +406,52 @@ public class ToDoController implements Serializable {
      * Anyhow - we see less dissonance in adding a button to a model, since this can be perceived as a "trait" of the model.
      */
     private void changeCenterBar(MouseEvent e) {
-        switch (toDoView.listView.getSelectionModel().getSelectedIndex()) {
+        switch (toDoView.getListView().getSelectionModel().getSelectedIndex()) {
             case 0 -> {
                 // Create new instance of the view, populated with up-to-date dataset
                 this.importantBarView = new ImportantBarView(this.toDoList.getToDoListImportant());
 
                 // Add listeners
-                importantBarView.createToDo.setOnMouseClicked(this::createToDoDialog);
-                linkTableViewListeners(importantBarView.tableView.getItems());
-                importantBarView.searchButton.setOnMouseClicked(this::searchItemAndGenerateView);
-                importantBarView.searchButton.setOnAction(this::searchItemAndGenerateView);
-                importantBarView.comboBox.setOnAction(this::changeCombo);
-                importantBarView.tableView.setOnMouseClicked(this::updateToDo);
+                importantBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
+                linkTableViewListeners(importantBarView.getTableView().getItems());
+                importantBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
+                importantBarView.getSearchButton().setOnAction(this::searchItemAndGenerateView);
+                importantBarView.getComboBox().setOnAction(this::changeCombo);
+                importantBarView.getTableView().setOnMouseClicked(this::updateToDo);
 
                 // Put it on main view
-                toDoView.borderPane.setCenter(importantBarView);
+                toDoView.getBorderPane().setCenter(importantBarView);
             }
             case 1 -> {
                 plannedBarView = new PlannedBarView(this.toDoList.getToDoListPlanned());
-                plannedBarView.createToDo.setOnMouseClicked(this::createToDoDialog);
-                plannedBarView.searchButton.setOnMouseClicked(this::searchItemAndGenerateView);
-                plannedBarView.searchButton.setOnAction(this::searchItemAndGenerateView);
-                plannedBarView.comboBox.setOnAction(this::changeCombo);
-                plannedBarView.tableView.setOnMouseClicked(this::updateToDo);
-                linkTableViewListeners(plannedBarView.tableView.getItems());
-                toDoView.borderPane.setCenter(plannedBarView);
+                plannedBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
+                plannedBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
+                plannedBarView.getSearchButton().setOnAction(this::searchItemAndGenerateView);
+                plannedBarView.getComboBox().setOnAction(this::changeCombo);
+                plannedBarView.getTableView().setOnMouseClicked(this::updateToDo);
+                linkTableViewListeners(plannedBarView.getTableView().getItems());
+                toDoView.getBorderPane().setCenter(plannedBarView);
                 
             }
             case 2 -> {
                 doneBarView = new DoneBarView(this.toDoList.getToDoListDone());
-                doneBarView.createToDo.setOnMouseClicked(this::createToDoDialog);
-                doneBarView.searchButton.setOnMouseClicked(this::searchItemAndGenerateView);
-                doneBarView.searchButton.setOnAction(this::searchItemAndGenerateView);
-                doneBarView.comboBox.setOnAction(this::changeCombo);
-                doneBarView.tableView.setOnMouseClicked(this::updateToDo);
-                linkTableViewListeners(doneBarView.tableView.getItems());
-                toDoView.borderPane.setCenter(doneBarView);
+                doneBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
+                doneBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
+                doneBarView.getSearchButton().setOnAction(this::searchItemAndGenerateView);
+                doneBarView.getComboBox().setOnAction(this::changeCombo);
+                doneBarView.getTableView().setOnMouseClicked(this::updateToDo);
+                linkTableViewListeners(doneBarView.getTableView().getItems());
+                toDoView.getBorderPane().setCenter(doneBarView);
             }
             case 3 -> {
                 garbageBarView = new GarbageBarView(this.toDoList.getToDoListGarbage());
-                garbageBarView.createToDo.setOnMouseClicked(this::createToDoDialog);
-                garbageBarView.searchButton.setOnMouseClicked(this::searchItemAndGenerateView);
-                garbageBarView.searchButton.setOnAction(this::searchItemAndGenerateView);
-                garbageBarView.comboBox.setOnAction(this::changeCombo);
-                garbageBarView.tableView.setOnMouseClicked(this::updateToDo);
-                linkTableViewListeners(garbageBarView.tableView.getItems());
-                toDoView.borderPane.setCenter(garbageBarView);
+                garbageBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
+                garbageBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
+                garbageBarView.getSearchButton().setOnAction(this::searchItemAndGenerateView);
+                garbageBarView.getComboBox().setOnAction(this::changeCombo);
+                garbageBarView.getTableView().setOnMouseClicked(this::updateToDo);
+                linkTableViewListeners(garbageBarView.getTableView().getItems());
+                toDoView.getBorderPane().setCenter(garbageBarView);
             }
         }
     }
@@ -476,35 +464,35 @@ public class ToDoController implements Serializable {
     private boolean validateUserInput() {
 
         // Parse out data
-        String title = this.toDoView.toDoDialogPane.titleTextfield.getText();
-        String category = this.toDoView.toDoDialogPane.categoryComboBox.getValue();
-        String message = this.toDoView.toDoDialogPane.messageTextArea.getText();
+        String title = this.toDoView.getToDoDialogPane().getTitleTextfield().getText();
+        String category = this.toDoView.getToDoDialogPane().getCategoryComboBox().getValue();
+        String message = this.toDoView.getToDoDialogPane().getMessageTextArea().getText();
         String dueDateString = "";
         try {
-            dueDateString = this.toDoView.toDoDialogPane.datePicker.getValue().toString();
+            dueDateString = this.toDoView.getToDoDialogPane().getDatePicker().getValue().toString();
             if (dueDateString.equals("")) {
                 // Setting default date to today
-                this.toDoView.toDoDialogPane.datePicker.setValue(LocalDate.now());
+                this.toDoView.getToDoDialogPane().getDatePicker().setValue(LocalDate.now());
             }
         } catch (NullPointerException e) {
             // Setting default date to today
-            this.toDoView.toDoDialogPane.datePicker.setValue(LocalDate.now());
+            this.toDoView.getToDoDialogPane().getDatePicker().setValue(LocalDate.now());
             dueDateString = LocalDate.now().toString();
         }
 
-        String tags = this.toDoView.toDoDialogPane.tagsTextfield.getText();
+        String tags = this.toDoView.getToDoDialogPane().getTagsTextfield().getText();
 
         // Set default category if none is chosen
         // Note that we need to update the stored variable as it is used for the validity check later
         if (category == null) {
-            this.toDoView.toDoDialogPane.categoryComboBox.setValue("Geplant");
-            category = this.toDoView.toDoDialogPane.categoryComboBox.getValue();
+            this.toDoView.getToDoDialogPane().getCategoryComboBox().setValue("Geplant");
+            category = this.toDoView.getToDoDialogPane().getCategoryComboBox().getValue();
         }
 
         // Validate easy inputs first
         boolean titleIsValid = title.length() < 50 && title.length() > 0;
         boolean messageIsValid = message.length() < 300;
-        boolean categoryIsValid = this.toDoView.listView.getItems().contains(category);
+        boolean categoryIsValid = this.toDoView.getListView().getItems().contains(category);
         boolean tagsAreValid = false;
         String[] tagArray;
 
@@ -527,19 +515,19 @@ public class ToDoController implements Serializable {
 
         // Give graphical feedback
         if (!titleIsValid) {
-            this.toDoView.toDoDialogPane.titleTextfield.getStyleClass().add("notOk");
+            this.toDoView.getToDoDialogPane().getTitleTextfield().getStyleClass().add("notOk");
         }
         if (!messageIsValid) {
-            this.toDoView.toDoDialogPane.messageTextArea.getStyleClass().add("notOk");
+            this.toDoView.getToDoDialogPane().getMessageTextArea().getStyleClass().add("notOk");
         }
         if (!categoryIsValid) {
-            this.toDoView.toDoDialogPane.categoryComboBox.getStyleClass().add("notOk");
+            this.toDoView.getToDoDialogPane().getCategoryComboBox().getStyleClass().add("notOk");
         }
         if (!dateIsValid) {
-            this.toDoView.toDoDialogPane.datePicker.getStyleClass().add("notOk");
+            this.toDoView.getToDoDialogPane().getDatePicker().getStyleClass().add("notOk");
         }
         if (!tagsAreValid) {
-            this.toDoView.toDoDialogPane.tagsTextfield.getStyleClass().add("notOk");
+            this.toDoView.getToDoDialogPane().getTagsTextfield().getStyleClass().add("notOk");
         }
 
         return (titleIsValid && messageIsValid && categoryIsValid && dateIsValid && tagsAreValid);
@@ -554,17 +542,17 @@ public class ToDoController implements Serializable {
     public void createToDoDialog(MouseEvent e) {
 
         // Create & Customize Dialog
-        this.toDoView.addToDoDialog = new Dialog<ButtonType>();
-        this.toDoView.toDoDialogPane = new AddToDoDialogPane(this.toDoView.listView.getItems());
-        this.toDoView.addToDoDialog.setDialogPane(this.toDoView.toDoDialogPane);
+        this.toDoView.setAddToDoDialog(new Dialog<ButtonType>());
+        this.toDoView.setToDoDialogPane(new AddToDoDialogPane(this.toDoView.getListView().getItems()));
+        this.toDoView.getAddToDoDialog().setDialogPane(this.toDoView.getToDoDialogPane());
 
-        this.toDoView.addToDoDialog.setTitle("Neue Aufgabe");
-        Stage stage = (Stage) toDoView.addToDoDialog.getDialogPane().getScene().getWindow();
+        this.toDoView.getAddToDoDialog().setTitle("Neue Aufgabe");
+        Stage stage = (Stage) toDoView.getAddToDoDialog().getDialogPane().getScene().getWindow();
 		stage.getIcons().add(new Image(this.getClass().getResource("/icons/doneIcon4.png").toString()));
 		
 
         // Set up event filter on OK-button to prevent dialog from closing when user input is not valid
-        Button okButton = (Button) this.toDoView.toDoDialogPane.lookupButton(this.toDoView.toDoDialogPane.okButtonType);
+        Button okButton = (Button) this.toDoView.getToDoDialogPane().lookupButton(this.toDoView.getToDoDialogPane().getOkButtonType());
         okButton.addEventFilter(ActionEvent.ACTION,
                 event -> {
                     if (!validateUserInput()) {
@@ -573,14 +561,14 @@ public class ToDoController implements Serializable {
                 });
 
         // Clear graphical validation
-        this.toDoView.toDoDialogPane.titleTextfield.getStyleClass().remove("notOk");
-        this.toDoView.toDoDialogPane.messageTextArea.getStyleClass().remove("notOk");
-        this.toDoView.toDoDialogPane.categoryComboBox.getStyleClass().remove("notOk");
-        this.toDoView.toDoDialogPane.datePicker.getStyleClass().remove("notOk");
-        this.toDoView.toDoDialogPane.tagsTextfield.getStyleClass().remove("notOk");
+        this.toDoView.getToDoDialogPane().getTitleTextfield().getStyleClass().remove("notOk");
+        this.toDoView.getToDoDialogPane().getMessageTextArea().getStyleClass().remove("notOk");
+        this.toDoView.getToDoDialogPane().getCategoryComboBox().getStyleClass().remove("notOk");
+        this.toDoView.getToDoDialogPane().getDatePicker().getStyleClass().remove("notOk");
+        this.toDoView.getToDoDialogPane().getTagsTextfield().getStyleClass().remove("notOk");
 
         // Show dialog
-        Optional<ButtonType> result = this.toDoView.addToDoDialog.showAndWait();
+        Optional<ButtonType> result = this.toDoView.getAddToDoDialog().showAndWait();
 
         // Parse only positive result, ignore CANCEL_CLOSE
         if (result.isPresent() && result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
@@ -589,11 +577,11 @@ public class ToDoController implements Serializable {
             if (this.validateUserInput()) {
 
                 // Parse out data
-                String title = this.toDoView.toDoDialogPane.titleTextfield.getText();
-                String category = this.toDoView.toDoDialogPane.categoryComboBox.getValue();
-                String message = this.toDoView.toDoDialogPane.messageTextArea.getText();
-                String dueDateString = this.toDoView.toDoDialogPane.datePicker.getValue().toString();
-                String tags = this.toDoView.toDoDialogPane.tagsTextfield.getText();
+                String title = this.toDoView.getToDoDialogPane().getTitleTextfield().getText();
+                String category = this.toDoView.getToDoDialogPane().getCategoryComboBox().getValue();
+                String message = this.toDoView.getToDoDialogPane().getMessageTextArea().getText();
+                String dueDateString = this.toDoView.getToDoDialogPane().getDatePicker().getValue().toString();
+                String tags = this.toDoView.getToDoDialogPane().getTagsTextfield().getText();
 
                 String[] tagArray = tags.replaceAll("\\s", "").split(";");
                 ArrayList<String> tagArrayList = new ArrayList<String>(List.of(tagArray));
@@ -604,11 +592,11 @@ public class ToDoController implements Serializable {
         }
 
         // Clear out dialogPane
-        this.toDoView.toDoDialogPane.clearPane();
+        this.toDoView.getToDoDialogPane().clearPane();
 
         // Add editing functionality
         MainBarView midView = (MainBarView) this.getActiveMidView();
-        midView.tableView.setOnMouseClicked(this::updateToDo);
+        midView.getTableView().setOnMouseClicked(this::updateToDo);
 
         // Refresh views
         this.updateInstancedSublists();
@@ -621,19 +609,19 @@ public class ToDoController implements Serializable {
     // Open a new focus timer window
     public void createFocusTimer(MouseEvent e) {
 
-    	this.toDoView.focusTimerDialog.model.restart();
-    	this.toDoView.focusTimerDialog.model.stop();
+    	this.toDoView.getFocusTimerDialog().getModel().restart();
+    	this.toDoView.getFocusTimerDialog().getModel().stop();
 
-    	((FocusTimerDialogPane) this.toDoView.focusDialog.getDialogPane()).playButton.setOnAction(a->{
-    	this.toDoView.focusTimerDialog.model.start();
+    	((FocusTimerDialogPane) this.toDoView.getFocusDialog().getDialogPane()).getPlayButton().setOnAction(a->{
+    	this.toDoView.getFocusTimerDialog().getModel().start();
     	});
-    	((FocusTimerDialogPane) this.toDoView.focusDialog.getDialogPane()).stopButton.setOnAction(a->{
-    	this.toDoView.focusTimerDialog.model.stop();
+    	((FocusTimerDialogPane) this.toDoView.getFocusDialog().getDialogPane()).getStopButton().setOnAction(a->{
+    	this.toDoView.getFocusTimerDialog().getModel().stop();
     	});
-    	((FocusTimerDialogPane) this.toDoView.focusDialog.getDialogPane()).replayButton.setOnAction(a->{
-    	this.toDoView.focusTimerDialog.model.restart();
+    	((FocusTimerDialogPane) this.toDoView.getFocusDialog().getDialogPane()).getReplayButton().setOnAction(a->{
+    	this.toDoView.getFocusTimerDialog().getModel().restart();
     	});
-    	this.toDoView.focusDialog.showAndWait();
+    	this.toDoView.getFocusDialog().showAndWait();
     	}
     	
 
@@ -648,9 +636,9 @@ public class ToDoController implements Serializable {
 
         // Set items based on selected category
         MainBarView main = (MainBarView) getActiveMidView();
-        switch (main.comboBox.getSelectionModel().getSelectedIndex()) {
+        switch (main.getComboBox().getSelectionModel().getSelectedIndex()) {
             case 0: {
-                String selectedCategory = this.toDoView.listView.getSelectionModel().getSelectedItem();
+                String selectedCategory = this.toDoView.getListView().getSelectionModel().getSelectedItem();
                 ObservableList<ToDo> resultSet = FXCollections.observableArrayList();
                 switch (selectedCategory) {
 
@@ -672,13 +660,13 @@ public class ToDoController implements Serializable {
 
                 }
 
-                main.tableView.getItems().clear();
-                main.tableView.getItems().addAll(resultSet);
+                main.getTableView().getItems().clear();
+                main.getTableView().getItems().addAll(resultSet);
                 break;
             }
             case 1: {
 
-                String selectedCategory = this.toDoView.listView.getSelectionModel().getSelectedItem();
+                String selectedCategory = this.toDoView.getListView().getSelectionModel().getSelectedItem();
                 ObservableList<ToDo> resultSet = FXCollections.observableArrayList();
                 switch (selectedCategory) {
 
@@ -713,8 +701,8 @@ public class ToDoController implements Serializable {
                 }
 
                 ObservableList<ToDo> observableListToday = FXCollections.observableArrayList(resultSet);
-                main.tableView.getItems().clear();
-                main.tableView.getItems().addAll(observableListToday);
+                main.getTableView().getItems().clear();
+                main.getTableView().getItems().addAll(observableListToday);
             }
             
         }
@@ -739,33 +727,33 @@ public class ToDoController implements Serializable {
   public void createHowTo(MouseEvent e) {
     		  
         // show dialog
-        this.toDoView.howToDialog.showAndWait();
-	  	this.toDoView.howToDialogPane.getMediaPlayer().stop();
+        this.toDoView.getHowToDialog().showAndWait();
+	  	this.toDoView.getHowToDialogPane().getMediaPlayer().stop();
         
         
         // If ButtonType "beenden" is clicked, stop the Video
-        if (toDoView.howToDialogPane.getCloseButtonType().getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE) {
+        if (toDoView.getHowToDialogPane().getCloseButtonType().getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE) {
  		   
- 		   toDoView.howToDialogPane.getMediaPlayer().stop();  
+ 		   toDoView.getHowToDialogPane().getMediaPlayer().stop();  
     }
   }
   
   // Plays HowTo video
   public void playMedia(MouseEvent event) {
 	  
-	  this.toDoView.howToDialogPane.getMediaPlayer().play();
+	  this.toDoView.getHowToDialogPane().getMediaPlayer().play();
   }
   
   //Stops HowTo video
   public void stopMedia(MouseEvent event) {
 	  
-	  this.toDoView.howToDialogPane.getMediaPlayer().pause();
+	  this.toDoView.getHowToDialogPane().getMediaPlayer().pause();
 	  
   }
   //Replays HowTo video
   public void replayMedia(MouseEvent event) {
 	  
-	  this.toDoView.howToDialogPane.getMediaPlayer().stop();
+	  this.toDoView.getHowToDialogPane().getMediaPlayer().stop();
 	  
   }
   
