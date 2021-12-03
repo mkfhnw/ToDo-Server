@@ -54,7 +54,6 @@ public class ToDo {
 		Set<String> categorySet = new HashSet<String>(this.categories);
 		this.categories.clear();
 		this.categories.addAll(categorySet);
-		ToDoList.categoryList.addAll(this.categories);
 
 		// Select other category than "Geplant" if available
 		this.category = "Geplant";
@@ -107,7 +106,6 @@ public class ToDo {
 		Set<String> categorySet = new HashSet<String>(this.categories);
 		this.categories.clear();
 		this.categories.addAll(categorySet);
-		ToDoList.categoryList.addAll(this.categories);
 
 		// Select other category than "Geplant" if available
 		this.category = "Geplant";
@@ -166,7 +164,6 @@ public class ToDo {
 		if(!this.categories.contains("Geplant")) {
 			this.categories.add("Geplant");
 		}
-		ToDoList.categoryList.addAll(this.categories);
 		this.tags = tags;
 
 
@@ -216,7 +213,6 @@ public class ToDo {
 			Set<String> categorySet = new HashSet<String>(this.categories);
 			this.categories.clear();
 			this.categories.addAll(categorySet);
-			ToDoList.categoryList.addAll(this.categories);
 
 			// Select other category than "Geplant" if available
 			this.category = "Geplant";
