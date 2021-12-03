@@ -3,7 +3,7 @@ package client.view;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import model.ToDo;
+import client.model.ToDo;
 
 
 public class GarbageBarView  extends MainBarView {

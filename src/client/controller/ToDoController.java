@@ -1,5 +1,6 @@
 package client.controller;
 
+import client.view.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
@@ -14,9 +15,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.FocusTimerModel;
-import model.ToDo;
-import model.ToDoList;
+import client.model.FocusTimerModel;
+import client.model.ToDo;
+import client.model.ToDoList;
 import services.SqliteManager;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -39,7 +40,6 @@ public class ToDoController implements Serializable {
     private SearchBarView searchBarView;
     private final FocusTimerDialogPane dialog;
     private FocusTimerModel focusModel;
-    private SqliteManager sqliteManager;
 
     // Constructor
     public ToDoController(ToDoView toDoView, ToDo toDo, ToDoList toDoList) {
@@ -50,18 +50,9 @@ public class ToDoController implements Serializable {
         
         this.focusModel = focusModel;
 
-        // Set up database handler
-        try {
-            this.sqliteManager = new SqliteManager();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
 
         // Load items from database
-        ArrayList<ToDo> databaseItems = this.sqliteManager.loadItems();
-        for(ToDo item : databaseItems) {
-            this.toDoList.addToDo(item);
-        }
         this.toDoList.updateSublists();
         System.out.println("Loaded items from database: " + this.toDoList.getToDoList().size());
 

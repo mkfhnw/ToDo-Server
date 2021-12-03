@@ -8,7 +8,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import model.ToDo;
+import client.model.ToDo;
 
 /*
  * This abstract class is the super class
@@ -18,24 +18,24 @@ import model.ToDo;
 public abstract class MainBarView extends VBox {
 	
 	// control elements for this container
-	protected ObservableList<ToDo> subSet;
-	protected ImageView icon;
+	private ObservableList<ToDo> subSet;
+	private ImageView icon;
 	private final ImageView plus;
-	protected Label label;
-	protected ImageView lupe;
-	protected TextField searchField;
-	protected Button searchButton;
-	protected Button createToDo;
-	protected TableView<ToDo> tableView;
-	protected TableColumn<ToDo, String> important;
-	protected TableColumn<ToDo, String> task;
-	protected TableColumn<ToDo, String> dueDate;
-	protected TableColumn<ToDo, String> checkBox;
-	protected TableColumn<ToDo, String> garbage;
-	protected HBox header;
-	protected HBox searchBar;
-	protected ObservableList<String> filter;
-	protected ComboBox<String> comboBox;
+	private Label label;
+	private ImageView lupe;
+	private TextField searchField;
+	private Button searchButton;
+	private Button createToDo;
+	private TableView<ToDo> tableView;
+	private TableColumn<ToDo, String> important;
+	private TableColumn<ToDo, String> task;
+	private TableColumn<ToDo, String> dueDate;
+	private TableColumn<ToDo, String> checkBox;
+	private TableColumn<ToDo, String> garbage;
+	private HBox header;
+	private HBox searchBar;
+	private ObservableList<String> filter;
+	private ComboBox<String> comboBox;
 	
 	// Constructor
 	public MainBarView() {

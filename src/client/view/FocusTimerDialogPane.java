@@ -14,34 +14,34 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import model.FocusTimerModel;
+import client.model.FocusTimerModel;
 
 public class FocusTimerDialogPane extends DialogPane {
 	
-	protected FocusTimerModel model;
+	private FocusTimerModel model;
 	
-	protected Button playButton;
-	protected Button stopButton;
-	protected Button replayButton;
+	private Button playButton;
+	private Button stopButton;
+	private Button replayButton;
 	
-	protected ImageView playIcon;
-	protected ImageView stopIcon;
-	protected ImageView replayIcon;
+	private ImageView playIcon;
+	private ImageView stopIcon;
+	private ImageView replayIcon;
 	
-	protected Label counterLabel;
+	private Label counterLabel;
 	
-	protected BorderPane timerBorderPane;
+	private BorderPane timerBorderPane;
 	
-	protected VBox vBoxText;
-	protected HBox hBoxButtons;
+	private VBox vBoxText;
+	private HBox hBoxButtons;
 	
-	protected VBox vBoxPlay;
-	protected VBox vBoxStop;
-	protected VBox vBoxReplay;
+	private VBox vBoxPlay;
+	private VBox vBoxStop;
+	private VBox vBoxReplay;
 	
-	protected Timeline timeline;
+	private Timeline timeline;
 	
-	protected ButtonType closeButtonType;
+	private ButtonType closeButtonType;
 	
 	public FocusTimerDialogPane() {
 			

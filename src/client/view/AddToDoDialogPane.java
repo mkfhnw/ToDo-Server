@@ -7,43 +7,43 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import model.ToDo;
+import client.model.ToDo;
 
 
 public class AddToDoDialogPane extends DialogPane {
 
     // Components
-    protected BorderPane root;
-    protected VBox leftPane;
-    protected VBox rightPane;
-    protected HBox titleBar;
-    protected HBox categoryBar;
-    protected HBox dueDateBar;
-    protected HBox tagsBar;
-    protected VBox headerBar;
+    private BorderPane root;
+    private VBox leftPane;
+    private VBox rightPane;
+    private HBox titleBar;
+    private HBox categoryBar;
+    private HBox dueDateBar;
+    private HBox tagsBar;
+    private VBox headerBar;
 
-    protected Label newTaskLabel;
-    protected Label tippLabel;
-    protected Label titleLabel;
-    protected Label categoryLabel;
-    protected Label dueDateLabel;
-    protected Label messageLabel;
-    protected Label tagsLabel;
+    private Label newTaskLabel;
+    private Label tippLabel;
+    private Label titleLabel;
+    private Label categoryLabel;
+    private Label dueDateLabel;
+    private Label messageLabel;
+    private Label tagsLabel;
 
-    protected TextField titleTextfield;
-    protected TextField tagsTextfield;
+    private TextField titleTextfield;
+    private TextField tagsTextfield;
 
-    protected Tooltip titleToolTip;
-    protected Tooltip messageToolTip;
-    protected Tooltip categoryToolTip;
-    protected Tooltip dateToolTip;
-    protected Tooltip tagsToolTip;
+    private Tooltip titleToolTip;
+    private Tooltip messageToolTip;
+    private Tooltip categoryToolTip;
+    private Tooltip dateToolTip;
+    private Tooltip tagsToolTip;
 
-    protected ComboBox<String> categoryComboBox;
+    private ComboBox<String> categoryComboBox;
 
-    protected DatePicker datePicker;
+    private DatePicker datePicker;
 
-    protected TextArea messageTextArea;
+    private TextArea messageTextArea;
 
     // Custom button type for eventhandling
     ButtonType okButtonType;
@@ -277,5 +277,8 @@ public class AddToDoDialogPane extends DialogPane {
         this.messageTextArea.clear();
         this.tagsTextfield.clear();
     }
+
+    // Getters & Setters
+
 
 }
