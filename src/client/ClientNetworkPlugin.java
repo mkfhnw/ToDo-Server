@@ -141,6 +141,8 @@ public class ClientNetworkPlugin {
 
             ArrayList<String> data = new ArrayList<>();
             data.add(toDo.getTitle());
+            data.add(toDo.getMessage());
+            data.add(toDo.getDueDate().toString());
         	
         	// title (+ validation) --> Controller
         	// description (+ validation) --> Controller 
