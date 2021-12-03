@@ -52,14 +52,14 @@ public abstract class MainBarView extends VBox {
 		this.getChildren().add(header);
 		
 		// Lupe Icon for the searchField		
-		this.lupe = new ImageView("/icons/lupe.png");
+		this.lupe = new ImageView("/common/resources/lupe.png");
 		this.lupe.setFitHeight(15);
 		this.lupe.setFitWidth(15);
 				
 		
 		// SearchBar and button for creating a new item
 		this.createToDo = new Button();
-		this.plus = new ImageView("/icons/plusIcon.png");
+		this.plus = new ImageView("/common/resources/plusIcon.png");
 		this.plus.setFitHeight(15);
 		this.plus.setFitWidth(15);
 		this.createToDo.setGraphic(plus);

@@ -152,7 +152,7 @@ public class ToDoView extends BorderPane {
 			this.focusDialog.setTitle("Fokus Timer");
 			
 			Stage stage = (Stage) focusDialog.getDialogPane().getScene().getWindow();
-			stage.getIcons().add(new Image(this.getClass().getResource("/icons/timer.png").toString()));
+			stage.getIcons().add(new Image(this.getClass().getResource("/common/resources/timer.png").toString()));
 			
 			this.focusTimerDialog = new FocusTimerDialogPane();
 			this.focusDialog.setDialogPane(focusTimerDialog);
@@ -163,7 +163,7 @@ public class ToDoView extends BorderPane {
 			this.howToDialog = new Dialog<ButtonType>();
 			this.howToDialog.setTitle("How-To");
 			Stage stage2 = (Stage) howToDialog.getDialogPane().getScene().getWindow();
-			stage2.getIcons().add(new Image(this.getClass().getResource("/icons/howTo.png").toString()));
+			stage2.getIcons().add(new Image(this.getClass().getResource("/common/resources/howTo.png").toString()));
 			
 			this.howToDialogPane = new HowToDialogPane();
 			this.howToDialog.setDialogPane(howToDialogPane);

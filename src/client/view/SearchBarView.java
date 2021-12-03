@@ -14,7 +14,7 @@ public class SearchBarView extends MainBarView {
         super();
 
         // Individual icons and labels for this view
-        this.icon = new ImageView("/icons/lupe.png");
+        this.icon = new ImageView("/common/resources/lupe.png");
         this.label = new Label("Suchergebnisse");
         this.icon.setFitHeight(50);
         this.icon.setFitWidth(53);

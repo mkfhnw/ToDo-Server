@@ -44,7 +44,7 @@ public class HowToDialogPane extends DialogPane {
 	public HowToDialogPane() {
 	
 	// Create Media
-	String path = new File("src/icons/focusTimer.mp4").getAbsolutePath();
+	String path = new File("src/common/resources/focusTimer.mp4").getAbsolutePath();
 	this.media = new Media(new File(path).toURI().toString());
 	this.mediaPlayer = new MediaPlayer(media);
 	this.mediaView = new MediaView();
@@ -55,17 +55,17 @@ public class HowToDialogPane extends DialogPane {
 	this.howToBorderPane.setCenter(mediaView);
 	
 	// Icon for PlayButton
-	this.playIcon = new ImageView("/icons/startIcon.png");
+	this.playIcon = new ImageView("/common/resources/startIcon.png");
 	this.playIcon.setFitHeight(40);
 	this.playIcon.setFitWidth(40);
 	
 	// Icon for StopButton
-	this.stopIcon = new ImageView("/icons/stopIcon.png");
+	this.stopIcon = new ImageView("/common/resources/stopIcon.png");
 	this.stopIcon.setFitHeight(40);
 	this.stopIcon.setFitWidth(40);
 	
 	// Icon for ReplayButton
-	this.replayIcon = new ImageView("/icons/restartIcon.png");
+	this.replayIcon = new ImageView("/common/resources/restartIcon.png");
 	this.replayIcon.setFitHeight(40);
 	this.replayIcon.setFitWidth(40);
 

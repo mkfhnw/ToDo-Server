@@ -17,7 +17,7 @@ public class GarbageBarView  extends MainBarView {
 		super();
 		
 		// Individual icons and labels for this view
-		this.icon = new ImageView("/icons/garbageIcon.png");
+		this.icon = new ImageView("/common/resources/garbageIcon.png");
 		this.label = new Label("Papierkorb");
 		this.icon.setFitHeight(50);
 		this.icon.setFitWidth(50);

@@ -44,7 +44,7 @@ public class LoginView extends BorderPane {
 	
 	// Content
 		
-	this.image = new ImageView("/client/resources/User.png");
+	this.image = new ImageView("/common/resources/User.png");
 	this.image.setFitHeight(140);
 	this.image.setFitWidth(140);
 		

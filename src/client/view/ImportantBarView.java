@@ -16,7 +16,7 @@ public class ImportantBarView  extends MainBarView {
 		super();
 		
 		// Individual icons and labels for this view
-		this.icon = new ImageView("/icons/starIcon.png");
+		this.icon = new ImageView("/common/resources/starIcon.png");
 		this.label = new Label("Wichtig");
 		this.icon.setFitHeight(50);
 		this.icon.setFitWidth(53);
