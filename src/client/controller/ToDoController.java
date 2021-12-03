@@ -548,7 +548,7 @@ public class ToDoController implements Serializable {
 
         this.toDoView.getAddToDoDialog().setTitle("Neue Aufgabe");
         Stage stage = (Stage) toDoView.getAddToDoDialog().getDialogPane().getScene().getWindow();
-		stage.getIcons().add(new Image(this.getClass().getResource("/icons/doneIcon4.png").toString()));
+		stage.getIcons().add(new Image(this.getClass().getResource("/common/resources/doneIcon4.png").toString()));
 		
 
         // Set up event filter on OK-button to prevent dialog from closing when user input is not valid

@@ -43,7 +43,7 @@ public class ToDoApp extends Application {
 		stage.show();
 		
 		// Adds an icon to the window
-		Image doneImage = new Image("/icons/doneIcon.png");
+		Image doneImage = new Image("/common/resources/doneIcon.png");
 		stage.getIcons().add(doneImage);
 		
 	}

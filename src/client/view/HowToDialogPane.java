@@ -44,7 +44,7 @@ public class HowToDialogPane extends DialogPane {
 	public HowToDialogPane() {
 	
 	// Create Media
-	String path = new File("src/common/resources/focusTimer.mp4").getAbsolutePath();
+	String path = new File("src/common/resources/howTo.mp4").getAbsolutePath();
 	this.media = new Media(new File(path).toURI().toString());
 	this.mediaPlayer = new MediaPlayer(media);
 	this.mediaView = new MediaView();
