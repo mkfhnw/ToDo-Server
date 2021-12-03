@@ -1,0 +1,71 @@
+.mainBarView {
+ 	-fx-padding: 15px;
+}
+.lupe {
+	-fx-spacing: 10px;
+}
+.searchButton {
+	-fx-background-color: #101b53;
+}
+.searchButton:hover {
+	-fx-background-color: #1ec4dc;
+}
+.searchField {
+	-fx-spacing: 10px;
+}
+.createToDo {
+	-fx-background-color: #101b53;
+	-fx-text-fill: #ffffff;
+	-fx-spacing: 100px;
+}
+.createToDo:hover {
+	-fx-background-color: #1ec4dc;
+}
+.tableView {
+ 	-fx-background-color: #ffffff;
+	-fx-text-fill: #121d58;
+	-fx-border-style: solid;
+}
+.tableColumn {
+	-fx-text-fill: #121d58;
+}
+.checkBox {
+    -fx-background-color: #ffffff;
+	-fx-text-fill: #121d58;
+	-fx-alignment: CENTER;
+}
+.task {
+    	-fx-background-color: #ffffff;
+	-fx-text-fill: #121d58;
+}
+.dueDate {
+    	-fx-background-color: #ffffff;
+	-fx-text-fill: #121d58;
+}
+.important {
+    	-fx-background-color: #ffffff;
+	-fx-text-fill: #121d58;
+	-fx-alignment: CENTER;
+}
+.garbage {
+ 	-fx-background-color: #ffffff;
+	-fx-text-fill: #121d58;
+	-fx-alignment: CENTER;
+}
+.comboBox {
+	-fx-background-color: #101b53;
+}
+.combo-box .list-cell {
+	-fx-text-fill: #ffffff;
+	-fx-background-color: #101b53;
+}
+.combo-box:hover {
+	-fx-background-color: #1ec4dc;
+}
+.combo-box .list-cell:hover {
+	-fx-background-color: #1ec4dc;
+}
+.combo-box .arrow {
+	-fx-background-color: #ffffff;
+}
+

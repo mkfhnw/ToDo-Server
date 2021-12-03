@@ -26,8 +26,6 @@ public class ToDoClient {
     private final String defaultToken = "3963c9cae5c5aeaa71f287190774db4d354287c7973e969e9d6c5722c1037a33";
     private final String sender = "Client";
     private final String recipient = "Server";
-    private ArrayList<String> logins;
-    // private ArrayList<ToDo> toDo;
 
     // Constructor
     public ToDoClient() {
@@ -41,13 +39,6 @@ public class ToDoClient {
         }
         System.out.println("[CLIENT] New ToDoClient created.");
         
-        
-        
-        // ArrayList for Logins
-        this.logins = new ArrayList<>();
-        
-        // ArrayList for ToDos
-      //  this.toDo = new ArrayList<>();
 
     }
 
@@ -142,19 +133,16 @@ public class ToDoClient {
         	LoginView loginView = new LoginView();
             
         	
-        	sendMessage("LOGIN", this.logins);
+        	// sendMessage("LOGIN", toDoController.get());
         	
         	// In Controller
         	String emailLogin = loginView.getUserField().getText();
-        	this.logins.add(emailLogin);
         	
         	String passwordLogin = loginView.getPasswordField().getText();
-        	this.logins.add(passwordLogin);
         	
         	
-        	// Fails if name/password do not match
-        	
-        	// Token
+        	// Fails if name/password do not match --> Server
+
         }
         
         public void logout() {
@@ -162,7 +150,6 @@ public class ToDoClient {
         	// No Data must be sent 
         	// Never fails; token becomes invalid
         	
-        	// DELETE toDoClient.sendMessage("LOGOUT", data);
         }
         
         
@@ -170,32 +157,27 @@ public class ToDoClient {
         	RegistrationView registrationView = new RegistrationView();
         	
         	// In Controller
-        	sendMessage("CREATE_LOGIN", this.logins);
+        	// sendMessage("CREATE_LOGIN", toDoController.get());
         	String emailCreateLogin = registrationView.getEmailField().getText();
-        	this.logins.add(emailCreateLogin);
         	
         	String passwordCreateLogin = registrationView.getPasswordField().getText();
-        	this.logins.add(passwordCreateLogin);
         	
-        	// Fails if name already taken, or invalid
-        	// After creating an account, you still have to login
-        	// (Password validation) -- if we want
-        	// (Token)
+        	// Fails if name already taken, or invalid --> SERVER
+        	// After creating an account, you still have to login --> CONTROLLER
+        	// (Password validation) -- if we want --> CONTROLLER
         	
         	
         }
         
         public void createToDo() {
-//        	AddToDoDialogPane toDoDialogPane = new AddToDoDialogPane();
         	
 //        	sendMessage("CREATE_TODO", toDoController.updateToDo());
-        	
         	
         	// title (+ validation) --> Controller
         	// description (+ validation) --> Controller 
         	// duedate (with and without) --> controller
-        	// Priority --> Controller and AddToDoDialogPane
-        	// Token-Validation
+        	// Priority --> Controller, AddToDoDialogPane, ToDo
+        	// Token-Validation --> SERVER
         	
         /*
          * For Controller, if not existing yet: LocalDate today = LocalDate.now();
@@ -203,12 +185,6 @@ public class ToDoClient {
         	if (toDoTitle.length() >= 3 && toDoTitle.length() <= 20 
         		&& !toDoDialogPane.getDatePicker().isBefore(today) 
         		&& toDoDialogPane.getMessageTextArea().length() <= 255) {
-        		
-        		ToDo toDo = new ToDo(title, messageTextArea, priority, dueDate);
-        		
-        		toDo.getToDoID()++;
-        	
-        	this.toDo.add()
          */
         
         
@@ -216,25 +192,24 @@ public class ToDoClient {
 		}
 
         public void changePassword() {
-        	// password
-        	// (password validation)
-        	// (Token)
-        	// Validation (Password length + Token valid) --> controller
+        	// password --> CONTROLLER
+        	// (password validation) --> CONTROLLER
+        	// Validation (Password length (CONTROLLER) + Token valid (SERVER))
         	
         	// toDoClient.sendMessage("CHANGE_PASSWORD", data);
         }
         
         public void getToDo() {
-        	// int ID = toDo.getID();
+        	// int ID 
+        	// toDoList for each; --> SERVER
         	// Token-Validation
         	
         	// toDoClient.sendMessage("GET_TODO", ID);
         }
         
         public void deleteToDo() {
-        	// toDoController.deleteToDo();
-        	
-        	
+        	// ID
+        	// toDoController.deleteToDo(); --> SERVER
         	
         	// Token-Validation
         	
@@ -243,13 +218,13 @@ public class ToDoClient {
         
         public void listToDos() {
 
-        	// Token-Validation
+        	// Token
         	
         	// toDoClient.sendMessage("LIST_TODOS", data);
         }
         
         public void ping() {
-        	// Token
+        	// With and without Token
         	
         	// toDoClient.sendMessage("PING", data);
         }
