@@ -37,9 +37,9 @@ public class HowToDialogPane extends DialogPane {
 	private MediaPlayer mediaPlayer;
 	private MediaView mediaView;
 	
-	protected BorderPane howToBorderPane;
+	private BorderPane howToBorderPane;
 	
-	protected ButtonType closeButtonType;
+	private ButtonType closeButtonType;
 
 	public HowToDialogPane() {
 	

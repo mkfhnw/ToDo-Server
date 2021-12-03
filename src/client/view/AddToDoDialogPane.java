@@ -278,7 +278,238 @@ public class AddToDoDialogPane extends DialogPane {
         this.tagsTextfield.clear();
     }
 
-    // Getters & Setters
+	public BorderPane getRoot() {
+		return root;
+	}
+
+	public VBox getLeftPane() {
+		return leftPane;
+	}
+
+	public VBox getRightPane() {
+		return rightPane;
+	}
+
+	public HBox getTitleBar() {
+		return titleBar;
+	}
+
+	public HBox getCategoryBar() {
+		return categoryBar;
+	}
+
+	public HBox getDueDateBar() {
+		return dueDateBar;
+	}
+
+	public HBox getTagsBar() {
+		return tagsBar;
+	}
+
+	public VBox getHeaderBar() {
+		return headerBar;
+	}
+
+	public Label getNewTaskLabel() {
+		return newTaskLabel;
+	}
+
+	public Label getTippLabel() {
+		return tippLabel;
+	}
+
+	public Label getTitleLabel() {
+		return titleLabel;
+	}
+
+	public Label getCategoryLabel() {
+		return categoryLabel;
+	}
+
+	public Label getDueDateLabel() {
+		return dueDateLabel;
+	}
+
+	public Label getMessageLabel() {
+		return messageLabel;
+	}
+
+	public Label getTagsLabel() {
+		return tagsLabel;
+	}
+
+	public TextField getTitleTextfield() {
+		return titleTextfield;
+	}
+
+	public TextField getTagsTextfield() {
+		return tagsTextfield;
+	}
+
+	public Tooltip getTitleToolTip() {
+		return titleToolTip;
+	}
+
+	public Tooltip getMessageToolTip() {
+		return messageToolTip;
+	}
+
+	public Tooltip getCategoryToolTip() {
+		return categoryToolTip;
+	}
+
+	public Tooltip getDateToolTip() {
+		return dateToolTip;
+	}
+
+	public Tooltip getTagsToolTip() {
+		return tagsToolTip;
+	}
+
+	public ComboBox<String> getCategoryComboBox() {
+		return categoryComboBox;
+	}
+
+	public DatePicker getDatePicker() {
+		return datePicker;
+	}
+
+	public TextArea getMessageTextArea() {
+		return messageTextArea;
+	}
+
+	public ButtonType getOkButtonType() {
+		return okButtonType;
+	}
+
+	public int getSPACING_CATEGORYBAR() {
+		return SPACING_CATEGORYBAR;
+	}
+
+	public int getSPACING_TITLEBAR() {
+		return SPACING_TITLEBAR;
+	}
+
+	public int getSPACING_DUEDATEBAR() {
+		return SPACING_DUEDATEBAR;
+	}
+
+	public int getSPACING_TAGSBAR() {
+		return SPACING_TAGSBAR;
+	}
+
+	public int getSPACING_HEADERBAR() {
+		return SPACING_HEADERBAR;
+	}
+
+	public Duration getDURATION_UNTIL_SHOW() {
+		return DURATION_UNTIL_SHOW;
+	}
+
+	public void setRoot(BorderPane root) {
+		this.root = root;
+	}
+
+	public void setLeftPane(VBox leftPane) {
+		this.leftPane = leftPane;
+	}
+
+	public void setRightPane(VBox rightPane) {
+		this.rightPane = rightPane;
+	}
+
+	public void setTitleBar(HBox titleBar) {
+		this.titleBar = titleBar;
+	}
+
+	public void setCategoryBar(HBox categoryBar) {
+		this.categoryBar = categoryBar;
+	}
+
+	public void setDueDateBar(HBox dueDateBar) {
+		this.dueDateBar = dueDateBar;
+	}
+
+	public void setTagsBar(HBox tagsBar) {
+		this.tagsBar = tagsBar;
+	}
+
+	public void setHeaderBar(VBox headerBar) {
+		this.headerBar = headerBar;
+	}
+
+	public void setNewTaskLabel(Label newTaskLabel) {
+		this.newTaskLabel = newTaskLabel;
+	}
+
+	public void setTippLabel(Label tippLabel) {
+		this.tippLabel = tippLabel;
+	}
+
+	public void setTitleLabel(Label titleLabel) {
+		this.titleLabel = titleLabel;
+	}
+
+	public void setCategoryLabel(Label categoryLabel) {
+		this.categoryLabel = categoryLabel;
+	}
+
+	public void setDueDateLabel(Label dueDateLabel) {
+		this.dueDateLabel = dueDateLabel;
+	}
+
+	public void setMessageLabel(Label messageLabel) {
+		this.messageLabel = messageLabel;
+	}
+
+	public void setTagsLabel(Label tagsLabel) {
+		this.tagsLabel = tagsLabel;
+	}
+
+	public void setTitleTextfield(TextField titleTextfield) {
+		this.titleTextfield = titleTextfield;
+	}
+
+	public void setTagsTextfield(TextField tagsTextfield) {
+		this.tagsTextfield = tagsTextfield;
+	}
+
+	public void setTitleToolTip(Tooltip titleToolTip) {
+		this.titleToolTip = titleToolTip;
+	}
+
+	public void setMessageToolTip(Tooltip messageToolTip) {
+		this.messageToolTip = messageToolTip;
+	}
+
+	public void setCategoryToolTip(Tooltip categoryToolTip) {
+		this.categoryToolTip = categoryToolTip;
+	}
+
+	public void setDateToolTip(Tooltip dateToolTip) {
+		this.dateToolTip = dateToolTip;
+	}
+
+	public void setTagsToolTip(Tooltip tagsToolTip) {
+		this.tagsToolTip = tagsToolTip;
+	}
+
+	public void setCategoryComboBox(ComboBox<String> categoryComboBox) {
+		this.categoryComboBox = categoryComboBox;
+	}
+
+	public void setDatePicker(DatePicker datePicker) {
+		this.datePicker = datePicker;
+	}
+
+	public void setMessageTextArea(TextArea messageTextArea) {
+		this.messageTextArea = messageTextArea;
+	}
+
+	public void setOkButtonType(ButtonType okButtonType) {
+		this.okButtonType = okButtonType;
+	}
+
 
 
 }

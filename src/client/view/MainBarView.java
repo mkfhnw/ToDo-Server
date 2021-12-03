@@ -146,6 +146,142 @@ public abstract class MainBarView extends VBox {
 		return comboBox;
 	}
 
+	public ObservableList<ToDo> getSubSet() {
+		return subSet;
+	}
+
+	public ImageView getIcon() {
+		return icon;
+	}
+
+	public ImageView getPlus() {
+		return plus;
+	}
+
+	public Label getLabel() {
+		return label;
+	}
+
+	public ImageView getLupe() {
+		return lupe;
+	}
+
+	public TextField getSearchField() {
+		return searchField;
+	}
+
+	public Button getSearchButton() {
+		return searchButton;
+	}
+
+	public Button getCreateToDo() {
+		return createToDo;
+	}
+
+	public TableView<ToDo> getTableView() {
+		return tableView;
+	}
+
+	public TableColumn<ToDo, String> getImportant() {
+		return important;
+	}
+
+	public TableColumn<ToDo, String> getTask() {
+		return task;
+	}
+
+	public TableColumn<ToDo, String> getDueDate() {
+		return dueDate;
+	}
+
+	public TableColumn<ToDo, String> getCheckBox() {
+		return checkBox;
+	}
+
+	public TableColumn<ToDo, String> getGarbage() {
+		return garbage;
+	}
+
+	public HBox getHeader() {
+		return header;
+	}
+
+	public HBox getSearchBar() {
+		return searchBar;
+	}
+
+	public ObservableList<String> getFilter() {
+		return filter;
+	}
+
+	public void setSubSet(ObservableList<ToDo> subSet) {
+		this.subSet = subSet;
+	}
+
+	public void setIcon(ImageView icon) {
+		this.icon = icon;
+	}
+
+	public void setLabel(Label label) {
+		this.label = label;
+	}
+
+	public void setLupe(ImageView lupe) {
+		this.lupe = lupe;
+	}
+
+	public void setSearchField(TextField searchField) {
+		this.searchField = searchField;
+	}
+
+	public void setSearchButton(Button searchButton) {
+		this.searchButton = searchButton;
+	}
+
+	public void setCreateToDo(Button createToDo) {
+		this.createToDo = createToDo;
+	}
+
+	public void setTableView(TableView<ToDo> tableView) {
+		this.tableView = tableView;
+	}
+
+	public void setImportant(TableColumn<ToDo, String> important) {
+		this.important = important;
+	}
+
+	public void setTask(TableColumn<ToDo, String> task) {
+		this.task = task;
+	}
+
+	public void setDueDate(TableColumn<ToDo, String> dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public void setCheckBox(TableColumn<ToDo, String> checkBox) {
+		this.checkBox = checkBox;
+	}
+
+	public void setGarbage(TableColumn<ToDo, String> garbage) {
+		this.garbage = garbage;
+	}
+
+	public void setHeader(HBox header) {
+		this.header = header;
+	}
+
+	public void setSearchBar(HBox searchBar) {
+		this.searchBar = searchBar;
+	}
+
+	public void setFilter(ObservableList<String> filter) {
+		this.filter = filter;
+	}
+
+	public void setComboBox(ComboBox<String> comboBox) {
+		this.comboBox = comboBox;
+	}
+
 	
 	
 }
