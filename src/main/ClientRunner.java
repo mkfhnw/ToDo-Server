@@ -1,7 +1,6 @@
 package main;
 
-import client.ToDoClient;
-import common.MessageType;
+import client.ClientNetworkPlugin;
 
 import java.util.ArrayList;
 
@@ -13,23 +12,23 @@ public class ClientRunner {
         try{ Thread.sleep(5000); } catch (Exception e) { System.out.println(e.getMessage()); }
 
         // Create client
-        ToDoClient toDoClient = new ToDoClient();
+        ClientNetworkPlugin clientNetworkPlugin = new ClientNetworkPlugin();
 
         // Send PING message
         ArrayList<String> data = new ArrayList<>();
         
         
-        toDoClient.sendMessage("PING", data);
+        clientNetworkPlugin.sendMessage("PING", data);
 //        See MessageType class for command spelling
        // data.add("Username");
        // data.add("Password");
-        toDoClient.sendMessage("LOGOUT", data);
+        clientNetworkPlugin.sendMessage("LOGOUT", data);
      // toDoClient.sendMessage("LIST_TODOS", data);
 
         try{ Thread.sleep(5000); } catch (Exception e) { System.out.println(e.getMessage()); }
 
         // Read incoming response
-        toDoClient.parseResponse();
+        clientNetworkPlugin.parseResponse();
 
         }
     

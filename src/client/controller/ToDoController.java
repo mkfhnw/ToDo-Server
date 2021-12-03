@@ -1,5 +1,6 @@
 package client.controller;
 
+import client.ClientNetworkPlugin;
 import client.view.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -40,6 +41,8 @@ public class ToDoController implements Serializable {
     private final FocusTimerDialogPane dialog;
     private FocusTimerModel focusModel;
 
+    private ClientNetworkPlugin clientNetworkPlugin;
+
     // Constructor
     public ToDoController(ToDoView toDoView, ToDo toDo, ToDoList toDoList) {
 
@@ -49,7 +52,7 @@ public class ToDoController implements Serializable {
         
         this.focusModel = focusModel;
 
-
+        this.clientNetworkPlugin = new ClientNetworkPlugin();
 
         // Load items from database
         this.toDoList.updateSublists();
@@ -140,6 +143,10 @@ public class ToDoController implements Serializable {
         ToDo toDo = new ToDo(title, message, dueDate, category, tags);
         this.toDoList.addToDo(toDo);
         this.toDoList.updateSublists();
+
+        // Send data to server
+        this.clientNetworkPlugin.createToDo(toDo);
+
     }
 
     /* Read method
@@ -147,6 +154,7 @@ public class ToDoController implements Serializable {
      */
     public ToDo getToDo(int ID) {
         return this.toDoList.getToDo(ID);
+
     }
 
     /* Update method

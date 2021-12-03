@@ -1,5 +1,6 @@
 package client;
 
+import client.model.ToDo;
 import common.Message;
 import common.MessageType;
 
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import client.view.LoginView;
 import client.view.RegistrationView;
 
-public class ToDoClient {
+public class ClientNetworkPlugin {
 
     // Fields
     private final int PORT = 50001;
@@ -28,7 +29,7 @@ public class ToDoClient {
     private final String recipient = "Server";
 
     // Constructor
-    public ToDoClient() {
+    public ClientNetworkPlugin() {
 
         try {
             this.clientSocket = new Socket("localhost", this.PORT);
@@ -93,41 +94,6 @@ public class ToDoClient {
             System.out.println(e.getMessage());
         }
     }
-
-     // Will be used to know which kind of MessageType is needed
-        public void sendMessageType(MessageType messageType) {
-        	
-        	switch (messageType) {
-            
-            case LOGIN:
-            	login();
-            	break;
-            case LOGOUT:
-            	logout();
-            	break;
-            case CREATE_LOGIN:
-            	createLogin();
-            	break;
-            case CREATE_TODO:
-            	createToDo();
-            	break;
-            case CHANGE_PASSWORD:
-            	changePassword();
-            	break;
-            case GET_TODO:
-            	getToDo();
-            	break;
-            case DELETE_TODO:
-            	deleteToDo();
-            	break;
-            case LIST_TODOS:
-            	listToDos();
-            	break;
-            case PING:
-            	ping();
-            }
-            
-        }
         
         public void login() {
         	LoginView loginView = new LoginView();
@@ -169,9 +135,12 @@ public class ToDoClient {
         	
         }
         
-        public void createToDo() {
+        public void createToDo(ToDo toDo) {
         	
 //        	sendMessage("CREATE_TODO", toDoController.updateToDo());
+
+            ArrayList<String> data = new ArrayList<>();
+            data.add(toDo.getTitle());
         	
         	// title (+ validation) --> Controller
         	// description (+ validation) --> Controller 
@@ -188,7 +157,7 @@ public class ToDoClient {
          */
         
         
-        	// toDoClient.sendMessage("CREATE_TODO", data);
+        	 this.sendMessage("CREATE_TODO", data);
 		}
 
         public void changePassword() {
