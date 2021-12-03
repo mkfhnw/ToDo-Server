@@ -172,4 +172,188 @@ public class ToDoView extends BorderPane {
 
 		}
 
+		public ToDo getToDoModel() {
+			return toDoModel;
+		}
+
+		public ToDoList getToDoListModel() {
+			return toDoListModel;
+		}
+
+		public ListView<String> getListView() {
+			return listView;
+		}
+
+		public VBox getvBox() {
+			return vBox;
+		}
+
+		public BorderPane getBorderPane() {
+			return borderPane;
+		}
+
+		public SplitPane getSplitPane() {
+			return splitPane;
+		}
+
+		public StackPane getStackPane() {
+			return stackPane;
+		}
+
+		public Dialog<ButtonType> getAddToDoDialog() {
+			return addToDoDialog;
+		}
+
+		public AddToDoDialogPane getToDoDialogPane() {
+			return toDoDialogPane;
+		}
+
+		public static String getDone() {
+			return done;
+		}
+
+		public static String getUndone() {
+			return undone;
+		}
+
+		public CategoryAxis getxAxis() {
+			return xAxis;
+		}
+
+		public NumberAxis getyAxis() {
+			return yAxis;
+		}
+
+		public BarChart<String, Number> getBc() {
+			return bc;
+		}
+
+		public XYChart.Series getSerie1() {
+			return serie1;
+		}
+
+		public XYChart.Series getSerie2() {
+			return serie2;
+		}
+
+		public Dialog<ButtonType> getFocusDialog() {
+			return focusDialog;
+		}
+
+		public FocusTimerDialogPane getFocusTimerDialog() {
+			return focusTimerDialog;
+		}
+
+		public Button getOpenFocusTimer() {
+			return openFocusTimer;
+		}
+
+		public Dialog<ButtonType> getHowToDialog() {
+			return howToDialog;
+		}
+
+		public HowToDialogPane getHowToDialogPane() {
+			return howToDialogPane;
+		}
+
+		public Button getHowTo() {
+			return howTo;
+		}
+
+		public HBox gethBoxHowTo() {
+			return hBoxHowTo;
+		}
+
+		public VBox getvBoxBottom() {
+			return vBoxBottom;
+		}
+
+		public HBox gethBoxBottom() {
+			return hBoxBottom;
+		}
+
+		public void setToDoModel(ToDo toDoModel) {
+			this.toDoModel = toDoModel;
+		}
+
+		public void setToDoListModel(ToDoList toDoListModel) {
+			this.toDoListModel = toDoListModel;
+		}
+
+		public void setListView(ListView<String> listView) {
+			this.listView = listView;
+		}
+
+		public void setvBox(VBox vBox) {
+			this.vBox = vBox;
+		}
+
+		public void setBorderPane(BorderPane borderPane) {
+			this.borderPane = borderPane;
+		}
+
+		public void setSplitPane(SplitPane splitPane) {
+			this.splitPane = splitPane;
+		}
+
+		public void setStackPane(StackPane stackPane) {
+			this.stackPane = stackPane;
+		}
+
+		public void setAddToDoDialog(Dialog<ButtonType> addToDoDialog) {
+			this.addToDoDialog = addToDoDialog;
+		}
+
+		public void setToDoDialogPane(AddToDoDialogPane toDoDialogPane) {
+			this.toDoDialogPane = toDoDialogPane;
+		}
+
+		public void setBc(BarChart<String, Number> bc) {
+			this.bc = bc;
+		}
+
+		public void setSerie1(XYChart.Series serie1) {
+			this.serie1 = serie1;
+		}
+
+		public void setSerie2(XYChart.Series serie2) {
+			this.serie2 = serie2;
+		}
+
+		public void setFocusDialog(Dialog<ButtonType> focusDialog) {
+			this.focusDialog = focusDialog;
+		}
+
+		public void setFocusTimerDialog(FocusTimerDialogPane focusTimerDialog) {
+			this.focusTimerDialog = focusTimerDialog;
+		}
+
+		public void setOpenFocusTimer(Button openFocusTimer) {
+			this.openFocusTimer = openFocusTimer;
+		}
+
+		public void setHowToDialog(Dialog<ButtonType> howToDialog) {
+			this.howToDialog = howToDialog;
+		}
+
+		public void setHowToDialogPane(HowToDialogPane howToDialogPane) {
+			this.howToDialogPane = howToDialogPane;
+		}
+
+		public void setHowTo(Button howTo) {
+			this.howTo = howTo;
+		}
+
+		public void sethBoxHowTo(HBox hBoxHowTo) {
+			this.hBoxHowTo = hBoxHowTo;
+		}
+
+		public void setvBoxBottom(VBox vBoxBottom) {
+			this.vBoxBottom = vBoxBottom;
+		}
+
+		public void sethBoxBottom(HBox hBoxBottom) {
+			this.hBoxBottom = hBoxBottom;
+		}
+
 }

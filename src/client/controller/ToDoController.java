@@ -58,12 +58,12 @@ public class ToDoController implements Serializable {
 
         // Set default midPane & add initial event handling for searchbar
         this.plannedBarView = new PlannedBarView(this.toDoList.getToDoListPlanned());
-        plannedBarView.createToDo.setOnMouseClicked(this::createToDoDialog);
-        plannedBarView.searchButton.setOnMouseClicked(this::searchItemAndGenerateView);
-        this.plannedBarView.searchField.setOnAction(this::searchItemAndGenerateView);
-        plannedBarView.comboBox.setOnAction(this::changeCombo);
-        plannedBarView.tableView.setOnMouseClicked(this::updateToDo);
-        this.linkTableViewListeners(plannedBarView.tableView.getItems());
+        plannedBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
+        plannedBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
+        this.plannedBarView.getSearchField().setOnAction(this::searchItemAndGenerateView);
+        plannedBarView.getComboBox().setOnAction(this::changeCombo);
+        plannedBarView.getTableView().setOnMouseClicked(this::updateToDo);
+        this.linkTableViewListeners(plannedBarView.getTableView().getItems());
         toDoView.borderPane.setCenter(plannedBarView);
 
         // Register buttons EventHandling
