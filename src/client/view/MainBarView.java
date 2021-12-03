@@ -19,20 +19,20 @@ public abstract class MainBarView extends VBox {
 	
 	// control elements for this container
 	private ObservableList<ToDo> subSet;
-	private ImageView icon;
+	protected ImageView icon;
 	private final ImageView plus;
-	private Label label;
+	protected Label label;
 	private ImageView lupe;
 	private TextField searchField;
 	private Button searchButton;
 	private Button createToDo;
-	private TableView<ToDo> tableView;
+	protected TableView<ToDo> tableView;
 	private TableColumn<ToDo, String> important;
 	private TableColumn<ToDo, String> task;
 	private TableColumn<ToDo, String> dueDate;
 	private TableColumn<ToDo, String> checkBox;
 	private TableColumn<ToDo, String> garbage;
-	private HBox header;
+	protected HBox header;
 	private HBox searchBar;
 	private ObservableList<String> filter;
 	private ComboBox<String> comboBox;
