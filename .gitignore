@@ -3,3 +3,9 @@
 # Eclipse stuff
 .classpath
 .project
+
+# IntelliJ stuff
+*.iml
+
+# Ignore databases
+*.db
