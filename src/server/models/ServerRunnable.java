@@ -66,6 +66,12 @@ public class ServerRunnable implements Runnable {
         }
     }
 
+    /* The run method
+     * On a new connection, the serverScket creates a new thread using this runnable. As soon as the thread gets
+     * started, this run method gets called. Inside this run method, we listen for calls from the client until the
+     * client sends the LOGOUT-message type. On reception of the LOGOUT-message, the socket gets closed and the runnable
+     * comes to an end - which means the above thread closes as well.
+     */
     @Override
     public void run() {
 
@@ -80,9 +86,6 @@ public class ServerRunnable implements Runnable {
 
                 // Parse messageString to a "message"
                 Message clientMessage = new Message(this.recipient, this.sender, this.defaultToken, inputString);
-                System.out.println("[SERVER-RUNNABLE] Built message string: " + clientMessage.getMessageString());
-
-                Thread.sleep(5000);
 
                 switch (clientMessage.getMessageType()) {
 
@@ -94,11 +97,13 @@ public class ServerRunnable implements Runnable {
                     
                     case LOGOUT -> {
                     	this.reactToLogout();
+
+                        this.clientSocket.close();
                     	break;
                     }
                     
                     case CREATE_LOGIN -> {
-                    	this.reactToCreateLogin();
+                    	this.reactToCreateLogin(clientMessage);
                     	break;
                     }
                     
@@ -146,51 +151,63 @@ public class ServerRunnable implements Runnable {
 
     }
 
+    // Reception methods based on the input of the client
 	private void reactToLogin() {
-		
-		// TODO Auto-generated method stub
-		
+
 	}
 	
 	private void reactToLogout() {
-    	System.out.println("Auf Logout reagiert");
-		// TODO Auto-generated method stub
 		
 	}
     
-    private void reactToCreateLogin() {
-		// TODO Auto-generated method stub
-		
+    private void reactToCreateLogin(Message clientMessage) {
+
+        // Grab data - username first, then password
+        String username = clientMessage.getDataParts().get(0);
+        String password = clientMessage.getDataParts().get(1);
+
+        // Validate user input
+        boolean usernameIsValid = false;
+        boolean passwordIsValid = false;
+
+        // Email validation - checks if email contains an @, and does neither start nor end with a "." .
+        String[] usernameParts = username.split("@");
+        if(usernameParts.length != 0 && !usernameParts[0].startsWith(".") && !usernameParts[1].endsWith(".")) {
+            usernameIsValid = true;
+        }
+
+        // Password validation
+
+
+        // TODO: Check if username already exists by checking if a .db file already exists with this username
+
+        // Create new database for the user
+
+        // Send response
+
 	}
     
     private void reactToCreateToDo() {
-		// TODO Auto-generated method stub
 		
 	}
     
     private void reactToChangePassword() {
-		// TODO Auto-generated method stub
 		
 	}
     
     private void reactToGetToDo() {
-		// TODO Auto-generated method stub
 		
 	}
     
     private void reactToDeleteToDo() {
-		// TODO Auto-generated method stub
 		
 	}
     
     private void reactToListToDos() {
-		// TODO Auto-generated method stub
 		
 	}
     
     private void reactToPing() {
-    	System.out.println("Auf Ping reagiert");
-		// TODO Auto-generated method stub
 		
 	}
 

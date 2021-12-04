@@ -19,7 +19,7 @@ import client.view.RegistrationView;
 public class ClientNetworkPlugin {
 
     // Fields
-    private final int PORT = 50001;
+    private final int PORT = 50002;
     private Socket clientSocket;
     private BufferedReader inputReader;
     private PrintWriter outputWriter;
