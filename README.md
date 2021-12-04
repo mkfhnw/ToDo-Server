@@ -21,6 +21,16 @@
 9. Click on the jar file and apply with "ok"
 10. Click on **Apply and Close** You're able to use the jdbc-sqlite driver now.
 
+
+## Features
+### Server-Side features
+- [x] User input validation
+- [x] Store information in SQLite database
+
+### Client-Side features
+- [x] 
+
+
 ## How to test your server
 1. Let the ServerRunner run
 2. Open up Powershell (type Poweshell in the Windows Searchbar)

@@ -2,6 +2,8 @@ package server.models;
 
 
 import common.Message;
+import server.services.DatabaseManager;
+import server.services.InputValidator;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -83,6 +85,7 @@ public class ServerRunnable implements Runnable {
                 // Build string from sent message
                 String inputString = this.inputReader.readLine();
                 System.out.println("[SERVER-RUNNABLE] Received message: " + inputString);
+                Thread.sleep(3000);
 
                 // Parse messageString to a "message"
                 Message clientMessage = new Message(this.recipient, this.sender, this.defaultToken, inputString);
@@ -91,11 +94,15 @@ public class ServerRunnable implements Runnable {
 
                     // Perform action based on messageType
                     case LOGIN -> {
+                        System.out.println("[SERVER-RUNNABLE] Reacting to LOGIN...");
+                        Thread.sleep(5000);
                         this.reactToLogin();
                         break;
                     }
                     
                     case LOGOUT -> {
+                        System.out.println("[SERVER-RUNNABLE] Reacting to LOGOUT...");
+                        Thread.sleep(5000);
                     	this.reactToLogout();
 
                         this.clientSocket.close();
@@ -103,36 +110,50 @@ public class ServerRunnable implements Runnable {
                     }
                     
                     case CREATE_LOGIN -> {
+                        System.out.println("[SERVER-RUNNABLE] Reacting to CREATE_LOGIN...");
+                        Thread.sleep(5000);
                     	this.reactToCreateLogin(clientMessage);
                     	break;
                     }
                     
                     case CREATE_TODO -> {
+                        System.out.println("[SERVER-RUNNABLE] Reacting to CREATE_TODO...");
+                        Thread.sleep(5000);
                     	this.reactToCreateToDo();
                     	break;
                     }
                     
                     case CHANGE_PASSWORD -> {
+                        System.out.println("[SERVER-RUNNABLE] Reacting to CHANGE_PASSWORD...");
+                        Thread.sleep(5000);
                     	this.reactToChangePassword();
                     	break;
                     }
                     
                     case GET_TODO -> {
+                        System.out.println("[SERVER-RUNNABLE] Reacting to GET_TODO...");
+                        Thread.sleep(5000);
                     	this.reactToGetToDo();
                     	break;
                     }
                     
                     case DELETE_TODO -> {
+                        System.out.println("[SERVER-RUNNABLE] Reacting to DELETE_TODO...");
+                        Thread.sleep(5000);
                     	this.reactToDeleteToDo();
                     	break;
                     }
                     
                     case LIST_TODOS -> {
+                        System.out.println("[SERVER-RUNNABLE] Reacting to LIST_TODOS...");
+                        Thread.sleep(5000);
                     	this.reactToListToDos();
                     	break;
                     }
                     
                     case PING -> {
+                        System.out.println("[SERVER-RUNNABLE] Reacting to PING...");
+                        Thread.sleep(5000);
                     	this.reactToPing();
                     	break;
                     }
@@ -167,21 +188,18 @@ public class ServerRunnable implements Runnable {
         String password = clientMessage.getDataParts().get(1);
 
         // Validate user input
-        boolean usernameIsValid = false;
-        boolean passwordIsValid = false;
-
-        // Email validation - checks if email contains an @, and does neither start nor end with a "." .
-        String[] usernameParts = username.split("@");
-        if(usernameParts.length != 0 && !usernameParts[0].startsWith(".") && !usernameParts[1].endsWith(".")) {
-            usernameIsValid = true;
-        }
-
-        // Password validation
-
+        InputValidator inputValidator = new InputValidator();
+        boolean usernameIsValid = inputValidator.validateUsername(username);
+        boolean passwordIsValid = inputValidator.validatePassword(password);
 
         // TODO: Check if username already exists by checking if a .db file already exists with this username
 
-        // Create new database for the user
+        // Create new database and store login credentials for the user if input is valid
+        if(usernameIsValid && passwordIsValid) {
+            DatabaseManager databaseManager = new DatabaseManager(username.split("@")[0]);
+            databaseManager.initializeDatabase();
+            databaseManager.storeLoginCredentials(username, password);
+        }
 
         // Send response
 

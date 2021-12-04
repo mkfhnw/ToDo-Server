@@ -37,7 +37,7 @@ public class Message {
 
         // Parse data parts - but only if message has more than 2 parts (the first 2 parts are always MessageType & Token - at least for now)
         if(messageParts.size() > 2) {
-            this.dataParts = new ArrayList<>(this.messageParts.subList(2, (this.messageParts.size() -1)));
+            this.dataParts = new ArrayList<>(this.messageParts.subList(2, (this.messageParts.size())));
         } else {
             this.dataParts = new ArrayList<>();
         }
@@ -58,7 +58,7 @@ public class Message {
         this.messageString = messageString;
         this.messageType = MessageType.valueOf(stringParts[0]);
         this.messageParts = new ArrayList<>(Arrays.asList(stringParts));
-        this.dataParts = new ArrayList<>(this.messageParts.subList(2, (this.messageParts.size() -1)));
+        this.dataParts = new ArrayList<>(this.messageParts.subList(2, (this.messageParts.size())));
         this.token = stringParts[1];
         
         // Parse sender & Recipient
@@ -85,7 +85,7 @@ public class Message {
         // Delete last |-char
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
 
-        return messageType.toString() + "|" + token + "|" +stringBuilder.toString();
+        return messageType.toString() + "|" + token + "|" + stringBuilder.toString();
     }
     private ArrayList<String> parseDataParts(ArrayList<String> data) {
 

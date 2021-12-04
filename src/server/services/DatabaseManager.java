@@ -18,10 +18,9 @@ public class DatabaseManager {
      */
     public DatabaseManager(String accountName) {
         String fileString = System.getProperty("user.dir");
-        this.connectionString = fileString + File.separator + "src" + File.separator + "database" + File.separator
-                + accountName + ".db";
-        this.connectionString = "jdbc:sqlite" + connectionString;
-        this.initializeDatabase();
+        this.connectionString = fileString + File.separator + "src" + File.separator + "server" + File.separator
+                + "database" + File.separator + accountName + ".db";
+        this.connectionString = "jdbc:sqlite:" + connectionString;
     }
 
     // Custom methods
@@ -30,9 +29,11 @@ public class DatabaseManager {
      * This method gets called after the server receives a CREATE_LOGIN method. It throws the default database schema
      * shown in the picture on the README.
      */
-    private void initializeDatabase() {
+    public void initializeDatabase() {
         try(Connection connection = DriverManager.getConnection(this.connectionString);
             Statement statement = connection.createStatement();) {
+
+            System.out.println("[DATABASE-MANAGER] Initializing database...");
 
             // Create Accounts table
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS Accounts (" +
@@ -50,7 +51,26 @@ public class DatabaseManager {
                     "DueDate STRING)");
 
         } catch (Exception e) {
-            System.out.println("[DATABASE-MANAGER] EXCEPTION: ");
+            System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
+        }
+    }
+
+    /* Methods to store login credentials
+     * Stores the login credentials on the database. Assumes that the input was already validated when this method gets
+     * called! Handle with caution.
+     */
+    public void storeLoginCredentials(String username, String password) {
+        try(Connection connection = DriverManager.getConnection(this.connectionString);
+            Statement statement = connection.createStatement();) {
+
+            String writeString = "INSERT INTO Accounts (Name, Password) VALUES("
+                    + "'" + username + "', "
+                    + "'" + password + "'"
+                    + ")";
+            statement.executeUpdate(writeString);
+
+        } catch (Exception e) {
+            System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
         }
     }
 
