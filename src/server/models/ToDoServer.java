@@ -14,12 +14,14 @@ public class ToDoServer {
     private final int PORT = 50001;
     private boolean isActive;
     private ArrayList<Thread> clientThreads;
+    private ArrayList<String> activeTokens;
 
     // Constructor
     public ToDoServer() {
         this.createServerSocket();
         this.isActive = false;
         this.clientThreads = new ArrayList<>();
+        this.activeTokens = new ArrayList<>();
         System.out.println("[SERVER] New ToDoServer created.");
     }
 
