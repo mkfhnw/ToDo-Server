@@ -42,6 +42,10 @@ public class Message {
             this.dataParts = new ArrayList<>();
         }
 
+
+        // Blablabla
+
+
         // Enforce server message type, since only server can send messages of type RESULT
         if(this.sender == Addressor.SERVER) { this.messageType = MessageType.RESULT; }
         else { this.messageType = MessageType.valueOf(this.messageParts.get(0)); }

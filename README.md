@@ -1,5 +1,26 @@
 # ToDo-Server
 
+## Adding the SQLite-JDBC driver in IntelliJ
+1. Open the project in IntelliJ
+2. On the top left, click on **File** and select **Project Structure** (File -> Project Structure)
+3. Move to the **Libraries**-tab and click on the **+** (plus) icon to add a new project library.
+4. Select **Java** and navigate to the **lib-directory** of this project. The lib-directory is located inside the
+   src-directory.
+5. Select the **sqlite-jdbc-3.36.0.3.jar** and click on **add**.
+6. Click on **apply** and close the window. You're able to use the jdbc-sqlite driver now.
+
+## Adding the SQLite-JDBC driver in Eclipse
+1. Open the project in Eclipse
+2. Click with the right side of the mouse on yout project
+3. Click on **Build Path**
+4. Click on **Configure Build Path**
+5. Make sure you are in the Java Build Path Folder
+6. Click on **Modulepath**
+7. Then **Add JARs...**
+8. Open this path: ToDo-List/scr/lib
+9. Click on the jar file and apply with "ok"
+10. Click on **Apply and Close** You're able to use the jdbc-sqlite driver now.
+
 ## How to test your server
 1. Let the ServerRunner run
 2. Open up Powershell (type Poweshell in the Windows Searchbar)
