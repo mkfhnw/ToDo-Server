@@ -10,7 +10,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+import client.model.ToDo;
 
 /* The ClientRunnable class
  * The ClientRunnable is a class that implements the Runnable interface.
@@ -63,6 +67,7 @@ public class ServerRunnable implements Runnable {
     private void sendMessage(String message) {
         try {
             this.outputWriter.write(message);
+            this.outputWriter.flush();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -96,14 +101,14 @@ public class ServerRunnable implements Runnable {
                     case LOGIN -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to LOGIN...");
                         Thread.sleep(5000);
-                        this.reactToLogin();
+                        this.reactToLogin(clientMessage);
                         break;
                     }
                     
                     case LOGOUT -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to LOGOUT...");
                         Thread.sleep(5000);
-                    	this.reactToLogout();
+                    	this.reactToLogout(clientMessage);
 
                         this.clientSocket.close();
                     	break;
@@ -119,42 +124,42 @@ public class ServerRunnable implements Runnable {
                     case CREATE_TODO -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to CREATE_TODO...");
                         Thread.sleep(5000);
-                    	this.reactToCreateToDo();
+                    	this.reactToCreateToDo(clientMessage);
                     	break;
                     }
                     
                     case CHANGE_PASSWORD -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to CHANGE_PASSWORD...");
                         Thread.sleep(5000);
-                    	this.reactToChangePassword();
+                    	this.reactToChangePassword(clientMessage);
                     	break;
                     }
                     
                     case GET_TODO -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to GET_TODO...");
                         Thread.sleep(5000);
-                    	this.reactToGetToDo();
+                    	this.reactToGetToDo(clientMessage);
                     	break;
                     }
                     
                     case DELETE_TODO -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to DELETE_TODO...");
                         Thread.sleep(5000);
-                    	this.reactToDeleteToDo();
+                    	this.reactToDeleteToDo(clientMessage);
                     	break;
                     }
                     
                     case LIST_TODOS -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to LIST_TODOS...");
                         Thread.sleep(5000);
-                    	this.reactToListToDos();
+                    	this.reactToListToDos(clientMessage);
                     	break;
                     }
                     
                     case PING -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to PING...");
                         Thread.sleep(5000);
-                    	this.reactToPing();
+                    	this.reactToPing(clientMessage);
                     	break;
                     }
 
@@ -173,11 +178,11 @@ public class ServerRunnable implements Runnable {
     }
 
     // Reception methods based on the input of the client
-	private void reactToLogin() {
+	private void reactToLogin(Message clientMessage) {
 
 	}
 	
-	private void reactToLogout() {
+	private void reactToLogout(Message clientMessage) {
 		
 	}
     
@@ -202,30 +207,41 @@ public class ServerRunnable implements Runnable {
         }
 
         // Send response
+        
 
 	}
     
-    private void reactToCreateToDo() {
+    private void reactToCreateToDo(Message clientMessage) {
+    	
+    	//String title = clientMessage.getDataParts().get(0);
+    	//String message = clientMessage.getDataParts().get(1);
+    	//String dueDateAsString = clientMessage.getDataParts().get(2);
+    	
+    	//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    	//LocalDate dueDate = LocalDate.parse(dueDateAsString, dtf);
+    	
+    	//ToDo toDo = new ToDo(title, message, dueDate);
+    	
 		
 	}
     
-    private void reactToChangePassword() {
+    private void reactToChangePassword(Message clientMessage) {
 		
 	}
     
-    private void reactToGetToDo() {
+    private void reactToGetToDo(Message clientMessage) {
 		
 	}
     
-    private void reactToDeleteToDo() {
+    private void reactToDeleteToDo(Message clientMessage) {
 		
 	}
     
-    private void reactToListToDos() {
+    private void reactToListToDos(Message clientMessage) {
 		
 	}
     
-    private void reactToPing() {
+    private void reactToPing(Message clientMessage) {
 		
 	}
 
