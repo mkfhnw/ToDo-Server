@@ -54,6 +54,7 @@ public class ToDoView extends BorderPane {
 		private VBox vBoxBottom;
 		private HBox hBoxBottom;
 		
+		private Button logoutButton;
 		/*
 		 * Instantiates all necessary control elements
 		 * and adds them to the container
@@ -125,10 +126,11 @@ public class ToDoView extends BorderPane {
 			 */
 			this.openFocusTimer = new Button("Fokus Timer");
 			this.howTo = new Button("How to");
+			this.logoutButton = new Button("Abmelden");
 			
 			this.vBoxBottom = new VBox();
 			
-			this.vBoxBottom.getChildren().addAll(openFocusTimer, howTo);
+			this.vBoxBottom.getChildren().addAll(openFocusTimer, howTo, logoutButton);
 			this.vBoxBottom.setPadding(new Insets(50.0, 00.0, 50.0, 50.0));
 			this.vBoxBottom.setSpacing(30);
 			this.vBoxBottom.setAlignment(Pos.CENTER);
@@ -169,6 +171,8 @@ public class ToDoView extends BorderPane {
 			this.howToDialog.setDialogPane(howToDialogPane);
 			
 			this.howToDialog.initModality(Modality.NONE);
+			
+
 
 		}
 
