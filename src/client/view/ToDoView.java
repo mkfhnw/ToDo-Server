@@ -55,6 +55,7 @@ public class ToDoView extends BorderPane {
 		private HBox hBoxBottom;
 		
 		private Button logoutButton;
+		private Button changePasswordButton;
 		/*
 		 * Instantiates all necessary control elements
 		 * and adds them to the container
@@ -127,6 +128,7 @@ public class ToDoView extends BorderPane {
 			this.openFocusTimer = new Button("Fokus Timer");
 			this.howTo = new Button("How to");
 			this.logoutButton = new Button("Abmelden");
+			this.changePasswordButton = new Button("Passwort ändern");
 			
 			this.vBoxBottom = new VBox();
 			
@@ -262,6 +264,14 @@ public class ToDoView extends BorderPane {
 
 		public Button getHowTo() {
 			return howTo;
+		}
+		
+		public Button getLogoutButton() {
+			return logoutButton;
+		}
+		
+		public Button getChangePasswordButton() {
+			return changePasswordButton;
 		}
 
 		public HBox gethBoxHowTo() {

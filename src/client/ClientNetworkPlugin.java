@@ -95,109 +95,107 @@ public class ClientNetworkPlugin {
         }
     }
         
-        public void login() {
-        	LoginView loginView = new LoginView();
-            
+        public void login(String emailLogin, String passwordLogin) {
+        
+        	ArrayList<String> loginData = new ArrayList<>();
+        	loginData.add(emailLogin);
+        	loginData.add(passwordLogin);
         	
-        	// sendMessage("LOGIN", toDoController.get());
-        	
-        	// In Controller
-        	String emailLogin = loginView.getUserField().getText();
-        	
-        	String passwordLogin = loginView.getPasswordField().getText();
-        	
-        	
+        	sendMessage("LOGIN", loginData);
+
         	// Fails if name/password do not match --> Server
 
         }
         
         public void logout() {
         	
-        	// No Data must be sent 
-        	// Never fails; token becomes invalid
+        	// Token
+        	
+        	ArrayList<String> logoutData = new ArrayList<>();        	
+        	
+        	sendMessage("LOGOUT", logoutData);
         	
         }
         
         
-        public void createLogin() {
-        	RegistrationView registrationView = new RegistrationView();
+        public void createLogin(String emailCreateLogin, String passwordCreateLogin) {
+        	 
+        	ArrayList<String> createLoginData = new ArrayList<>();
+        	createLoginData.add(emailCreateLogin);
+        	createLoginData.add(passwordCreateLogin);
         	
-        	// In Controller
-        	// sendMessage("CREATE_LOGIN", toDoController.get());
-        	String emailCreateLogin = registrationView.getEmailField().getText();
+        	sendMessage("CREATE_LOGIN", createLoginData);
         	
-        	String passwordCreateLogin = registrationView.getPasswordField().getText();
         	
         	// Fails if name already taken, or invalid --> SERVER
         	// After creating an account, you still have to login --> CONTROLLER
-        	// (Password validation) -- if we want --> CONTROLLER
         	
         	
         }
         
         public void createToDo(ToDo toDo) {
-        	
-//        	sendMessage("CREATE_TODO", toDoController.updateToDo());
 
-            ArrayList<String> data = new ArrayList<>();
-            data.add(toDo.getTitle());
-            data.add(toDo.getMessage());
-            data.add(toDo.getDueDate().toString());
-        	
-        	// title (+ validation) --> Controller
-        	// description (+ validation) --> Controller 
-        	// duedate (with and without) --> controller
-        	// Priority --> Controller, AddToDoDialogPane, ToDo
+            ArrayList<String> createToDoData = new ArrayList<>();
+            createToDoData.add(toDo.getTitle());
+            createToDoData.add(toDo.getMessage());
+            createToDoData.add(toDo.getDueDate().toString());
+            createToDoData.add(toDo.getCategory());
+            // data.add(toDo.getPriority()); --> DELETE TAGS?
+            
+            sendMessage("CREATE_TODO", createToDoData);
+            
         	// Token-Validation --> SERVER
-        	
-        /*
-         * For Controller, if not existing yet: LocalDate today = LocalDate.now();
-         * 
-        	if (toDoTitle.length() >= 3 && toDoTitle.length() <= 20 
-        		&& !toDoDialogPane.getDatePicker().isBefore(today) 
-        		&& toDoDialogPane.getMessageTextArea().length() <= 255) {
-         */
-        
-        
-        	 this.sendMessage("CREATE_TODO", data);
+            
 		}
 
-        public void changePassword() {
-        	// password --> CONTROLLER
-        	// (password validation) --> CONTROLLER
-        	// Validation (Password length (CONTROLLER) + Token valid (SERVER))
+        public void changePassword(String newPassword) {
         	
-        	// toDoClient.sendMessage("CHANGE_PASSWORD", data);
+        	 ArrayList<String> changePasswordData = new ArrayList<>();
+        	 changePasswordData.add(newPassword);
+        	
+        	// change password --> CONTROLLER
+        	// Token valid (SERVER))
+        	
+        	sendMessage("CHANGE_PASSWORD", changePasswordData);
         }
         
-        public void getToDo() {
-        	// int ID 
+        public void getToDo(int ID) { // NOCH NICHT FERTIG
         	// toDoList for each; --> SERVER
-        	// Token-Validation
+        	// Token-Validation --> SERVER
         	
-        	// toDoClient.sendMessage("GET_TODO", ID);
+        	ArrayList<String> toDoData = new ArrayList<>();
+        	toDoData.add(Integer.toString(ID));
+        	
+        	sendMessage("GET_TODO", toDoData);
         }
         
-        public void deleteToDo() {
-        	// ID
+        public void deleteToDo(int ID) {
+        	
+        	ArrayList<String> deletedToDoData = new ArrayList<>();
+        	deletedToDoData.add(Integer.toString(ID));
+
         	// toDoController.deleteToDo(); --> SERVER
         	
-        	// Token-Validation
+        	// Token-Validation --> SERVER
         	
-        	// toDoClient.sendMessage("DELETE_TODO", toDo);
+        	sendMessage("DELETE_TODO", deletedToDoData);
         }
         
         public void listToDos() {
-
+        	
+        	ArrayList<String> listToDos = new ArrayList<>();
+        	
         	// Token
         	
-        	// toDoClient.sendMessage("LIST_TODOS", data);
+        	sendMessage("LIST_TODOS", listToDos);
         }
         
         public void ping() {
         	// With and without Token
         	
-        	// toDoClient.sendMessage("PING", data);
+        	ArrayList<String> pingData = new ArrayList<>();
+        	
+        	sendMessage("PING", pingData);
         }
     
         

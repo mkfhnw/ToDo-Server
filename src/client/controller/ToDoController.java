@@ -40,8 +40,10 @@ public class ToDoController implements Serializable {
     private SearchBarView searchBarView;
     private final FocusTimerDialogPane dialog;
     private FocusTimerModel focusModel;
-
+    
+    private LoginView loginView;
     private ClientNetworkPlugin clientNetworkPlugin;
+    private RegistrationView registrationView;
 
     // Constructor
     public ToDoController(ToDoView toDoView, ToDo toDo, ToDoList toDoList) {
@@ -53,7 +55,11 @@ public class ToDoController implements Serializable {
         this.focusModel = focusModel;
 
         this.clientNetworkPlugin = new ClientNetworkPlugin();
-
+        
+        this.loginView = new LoginView();
+        
+        this.registrationView = new RegistrationView();
+        
         // Load items from database
         this.toDoList.updateSublists();
         System.out.println("Loaded items from database: " + this.toDoList.getToDoList().size());
@@ -86,6 +92,12 @@ public class ToDoController implements Serializable {
         this.toDoView.getHowToDialogPane().getStopButton().setOnMouseClicked(this::stopMedia);
         this.toDoView.getHowToDialogPane().getReplayButton().setOnMouseClicked(this::replayMedia);
 
+        // EventHandling for logout
+        this.toDoView.getLogoutButton().setOnMouseClicked(this::logout);
+        
+        // EventHandling for changing password
+        this.toDoView.getChangePasswordButton().setOnMouseClicked(this::changePassword);
+        
         // Instantiate barchart with utils
         Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(0.3), new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -153,7 +165,8 @@ public class ToDoController implements Serializable {
      * Returns a ToDo based on its ID
      */
     public ToDo getToDo(int ID) {
-        return this.toDoList.getToDo(ID);
+    	this.clientNetworkPlugin.getToDo(ID);
+    	return this.toDoList.getToDo(ID);
 
     }
 
@@ -226,6 +239,8 @@ public class ToDoController implements Serializable {
         // Fetch ToDo item
         ToDo itemToRemove = this.toDoList.getToDo(ID);
         this.toDoList.removeToDo(itemToRemove);
+        
+        this.clientNetworkPlugin.deleteToDo(ID);
     }
 
 
@@ -498,8 +513,8 @@ public class ToDoController implements Serializable {
         }
 
         // Validate easy inputs first
-        boolean titleIsValid = title.length() < 50 && title.length() > 0;
-        boolean messageIsValid = message.length() < 300;
+        boolean titleIsValid = title.length() >= 3 && title.length() <= 20;
+        boolean messageIsValid = message.length() <= 255;
         boolean categoryIsValid = this.toDoView.getListView().getItems().contains(category);
         boolean tagsAreValid = false;
         String[] tagArray;
@@ -765,6 +780,58 @@ public class ToDoController implements Serializable {
 	  
   }
   
+  public void getLogin() {
+	  	
+	String emailLogin = loginView.getUserField().getText();
+  	String passwordLogin = loginView.getPasswordField().getText();
+  	
+  	this.clientNetworkPlugin.login(emailLogin, passwordLogin);
+  }
+  
+  public void getNewAccount() {
+	  
+	String emailCreateLogin = registrationView.getEmailField().getText();
+  	String passwordCreateLogin = registrationView.getPasswordField().getText();
+  	
+  	this.clientNetworkPlugin.createLogin(emailCreateLogin, passwordCreateLogin);
+  	
+  }
+  
+  public boolean validatePassword() {
+	  if (registrationView.getPasswordField().getText().length() >= 3 && registrationView.getPasswordField().getText().length() <= 20) {
+		  return true;
+	  } else {
+		  return false; // LABEL/ALARM --> TODO!
+	  }
+	    
+  }
+  
+  public void logout(MouseEvent event) {
+	// ALARMDIALOG?
+	
+	  this.clientNetworkPlugin.logout();
+	  
+	  }
+  
+  public void changePassword(MouseEvent event) {
+	  
+	  // DIALOGPANE CHANGEPASSWORD
+	  
+	  // validateNewPassword();
+	  
+	  //String password = view.getPasswordField().getText();
+	  //this.clientNetworkPlugin.changePassword(password);
+	  
+	  
+  }
+  
+//   public boolean validateNewPassword() {
+  
+//	  }
+  
+  
+
+
   
 }
 
