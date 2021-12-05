@@ -59,7 +59,7 @@ public class DatabaseManager {
         }
     }
 
-    /* Methods to store login credentials
+    /* Method to store login credentials
      * Stores the login credentials on the database. Assumes that the input was already validated when this method gets
      * called! Handle with caution.
      */
@@ -89,6 +89,16 @@ public class DatabaseManager {
         } catch (Exception e) {
             System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
         }
+    }
+
+    /* Method to validate if a user already exist based on if it already has a database
+     * Takes the username (an email) as an input
+     */
+    public static boolean doesDatabaseExist(String accountName) {
+        String fileString = System.getProperty("user.dir");
+        fileString = fileString + File.separator + "src" + File.separator + "server" + File.separator
+                + "database" + File.separator + accountName + ".db";
+        return new File(fileString).exists();
     }
 
 }

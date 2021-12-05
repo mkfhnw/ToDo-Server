@@ -197,17 +197,22 @@ public class ServerRunnable implements Runnable {
         InputValidator inputValidator = new InputValidator();
         boolean usernameIsValid = inputValidator.validateUsername(username);
         boolean passwordIsValid = inputValidator.validatePassword(password);
+        boolean userDoesAlreadyExist = DatabaseManager.doesDatabaseExist(username.split("@")[0]);
 
         // TODO: Check if username already exists by checking if a .db file already exists with this username
 
         // Create new database and store login credentials for the user if input is valid
-        if(usernameIsValid && passwordIsValid) {
+        if(usernameIsValid && passwordIsValid && !userDoesAlreadyExist) {
             DatabaseManager databaseManager = new DatabaseManager(username.split("@")[0]);
             databaseManager.initializeDatabase();
             databaseManager.storeLoginCredentials(username, password);
+            this.sendMessage("RESULT|True");
         }
 
         // Send response
+        if(!usernameIsValid || !passwordIsValid || userDoesAlreadyExist) {
+            this.sendMessage("RESULT|False");
+        }
         
 
 	}
