@@ -93,7 +93,8 @@ public class ServerRunnable implements Runnable {
                 Thread.sleep(3000);
 
                 // Parse messageString to a "message"
-                Message clientMessage = new Message(this.recipient, this.sender, this.defaultToken, inputString);
+                // Message clientMessage = new Message(this.recipient, this.sender, this.defaultToken, inputString);
+                Message clientMessage = new Message(inputString);
 
                 switch (clientMessage.getMessageType()) {
 
