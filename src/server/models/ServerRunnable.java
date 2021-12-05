@@ -2,6 +2,7 @@ package server.models;
 
 
 import common.Message;
+import common.Token;
 import server.services.DatabaseManager;
 import server.services.InputValidator;
 
@@ -33,13 +34,15 @@ public class ServerRunnable implements Runnable {
     private final String recipient = "Client";
     private final String falseResult = "Result|false";
     private final String trueResult = "Result|true";
+    private final ToDoServer parent;
 
     // Constructor
-    public ServerRunnable(Socket clientSocket) {
+    public ServerRunnable(Socket clientSocket, ToDoServer parent) {
 
         this.clientSocket = clientSocket;
         this.inputReader = this.getInputReader(this.clientSocket);
         this.outputWriter = this.getOutputWriter(this.clientSocket);
+        this.parent = parent;
 
         System.out.println("[SERVER-RUNNABLE] Client connected: "
                 + clientSocket.getInetAddress().getHostAddress()
@@ -200,7 +203,12 @@ public class ServerRunnable implements Runnable {
         }
 
         // If all checks passed - create a token
+        Token token = new Token();
 
+        // Assign the token to the user
+
+        // Add token to the active token list
+        this.parent.insertToken(token);
 
     }
 	
