@@ -42,10 +42,6 @@ public class Message {
             this.dataParts = new ArrayList<>();
         }
 
-
-        // Blablabla
-
-
         // Enforce server message type, since only server can send messages of type RESULT
         if(this.sender == Addressor.SERVER) { this.messageType = MessageType.RESULT; }
         else { this.messageType = MessageType.valueOf(this.messageParts.get(0)); }
@@ -58,9 +54,17 @@ public class Message {
         this.messageString = messageString;
         this.messageType = MessageType.valueOf(stringParts[0]);
         this.messageParts = new ArrayList<>(Arrays.asList(stringParts));
-        this.dataParts = new ArrayList<>(this.messageParts.subList(2, (this.messageParts.size())));
-        this.token = stringParts[1];
-        
+
+        // Parse token
+        if(this.messageType != MessageType.CREATE_LOGIN) {
+            this.token = stringParts[1];
+        } else {this.token = null;}
+
+        // Parse data parts
+        if(this.token != null) {
+            this.dataParts = new ArrayList<>(this.messageParts.subList(2, (this.messageParts.size())));
+        } else { this.dataParts = new ArrayList<>(this.messageParts.subList(1, (this.messageParts.size()))); }
+
         // Parse sender & Recipient
         if (this.messageType == MessageType.RESULT) {
             this.sender = Addressor.SERVER;

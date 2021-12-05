@@ -2,6 +2,7 @@ package server.models;
 
 
 import common.Message;
+import common.Token;
 import server.services.DatabaseManager;
 import server.services.InputValidator;
 
@@ -31,13 +32,17 @@ public class ServerRunnable implements Runnable {
     private final String defaultToken = "3963c9cae5c5aeaa71f287190774db4d354287c7973e969e9d6c5722c1037a33";
     private final String sender = "Server";
     private final String recipient = "Client";
+    private final String falseResult = "Result|false";
+    private final String trueResult = "Result|true";
+    private final ToDoServer parent;
 
     // Constructor
-    public ServerRunnable(Socket clientSocket) {
+    public ServerRunnable(Socket clientSocket, ToDoServer parent) {
 
         this.clientSocket = clientSocket;
         this.inputReader = this.getInputReader(this.clientSocket);
         this.outputWriter = this.getOutputWriter(this.clientSocket);
+        this.parent = parent;
 
         System.out.println("[SERVER-RUNNABLE] Client connected: "
                 + clientSocket.getInetAddress().getHostAddress()
@@ -93,7 +98,8 @@ public class ServerRunnable implements Runnable {
                 Thread.sleep(3000);
 
                 // Parse messageString to a "message"
-                Message clientMessage = new Message(this.recipient, this.sender, this.defaultToken, inputString);
+                // Message clientMessage = new Message(this.recipient, this.sender, this.defaultToken, inputString);
+                Message clientMessage = new Message(inputString);
 
                 switch (clientMessage.getMessageType()) {
 
@@ -180,7 +186,31 @@ public class ServerRunnable implements Runnable {
     // Reception methods based on the input of the client
 	private void reactToLogin(Message clientMessage) {
 
-	}
+        // Grab data - username first, then password
+        String username = clientMessage.getDataParts().get(0);
+        String password = clientMessage.getDataParts().get(1);
+
+        // Validate user input
+        InputValidator inputValidator = new InputValidator();
+        boolean usernameIsValid = inputValidator.validateUsername(username);
+        boolean passwordIsValid = inputValidator.validatePassword(password);
+        boolean userDoesAlreadyExist = DatabaseManager.doesDatabaseExist(username.split("@")[0]);
+
+        // Return false if any of the checks above failed
+        if(!usernameIsValid || !passwordIsValid || !userDoesAlreadyExist) {
+            this.sendMessage(this.falseResult);
+            return;
+        }
+
+        // If all checks passed - create a token
+        Token token = new Token();
+
+        // Assign the token to the user
+
+        // Add token to the active token list
+        this.parent.insertToken(token);
+
+    }
 	
 	private void reactToLogout(Message clientMessage) {
 		
@@ -196,17 +226,20 @@ public class ServerRunnable implements Runnable {
         InputValidator inputValidator = new InputValidator();
         boolean usernameIsValid = inputValidator.validateUsername(username);
         boolean passwordIsValid = inputValidator.validatePassword(password);
-
-        // TODO: Check if username already exists by checking if a .db file already exists with this username
+        boolean userDoesAlreadyExist = DatabaseManager.doesDatabaseExist(username.split("@")[0]);
 
         // Create new database and store login credentials for the user if input is valid
-        if(usernameIsValid && passwordIsValid) {
+        if(usernameIsValid && passwordIsValid && !userDoesAlreadyExist) {
             DatabaseManager databaseManager = new DatabaseManager(username.split("@")[0]);
             databaseManager.initializeDatabase();
             databaseManager.storeLoginCredentials(username, password);
+            this.sendMessage(this.trueResult);
         }
 
         // Send response
+        if(!usernameIsValid || !passwordIsValid || userDoesAlreadyExist) {
+            this.sendMessage(this.falseResult);
+        }
         
 
 	}

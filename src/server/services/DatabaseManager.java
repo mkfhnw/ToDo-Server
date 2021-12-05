@@ -1,6 +1,10 @@
 package server.services;
 
+import common.MessageType;
+
 import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -55,7 +59,7 @@ public class DatabaseManager {
         }
     }
 
-    /* Methods to store login credentials
+    /* Method to store login credentials
      * Stores the login credentials on the database. Assumes that the input was already validated when this method gets
      * called! Handle with caution.
      */
@@ -63,15 +67,38 @@ public class DatabaseManager {
         try(Connection connection = DriverManager.getConnection(this.connectionString);
             Statement statement = connection.createStatement();) {
 
+            // Hash password
+            MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+            byte[] encodedPassword = sha256.digest(password.getBytes(StandardCharsets.UTF_8));
+            StringBuilder stringBuilder = new StringBuilder();
+
+            // Build hash string from hex values
+            for(int i = 0; i < encodedPassword.length; i++) {
+                String hexString = Integer.toHexString(0xff & encodedPassword[i]);
+                if(hexString.length() == 1) { stringBuilder.append('0'); }
+                stringBuilder.append(hexString);
+            }
+            String hashedPassword = stringBuilder.toString();
+
             String writeString = "INSERT INTO Accounts (Name, Password) VALUES("
                     + "'" + username + "', "
-                    + "'" + password + "'"
+                    + "'" + hashedPassword + "'"
                     + ")";
             statement.executeUpdate(writeString);
 
         } catch (Exception e) {
             System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
         }
+    }
+
+    /* Method to validate if a user already exist based on if it already has a database
+     * Takes the username (an email) as an input
+     */
+    public static boolean doesDatabaseExist(String accountName) {
+        String fileString = System.getProperty("user.dir");
+        fileString = fileString + File.separator + "src" + File.separator + "server" + File.separator
+                + "database" + File.separator + accountName + ".db";
+        return new File(fileString).exists();
     }
 
 }

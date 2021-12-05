@@ -1,5 +1,7 @@
 package server.models;
 
+import common.Token;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,7 +16,7 @@ public class ToDoServer {
     private final int PORT = 50002;
     private boolean isActive;
     private ArrayList<Thread> clientThreads;
-    private ArrayList<String> activeTokens;
+    private volatile ArrayList<String> activeTokens;
 
     // Constructor
     public ToDoServer() {
@@ -33,7 +35,7 @@ public class ToDoServer {
             Socket clientSocket = this.serverSocket.accept();
 
             // Create new thread out of clientRunnable & append it to the threadList
-            ServerRunnable serverRunnable = new ServerRunnable(clientSocket);
+            ServerRunnable serverRunnable = new ServerRunnable(clientSocket, this);
             Thread clientThread = new Thread(serverRunnable);
             this.clientThreads.add(clientThread);
 
@@ -68,6 +70,15 @@ public class ToDoServer {
         }
     }
 
+
+    // Methods to update the token list
+    public synchronized void insertToken(Token token) {
+        this.activeTokens.add(token.getTokenString());
+    }
+
+    public synchronized void deleteToken(Token token) {
+        this.activeTokens.remove(token.getTokenString());
+    }
 
     // Getter & Setter
     public boolean isActive() { return isActive; }
