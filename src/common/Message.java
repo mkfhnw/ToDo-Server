@@ -56,9 +56,9 @@ public class Message {
         this.messageParts = new ArrayList<>(Arrays.asList(stringParts));
 
         // Parse token
-        if(this.messageType != MessageType.CREATE_LOGIN) {
-            this.token = stringParts[1];
-        } else {this.token = null;}
+        if(this.messageType == MessageType.CREATE_LOGIN || this.messageType == MessageType.LOGIN) {
+            this.token = null;
+        } else {this.token = stringParts[1];}
 
         // Parse data parts
         if(this.token != null) {

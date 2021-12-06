@@ -1,15 +1,13 @@
 package server.models;
 
 
+import common.HashDigest;
 import common.Message;
 import common.Token;
 import server.services.DatabaseManager;
 import server.services.InputValidator;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -32,8 +30,8 @@ public class ServerRunnable implements Runnable {
     private final String defaultToken = "3963c9cae5c5aeaa71f287190774db4d354287c7973e969e9d6c5722c1037a33";
     private final String sender = "Server";
     private final String recipient = "Client";
-    private final String falseResult = "Result|false";
-    private final String trueResult = "Result|true";
+    private final String falseResult = "Result|false\n";
+    private final String trueResult = "Result|true\n";
     private final ToDoServer parent;
 
     // Constructor
@@ -87,7 +85,9 @@ public class ServerRunnable implements Runnable {
     @Override
     public void run() {
 
-        while (true) {
+        boolean shouldRun = true;
+
+        while (shouldRun) {
 
             try {
                 System.out.println("[SERVER-RUNNABLE] Listening for messages...");
@@ -106,14 +106,14 @@ public class ServerRunnable implements Runnable {
                     // Perform action based on messageType
                     case LOGIN -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to LOGIN...");
-                        Thread.sleep(5000);
+                        Thread.sleep(3000);
                         this.reactToLogin(clientMessage);
                         break;
                     }
                     
                     case LOGOUT -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to LOGOUT...");
-                        Thread.sleep(5000);
+                        Thread.sleep(3000);
                     	this.reactToLogout(clientMessage);
 
                         this.clientSocket.close();
@@ -122,60 +122,68 @@ public class ServerRunnable implements Runnable {
                     
                     case CREATE_LOGIN -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to CREATE_LOGIN...");
-                        Thread.sleep(5000);
+                        Thread.sleep(3000);
                     	this.reactToCreateLogin(clientMessage);
                     	break;
                     }
                     
                     case CREATE_TODO -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to CREATE_TODO...");
-                        Thread.sleep(5000);
+                        Thread.sleep(3000);
                     	this.reactToCreateToDo(clientMessage);
                     	break;
                     }
                     
                     case CHANGE_PASSWORD -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to CHANGE_PASSWORD...");
-                        Thread.sleep(5000);
+                        Thread.sleep(3000);
                     	this.reactToChangePassword(clientMessage);
                     	break;
                     }
                     
                     case GET_TODO -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to GET_TODO...");
-                        Thread.sleep(5000);
+                        Thread.sleep(3000);
                     	this.reactToGetToDo(clientMessage);
                     	break;
                     }
                     
                     case DELETE_TODO -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to DELETE_TODO...");
-                        Thread.sleep(5000);
+                        Thread.sleep(3000);
                     	this.reactToDeleteToDo(clientMessage);
                     	break;
                     }
                     
                     case LIST_TODOS -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to LIST_TODOS...");
-                        Thread.sleep(5000);
+                        Thread.sleep(3000);
                     	this.reactToListToDos(clientMessage);
                     	break;
                     }
                     
                     case PING -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to PING...");
-                        Thread.sleep(5000);
+                        Thread.sleep(3000);
                     	this.reactToPing(clientMessage);
                     	break;
                     }
 
                 }
 
-                // Socket gets closed
-                this.clientSocket.close();
+                // Make the loop lay back for a bit - only for dev purpose
+                Thread.sleep(1000);
 
             } catch (Exception e) {
                 System.out.println("[SERVER-RUNNABLE] EXCEPTION: " + e.getMessage());
+                if(this.clientSocket.isClosed()) { shouldRun = false; }
+
+                // Socket gets closed
+                try {
+                    this.clientSocket.close();
+                } catch (IOException ex) {
+                    System.out.println("[SERVER-RUNNABLE] EXCEPTION: " + ex.getMessage());;
+                }
             }
 
         }
@@ -202,13 +210,30 @@ public class ServerRunnable implements Runnable {
             return;
         }
 
-        // If all checks passed - create a token
-        Token token = new Token();
+        // See if password matches
+        DatabaseManager databaseManager = new DatabaseManager(username.split("@")[0]);
+        String storedPassword = databaseManager.getPassword();
+        String hashedPasswordInput = new HashDigest(password).getDigest();
 
-        // Assign the token to the user
+        if(storedPassword.equals(hashedPasswordInput)) {
 
-        // Add token to the active token list
-        this.parent.insertToken(token);
+            // If all checks passed - create a token
+            Token token = new Token();
+
+            // Assign the token to the user
+            token.setUser(username);
+
+            // Add token to the active token list
+            this.parent.insertToken(token);
+
+            // Send token back to user
+            this.sendMessage("Result|true|" + token.getTokenString() + "\n");
+
+            return;
+        }
+
+        // If we reach this line, return false since the password was not correct
+        this.sendMessage(this.falseResult);
 
     }
 	

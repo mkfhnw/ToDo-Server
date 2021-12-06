@@ -9,6 +9,7 @@ public class Token {
 
     // Fields
     private String tokenString;
+    private String user;
     public static int globalCounter = 0;
 
     // Constructor
@@ -54,5 +55,9 @@ public class Token {
     public String getTokenString() {
         return this.tokenString;
     }
+    public String getUser() { return this.user; }
+
+    // Setter
+    public void setUser(String username) { this.user = username; }
 
 }

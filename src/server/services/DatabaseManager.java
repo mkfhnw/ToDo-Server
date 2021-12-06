@@ -1,13 +1,12 @@
 package server.services;
 
+import common.HashDigest;
 import common.MessageType;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DatabaseManager {
 
@@ -68,18 +67,9 @@ public class DatabaseManager {
             Statement statement = connection.createStatement();) {
 
             // Hash password
-            MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-            byte[] encodedPassword = sha256.digest(password.getBytes(StandardCharsets.UTF_8));
-            StringBuilder stringBuilder = new StringBuilder();
+            String hashedPassword = new HashDigest(password).getDigest();
 
-            // Build hash string from hex values
-            for(int i = 0; i < encodedPassword.length; i++) {
-                String hexString = Integer.toHexString(0xff & encodedPassword[i]);
-                if(hexString.length() == 1) { stringBuilder.append('0'); }
-                stringBuilder.append(hexString);
-            }
-            String hashedPassword = stringBuilder.toString();
-
+            // Write to db
             String writeString = "INSERT INTO Accounts (Name, Password) VALUES("
                     + "'" + username + "', "
                     + "'" + hashedPassword + "'"
@@ -99,6 +89,26 @@ public class DatabaseManager {
         fileString = fileString + File.separator + "src" + File.separator + "server" + File.separator
                 + "database" + File.separator + accountName + ".db";
         return new File(fileString).exists();
+    }
+
+    // Method to grab a users hashed password
+    public String getPassword() {
+        try(Connection connection = DriverManager.getConnection(this.connectionString);
+            Statement statement = connection.createStatement();) {
+
+            // Query password
+            String queryString = "SELECT Password FROM Accounts WHERE Account_ID='1'";
+            ResultSet resultSet = statement.executeQuery(queryString);
+            String password = null;
+
+            // Set to var & return
+            while(resultSet.next()) { password = resultSet.getString("Password"); }
+
+            return password;
+        } catch (Exception e) {
+            System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
+            return null;
+        }
     }
 
 }
