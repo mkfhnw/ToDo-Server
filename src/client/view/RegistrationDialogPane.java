@@ -1,19 +1,19 @@
 package client.view;
 
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.awt.*;
 
-public class RegistrationView extends DialogPane {
+public class RegistrationDialogPane extends DialogPane {
 	
 	private Label title;
-	
-	private BorderPane borderPane;
-	
 	private Label firstnameLabel;
 	private TextField firstnameField;
 	private Label surnameLabel;
@@ -25,12 +25,20 @@ public class RegistrationView extends DialogPane {
 	private Label repeatPasswordLabel;
 	private TextField repeatPasswordField;
 	
+	private BorderPane borderPane;
+	private VBox firstnameVBox;
+	private VBox surnameVBox;
+	private VBox emailVBox;
+	private VBox passwordVBox;
+	private VBox repeatPasswordVBox;
+	private HBox hbox;
+	
 	private ButtonType okButtonType;
 	private ButtonType cancelButtonType;
 	
 
 
-	public RegistrationView() {
+	public RegistrationDialogPane() {
 	
 	this.title = new Label("Account erstellen");
 	
@@ -49,10 +57,35 @@ public class RegistrationView extends DialogPane {
 	this.repeatPasswordLabel = new Label("Passwort wiederholen");
 	this.repeatPasswordField = new TextField();
 	
+	this.firstnameVBox = new VBox();
+	this.surnameVBox = new VBox();
+	this.emailVBox = new VBox();
+	this.passwordVBox = new VBox();
+	this.repeatPasswordVBox = new VBox();
+	this.hbox = new HBox();
+	this.borderPane = new BorderPane();
+	
+	this.firstnameVBox.getChildren().addAll(firstnameLabel, firstnameField);
+	this.surnameVBox.getChildren().addAll(surnameLabel, surnameField);
+	this.emailVBox.getChildren().addAll(emailLabel, emailField);
+	this.passwordVBox.getChildren().addAll(passwordLabel, passwordField);
+	this.repeatPasswordVBox.getChildren().addAll(repeatPasswordLabel, repeatPasswordField);
+	this.hbox.getChildren().addAll(
+			firstnameVBox, 
+			surnameVBox,
+			emailVBox,
+			passwordVBox, 
+			repeatPasswordVBox);
+	
+	this.borderPane.setTop(title);
+	this.borderPane.setCenter(hbox);
+	
+	
+	
 	 // Add buttonTypes
-    // this.okButtonType = new ButtonType("Erstellen", ButtonBar.ButtonData.OK_DONE);
-    // this.getButtonTypes().add(new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE));
-    // this.getButtonTypes().add(okButtonType);
+    this.okButtonType = new ButtonType("Erstellen", ButtonBar.ButtonData.OK_DONE);
+    this.getButtonTypes().add(new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE));
+    this.getButtonTypes().add(okButtonType);
 	
 	this.setContentText("Account erstellen");
 		

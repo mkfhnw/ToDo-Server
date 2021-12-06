@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import client.view.LoginView;
-import client.view.RegistrationView;
+import client.view.RegistrationDialogPane;
 
 public class ClientNetworkPlugin {
 

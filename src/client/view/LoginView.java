@@ -2,8 +2,11 @@ package client.view;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -11,6 +14,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class LoginView extends BorderPane {
 	
@@ -38,6 +43,9 @@ public class LoginView extends BorderPane {
     private final int SPACING_IMAGE_VBOX = 20;
     private final int SPACING = 20;
 	
+    // Dialog for CreateAccount
+    private Dialog<ButtonType> registrationDialog;
+	private RegistrationDialogPane registrationDialogPane;
 	
 	// Constructor
 	public LoginView() {
@@ -110,6 +118,17 @@ public class LoginView extends BorderPane {
 	this.setTop(imageVBox);	
 	this.setCenter(loginVBox);
 	this.setBottom(buttonVBox);
+	
+	// Create and costumize Registration Dialog
+	this.registrationDialog = new Dialog<ButtonType>();
+	this.registrationDialog.setTitle("Account erstellen");
+	Stage stage3 = (Stage) registrationDialog.getDialogPane().getScene().getWindow();
+	stage3.getIcons().add(new Image(this.getClass().getResource("/common/resources/howTo.png").toString()));
+	
+	this.registrationDialogPane = new RegistrationDialogPane();
+	this.registrationDialog.setDialogPane(registrationDialogPane);
+	
+	this.registrationDialog.initModality(Modality.NONE);
 	
 	}
 
@@ -271,6 +290,26 @@ public class LoginView extends BorderPane {
 
 	public void setImageVBox(VBox imageVBox) {
 		this.imageVBox = imageVBox;
+	}
+
+
+	public Dialog<ButtonType> getRegistrationDialog() {
+		return registrationDialog;
+	}
+
+
+	public RegistrationDialogPane getRegistrationDialogPane() {
+		return registrationDialogPane;
+	}
+
+
+	public void setRegistrationDialog(Dialog<ButtonType> registrationDialog) {
+		this.registrationDialog = registrationDialog;
+	}
+
+
+	public void setRegistrationDialogPane(RegistrationDialogPane registrationDialogPane) {
+		this.registrationDialogPane = registrationDialogPane;
 	}
 	
 

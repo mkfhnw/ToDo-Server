@@ -43,7 +43,7 @@ public class ToDoController implements Serializable {
     
     private LoginView loginView;
     private ClientNetworkPlugin clientNetworkPlugin;
-    private RegistrationView registrationView;
+    private RegistrationDialogPane registrationView;
 
     // Constructor
     public ToDoController(ToDoView toDoView, ToDo toDo, ToDoList toDoList) {
@@ -58,7 +58,7 @@ public class ToDoController implements Serializable {
         
         this.loginView = new LoginView();
         
-        this.registrationView = new RegistrationView();
+        this.registrationView = new RegistrationDialogPane();
         
         // Load items from database
         this.toDoList.updateSublists();
@@ -97,6 +97,9 @@ public class ToDoController implements Serializable {
         
         // EventHandling for changing password
         this.toDoView.getChangePasswordButton().setOnMouseClicked(this::changePassword);
+        
+        // EventHandling for registration
+        this.loginView.getSignInButton().setOnMouseClicked(this::openRegistrationView);
         
         // Instantiate barchart with utils
         Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(0.3), new EventHandler<ActionEvent>() {
@@ -829,10 +832,20 @@ public class ToDoController implements Serializable {
   
 //	  }
   
-  
+  public void openRegistrationView(MouseEvent event) {
+	  
+	// show dialog
+      this.loginView.getRegistrationDialog().showAndWait();
+      
+      // If ButtonType "beenden" is clicked, stop the Video
+      if (loginView.getRegistrationDialogPane().getOkButtonType().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+    	  
+    	  // save login?		  
+	  
+  }
 
 
-  
+  }  
 }
 
 		
