@@ -7,6 +7,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import client.model.Priority;
 import client.model.ToDo;
 
 
@@ -19,6 +20,7 @@ public class AddToDoDialogPane extends DialogPane {
     private HBox titleBar;
     private HBox categoryBar;
     private HBox dueDateBar;
+    private HBox priorityBar;
     private HBox tagsBar;
     private VBox headerBar;
 
@@ -27,6 +29,7 @@ public class AddToDoDialogPane extends DialogPane {
     private Label titleLabel;
     private Label categoryLabel;
     private Label dueDateLabel;
+    private Label priorityLabel;
     private Label messageLabel;
     private Label tagsLabel;
 
@@ -37,13 +40,13 @@ public class AddToDoDialogPane extends DialogPane {
     private Tooltip messageToolTip;
     private Tooltip categoryToolTip;
     private Tooltip dateToolTip;
+    private Tooltip priorityTip;
     private Tooltip tagsToolTip;
 
     private ComboBox<String> categoryComboBox;
-
     private DatePicker datePicker;
-
     private TextArea messageTextArea;
+    private ComboBox<Priority> priorityComboBox;
 
     // Custom button type for eventhandling
     ButtonType okButtonType;
@@ -52,9 +55,10 @@ public class AddToDoDialogPane extends DialogPane {
     private final int SPACING_CATEGORYBAR = 15;
     private final int SPACING_TITLEBAR = 43;
     private final int SPACING_DUEDATEBAR = 28;
+    private final int SPACING_PRIORITYBAR = 28;
     private final int SPACING_TAGSBAR = 40;
     private final int SPACING_HEADERBAR = -10;
-    private final Duration DURATION_UNTIL_SHOW = Duration.seconds(0.4);
+    private final Duration DURATION_UNTIL_SHOW = Duration.seconds(0.2);
 
 
     // Constructor
@@ -67,6 +71,7 @@ public class AddToDoDialogPane extends DialogPane {
         titleBar = new HBox(SPACING_TITLEBAR);
         categoryBar = new HBox(SPACING_CATEGORYBAR);
         dueDateBar = new HBox(SPACING_DUEDATEBAR);
+        priorityBar = new HBox(SPACING_PRIORITYBAR);
         tagsBar = new HBox(SPACING_TAGSBAR);
         headerBar = new VBox(SPACING_HEADERBAR);
 
@@ -74,6 +79,7 @@ public class AddToDoDialogPane extends DialogPane {
         titleLabel = new Label("Titel");
         categoryLabel = new Label("Kategorie");
         dueDateLabel = new Label("Termin");
+        priorityLabel = new Label("Priorität");
         messageLabel = new Label("Beschreibung");
         tagsLabel = new Label("Tags");
         tippLabel = new Label("Bewegen Sie Ihren Mauszeiger über einen Schriftzug!");
@@ -82,10 +88,11 @@ public class AddToDoDialogPane extends DialogPane {
         tagsTextfield = new TextField();
 
         // Instantiate tooltips
-        titleToolTip = new Tooltip("Ihr Titel muss > 50 Zeichen lang sein.");
-        messageToolTip = new Tooltip("Ihre Beschreibung muss > 300 Zeichen lang sein.");
+        titleToolTip = new Tooltip("Ihr Titel muss zwischen 3 - 20 Zeichen lang sein.");
+        messageToolTip = new Tooltip("Ihre Beschreibung muss < 255 Zeichen lang sein.");
         categoryToolTip = new Tooltip("Die Kategorie muss einen Wert enthalten.");
         dateToolTip = new Tooltip("Ihr Datum muss im Format DD.MM.YYYY sein und in der Zukunft liegen.");
+        priorityTip = new Tooltip("Die Priorität muss einen Wert enthalten.");
         tagsToolTip = new Tooltip("Ihre Tags müssen einzelne Wörter sein, separiert mit einem Semikolon (;).");
 
         // Change tooltip timers
@@ -93,6 +100,7 @@ public class AddToDoDialogPane extends DialogPane {
         messageToolTip.setShowDelay(DURATION_UNTIL_SHOW);
         categoryToolTip.setShowDelay(DURATION_UNTIL_SHOW);
         dateToolTip.setShowDelay(DURATION_UNTIL_SHOW);
+        priorityTip.setShowDelay(DURATION_UNTIL_SHOW);
         tagsToolTip.setShowDelay(DURATION_UNTIL_SHOW);
 
         // Instantiate the rest of the items, remove "Papierkorb" from selectable category
@@ -104,14 +112,19 @@ public class AddToDoDialogPane extends DialogPane {
         datePicker = new DatePicker();
         messageTextArea = new TextArea();
 
+        // ComboBox for Priority
+        priorityComboBox = new ComboBox<>();
+        priorityComboBox.setItems(FXCollections.observableArrayList(Priority.values()));
+        
         // Fill controls into containers
         titleBar.getChildren().addAll(titleLabel, titleTextfield);
         categoryBar.getChildren().addAll(categoryLabel, categoryComboBox);
         dueDateBar.getChildren().addAll(dueDateLabel, datePicker);
+        priorityBar.getChildren().addAll(priorityLabel, priorityComboBox);
         tagsBar.getChildren().addAll(tagsLabel, tagsTextfield);
         headerBar.getChildren().addAll(newTaskLabel, tippLabel);
 
-        leftPane.getChildren().addAll(titleBar, categoryBar, dueDateBar, tagsBar);
+        leftPane.getChildren().addAll(titleBar, categoryBar, dueDateBar, priorityBar, tagsBar);
         rightPane.getChildren().addAll(messageLabel, messageTextArea);
 
         // Set containers
@@ -124,6 +137,7 @@ public class AddToDoDialogPane extends DialogPane {
         messageLabel.setTooltip(messageToolTip);
         categoryLabel.setTooltip(categoryToolTip);
         dueDateLabel.setTooltip(dateToolTip);
+        priorityLabel.setTooltip(priorityTip);
         tagsLabel.setTooltip(tagsToolTip);
         
 
@@ -163,6 +177,7 @@ public class AddToDoDialogPane extends DialogPane {
         titleBar = new HBox(SPACING_TITLEBAR);
         categoryBar = new HBox(SPACING_CATEGORYBAR);
         dueDateBar = new HBox(SPACING_DUEDATEBAR);
+        priorityBar = new HBox(SPACING_PRIORITYBAR);
         tagsBar = new HBox(SPACING_TAGSBAR);
         headerBar = new VBox(SPACING_HEADERBAR);
 
@@ -172,23 +187,26 @@ public class AddToDoDialogPane extends DialogPane {
         dueDateLabel = new Label("Termin");
         messageLabel = new Label("Beschreibung");
         tagsLabel = new Label("Tags");
+        priorityLabel = new Label("Priorität");
         tippLabel = new Label("Bewegen Sie Ihren Mauszeiger über einen Schriftzug!");
 
         titleTextfield = new TextField();
         tagsTextfield = new TextField();
 
         // Instantiate tooltips
-        titleToolTip = new Tooltip("Your title must be > 50 characters.");
-        messageToolTip = new Tooltip("Your title must be > 300 characters.");
-        categoryToolTip = new Tooltip("Your category must be a value contained in the dropdown.");
-        dateToolTip = new Tooltip("Your date must be in format DD.MM.YYYY and lie ahead in time.");
-        tagsToolTip = new Tooltip("Your tags must be single words separated with a semicolon (;).");
+        titleToolTip = new Tooltip("Ihr Titel muss zwischen 3 - 20 Zeichen lang sein.");
+        messageToolTip = new Tooltip("Ihre Beschreibung muss < 255 Zeichen lang sein.");
+        categoryToolTip = new Tooltip("Die Kategorie muss einen Wert enthalten.");
+        dateToolTip = new Tooltip("Ihr Datum muss im Format DD.MM.YYYY sein und in der Zukunft liegen.");
+        priorityTip = new Tooltip("Die Priorität muss einen Wert enthalten.");
+        tagsToolTip = new Tooltip("Ihre Tags müssen einzelne Wörter sein, separiert mit einem Semikolon (;).");
 
         // Change tooltip timers
         titleToolTip.setShowDelay(DURATION_UNTIL_SHOW);
         messageToolTip.setShowDelay(DURATION_UNTIL_SHOW);
         categoryToolTip.setShowDelay(DURATION_UNTIL_SHOW);
         dateToolTip.setShowDelay(DURATION_UNTIL_SHOW);
+        priorityTip.setShowDelay(DURATION_UNTIL_SHOW);
         tagsToolTip.setShowDelay(DURATION_UNTIL_SHOW);
 
         // Remove Papierkorb
@@ -207,9 +225,10 @@ public class AddToDoDialogPane extends DialogPane {
         categoryBar.getChildren().addAll(categoryLabel, categoryComboBox);
         dueDateBar.getChildren().addAll(dueDateLabel, datePicker);
         tagsBar.getChildren().addAll(tagsLabel, tagsTextfield);
+        priorityBar.getChildren().addAll(priorityLabel, priorityComboBox);
         headerBar.getChildren().addAll(newTaskLabel, tippLabel);
 
-        leftPane.getChildren().addAll(titleBar, categoryBar, dueDateBar, tagsBar);
+        leftPane.getChildren().addAll(titleBar, categoryBar, dueDateBar, priorityBar, tagsBar);
         rightPane.getChildren().addAll(messageLabel, messageTextArea);
 
         // Set containers
@@ -222,6 +241,7 @@ public class AddToDoDialogPane extends DialogPane {
         messageLabel.setTooltip(messageToolTip);
         categoryLabel.setTooltip(categoryToolTip);
         dueDateLabel.setTooltip(dateToolTip);
+        priorityLabel.setTooltip(priorityTip);
         tagsLabel.setTooltip(tagsToolTip);
 
         // Fill fields
@@ -508,6 +528,42 @@ public class AddToDoDialogPane extends DialogPane {
 
 	public void setOkButtonType(ButtonType okButtonType) {
 		this.okButtonType = okButtonType;
+	}
+
+	public HBox getPriorityBar() {
+		return priorityBar;
+	}
+
+	public Label getPriorityLabel() {
+		return priorityLabel;
+	}
+
+	public Tooltip getPriorityTip() {
+		return priorityTip;
+	}
+
+	public ComboBox<Priority> getPriorityComboBox() {
+		return priorityComboBox;
+	}
+
+	public int getSPACING_PRIORITYBAR() {
+		return SPACING_PRIORITYBAR;
+	}
+
+	public void setPriorityBar(HBox priorityBar) {
+		this.priorityBar = priorityBar;
+	}
+
+	public void setPriorityLabel(Label priorityLabel) {
+		this.priorityLabel = priorityLabel;
+	}
+
+	public void setPriorityTip(Tooltip priorityTip) {
+		this.priorityTip = priorityTip;
+	}
+
+	public void setPriorityComboBox(ComboBox<Priority> priorityComboBox) {
+		this.priorityComboBox = priorityComboBox;
 	}
 
 

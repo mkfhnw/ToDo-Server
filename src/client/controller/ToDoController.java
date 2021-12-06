@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import client.model.FocusTimerModel;
+import client.model.Priority;
 import client.model.ToDo;
 import client.model.ToDoList;
 import java.io.Serializable;
@@ -155,8 +156,8 @@ public class ToDoController implements Serializable {
      * Parses the inputs of the user required for a new ToDoInstance, creates the instance and stores it.
      * Needs input from ToDoView
      */
-    public void createToDo(String title, String message, LocalDate dueDate, String category, ArrayList<String> tags) {
-        ToDo toDo = new ToDo(title, message, dueDate, category, tags);
+    public void createToDo(String title, String message, LocalDate dueDate, Priority priority, String category, ArrayList<String> tags) {
+        ToDo toDo = new ToDo(title, message, dueDate, priority, category, tags);
         this.toDoList.addToDo(toDo);
         this.toDoList.updateSublists();
 
@@ -609,10 +610,10 @@ public class ToDoController implements Serializable {
                 String message = this.toDoView.getToDoDialogPane().getMessageTextArea().getText();
                 String dueDateString = this.toDoView.getToDoDialogPane().getDatePicker().getValue().toString();
                 String tags = this.toDoView.getToDoDialogPane().getTagsTextfield().getText();
-
+                String priorityString = this.toDoView.getToDoDialogPane().getPriorityComboBox().getValue().toString();
                 String[] tagArray = tags.replaceAll("\\s", "").split(";");
                 ArrayList<String> tagArrayList = new ArrayList<String>(List.of(tagArray));
-                this.createToDo(title, message, LocalDate.parse(dueDateString), category, tagArrayList);
+                this.createToDo(title, message, LocalDate.parse(dueDateString), category, priorityString, tagArrayList);
 
             }
 
