@@ -9,10 +9,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.awt.*;
-
 public class RegistrationDialogPane extends DialogPane {
 	
+	// Elements for registration
 	private Label title;
 	private Label firstnameLabel;
 	private TextField firstnameField;
@@ -25,6 +24,7 @@ public class RegistrationDialogPane extends DialogPane {
 	private Label repeatPasswordLabel;
 	private TextField repeatPasswordField;
 	
+	// Layout
 	private BorderPane borderPane;
 	private VBox firstnameVBox;
 	private VBox surnameVBox;
@@ -33,11 +33,19 @@ public class RegistrationDialogPane extends DialogPane {
 	private VBox repeatPasswordVBox;
 	private HBox hbox;
 	
+	// Buttontypes for DialogPane
 	private ButtonType okButtonType;
 	private ButtonType cancelButtonType;
 	
+	// Spacings for Layout
+	private final int SPACING_FIRSTNAME = 15;
+    private final int SPACING_SURNAME = 43;
+    private final int SPACING_EMAIL = 28;
+    private final int SPACING_PASSWORD = 40;
+    private final int SPACING_REPEAT_PASSWORD = -10;
+	
 
-
+	// Constructor
 	public RegistrationDialogPane() {
 	
 	this.title = new Label("Account erstellen");
@@ -57,11 +65,11 @@ public class RegistrationDialogPane extends DialogPane {
 	this.repeatPasswordLabel = new Label("Passwort wiederholen");
 	this.repeatPasswordField = new TextField();
 	
-	this.firstnameVBox = new VBox();
-	this.surnameVBox = new VBox();
-	this.emailVBox = new VBox();
-	this.passwordVBox = new VBox();
-	this.repeatPasswordVBox = new VBox();
+	this.firstnameVBox = new VBox(SPACING_FIRSTNAME);
+	this.surnameVBox = new VBox(SPACING_SURNAME);
+	this.emailVBox = new VBox(SPACING_EMAIL);
+	this.passwordVBox = new VBox(SPACING_PASSWORD);
+	this.repeatPasswordVBox = new VBox(SPACING_REPEAT_PASSWORD);
 	this.hbox = new HBox();
 	this.borderPane = new BorderPane();
 	
@@ -84,12 +92,15 @@ public class RegistrationDialogPane extends DialogPane {
 	
 	 // Add buttonTypes
     this.okButtonType = new ButtonType("Erstellen", ButtonBar.ButtonData.OK_DONE);
-    this.getButtonTypes().add(new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE));
     this.getButtonTypes().add(okButtonType);
+    
+    this.cancelButtonType = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
+    this.getButtonTypes().add(cancelButtonType);
 	
+    // set content and text for content
 	this.setContentText("Account erstellen");
-		
 	
+	this.setContent(borderPane);
 		
 	}
 
@@ -259,6 +270,108 @@ public class RegistrationDialogPane extends DialogPane {
 
 	public void setCancelButtonType(ButtonType cancelButtonType) {
 		this.cancelButtonType = cancelButtonType;
+	}
+
+
+
+	public VBox getFirstnameVBox() {
+		return firstnameVBox;
+	}
+
+
+
+	public VBox getSurnameVBox() {
+		return surnameVBox;
+	}
+
+
+
+	public VBox getEmailVBox() {
+		return emailVBox;
+	}
+
+
+
+	public VBox getPasswordVBox() {
+		return passwordVBox;
+	}
+
+
+
+	public VBox getRepeatPasswordVBox() {
+		return repeatPasswordVBox;
+	}
+
+
+
+	public HBox getHbox() {
+		return hbox;
+	}
+
+
+
+	public int getSPACING_FIRSTNAME() {
+		return SPACING_FIRSTNAME;
+	}
+
+
+
+	public int getSPACING_SURNAME() {
+		return SPACING_SURNAME;
+	}
+
+
+
+	public int getSPACING_EMAIL() {
+		return SPACING_EMAIL;
+	}
+
+
+
+	public int getSPACING_PASSWORD() {
+		return SPACING_PASSWORD;
+	}
+
+
+
+	public int getSPACING_REPEAT_PASSWORD() {
+		return SPACING_REPEAT_PASSWORD;
+	}
+
+
+
+	public void setFirstnameVBox(VBox firstnameVBox) {
+		this.firstnameVBox = firstnameVBox;
+	}
+
+
+
+	public void setSurnameVBox(VBox surnameVBox) {
+		this.surnameVBox = surnameVBox;
+	}
+
+
+
+	public void setEmailVBox(VBox emailVBox) {
+		this.emailVBox = emailVBox;
+	}
+
+
+
+	public void setPasswordVBox(VBox passwordVBox) {
+		this.passwordVBox = passwordVBox;
+	}
+
+
+
+	public void setRepeatPasswordVBox(VBox repeatPasswordVBox) {
+		this.repeatPasswordVBox = repeatPasswordVBox;
+	}
+
+
+
+	public void setHbox(HBox hbox) {
+		this.hbox = hbox;
 	}
 
 }
