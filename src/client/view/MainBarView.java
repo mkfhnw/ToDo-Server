@@ -30,6 +30,7 @@ public abstract class MainBarView extends VBox {
 	private TableColumn<ToDo, String> important;
 	private TableColumn<ToDo, String> task;
 	private TableColumn<ToDo, String> dueDate;
+	private TableColumn<ToDo, String> priority;
 	private TableColumn<ToDo, String> checkBox;
 	private TableColumn<ToDo, String> garbage;
 	protected HBox header;
@@ -105,6 +106,9 @@ public abstract class MainBarView extends VBox {
 		this.dueDate = new TableColumn<>("Termin");
 		this.dueDate.setCellValueFactory(new PropertyValueFactory<ToDo, String>("dueDateString"));
 
+		this.priority = new TableColumn<>("Priorität");
+		this.priority.setCellValueFactory(new PropertyValueFactory<ToDo, String>("priority"));
+		
 		this.checkBox = new TableColumn<>("Erledigt");
 		this.checkBox.setCellValueFactory(new PropertyValueFactory<ToDo, String>("doneButton"));
 		
@@ -112,7 +116,7 @@ public abstract class MainBarView extends VBox {
 		this.garbage.setCellValueFactory(new PropertyValueFactory<ToDo, String>("garbageButton"));
 	
 		// Adds Columns to the TableView
-		this.tableView.getColumns().addAll(this.important, this.task, this.dueDate, this.checkBox, this.garbage);
+		this.tableView.getColumns().addAll(this.important, this.task, this.dueDate, this.priority, this.checkBox, this.garbage);
     	    
 		this.getChildren().addAll(tableView);
 						

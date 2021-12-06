@@ -42,6 +42,11 @@
     	-fx-background-color: #ffffff;
 	-fx-text-fill: #121d58;
 }
+.priority {
+    	-fx-background-color: #ffffff;
+	-fx-text-fill: #121d58;
+	-fx-alignment: CENTER;
+}
 .important {
     	-fx-background-color: #ffffff;
 	-fx-text-fill: #121d58;
