@@ -38,7 +38,7 @@ public class ToDo {
 		this.ID = -1;
 	}
 
-	public ToDo(String title, String message, LocalDate dueDate, Priority priority, String category) {
+	public ToDo(String title, String message, LocalDate dueDate, String category) {
 		this.ID = globalToDoId + 1;
 		globalToDoId++;
 		this.title = title;
@@ -46,7 +46,6 @@ public class ToDo {
 		this.dateOfCreation = LocalDate.now();
 		this.dueDate = dueDate;
 		this.dueDateString = this.dueDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-		this.priority = priority;
 		this.isDone = false;
 
 		this.categories = new ArrayList<>();
@@ -90,7 +89,7 @@ public class ToDo {
 		this.importantButton.getStyleClass().add("button");
 	}
 
-	public ToDo(String title, String message, LocalDate dueDate, Priority priority, String category, ArrayList<String> tags) {
+	public ToDo(String title, String message, LocalDate dueDate, String category, ArrayList<String> tags) {
 		this.ID = globalToDoId + 1;
 		globalToDoId++;
 		this.title = title;
@@ -99,7 +98,6 @@ public class ToDo {
 		this.dueDate = dueDate;
 		this.dueDateString = this.dueDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 		this.isDone = false;
-		this.priority = priority;
 		this.tags = tags;
 
 		this.categories = new ArrayList<>();
@@ -144,7 +142,7 @@ public class ToDo {
 
 	// Constructor used by the db-handler
 	public ToDo(String title, String message, LocalDate dateOfCreation,
-                LocalDate dueDate, Priority priority, ArrayList<String> categories, ArrayList<String> tags) {
+                LocalDate dueDate, ArrayList<String> categories, ArrayList<String> tags) {
 
 		this.ID = globalToDoId + 1;
 		ToDo.globalToDoId++;
@@ -153,7 +151,6 @@ public class ToDo {
 		this.dateOfCreation = dateOfCreation;
 		this.dueDate = dueDate;
 		this.dueDateString = this.dueDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-		this.priority = priority;
 		this.isDone = false;
 
 		this.categories = categories;
