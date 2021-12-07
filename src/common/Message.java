@@ -9,7 +9,7 @@ public class Message {
     // Fields
     private final Addressor sender;
     private final Addressor recipient;
-    private final String token;
+    private String token;
     private final ArrayList<String> messageParts;
     private final ArrayList<String> dataParts;
     private final MessageType messageType;
@@ -50,6 +50,8 @@ public class Message {
 
     // Constructor used to parse message from a messageString
     public Message(String messageString) {
+        // Result|true|token
+
         String[] stringParts = messageString.split("\\|");
         this.messageString = messageString;
         this.messageType = MessageType.valueOf(stringParts[0]);
@@ -59,6 +61,10 @@ public class Message {
         if(this.messageType == MessageType.CREATE_LOGIN || this.messageType == MessageType.LOGIN) {
             this.token = null;
         } else {this.token = stringParts[1];}
+
+        if(this.messageType == MessageType.RESULT && this.messageParts.size() == 3) {
+            this.token = messageParts.get(2);
+        }
 
         // Parse data parts
         if(this.token != null) {
