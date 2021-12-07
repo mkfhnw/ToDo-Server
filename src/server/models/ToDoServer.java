@@ -16,7 +16,7 @@ public class ToDoServer {
     private final int PORT = 50002;
     private boolean isActive;
     private ArrayList<Thread> clientThreads;
-    private volatile ArrayList<String> activeTokens;
+    private volatile ArrayList<Token> activeTokens;
 
     // Constructor
     public ToDoServer() {
@@ -73,11 +73,11 @@ public class ToDoServer {
 
     // Methods to update the token list
     public synchronized void insertToken(Token token) {
-        this.activeTokens.add(token.getTokenString());
+        this.activeTokens.add(token);
     }
 
     public synchronized void deleteToken(Token token) {
-        this.activeTokens.remove(token.getTokenString());
+        this.activeTokens.remove(token);
     }
 
     // Getter & Setter

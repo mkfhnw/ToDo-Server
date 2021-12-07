@@ -139,8 +139,8 @@ public class ClientNetworkPlugin {
             createToDoData.add(toDo.getTitle());
             createToDoData.add(toDo.getMessage());
             createToDoData.add(toDo.getDueDate().toString());
+            createToDoData.add(toDo.getPriority().toString());
             createToDoData.add(toDo.getCategory());
-            // data.add(toDo.getPriority()); --> DELETE TAGS?
             
             sendMessage("CREATE_TODO", createToDoData);
             

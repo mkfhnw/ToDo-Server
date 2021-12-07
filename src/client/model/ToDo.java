@@ -89,7 +89,9 @@ public class ToDo {
 		this.importantButton.getStyleClass().add("button");
 	}
 
-	public ToDo(String title, String message, LocalDate dueDate, String category, ArrayList<String> tags) {
+	// Used by the controller method createToDo()
+	public ToDo(String title, String message, LocalDate dueDate, String category, String priorityString,
+				ArrayList<String> tags) {
 		this.ID = globalToDoId + 1;
 		globalToDoId++;
 		this.title = title;
@@ -99,6 +101,7 @@ public class ToDo {
 		this.dueDateString = this.dueDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 		this.isDone = false;
 		this.tags = tags;
+		this.priority = Priority.valueOf(priorityString);
 
 		this.categories = new ArrayList<>();
 		this.categories.add("Geplant");
@@ -289,6 +292,7 @@ public class ToDo {
 		return this.categories;
 	}
 	public ArrayList<String> getTags() { return this.tags; }
+	public Priority getPriority() { return this.priority; }
 
 	// Setters
 	public void setTitle(String title) {
