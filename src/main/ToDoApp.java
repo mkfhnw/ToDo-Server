@@ -30,26 +30,24 @@ public class ToDoApp extends Application {
 	// Shows a GUI for the ToDo-App
 	
 	public void start(Stage stage) {
-
-		// 1. Instantiates the root todoView
+		
+		// Instantiates the root todoView
 		this.todoModel = new ToDo();
 		this.toDoList = new ToDoList();
 		this.toDoView = new ToDoView(todoModel, toDoList);
-		this.toDoController = new ToDoController(this.toDoView, this.todoModel, toDoList);
 		
-		// 1.1 Instance for LoginView
+		// Instance for LoginView
 		this.loginView = new LoginView();
 		
-		// 2. Passes the root to the scene
+		// Passes the root to the scene
 		Scene scene2 = new Scene(toDoView);
-		
-		// 2.1 Scene for LoginView
+				
+		// Scene for LoginView
 		Scene scene1 = new Scene(loginView);
 		
-		// open App
-		this.loginView.getSignInButton().setOnAction(e -> stage.setScene(scene2));
-		
-		// 3. Shows scene in a window (object stage)
+		this.toDoController = new ToDoController(this.toDoView, this.todoModel, toDoList, stage, scene2, loginView);
+
+		// Shows scene in a window (object stage)
 		stage.setScene(scene1);
 		stage.setTitle("ToDo-App");
 		stage.show();
@@ -68,5 +66,9 @@ public class ToDoApp extends Application {
 
 
 	}
+	
+	
+	
+	
 
 }

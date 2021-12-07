@@ -4,11 +4,13 @@ import client.ClientNetworkPlugin;
 import client.view.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -33,6 +35,8 @@ public class ToDoController implements Serializable {
     private final ToDoView toDoView;
     private final ToDo toDo;
     private final ToDoList toDoList;
+    private final Stage stage;
+    private final Scene scene2;
 
     private ImportantBarView importantBarView;
     private GarbageBarView garbageBarView;
@@ -47,17 +51,18 @@ public class ToDoController implements Serializable {
     private RegistrationDialogPane registrationView;
 
     // Constructor
-    public ToDoController(ToDoView toDoView, ToDo toDo, ToDoList toDoList) {
+    public ToDoController(ToDoView toDoView, ToDo toDo, ToDoList toDoList, Stage stage, Scene scene2, LoginView loginView) {
 
         this.toDoView = toDoView;
         this.toDo = toDo;
         this.toDoList = toDoList;
+        this.stage = stage;
+        this.scene2 = scene2;
+        this.loginView = loginView;
         
         this.focusModel = focusModel;
 
         this.clientNetworkPlugin = new ClientNetworkPlugin();
-        
-        this.loginView = new LoginView();
         
         this.registrationView = new RegistrationDialogPane();
         
@@ -102,6 +107,8 @@ public class ToDoController implements Serializable {
         // EventHandling for registration
         this.loginView.getRegisterButton().setOnMouseClicked(this::openRegistration);
         
+        // EventHandling to open ToDoApp
+        this.loginView.getSignInButton().setOnMouseClicked(this::openToDoApp);
        
         // Instantiate barchart with utils
         Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(0.3), new EventHandler<ActionEvent>() {
@@ -767,24 +774,28 @@ public class ToDoController implements Serializable {
   }
   
   // Plays HowTo video
+  
   public void playMedia(MouseEvent event) {
 	  
 	  this.toDoView.getHowToDialogPane().getMediaPlayer().play();
   }
   
   //Stops HowTo video
+  
   public void stopMedia(MouseEvent event) {
 	  
 	  this.toDoView.getHowToDialogPane().getMediaPlayer().pause();
 	  
   }
   //Replays HowTo video
+  
   public void replayMedia(MouseEvent event) {
 	  
 	  this.toDoView.getHowToDialogPane().getMediaPlayer().stop();
 	  
   }
   
+ 
   public void getLogin() {
 	  	
 	String emailLogin = loginView.getUserField().getText();
@@ -841,8 +852,17 @@ public class ToDoController implements Serializable {
       
     	  // save login?
   }
+  
+  
+  public void openToDoApp(MouseEvent event) {
+	  
+	  Platform.runLater(() -> {
+	  this.stage.setScene(scene2);
+	  stage.show();
+  
+  });
       
-
+  }
 
 
 
