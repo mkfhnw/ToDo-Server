@@ -105,6 +105,13 @@ public class ClientNetworkPlugin {
 
         	// Fails if name/password do not match --> Server
 
+            // Receive server response
+            // String responseString = this.receiveMessage();
+            // Message serverResponse = new Message(responseString);
+
+            // Set token
+            // this.token = serverResponse.getToken();
+
         }
         
         public void logout() {
