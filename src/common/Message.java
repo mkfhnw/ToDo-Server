@@ -26,7 +26,37 @@ public class Message {
         this.dataParts = this.parseDataParts(data);
     }
 
+    // Constructor used to parse message from a messageString
+    public Message(String messageString) {
 
+        // Check if message contains the | sign and split parts by it if so
+        String[] stringParts;
+        if(messageString.contains("|")) { stringParts = messageString.split("\\|"); }
+        else { stringParts = new String[1]; stringParts[0] = messageString; }
+
+        this.messageString = messageString;
+        this.messageType = MessageType.valueOf(stringParts[0]);
+        this.messageParts = new ArrayList<>(Arrays.asList(stringParts));
+
+        // Parse token
+        this.parseToken(stringParts);
+
+        // Parse data parts
+        if(this.token != null) {
+            this.dataParts = new ArrayList<>(this.messageParts.subList(2, (this.messageParts.size())));
+        } else { this.dataParts = new ArrayList<>(this.messageParts.subList(1, (this.messageParts.size()))); }
+
+        // Parse sender & Recipient
+        if (this.messageType == MessageType.RESULT) {
+            this.sender = Addressor.SERVER;
+            this.recipient = Addressor.CLIENT;
+        } else {
+            this.sender = Addressor.CLIENT;
+            this.recipient = Addressor.SERVER;
+        }
+    }
+
+    // DEPRECATED
     // Constructor used by the server to receive a message
     public Message(String sender, String recipient, String token, String messageString) {
         this.sender = Addressor.valueOf(sender.toUpperCase());
@@ -48,38 +78,6 @@ public class Message {
 
     }
 
-    // Constructor used to parse message from a messageString
-    public Message(String messageString) {
-        // Result|true|token
-
-        String[] stringParts = messageString.split("\\|");
-        this.messageString = messageString;
-        this.messageType = MessageType.valueOf(stringParts[0]);
-        this.messageParts = new ArrayList<>(Arrays.asList(stringParts));
-
-        // Parse token
-        if(this.messageType == MessageType.CREATE_LOGIN || this.messageType == MessageType.LOGIN) {
-            this.token = null;
-        } else {this.token = stringParts[1];}
-
-        if(this.messageType == MessageType.RESULT && this.messageParts.size() == 3) {
-            this.token = messageParts.get(2);
-        }
-
-        // Parse data parts
-        if(this.token != null) {
-            this.dataParts = new ArrayList<>(this.messageParts.subList(2, (this.messageParts.size())));
-        } else { this.dataParts = new ArrayList<>(this.messageParts.subList(1, (this.messageParts.size()))); }
-
-        // Parse sender & Recipient
-        if (this.messageType == MessageType.RESULT) {
-            this.sender = Addressor.SERVER;
-            this.recipient = Addressor.CLIENT;
-        } else {
-            this.sender = Addressor.CLIENT;
-            this.recipient = Addressor.SERVER;
-        }
-    }
 
 
     // Custom methods
@@ -97,6 +95,7 @@ public class Message {
 
         return messageType.toString() + "|" + token + "|" + stringBuilder.toString();
     }
+
     private ArrayList<String> parseDataParts(ArrayList<String> data) {
 
         // If data is empty, return empty arrayList
@@ -105,6 +104,27 @@ public class Message {
         // Otherwise, return the list as is
         return data;
 
+    }
+
+    private void parseToken(String[] stringParts) {
+
+        // Parses token for messages with MessageType only
+        if(this.messageParts.size() == 1) { this.token = null; }
+
+        // Parses token for CREATE_LOGIN and LOGIN Message Types
+        if(this.messageType == MessageType.CREATE_LOGIN || this.messageType == MessageType.LOGIN) {
+            this.token = null;
+        } else {this.token = stringParts[1];}
+
+        // Parses token for RESULT Message Types
+        if(this.messageType == MessageType.RESULT && this.messageParts.size() == 3) {
+            this.token = messageParts.get(2);
+        }
+
+        // Parses token for the LOGOUT Message Type
+        if(this.messageType == MessageType.LOGOUT && this.messageParts.size() == 2) {
+            this.token = messageParts.get(1);
+        }
     }
 
     // Getters

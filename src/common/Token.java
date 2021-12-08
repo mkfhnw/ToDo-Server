@@ -19,6 +19,7 @@ public class Token {
     // A fresh token must always be unique - otherwise one could either forge or calculate a token and hijack a session
     // To generate a unique token, we will hash a random byte array and append a counter to the end of the hexdigest of it
     // This way, we'll generate a 'continuously random' string and somewhat avoid the birthday problem.
+    // Tokens have a 15min time to live, measured in UnixTime.
     public Token() {
 
         // Count up
