@@ -3,6 +3,7 @@ package common;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Message {
 
@@ -128,11 +129,14 @@ public class Message {
     }
 
     // Getters
-    public Addressor getSender() { return sender; }
-    public Addressor getRecipient() { return recipient; }
-    public ArrayList<String> getMessageParts() { return messageParts; }
-    public MessageType getMessageType() { return messageType; }
-    public String getToken() { return token; }
-    public ArrayList<String> getDataParts() { return dataParts; }
+    public Addressor getSender() { return this.sender; }
+    public Addressor getRecipient() { return this.recipient; }
+    public ArrayList<String> getMessageParts() { return this.messageParts; }
+    public MessageType getMessageType() { return this.messageType; }
+    public ArrayList<String> getDataParts() { return this.dataParts; }
     public String getMessageString() { return messageString + "\n"; }
+    public String getToken() {
+        // Returns 0 if the token is null
+        return Objects.requireNonNullElse(this.token, "0");
+    }
 }

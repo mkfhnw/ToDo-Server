@@ -238,6 +238,15 @@ public class ServerRunnable implements Runnable {
     }
 	
 	private void reactToLogout(Message clientMessage) {
+
+        // Just send trueResult if no token is provided
+        if(clientMessage.getToken().equals("0")) { this.sendMessage(this.trueResult); return; }
+
+        // If a token is provided, delete it from the tokenList on the server parent class
+        if(!clientMessage.getToken().equals("0")) {
+            this.sendMessage(this.trueResult);
+            this.parent.deleteToken(clientMessage.getToken());
+        }
 		
 	}
     

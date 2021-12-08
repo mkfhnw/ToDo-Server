@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ToDoServer {
 
@@ -76,7 +78,12 @@ public class ToDoServer {
         this.activeTokens.add(token);
     }
 
-    public synchronized void deleteToken(Token token) {
+    public synchronized void deleteToken(String tokenString) {
+        List<Token> tokenList = this.activeTokens
+                .stream()
+                .filter(t -> t.getTokenString().equals(tokenString))
+                .collect(Collectors.toList());
+        Token token = tokenList.get(0);
         this.activeTokens.remove(token);
     }
 
