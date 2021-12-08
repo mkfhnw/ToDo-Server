@@ -73,19 +73,25 @@ public class ToDoServer {
     }
 
 
-    // Methods to update the token list
+    // Methods to work with the token list
     public synchronized void insertToken(Token token) {
         this.activeTokens.add(token);
+        System.out.println("[SERVER] Token added.");
     }
 
     public synchronized void deleteToken(String tokenString) {
+        Token token = this.getToken(tokenString);
+        this.activeTokens.remove(token);
+        System.out.println("[SERVER] Token deleted.");
+    }
+
+    public synchronized Token getToken(String tokenString) {
         List<Token> tokenList = this.activeTokens
                 .stream()
                 .filter(t -> t.getTokenString().equals(tokenString))
                 .collect(Collectors.toList());
         Token token = tokenList.get(0);
-        this.activeTokens.remove(token);
-        System.out.println("Token removed");
+        return token;
     }
 
     // Getter & Setter

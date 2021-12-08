@@ -96,7 +96,6 @@ public class ServerRunnable implements Runnable {
                 // Build string from sent message
                 String inputString = this.inputReader.readLine();
                 System.out.println("[SERVER-RUNNABLE] Received message: " + inputString);
-                Thread.sleep(3000);
 
                 // Parse messageString to a "message"
                 // Message clientMessage = new Message(this.recipient, this.sender, this.defaultToken, inputString);
@@ -107,14 +106,12 @@ public class ServerRunnable implements Runnable {
                     // Perform action based on messageType
                     case LOGIN -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to LOGIN...");
-                        Thread.sleep(3000);
                         this.reactToLogin(clientMessage);
                         break;
                     }
                     
                     case LOGOUT -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to LOGOUT...");
-                        Thread.sleep(3000);
                     	this.reactToLogout(clientMessage);
 
                         System.out.println("[SERVER-RUNNABLE] User logged out, shutting down socket connection.");
@@ -125,49 +122,42 @@ public class ServerRunnable implements Runnable {
                     
                     case CREATE_LOGIN -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to CREATE_LOGIN...");
-                        Thread.sleep(3000);
                     	this.reactToCreateLogin(clientMessage);
                     	break;
                     }
                     
                     case CREATE_TODO -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to CREATE_TODO...");
-                        Thread.sleep(3000);
                     	this.reactToCreateToDo(clientMessage);
                     	break;
                     }
                     
                     case CHANGE_PASSWORD -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to CHANGE_PASSWORD...");
-                        Thread.sleep(3000);
                     	this.reactToChangePassword(clientMessage);
                     	break;
                     }
                     
                     case GET_TODO -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to GET_TODO...");
-                        Thread.sleep(3000);
                     	this.reactToGetToDo(clientMessage);
                     	break;
                     }
                     
                     case DELETE_TODO -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to DELETE_TODO...");
-                        Thread.sleep(3000);
                     	this.reactToDeleteToDo(clientMessage);
                     	break;
                     }
                     
                     case LIST_TODOS -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to LIST_TODOS...");
-                        Thread.sleep(3000);
                     	this.reactToListToDos(clientMessage);
                     	break;
                     }
                     
                     case PING -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to PING...");
-                        Thread.sleep(3000);
                     	this.reactToPing(clientMessage);
                     	break;
                     }
@@ -203,7 +193,7 @@ public class ServerRunnable implements Runnable {
         String password = clientMessage.getDataParts().get(1);
 
         // Validate user input
-        InputValidator inputValidator = new InputValidator();
+        InputValidator inputValidator = InputValidator.getInputValidator();
         boolean usernameIsValid = inputValidator.validateUsername(username);
         boolean passwordIsValid = inputValidator.validatePassword(password);
         boolean userDoesAlreadyExist = DatabaseManager.doesDatabaseExist(username.split("@")[0]);
@@ -261,7 +251,7 @@ public class ServerRunnable implements Runnable {
         String password = clientMessage.getDataParts().get(1);
 
         // Validate user input
-        InputValidator inputValidator = new InputValidator();
+        InputValidator inputValidator = InputValidator.getInputValidator();
         boolean usernameIsValid = inputValidator.validateUsername(username);
         boolean passwordIsValid = inputValidator.validatePassword(password);
         boolean userDoesAlreadyExist = DatabaseManager.doesDatabaseExist(username.split("@")[0]);
@@ -283,15 +273,53 @@ public class ServerRunnable implements Runnable {
 	}
     
     private void reactToCreateToDo(Message clientMessage) {
-    	
-    	//String title = clientMessage.getDataParts().get(0);
-    	//String message = clientMessage.getDataParts().get(1);
-    	//String dueDateAsString = clientMessage.getDataParts().get(2);
-    	
-    	//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-    	//LocalDate dueDate = LocalDate.parse(dueDateAsString, dtf);
-    	
-    	//ToDo toDo = new ToDo(title, message, dueDate);
+
+        // Parse out token
+        String tokenString = clientMessage.getToken();
+        Token token = this.parent.getToken(tokenString);
+
+        // If token is invalid, send negative response
+        InputValidator inputValidator = InputValidator.getInputValidator();
+        if(!inputValidator.isTokenStillAlive(token)) {
+            this.sendMessage(this.falseResult);
+            return;
+        }
+
+        // If token is valid, go ahead
+        if(inputValidator.isTokenStillAlive(token)) {
+
+            // Parse username
+            String username = token.getUser();
+
+            // Create database manager
+            DatabaseManager databaseManager = new DatabaseManager(username.split("@")[0]);
+
+            // Parse out item details to pass to the database manager
+            String title = clientMessage.getDataParts().get(0);
+            String priority = clientMessage.getDataParts().get(1);
+            String description = null;
+            if(clientMessage.getDataParts().size() >= 3) { description = clientMessage.getDataParts().get(2); }
+            String dueDate = null;
+            if(clientMessage.getDataParts().size() == 4) { dueDate = clientMessage.getDataParts().get(3); }
+
+            // Choose fitting constructor based on how many inputs we have
+            if(description == null && dueDate == null) {
+                // databaseManager.createItem()
+            }
+
+            if(description == null && dueDate != null) {
+                // databaseManager.createItem();
+            }
+
+            if(description != null && dueDate == null) {
+                // databaseManager.createItem();
+            }
+
+            if(description != null && dueDate != null) {
+                int itemID = databaseManager.createItem(title, priority, description, dueDate);
+                this.sendMessage(trueResult + "|" + itemID);
+            }
+        }
     	
 		
 	}

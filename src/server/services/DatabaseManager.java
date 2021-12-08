@@ -111,4 +111,36 @@ public class DatabaseManager {
         }
     }
 
+    // CRUD-Methods
+    // CREATE Method with all parameters
+    public int createItem(String title, String priority, String description, String dueDate) {
+        try(Connection connection = DriverManager.getConnection(this.connectionString);
+            Statement statement = connection.createStatement();) {
+
+            // Build string
+            String insertString = "INSERT INTO Items(Account_ID, Title, Priority, Description, DueDate) VALUES(?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(insertString);
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setString(2, title);
+            preparedStatement.setString(3, priority);
+            preparedStatement.setString(4, description);
+            preparedStatement.setString(4, dueDate);
+
+            // Execute update
+            preparedStatement.executeUpdate();
+
+            // Grab item ID
+            String selectStatement = "SELECT ToDo_ID FROM Items ORDER BY ToDo_ID ASC";
+            ResultSet resultSet = statement.executeQuery(selectStatement);
+            int highestId = -1;
+            while(resultSet.next()) { highestId = resultSet.getInt("ToDo_ID"); }
+
+            return highestId;
+
+        } catch (Exception e) {
+            System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
+            return -1;
+        }
+    }
+
 }

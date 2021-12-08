@@ -7,6 +7,14 @@ import common.Token;
  */
 public class InputValidator {
 
+    // Singleton field
+    private static InputValidator inputValidator;
+
+    // Private constructor since we work with a factory method
+    public static InputValidator getInputValidator() {
+        if(inputValidator == null) { inputValidator = new InputValidator(); }
+        return inputValidator;
+    }
 
     // Returns true if username contains an @ and does neither start nor end with a "."
     public boolean validateUsername(String username) {
