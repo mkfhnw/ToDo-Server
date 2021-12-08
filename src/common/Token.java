@@ -10,6 +10,9 @@ public class Token {
     // Fields
     private String tokenString;
     private String user;
+    private final int timeToLive = 900000;
+    private final long unixTimeOfCreation = System.currentTimeMillis() / 1000L;
+    private final long unixTimeOfDeath = this.unixTimeOfCreation + this.timeToLive;
     public static int globalCounter = 0;
 
     // Constructor
@@ -45,8 +48,11 @@ public class Token {
             // Set as field
             this.tokenString = randomString;
 
+
         } catch (Exception e) {
             System.out.println("[TOKEN-EXCEPTION] " + e.getMessage());
+
+
         }
 
     }
@@ -56,6 +62,7 @@ public class Token {
         return this.tokenString;
     }
     public String getUser() { return this.user; }
+    public long getUnixTimeOfDeath() { return this.unixTimeOfDeath; }
 
     // Setter
     public void setUser(String username) { this.user = username; }

@@ -26,6 +26,7 @@
 ### Server-Side features
 - [x] User input validation
 - [x] Store information in SQLite database
+- [x] Tokens have a 15min time to live
 
 ### Client-Side features
 - [x] 
