@@ -12,6 +12,7 @@ import java.net.Socket;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import client.model.ToDo;
 
@@ -116,6 +117,8 @@ public class ServerRunnable implements Runnable {
                         Thread.sleep(3000);
                     	this.reactToLogout(clientMessage);
 
+                        System.out.println("[SERVER-RUNNABLE] User logged out, shutting down socket connection.");
+                        shouldRun = false;
                         this.clientSocket.close();
                     	break;
                     }
@@ -176,6 +179,7 @@ public class ServerRunnable implements Runnable {
 
             } catch (Exception e) {
                 System.out.println("[SERVER-RUNNABLE] EXCEPTION: " + e.getMessage());
+                System.out.println("[SERVER-RUNNABLE] EXCEPTION: " + Arrays.toString(e.getStackTrace()));
                 if(this.clientSocket.isClosed()) { shouldRun = false; }
 
                 // Socket gets closed
@@ -240,7 +244,7 @@ public class ServerRunnable implements Runnable {
 	private void reactToLogout(Message clientMessage) {
 
         // Just send trueResult if no token is provided
-        if(clientMessage.getToken().equals("0")) { this.sendMessage(this.trueResult); return; }
+        if(clientMessage.getToken().equals("0")) { this.sendMessage(this.trueResult); }
 
         // If a token is provided, delete it from the tokenList on the server parent class
         if(!clientMessage.getToken().equals("0")) {

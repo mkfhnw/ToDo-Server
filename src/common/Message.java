@@ -45,7 +45,14 @@ public class Message {
         // Parse data parts
         if(this.token != null) {
             this.dataParts = new ArrayList<>(this.messageParts.subList(2, (this.messageParts.size())));
-        } else { this.dataParts = new ArrayList<>(this.messageParts.subList(1, (this.messageParts.size()))); }
+        } else {
+            if(this.messageParts.size() > 1) {
+                this.dataParts = new ArrayList<>(this.messageParts.subList(1, (this.messageParts.size())));
+            } else {
+                this.dataParts = new ArrayList<>();
+            }
+
+        }
 
         // Parse sender & Recipient
         if (this.messageType == MessageType.RESULT) {
@@ -110,7 +117,7 @@ public class Message {
     private void parseToken(String[] stringParts) {
 
         // Parses token for messages with MessageType only
-        if(this.messageParts.size() == 1) { this.token = null; }
+        if(this.messageParts.size() == 1) { this.token = null; return; }
 
         // Parses token for CREATE_LOGIN and LOGIN Message Types
         if(this.messageType == MessageType.CREATE_LOGIN || this.messageType == MessageType.LOGIN) {

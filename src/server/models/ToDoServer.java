@@ -85,6 +85,7 @@ public class ToDoServer {
                 .collect(Collectors.toList());
         Token token = tokenList.get(0);
         this.activeTokens.remove(token);
+        System.out.println("Token removed");
     }
 
     // Getter & Setter
