@@ -142,5 +142,25 @@ public class DatabaseManager {
             return -1;
         }
     }
+    
+    public void deleteItem(String ID) {
+    	try(Connection connection = DriverManager.getConnection(this.connectionString);
+                Statement statement = connection.createStatement();) {
+    			
+    			String IdAsString = ID;
+    			
+                // Build string
+                String insertString = "DELETE FROM Items WHERE ToDo_ID = " + IdAsString;
+                PreparedStatement preparedStatement = connection.prepareStatement(insertString);
+             
+                // Execute update
+                preparedStatement.executeUpdate();
+                System.out.println("[DATABASE] ITEM DELETED");
+
+            } catch (Exception e) {
+                System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
+                
+            }
+    }
 
 }
