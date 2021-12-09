@@ -27,7 +27,7 @@ public class ToDoApp extends Application {
 		launch(args);
 	}
 	
-	// Shows a GUI for the ToDo-App
+	// Shows a GUI for the App
 	
 	public void start(Stage stage) {
 		

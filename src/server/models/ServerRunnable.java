@@ -9,6 +9,8 @@ import server.services.InputValidator;
 
 import java.io.*;
 import java.net.Socket;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 /* The ClientRunnable class
@@ -282,8 +284,26 @@ public class ServerRunnable implements Runnable {
             String title = clientMessage.getDataParts().get(0);
             String priority = clientMessage.getDataParts().get(1);
             String description = null;
-            if(clientMessage.getDataParts().size() >= 3) { description = clientMessage.getDataParts().get(2); }
             String dueDate = null;
+
+            // Check which parameter is missing by trying to convert the 3 parameter to a LocalDate
+            if(clientMessage.getDataParts().size() >= 3) {
+                try {
+
+                    // If we can convert the 3 parameter to a LocalDate, it is in fact a date
+                    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    LocalDate localDate = LocalDate.parse(clientMessage.getDataParts().get(2), dateTimeFormatter);
+                    dueDate = clientMessage.getDataParts().get(2);
+
+                } catch (Exception e) {
+
+                    // If we catch an exception, the string is a description and not a dueDate
+                    description = clientMessage.getDataParts().get(2);
+                    dueDate = null;
+
+                }
+            }
+
             if(clientMessage.getDataParts().size() == 4) { dueDate = clientMessage.getDataParts().get(3); }
 
             // Choose fitting constructor based on how many inputs we have
