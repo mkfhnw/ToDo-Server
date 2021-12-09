@@ -105,7 +105,8 @@ public class ClientNetworkPlugin {
 
         	// Fails if name/password do not match --> Server
 
-            // Receive server response
+            // Receive server response case        	
+        	
             // String responseString = this.receiveMessage();
             // Message serverResponse = new Message(responseString);
 
@@ -144,10 +145,11 @@ public class ClientNetworkPlugin {
 
             ArrayList<String> createToDoData = new ArrayList<>();
             createToDoData.add(toDo.getTitle());
+            createToDoData.add(toDo.getPriority().toString());
             createToDoData.add(toDo.getMessage());
             createToDoData.add(toDo.getDueDate().toString());
-            createToDoData.add(toDo.getPriority().toString());
-            createToDoData.add(toDo.getCategory());
+            
+            //createToDoData.add(toDo.getCategory());
             
             sendMessage("CREATE_TODO", createToDoData);
             
