@@ -9,12 +9,7 @@ import server.services.InputValidator;
 
 import java.io.*;
 import java.net.Socket;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
-
-import client.model.ToDo;
 
 /* The ClientRunnable class
  * The ClientRunnable is a class that implements the Runnable interface.
@@ -25,12 +20,9 @@ import client.model.ToDo;
 public class ServerRunnable implements Runnable {
 
     // Fields
-    private Socket clientSocket;
-    private BufferedReader inputReader;
-    private PrintWriter outputWriter;
-    private final String defaultToken = "3963c9cae5c5aeaa71f287190774db4d354287c7973e969e9d6c5722c1037a33";
-    private final String sender = "Server";
-    private final String recipient = "Client";
+    private final Socket clientSocket;
+    private final BufferedReader inputReader;
+    private final PrintWriter outputWriter;
     private final String falseResult = "Result|false\n";
     private final String trueResult = "Result|true\n";
     private final String trueResultWithoutNewline = "Result|true|";
@@ -52,8 +44,7 @@ public class ServerRunnable implements Runnable {
     // Private helper methods to keep constructor clean of try/catch-clauses
     private BufferedReader getInputReader(Socket clientSocket) {
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            return bufferedReader;
+            return new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -79,7 +70,7 @@ public class ServerRunnable implements Runnable {
     }
 
     /* The run method
-     * On a new connection, the serverScket creates a new thread using this runnable. As soon as the thread gets
+     * On a new connection, the serverSocket creates a new thread using this runnable. As soon as the thread gets
      * started, this run method gets called. Inside this run method, we listen for calls from the client until the
      * client sends the LOGOUT-message type. On reception of the LOGOUT-message, the socket gets closed and the runnable
      * comes to an end - which means the above thread closes as well.
@@ -108,7 +99,6 @@ public class ServerRunnable implements Runnable {
                     case LOGIN -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to LOGIN...");
                         this.reactToLogin(clientMessage);
-                        break;
                     }
                     
                     case LOGOUT -> {
@@ -118,54 +108,46 @@ public class ServerRunnable implements Runnable {
                         System.out.println("[SERVER-RUNNABLE] User logged out, shutting down socket connection.");
                         shouldRun = false;
                         this.clientSocket.close();
-                    	break;
                     }
                     
                     case CREATE_LOGIN -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to CREATE_LOGIN...");
                     	this.reactToCreateLogin(clientMessage);
-                    	break;
                     }
                     
                     case CREATE_TODO -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to CREATE_TODO...");
                     	this.reactToCreateToDo(clientMessage);
-                    	break;
                     }
                     
                     case CHANGE_PASSWORD -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to CHANGE_PASSWORD...");
                     	this.reactToChangePassword(clientMessage);
-                    	break;
                     }
                     
                     case GET_TODO -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to GET_TODO...");
                     	this.reactToGetToDo(clientMessage);
-                    	break;
                     }
                     
                     case DELETE_TODO -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to DELETE_TODO...");
                     	this.reactToDeleteToDo(clientMessage);
-                    	break;
                     }
                     
                     case LIST_TODOS -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to LIST_TODOS...");
                     	this.reactToListToDos(clientMessage);
-                    	break;
                     }
                     
                     case PING -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to PING...");
                     	this.reactToPing(clientMessage);
-                    	break;
                     }
 
                 }
 
-                // Make the loop lay back for a bit - only for dev purpose
+                // Make the loop lay back for a bit - your CPU says "Thank you!"
                 Thread.sleep(1000);
 
             } catch (Exception e) {
@@ -177,7 +159,7 @@ public class ServerRunnable implements Runnable {
                 try {
                     this.clientSocket.close();
                 } catch (IOException ex) {
-                    System.out.println("[SERVER-RUNNABLE] EXCEPTION: " + ex.getMessage());;
+                    System.out.println("[SERVER-RUNNABLE] EXCEPTION: " + ex.getMessage());
                 }
                 
             }
