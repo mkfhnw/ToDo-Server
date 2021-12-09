@@ -11,6 +11,7 @@ import java.io.*;
 import java.net.Socket;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /* The ClientRunnable class
@@ -384,11 +385,21 @@ public class ServerRunnable implements Runnable {
         if(inputValidator.isTokenStillAlive(token)) {
 
             // Parse username
-            String username = token.getUser();
+            String username = token.getUser().split("@")[0];
 
             // Create DatabaseManager
             DatabaseManager databaseManager = new DatabaseManager(username);
+            ArrayList<String> itemData = databaseManager.getToDo(clientMessage.getDataParts().get(0));
 
+            // If itemData is empty, the item in question does not exist - return false
+            if(itemData.size() == 0) {
+                this.sendMessage(this.falseResult);
+                return;
+            }
+
+            // Otherwise, create response
+            Message message = new Message(itemData);
+            this.sendMessage(message.getMessageString());
         }
 		
 	

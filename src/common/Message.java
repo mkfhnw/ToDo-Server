@@ -64,6 +64,18 @@ public class Message {
         }
     }
 
+    // Constructor only used by the server to create a message
+    public Message(ArrayList<String> dataParts) {
+        this.sender = Addressor.SERVER;
+        this.recipient = Addressor.CLIENT;
+        this.token = null;
+        this.messageType = MessageType.RESULT;
+        this.messageString = this.buildMessageString(this.messageType, this.token, dataParts);
+        String[] stringParts = this.messageString.split("\\|");
+        this.messageParts = new ArrayList<>(Arrays.asList(stringParts));
+        this.dataParts = new ArrayList<>(this.messageParts.subList(2, this.messageParts.size()));
+    }
+
     // DEPRECATED
     // Constructor used by the server to receive a message
     public Message(String sender, String recipient, String token, String messageString) {
@@ -99,7 +111,13 @@ public class Message {
         // Delete last |-char
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
 
-        return messageType.toString() + "|" + token + "|" + stringBuilder.toString();
+        // Check if message has a token
+        if(token == null) {
+            return messageType.toString() + "|true|" + stringBuilder.toString();
+        } else {
+            return messageType.toString() + "|" + token + "|" + stringBuilder.toString();
+        }
+
     }
 
     private ArrayList<String> parseDataParts(ArrayList<String> data) {
