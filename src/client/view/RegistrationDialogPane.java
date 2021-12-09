@@ -8,6 +8,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class RegistrationDialogPane extends DialogPane {
 	
@@ -26,68 +29,103 @@ public class RegistrationDialogPane extends DialogPane {
 	
 	// Layout
 	private BorderPane borderPane;
-	private VBox firstnameVBox;
-	private VBox surnameVBox;
-	private VBox emailVBox;
-	private VBox passwordVBox;
-	private VBox repeatPasswordVBox;
-	private HBox hbox;
+	private HBox firstnamePane;
+	private HBox surnamePane;
+	private HBox emailPane;
+	private HBox passwordPane;
+	private HBox repeatPasswordPane;
+	private VBox header;
+	private VBox vBox;
+	private HBox space;
+
 	
 	// Buttontypes for DialogPane
 	private ButtonType okButtonType;
 	private ButtonType cancelButtonType;
 	
-	// Spacings for Layout
-	private final int SPACING_FIRSTNAME = 15;
-    private final int SPACING_SURNAME = 43;
-    private final int SPACING_EMAIL = 28;
-    private final int SPACING_PASSWORD = 40;
-    private final int SPACING_REPEAT_PASSWORD = -10;
-	
+	// Spacing for Layout
+	private final int SPACING_FIRSTNAME = 100;
+	private final int SPACING_SURNAME = 90;
+	private final int SPACING_EMAIL = 60;
+	private final int SPACING_PASSWORD = 100;
+	private final int SPACING_REPEAT_PASSWORD = 12;
+	private final int SPACING_HEADER = 150;
+	private final int SPACING = 15;
 
+	// Size for TextFields
+	private final int SIZE_TEXTFIELDS = 250;
+	
 	// Constructor
+	
 	public RegistrationDialogPane() {
 	
+		
+	// Fields for the registration formula and design
+		
 	this.title = new Label("Account erstellen");
+	this.title.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
+	this.title.setTextFill(Color.web("#181C54"));
 	
 	this.firstnameLabel = new Label("Vorname");
+	this.firstnameLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+	this.firstnameLabel.setTextFill(Color.web("#181C54"));
 	this.firstnameField = new TextField();
+	this.firstnameField.setPrefWidth(SIZE_TEXTFIELDS);
 	
 	this.surnameLabel = new Label("Nachname");
+	this.surnameLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+	this.surnameLabel.setTextFill(Color.web("#181C54"));
 	this.surnameField = new TextField();
+	this.surnameField.setPrefWidth(SIZE_TEXTFIELDS);
 	
 	this.emailLabel = new Label("E-Mail-Adresse");
+	this.emailLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+	this.emailLabel.setTextFill(Color.web("#181C54"));
 	this.emailField = new TextField();
+	this.emailField = new TextField();
+	this.emailField.setPrefWidth(SIZE_TEXTFIELDS);
 	
 	this.passwordLabel = new Label("Passwort");
+	this.passwordLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+	this.passwordLabel.setTextFill(Color.web("#181C54"));
 	this.passwordField = new TextField();
+	this.passwordField = new TextField();
+	this.passwordField.setPrefWidth(SIZE_TEXTFIELDS);
 	
 	this.repeatPasswordLabel = new Label("Passwort wiederholen");
+	this.repeatPasswordLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+	this.repeatPasswordLabel.setTextFill(Color.web("#181C54"));
 	this.repeatPasswordField = new TextField();
+	this.repeatPasswordField = new TextField();
+	this.repeatPasswordField.setPrefWidth(SIZE_TEXTFIELDS);
 	
-	this.firstnameVBox = new VBox(SPACING_FIRSTNAME);
-	this.surnameVBox = new VBox(SPACING_SURNAME);
-	this.emailVBox = new VBox(SPACING_EMAIL);
-	this.passwordVBox = new VBox(SPACING_PASSWORD);
-	this.repeatPasswordVBox = new VBox(SPACING_REPEAT_PASSWORD);
-	this.hbox = new HBox();
+	// Layout
 	this.borderPane = new BorderPane();
+	this.firstnamePane = new HBox(SPACING_FIRSTNAME);
+	this.surnamePane = new HBox(SPACING_SURNAME);
+	this.emailPane = new HBox(SPACING_EMAIL);
+	this.passwordPane = new HBox(SPACING_PASSWORD);
+	this.repeatPasswordPane = new HBox(SPACING_REPEAT_PASSWORD);
+	this.header = new VBox(SPACING_HEADER);
+	this.vBox = new VBox(SPACING);
 	
-	this.firstnameVBox.getChildren().addAll(firstnameLabel, firstnameField);
-	this.surnameVBox.getChildren().addAll(surnameLabel, surnameField);
-	this.emailVBox.getChildren().addAll(emailLabel, emailField);
-	this.passwordVBox.getChildren().addAll(passwordLabel, passwordField);
-	this.repeatPasswordVBox.getChildren().addAll(repeatPasswordLabel, repeatPasswordField);
-	this.hbox.getChildren().addAll(
-			firstnameVBox, 
-			surnameVBox,
-			emailVBox,
-			passwordVBox, 
-			repeatPasswordVBox);
+	// Add Fields to Layout
+	this.header.getChildren().add(title);
+	this.firstnamePane.getChildren().addAll(firstnameLabel, firstnameField);
+	this.surnamePane.getChildren().addAll(surnameLabel, surnameField);
+	this.emailPane.getChildren().addAll(emailLabel, emailField);
+	this.passwordPane.getChildren().addAll(passwordLabel, passwordField);
+	this.repeatPasswordPane.getChildren().addAll(repeatPasswordLabel, repeatPasswordField);
+	this.vBox.getChildren().addAll(
+			header,
+			firstnamePane, 
+			surnamePane, 
+			emailPane, 
+			passwordPane,
+			repeatPasswordPane);
 	
-	this.borderPane.setTop(title);
-	this.borderPane.setCenter(hbox);
-	
+	this.borderPane.setTop(header);
+	this.borderPane.setCenter(vBox);
 	
 	
 	 // Add buttonTypes
@@ -270,108 +308,6 @@ public class RegistrationDialogPane extends DialogPane {
 
 	public void setCancelButtonType(ButtonType cancelButtonType) {
 		this.cancelButtonType = cancelButtonType;
-	}
-
-
-
-	public VBox getFirstnameVBox() {
-		return firstnameVBox;
-	}
-
-
-
-	public VBox getSurnameVBox() {
-		return surnameVBox;
-	}
-
-
-
-	public VBox getEmailVBox() {
-		return emailVBox;
-	}
-
-
-
-	public VBox getPasswordVBox() {
-		return passwordVBox;
-	}
-
-
-
-	public VBox getRepeatPasswordVBox() {
-		return repeatPasswordVBox;
-	}
-
-
-
-	public HBox getHbox() {
-		return hbox;
-	}
-
-
-
-	public int getSPACING_FIRSTNAME() {
-		return SPACING_FIRSTNAME;
-	}
-
-
-
-	public int getSPACING_SURNAME() {
-		return SPACING_SURNAME;
-	}
-
-
-
-	public int getSPACING_EMAIL() {
-		return SPACING_EMAIL;
-	}
-
-
-
-	public int getSPACING_PASSWORD() {
-		return SPACING_PASSWORD;
-	}
-
-
-
-	public int getSPACING_REPEAT_PASSWORD() {
-		return SPACING_REPEAT_PASSWORD;
-	}
-
-
-
-	public void setFirstnameVBox(VBox firstnameVBox) {
-		this.firstnameVBox = firstnameVBox;
-	}
-
-
-
-	public void setSurnameVBox(VBox surnameVBox) {
-		this.surnameVBox = surnameVBox;
-	}
-
-
-
-	public void setEmailVBox(VBox emailVBox) {
-		this.emailVBox = emailVBox;
-	}
-
-
-
-	public void setPasswordVBox(VBox passwordVBox) {
-		this.passwordVBox = passwordVBox;
-	}
-
-
-
-	public void setRepeatPasswordVBox(VBox repeatPasswordVBox) {
-		this.repeatPasswordVBox = repeatPasswordVBox;
-	}
-
-
-
-	public void setHbox(HBox hbox) {
-		this.hbox = hbox;
 	}
 
 }
