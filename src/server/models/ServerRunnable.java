@@ -33,6 +33,7 @@ public class ServerRunnable implements Runnable {
     private final String recipient = "Client";
     private final String falseResult = "Result|false\n";
     private final String trueResult = "Result|true\n";
+    private final String trueResultWithoutNewline = "Result|true|";
     private final ToDoServer parent;
 
     // Constructor
@@ -222,7 +223,7 @@ public class ServerRunnable implements Runnable {
             this.parent.insertToken(token);
 
             // Send token back to user
-            this.sendMessage("Result|true|" + token.getTokenString() + "\n");
+            this.sendMessage(this.trueResultWithoutNewline + token.getTokenString() + "\n");
 
             return;
         }
@@ -318,7 +319,7 @@ public class ServerRunnable implements Runnable {
 
             if(description != null && dueDate != null) {
                 int itemID = databaseManager.createItem(title, priority, description, dueDate);
-                this.sendMessage(trueResult + "|" + itemID);
+                this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
             }
         }
     	

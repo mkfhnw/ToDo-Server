@@ -124,7 +124,7 @@ public class DatabaseManager {
             preparedStatement.setString(2, title);
             preparedStatement.setString(3, priority);
             preparedStatement.setString(4, description);
-            preparedStatement.setString(4, dueDate);
+            preparedStatement.setString(5, dueDate);
 
             // Execute update
             preparedStatement.executeUpdate();
