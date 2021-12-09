@@ -131,6 +131,7 @@ public abstract class MainBarView extends VBox {
 		this.searchBar.getStyleClass().add("searchField");
 		this.createToDo.getStyleClass().add("createToDo");
 		this.tableView.getStyleClass().add("tableView");    
+		this.priority.getStyleClass().add("priority");
         this.checkBox.getStyleClass().add("checkBox");
         this.task.getStyleClass().add("task");
         this.dueDate.getStyleClass().add("dueDate");
@@ -139,6 +140,7 @@ public abstract class MainBarView extends VBox {
         this.important.getStyleClass().add("tableColumn");
         this.task.getStyleClass().add("tableColumn");
         this.dueDate.getStyleClass().add("tableColumn");
+        this.priority.getStyleClass().add("tableColumn");
         this.checkBox.getStyleClass().add("tableColumn");
         this.garbage.getStyleClass().add("tableColumn");
         this.comboBox.getStyleClass().add("comboBox");
