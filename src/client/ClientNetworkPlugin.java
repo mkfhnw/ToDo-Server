@@ -88,7 +88,7 @@ public class ClientNetworkPlugin {
             System.out.println("[CLIENT] Received message: " + messageString);
 
             // Create Message
-//            Message message = new Message(messageString);
+            Message message = new Message(messageString);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -103,15 +103,13 @@ public class ClientNetworkPlugin {
         	
         	sendMessage("LOGIN", loginData);
 
-        	// Fails if name/password do not match --> Server
-
             // Receive server response case        	
+        
+        	// String responseLogin = this.parseResponse();
+        	// Message serverResponseLogin = new Message(responseLogin);
         	
-            // String responseString = this.receiveMessage();
-            // Message serverResponse = new Message(responseString);
-
-            // Set token
-            // this.token = serverResponse.getToken();
+        	// set token
+        	// this.token = serverResponseLogin.getToken();
 
         }
         
@@ -122,6 +120,8 @@ public class ClientNetworkPlugin {
         	ArrayList<String> logoutData = new ArrayList<>();        	
         	
         	sendMessage("LOGOUT", logoutData);
+        	
+        	getToken();
         	
         }
         
@@ -134,6 +134,7 @@ public class ClientNetworkPlugin {
         	
         	sendMessage("CREATE_LOGIN", createLoginData);
         	
+        	getToken();
         	
         	// Fails if name already taken, or invalid --> SERVER
         	// After creating an account, you still have to login --> CONTROLLER
@@ -153,6 +154,8 @@ public class ClientNetworkPlugin {
             
             sendMessage("CREATE_TODO", createToDoData);
             
+            getToken();
+            
         	// Token-Validation --> SERVER
             
 		}
@@ -166,6 +169,9 @@ public class ClientNetworkPlugin {
         	// Token valid (SERVER))
         	
         	sendMessage("CHANGE_PASSWORD", changePasswordData);
+        
+        	getToken();
+        	
         }
         
         public void getToDo(int ID) { // NOCH NICHT FERTIG
@@ -176,6 +182,8 @@ public class ClientNetworkPlugin {
         	toDoData.add(Integer.toString(ID));
         	
         	sendMessage("GET_TODO", toDoData);
+        	
+        	getToken();
         }
         
         public void deleteToDo(int ID) {
@@ -188,6 +196,8 @@ public class ClientNetworkPlugin {
         	// Token-Validation --> SERVER
         	
         	sendMessage("DELETE_TODO", deletedToDoData);
+        	
+        	getToken();
         }
         
         public void listToDos() {
@@ -197,6 +207,8 @@ public class ClientNetworkPlugin {
         	// Token
         	
         	sendMessage("LIST_TODOS", listToDos);
+        	
+        	getToken();
         }
         
         public void ping() {
@@ -205,7 +217,13 @@ public class ClientNetworkPlugin {
         	ArrayList<String> pingData = new ArrayList<>();
         	
         	sendMessage("PING", pingData);
+        	
+        	getToken();
         }
+
+		public String getToken() {
+			return token;
+		}
     
         
 }
