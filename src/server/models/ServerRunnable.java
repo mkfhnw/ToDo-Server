@@ -377,18 +377,26 @@ public class ServerRunnable implements Runnable {
         String tokenString = clientMessage.getToken();
         Token token = this.parent.getToken(tokenString);
         
-     // If token is invalid, send negative response
+        // If token is invalid, send negative response
         InputValidator inputValidator = InputValidator.getInputValidator();
         if(!inputValidator.isTokenStillAlive(token)) {
             this.sendMessage(this.falseResult);
             return;
         }
         
-     // If token is valid, go ahead
+        // If token is valid, go ahead
         if(inputValidator.isTokenStillAlive(token)) {
 
             // Parse username
             String username = token.getUser();
+            
+            // Create database manager
+            DatabaseManager databaseManager = new DatabaseManager(username.split("@")[0]);
+            
+            //Parse out item ID to delete
+            String ID = clientMessage.getDataParts().get(0);
+            databaseManager.deleteItem(ID);
+            
 
         }
 		
