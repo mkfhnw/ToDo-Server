@@ -49,13 +49,17 @@ public class ToDoView extends BorderPane {
 		private Dialog<ButtonType> howToDialog;
 		private HowToDialogPane howToDialogPane;
 		private Button howTo;
+		
+		private Dialog<ButtonType> changePasswordDialog;
+		private ChangePasswordDialogPane changePasswordDialogPane;
+		private Button changePasswordButton;
 				
 		private HBox hBoxHowTo;
 		private VBox vBoxBottom;
 		private HBox hBoxBottom;
 		
 		private Button logoutButton;
-		private Button changePasswordButton;
+		
 		/*
 		 * Instantiates all necessary control elements
 		 * and adds them to the container
@@ -132,7 +136,7 @@ public class ToDoView extends BorderPane {
 			
 			this.vBoxBottom = new VBox();
 			
-			this.vBoxBottom.getChildren().addAll(openFocusTimer, howTo, logoutButton);
+			this.vBoxBottom.getChildren().addAll(openFocusTimer, howTo, changePasswordButton, logoutButton);
 			this.vBoxBottom.setPadding(new Insets(50.0, 00.0, 50.0, 50.0));
 			this.vBoxBottom.setSpacing(30);
 			this.vBoxBottom.setAlignment(Pos.CENTER);
@@ -174,6 +178,17 @@ public class ToDoView extends BorderPane {
 			this.howToDialog.setDialogPane(howToDialogPane);
 			
 			this.howToDialog.initModality(Modality.NONE);
+			
+			// Create and costumize ChangePasssword Dialog
+			this.changePasswordDialog = new Dialog<ButtonType>();
+			this.changePasswordDialog.setTitle("Passwort ändern");
+			Stage stage4 = (Stage) changePasswordDialog.getDialogPane().getScene().getWindow();
+			stage4.getIcons().add(new Image(this.getClass().getResource("/common/resources/howTo.png").toString()));
+			
+			this.changePasswordDialogPane = new ChangePasswordDialogPane();
+			this.changePasswordDialog.setDialogPane(changePasswordDialogPane);
+			
+			this.changePasswordDialog.initModality(Modality.NONE);
 			
 
 
@@ -369,6 +384,30 @@ public class ToDoView extends BorderPane {
 
 		public void sethBoxBottom(HBox hBoxBottom) {
 			this.hBoxBottom = hBoxBottom;
+		}
+
+		public Dialog<ButtonType> getChangePasswordDialog() {
+			return changePasswordDialog;
+		}
+
+		public ChangePasswordDialogPane getChangePasswordDialogPane() {
+			return changePasswordDialogPane;
+		}
+
+		public void setChangePasswordDialog(Dialog<ButtonType> changePasswordDialog) {
+			this.changePasswordDialog = changePasswordDialog;
+		}
+
+		public void setChangePasswordDialogPane(ChangePasswordDialogPane changePasswordDialogPane) {
+			this.changePasswordDialogPane = changePasswordDialogPane;
+		}
+
+		public void setChangePasswordButton(Button changePasswordButton) {
+			this.changePasswordButton = changePasswordButton;
+		}
+
+		public void setLogoutButton(Button logoutButton) {
+			this.logoutButton = logoutButton;
 		}
 
 }
