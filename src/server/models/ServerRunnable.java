@@ -305,18 +305,34 @@ public class ServerRunnable implements Runnable {
             if(clientMessage.getDataParts().size() == 4) { dueDate = clientMessage.getDataParts().get(3); }
 
             // Choose fitting constructor based on how many inputs we have
+
+            // 2 missing parameters
             if(description == null && dueDate == null) {
-                // databaseManager.createItem()
+                int itemID = databaseManager.createItem(title, priority);
+                this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
             }
 
+            // Missing dueDate
             if(description == null && dueDate != null) {
-                // databaseManager.createItem();
+                int itemID = databaseManager.createItem(title,
+                        priority,
+                        dueDate,
+                        "Description",
+                        true);
+                this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
             }
 
+            // Missing description
             if(description != null && dueDate == null) {
-                // databaseManager.createItem();
+                int itemID = databaseManager.createItem(title,
+                        priority,
+                        description,
+                        "DueDate",
+                        true);
+                this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
             }
 
+            // No missing parameter
             if(description != null && dueDate != null) {
                 int itemID = databaseManager.createItem(title, priority, description, dueDate);
                 this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
@@ -452,6 +468,5 @@ public class ServerRunnable implements Runnable {
         }
 		
 	}
-
 
 }
