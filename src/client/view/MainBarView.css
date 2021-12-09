@@ -37,10 +37,12 @@
 .task {
     	-fx-background-color: #ffffff;
 	-fx-text-fill: #121d58;
+	-fx-alignment: CENTER;
 }
 .dueDate {
     	-fx-background-color: #ffffff;
 	-fx-text-fill: #121d58;
+	-fx-alignment: CENTER;
 }
 .priority {
     	-fx-background-color: #ffffff;
