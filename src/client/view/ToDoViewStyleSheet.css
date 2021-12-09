@@ -24,3 +24,10 @@
 .howTo:hover {
     	-fx-background-color: #1ec4dc;
 }
+.logoutButton{
+	-fx-background-color: #FF0000;
+    	-fx-text-fill: #ffffff;
+}
+.logoutButton:hover {
+	-fx-text-fill: #000000;
+}
