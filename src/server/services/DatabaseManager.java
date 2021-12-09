@@ -3,6 +3,7 @@ package server.services;
 import common.HashDigest;
 import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseManager {
 
@@ -232,6 +233,41 @@ public class DatabaseManager {
         }
     }
 
+    // READ method
+    public ArrayList<String> getToDo(String idString) {
+        try(Connection connection = DriverManager.getConnection(this.connectionString);
+            Statement statement = connection.createStatement()) {
+
+            // Grab item from database and parse out contents
+            ArrayList<String> resultList = new ArrayList<>();
+            String queryString = "SELECT ToDo_ID, Title, Priority, Description, DueDate FROM main.Items WHERE ToDo_ID=" + idString;
+            ResultSet resultSet = statement.executeQuery(queryString);
+            while (resultSet.next()) {
+
+                // Grab values
+                String id = String.valueOf(resultSet.getInt("ToDo_ID"));
+                String title = resultSet.getString("Title");
+                String priority = resultSet.getString("Priority");
+                String description = resultSet.getString("Description");
+                String dueDate = resultSet.getString("DueDate");
+
+                // Parse out nulls
+                if(id != null && !id.equals("null")) { resultList.add(id); }
+                if(title != null && !title.equals("null")) { resultList.add(title); }
+                if(priority != null && !priority.equals("null")) { resultList.add(priority); }
+                if(description != null && !description.equals("null")) { resultList.add(description); }
+                if(dueDate != null && !dueDate.equals("null")) { resultList.add(dueDate); }
+            }
+
+            // Return contents
+            return resultList;
+
+        } catch (Exception e) {
+            System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
+            return new ArrayList<String>();
+        }
+
+    }
     
     public void deleteItem(String ID) {
     	try(Connection connection = DriverManager.getConnection(this.connectionString)) {
