@@ -350,12 +350,12 @@ public class ServerRunnable implements Runnable {
 	}
     
     private void reactToGetToDo(Message clientMessage) {
-    	
-    	// Parse out token
+
+        // Parse out token
         String tokenString = clientMessage.getToken();
         Token token = this.parent.getToken(tokenString);
 		
-     // If token is invalid, send negative response
+        // If token is invalid, send negative response
         InputValidator inputValidator = InputValidator.getInputValidator();
         if(!inputValidator.isTokenStillAlive(token)) {
             this.sendMessage(this.falseResult);
@@ -367,6 +367,9 @@ public class ServerRunnable implements Runnable {
 
             // Parse username
             String username = token.getUser();
+
+            // Create DatabaseManager
+            DatabaseManager databaseManager = new DatabaseManager(username);
 
         }
 		

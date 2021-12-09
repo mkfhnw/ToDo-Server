@@ -1,17 +1,12 @@
 package server.services;
 
 import common.HashDigest;
-import common.MessageType;
-
 import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.sql.*;
 
 public class DatabaseManager {
 
     // Fields
-    private String token;
     private String connectionString;
 
 
@@ -34,7 +29,7 @@ public class DatabaseManager {
      */
     public void initializeDatabase() {
         try(Connection connection = DriverManager.getConnection(this.connectionString);
-            Statement statement = connection.createStatement();) {
+            Statement statement = connection.createStatement()) {
 
             System.out.println("[DATABASE-MANAGER] Initializing database...");
 
@@ -64,7 +59,7 @@ public class DatabaseManager {
      */
     public void storeLoginCredentials(String username, String password) {
         try(Connection connection = DriverManager.getConnection(this.connectionString);
-            Statement statement = connection.createStatement();) {
+            Statement statement = connection.createStatement()) {
 
             // Hash password
             String hashedPassword = new HashDigest(password).getDigest();
@@ -94,7 +89,7 @@ public class DatabaseManager {
     // Method to grab a users hashed password
     public String getPassword() {
         try(Connection connection = DriverManager.getConnection(this.connectionString);
-            Statement statement = connection.createStatement();) {
+            Statement statement = connection.createStatement()) {
 
             // Query password
             String queryString = "SELECT Password FROM Accounts WHERE Account_ID='1'";
@@ -115,7 +110,7 @@ public class DatabaseManager {
     // CREATE Method with all parameters
     public int createItem(String title, String priority, String description, String dueDate) {
         try(Connection connection = DriverManager.getConnection(this.connectionString);
-            Statement statement = connection.createStatement();) {
+            Statement statement = connection.createStatement()) {
 
             // Build string
             String insertString = "INSERT INTO Items(Account_ID, Title, Priority, Description, DueDate) VALUES(?, ?, ?, ?, ?)";
@@ -130,7 +125,7 @@ public class DatabaseManager {
             preparedStatement.executeUpdate();
 
             // Grab item ID
-            String selectStatement = "SELECT ToDo_ID FROM Items ORDER BY ToDo_ID ASC";
+            String selectStatement = "SELECT ToDo_ID FROM Items ORDER BY ToDo_ID";
             ResultSet resultSet = statement.executeQuery(selectStatement);
             int highestId = -1;
             while(resultSet.next()) { highestId = resultSet.getInt("ToDo_ID"); }
@@ -142,15 +137,76 @@ public class DatabaseManager {
             return -1;
         }
     }
+
+    // CREATE Method with 1 missing parameter
+    // The boolean is just used to change the method signature, so we can overload it and still use 4 string parameters
+    public int createItem(String title, String priority, String thirdParameter, String nameOfMissingParameter, boolean hasMissingParameter) {
+        try(Connection connection = DriverManager.getConnection(this.connectionString);
+            Statement statement = connection.createStatement()) {
+
+
+            // Switch through the missing parameter
+            switch (nameOfMissingParameter) {
+
+                case "Description" -> {
+
+                    // Build string with missing description
+                    String insertString = "INSERT INTO Items(Account_ID, Title, Priority, DueDate) VALUES(?, ?, ?, ?)";
+                    PreparedStatement preparedStatement = connection.prepareStatement(insertString);
+                    preparedStatement.setInt(1, 1);
+                    preparedStatement.setString(2, title);
+                    preparedStatement.setString(3, priority);
+                    preparedStatement.setString(4, thirdParameter);
+
+                    // Execute update
+                    preparedStatement.executeUpdate();
+
+                    // Grab item ID
+                    String selectStatement = "SELECT ToDo_ID FROM Items ORDER BY ToDo_ID";
+                    ResultSet resultSet = statement.executeQuery(selectStatement);
+                    int highestId = -1;
+                    while(resultSet.next()) { highestId = resultSet.getInt("ToDo_ID"); }
+
+                    return highestId;
+                }
+
+                case "DueDate" -> {
+                    // Build string with missing dueDate
+                    String insertString = "INSERT INTO Items(Account_ID, Title, Priority, Description) VALUES(?, ?, ?, ?)";
+                    PreparedStatement preparedStatement = connection.prepareStatement(insertString);
+                    preparedStatement.setInt(1, 1);
+                    preparedStatement.setString(2, title);
+                    preparedStatement.setString(3, priority);
+                    preparedStatement.setString(4, thirdParameter);
+
+                    // Execute update
+                    preparedStatement.executeUpdate();
+
+                    // Grab item ID
+                    String selectStatement = "SELECT ToDo_ID FROM Items ORDER BY ToDo_ID";
+                    ResultSet resultSet = statement.executeQuery(selectStatement);
+                    int highestId = -1;
+                    while(resultSet.next()) { highestId = resultSet.getInt("ToDo_ID"); }
+
+                    return highestId;
+                }
+
+            }
+
+            return -1;
+
+        } catch (Exception e) {
+            System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
+            return -1;
+        }
+    }
+
     
     public void deleteItem(String ID) {
-    	try(Connection connection = DriverManager.getConnection(this.connectionString);
-                Statement statement = connection.createStatement();) {
-    			
-    			String IdAsString = ID;
-    			
+    	try(Connection connection = DriverManager.getConnection(this.connectionString)) {
+
                 // Build string
-                String insertString = "DELETE FROM Items WHERE ToDo_ID = " + IdAsString;
+                String insertString = "DELETE FROM Items WHERE ToDo_ID = " + ID;
                 PreparedStatement preparedStatement = connection.prepareStatement(insertString);
              
                 // Execute update
@@ -162,5 +218,7 @@ public class DatabaseManager {
                 
             }
     }
+
+
 
 }
