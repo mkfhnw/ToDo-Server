@@ -37,6 +37,7 @@ public class ToDoController implements Serializable {
     private final ToDoList toDoList;
     private final Stage stage;
     private final Scene scene2;
+    private final Scene scene1;
 
     private ImportantBarView importantBarView;
     private GarbageBarView garbageBarView;
@@ -51,7 +52,7 @@ public class ToDoController implements Serializable {
     private RegistrationDialogPane registrationView;
 
     // Constructor
-    public ToDoController(ToDoView toDoView, ToDo toDo, ToDoList toDoList, Stage stage, Scene scene2, LoginView loginView) {
+    public ToDoController(ToDoView toDoView, ToDo toDo, ToDoList toDoList, Stage stage, Scene scene2, LoginView loginView, Scene scene1) {
 
         this.toDoView = toDoView;
         this.toDo = toDo;
@@ -59,6 +60,7 @@ public class ToDoController implements Serializable {
         this.stage = stage;
         this.scene2 = scene2;
         this.loginView = loginView;
+        this.scene1 = scene1;
         
         this.focusModel = focusModel;
 
@@ -110,6 +112,8 @@ public class ToDoController implements Serializable {
         // EventHandling to open ToDoApp
         this.loginView.getSignInButton().setOnMouseClicked(this::openToDoApp);
        
+
+        
         // Instantiate barchart with utils
         Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(0.3), new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -857,6 +861,30 @@ public class ToDoController implements Serializable {
     	  // save login?
   }
   
+  /*
+   * After the registration is finished, the Login mask will open.
+   * The user has to login.
+   */
+  public void registrationDone() {
+	  
+	  Button okButton = (Button) this.loginView.getRegistrationDialogPane().lookupButton(this.loginView.getRegistrationDialogPane().getOkButtonType());
+      okButton.addEventFilter(ActionEvent.ACTION,
+              event -> {
+            	  
+            	  Platform.runLater(() -> {
+        			  this.stage.setScene(scene1);
+        			  stage.show();
+                  
+                  }
+              );
+		  
+		  });
+      
+      // + ADD LOGIN TO DATABASE?
+	  
+	  
+  }
+  
   
   public void openToDoApp(MouseEvent event) {
 	  
@@ -868,6 +896,7 @@ public class ToDoController implements Serializable {
       
   }
 
+  
 
 
 
