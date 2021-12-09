@@ -325,22 +325,118 @@ public class ServerRunnable implements Runnable {
 	}
     
     private void reactToChangePassword(Message clientMessage) {
+    	
+    	// Parse out token
+        String tokenString = clientMessage.getToken();
+        Token token = this.parent.getToken(tokenString);
+        
+     // If token is invalid, send negative response
+        InputValidator inputValidator = InputValidator.getInputValidator();
+        if(!inputValidator.isTokenStillAlive(token)) {
+            this.sendMessage(this.falseResult);
+            return;
+        }
+        
+     // If token is valid, go ahead
+        if(inputValidator.isTokenStillAlive(token)) {
+
+            // Parse username
+            String username = token.getUser();
+
+        }
 		
 	}
     
     private void reactToGetToDo(Message clientMessage) {
+    	
+    	// Parse out token
+        String tokenString = clientMessage.getToken();
+        Token token = this.parent.getToken(tokenString);
 		
+     // If token is invalid, send negative response
+        InputValidator inputValidator = InputValidator.getInputValidator();
+        if(!inputValidator.isTokenStillAlive(token)) {
+            this.sendMessage(this.falseResult);
+            return;
+        }
+        
+     // If token is valid, go ahead
+        if(inputValidator.isTokenStillAlive(token)) {
+
+            // Parse username
+            String username = token.getUser();
+
+        }
+		
+	
 	}
     
     private void reactToDeleteToDo(Message clientMessage) {
+    	
+    	// Parse out token
+        String tokenString = clientMessage.getToken();
+        Token token = this.parent.getToken(tokenString);
+        
+     // If token is invalid, send negative response
+        InputValidator inputValidator = InputValidator.getInputValidator();
+        if(!inputValidator.isTokenStillAlive(token)) {
+            this.sendMessage(this.falseResult);
+            return;
+        }
+        
+     // If token is valid, go ahead
+        if(inputValidator.isTokenStillAlive(token)) {
+
+            // Parse username
+            String username = token.getUser();
+
+        }
 		
 	}
     
     private void reactToListToDos(Message clientMessage) {
+    	
+    	// Parse out token
+        String tokenString = clientMessage.getToken();
+        Token token = this.parent.getToken(tokenString);
+        
+     // If token is invalid, send negative response
+        InputValidator inputValidator = InputValidator.getInputValidator();
+        if(!inputValidator.isTokenStillAlive(token)) {
+            this.sendMessage(this.falseResult);
+            return;
+        }
+        
+     // If token is valid, go ahead
+        if(inputValidator.isTokenStillAlive(token)) {
+
+            // Parse username
+            String username = token.getUser();
+
+        }
 		
 	}
     
     private void reactToPing(Message clientMessage) {
+    	
+    	// Parse out token
+        String tokenString = clientMessage.getToken();
+        Token token = this.parent.getToken(tokenString);
+        
+     // If token is invalid, send negative response
+        InputValidator inputValidator = InputValidator.getInputValidator();
+        if(!inputValidator.isTokenStillAlive(token)) {
+            this.sendMessage(this.falseResult);
+            return;
+        }
+        
+     // If token is valid, go ahead
+        if(inputValidator.isTokenStillAlive(token)) {
+
+            // Parse username
+            String username = token.getUser();
+
+        }
 		
 	}
 
