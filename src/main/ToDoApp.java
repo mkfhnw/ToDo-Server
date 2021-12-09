@@ -45,7 +45,7 @@ public class ToDoApp extends Application {
 		// Scene for LoginView
 		Scene scene1 = new Scene(loginView);
 		
-		this.toDoController = new ToDoController(this.toDoView, this.todoModel, toDoList, stage, scene2, loginView);
+		this.toDoController = new ToDoController(this.toDoView, this.todoModel, toDoList, stage, scene2, loginView, scene1);
 
 		// Shows scene in a window (object stage)
 		stage.setScene(scene1);
