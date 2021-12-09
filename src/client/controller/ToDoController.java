@@ -839,7 +839,7 @@ public class ToDoController implements Serializable {
   
   public void changePassword(MouseEvent event) {
 	  
-	  // DIALOGPANE CHANGEPASSWORD
+	  this.toDoView.getChangePasswordDialog().showAndWait();
 	  
 	  // validateNewPassword();
 	  
