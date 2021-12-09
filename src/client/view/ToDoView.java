@@ -149,6 +149,7 @@ public class ToDoView extends BorderPane {
 			this.openFocusTimer.getStyleClass().add("openFocusTimer");
 			this.bc.getStylesheets().add(getClass().getResource("BarChartStyleSheet.css").toExternalForm());
 			this.howTo.getStyleClass().add("howTo");
+			this.logoutButton.getStyleClass().add("logoutButton");
 	        
 			
 			// Create and customize Focus timer - Dialog
