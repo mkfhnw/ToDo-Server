@@ -285,6 +285,32 @@ public class DatabaseManager {
         }
 
     }
+
+    // LIST Method
+    public ArrayList<String> listToDos() {
+        try(Connection connection = DriverManager.getConnection(this.connectionString);
+            Statement statement = connection.createStatement();) {
+
+            // Prepare resultArray
+            ArrayList<String> resultList = new ArrayList<>();
+
+            // Prepare queryString
+            String queryString = "SELECT ToDo_ID FROM Items WHERE Account_ID=1";
+            ResultSet resultSet = statement.executeQuery(queryString);
+
+            // Grab data
+            while(resultSet.next()) {
+                resultList.add(String.valueOf(resultSet.getInt("ToDo_ID")));
+            }
+
+            return resultList;
+
+        } catch (Exception e) {
+            // Return empty arrayList if we catch an exception
+            System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
     
     public void deleteItem(String ID) {
     	try(Connection connection = DriverManager.getConnection(this.connectionString)) {
@@ -299,7 +325,6 @@ public class DatabaseManager {
 
             } catch (Exception e) {
                 System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
-                
             }
     }
 

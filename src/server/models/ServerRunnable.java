@@ -460,21 +460,33 @@ public class ServerRunnable implements Runnable {
         String tokenString = clientMessage.getToken();
         Token token = this.parent.getToken(tokenString);
         
-     // If token is invalid, send negative response
+        // If token is invalid, send negative response
         InputValidator inputValidator = InputValidator.getInputValidator();
         if(!inputValidator.isTokenStillAlive(token)) {
             this.sendMessage(this.falseResult);
             return;
         }
         
-     // If token is valid, go ahead
+        // If token is valid, go ahead
         if(inputValidator.isTokenStillAlive(token)) {
 
             // Parse username
             String username = token.getUser();
 
+            // Grab all ToDo_IDs from database
+            DatabaseManager databaseManager = new DatabaseManager(username.split("@")[0]);
+            ArrayList<String> data = databaseManager.listToDos();
+
+            // Forge mesasge
+            Message response = new Message(data);
+
+            // Send response
+            this.sendMessage(response.getMessageString());
+            return;
         }
-		
+
+        // If we reach this line, something went wrong
+		this.sendMessage(this.falseResult);
 	}
     
     private void reactToPing(Message clientMessage) {
