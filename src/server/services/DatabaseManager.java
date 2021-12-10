@@ -202,9 +202,8 @@ public class DatabaseManager {
         }
     }
 
-
     // Create method with 2 missing parameter
-    // CREATE Method with all parameters
+    // CREATE Method with only title and priority
     public int createItem(String title, String priority) {
         try(Connection connection = DriverManager.getConnection(this.connectionString);
             Statement statement = connection.createStatement()) {
