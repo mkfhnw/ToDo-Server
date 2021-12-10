@@ -55,7 +55,7 @@ public class AddToDoDialogPane extends DialogPane {
     private final int SPACING_CATEGORYBAR = 15;
     private final int SPACING_TITLEBAR = 43;
     private final int SPACING_DUEDATEBAR = 28;
-    private final int SPACING_PRIORITYBAR = 28;
+    private final int SPACING_PRIORITYBAR = 22;
     private final int SPACING_TAGSBAR = 40;
     private final int SPACING_HEADERBAR = -10;
     private final Duration DURATION_UNTIL_SHOW = Duration.seconds(0.2);

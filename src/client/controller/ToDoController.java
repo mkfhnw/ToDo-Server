@@ -835,6 +835,8 @@ public class ToDoController implements Serializable {
 	
 	  this.clientNetworkPlugin.logout();
 	  
+	  // Close App & back to LoginView (scene1)
+	  
 	  }
   
   public void changePassword(MouseEvent event) {
