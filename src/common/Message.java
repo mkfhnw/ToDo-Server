@@ -135,6 +135,9 @@ public class Message {
         // Parses token for messages with MessageType only
         if(this.messageParts.size() == 1) { this.token = null; return; }
 
+        // Parses token for PING command
+        if(this.messageType == MessageType.PING && this.messageParts.size() == 2) { this.token = stringParts[1]; return; }
+
         // Parses token for CREATE_LOGIN and LOGIN Message Types
         if(this.messageType == MessageType.CREATE_LOGIN || this.messageType == MessageType.LOGIN) {
             this.token = null;

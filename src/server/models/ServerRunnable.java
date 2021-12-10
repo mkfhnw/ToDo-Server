@@ -463,11 +463,26 @@ public class ServerRunnable implements Runnable {
     	
     	// Parse out token
         String tokenString = clientMessage.getToken();
-        Token token = this.parent.getToken(tokenString);
 
-        // If token is invalid, send negative response
-        InputValidator inputValidator = InputValidator.getInputValidator();
-        if(!inputValidator.isTokenStillAlive(token)) { this.sendMessage(this.falseResult); return; }
+        // See if a token was sent with
+        Token token = null;
+
+        if(!tokenString.equals("0")) {
+            try {
+                token = this.parent.getToken(tokenString);
+            } catch (Exception e) {
+                // If token was invalid, send false
+                this.sendMessage(falseResult);
+                return;
+            }
+        }
+
+        // Check if token is not null
+        if(token != null) {
+            // If token is invalid, send negative response
+            InputValidator inputValidator = InputValidator.getInputValidator();
+            if(!inputValidator.isTokenStillAlive(token)) { this.sendMessage(this.falseResult); return; }
+        }
 
         // If no token is provided or the token is valid - always send a true result
         this.sendMessage(this.trueResult);
