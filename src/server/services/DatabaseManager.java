@@ -290,7 +290,7 @@ public class DatabaseManager {
     	try(Connection connection = DriverManager.getConnection(this.connectionString)) {
 
                 // Build string
-                String insertString = "DELETE FROM Items WHERE ToDo_ID = " + ID;
+                String insertString = "DELETE FROM Items WHERE ToDo_ID=" + ID;
                 PreparedStatement preparedStatement = connection.prepareStatement(insertString);
              
                 // Execute update

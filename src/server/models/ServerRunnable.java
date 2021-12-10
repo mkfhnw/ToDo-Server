@@ -442,9 +442,15 @@ public class ServerRunnable implements Runnable {
             //Parse out item ID to delete
             String ID = clientMessage.getDataParts().get(0);
             databaseManager.deleteItem(ID);
-            
+
+            // Send response
+            this.sendMessage(this.trueResult);
+            return;
 
         }
+
+        // If we reach this line, something failed
+        this.sendMessage(this.falseResult);
 		
 	}
     
