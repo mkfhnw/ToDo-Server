@@ -176,8 +176,8 @@ public class ServerRunnable implements Runnable {
 	private void reactToLogin(Message clientMessage) {
 
         // Grab data - username first, then password
-        String username = clientMessage.getDataParts().get(0);
-        String password = clientMessage.getDataParts().get(1);
+        String username = this.getUsername(clientMessage);
+        String password = this.getPassword(clientMessage);
 
         // Validate user input
         InputValidator inputValidator = InputValidator.getInputValidator();
@@ -234,8 +234,8 @@ public class ServerRunnable implements Runnable {
     private void reactToCreateLogin(Message clientMessage) {
 
         // Grab data - username first, then password
-        String username = clientMessage.getDataParts().get(0);
-        String password = clientMessage.getDataParts().get(1);
+        String username = this.getUsername(clientMessage);
+        String password = this.getPassword(clientMessage);
 
         // Validate user input
         InputValidator inputValidator = InputValidator.getInputValidator();
@@ -351,18 +351,30 @@ public class ServerRunnable implements Runnable {
         String tokenString = clientMessage.getToken();
         Token token = this.parent.getToken(tokenString);
         
-     // If token is invalid, send negative response
+        // If token is invalid, send negative response
         InputValidator inputValidator = InputValidator.getInputValidator();
         if(!inputValidator.isTokenStillAlive(token)) {
             this.sendMessage(this.falseResult);
             return;
         }
         
-     // If token is valid, go ahead
+        // If token is valid, go ahead
         if(inputValidator.isTokenStillAlive(token)) {
 
-            // Parse username
+            // Parse username & validate newPassword input
             String username = token.getUser();
+
+            // We can't use the private .getPassword-method here since the newPassword is at index 0 in this case
+            String newPassword = clientMessage.getDataParts().get(0);
+
+            // Validate input, make changes if input is valid and return false otherwise
+            boolean passwordIsValid = inputValidator.validatePassword(newPassword);
+            if(passwordIsValid) {
+                // Create new instance of databaseManager and write the newPassword to the DB
+                DatabaseManager databaseManager = new DatabaseManager(username.split("@")[0]);
+                databaseManager.changePassword(newPassword);
+                this.sendMessage(this.trueResult);
+            } else { this.sendMessage(this.falseResult); }
 
         }
 		
@@ -489,4 +501,12 @@ public class ServerRunnable implements Runnable {
 		
 	}
 
+    // Helper methods
+    private String getUsername(Message clientMessage) {
+        return clientMessage.getDataParts().get(0);
+    }
+
+    private String getPassword(Message clientMessage) {
+        return clientMessage.getDataParts().get(1);
+    }
 }

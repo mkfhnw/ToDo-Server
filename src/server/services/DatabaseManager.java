@@ -107,6 +107,24 @@ public class DatabaseManager {
         }
     }
 
+    // Method to change a users password
+    // ATTENTION: This method does not validate the input - it assumes the input was already validated before!
+    public void changePassword(String newPassword) {
+        try(Connection connection = DriverManager.getConnection(this.connectionString);
+            Statement statement = connection.createStatement()) {
+
+            // Hash password
+            String hashedPassword = new HashDigest(newPassword).getDigest();
+
+            // Build queryString & execute it right away
+            String queryString = "UPDATE Accounts SET Password='" + hashedPassword + "' WHERE Account_ID=1";
+            statement.executeUpdate(queryString);
+
+        } catch (Exception e) {
+            System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
+        }
+    }
+
     // CRUD-Methods
     // CREATE Method with all parameters
     public int createItem(String title, String priority, String description, String dueDate) {
