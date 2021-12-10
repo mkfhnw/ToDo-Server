@@ -257,7 +257,7 @@ public class ToDoController implements Serializable {
         ToDo itemToRemove = this.toDoList.getToDo(ID);
         this.toDoList.removeToDo(itemToRemove);
         
-        this.clientNetworkPlugin.deleteToDo(ID);
+        
     }
 
 
@@ -291,9 +291,9 @@ public class ToDoController implements Serializable {
      */
     private void setToDoAsGarbage(MouseEvent e) {
         ToDo toDo = toDoList.getToDo((Button) e.getSource());
+        toDo.setCategory("Papierkorb");
         int ID = toDo.getID();
-        deleteToDo(ID);
-        //toDo.setCategory("Papierkorb");
+        this.clientNetworkPlugin.deleteToDo(ID);
         this.updateInstancedSublists();
         
 
