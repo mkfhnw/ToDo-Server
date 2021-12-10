@@ -154,6 +154,8 @@ public class AddToDoDialogPane extends DialogPane {
         this.messageLabel.getStyleClass().add("messageLabel");
         this.tagsLabel.getStyleClass().add("tagsLabel");
         this.messageTextArea.getStyleClass().add("messageTextArea");
+        this.priorityLabel.getStyleClass().add("priorityLabel");
+        
         
 
         // Add buttonTypes
@@ -277,6 +279,7 @@ public class AddToDoDialogPane extends DialogPane {
         this.dueDateLabel.getStyleClass().add("dueDateLabel");
         this.messageLabel.getStyleClass().add("messageLabel");
         this.tagsLabel.getStyleClass().add("tagsLabel");
+        this.priorityLabel.getStyleClass().add("priorityLabel");
         this.messageTextArea.getStyleClass().add("messageTextArea");
 
         // Add buttonTypes

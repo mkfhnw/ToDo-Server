@@ -35,6 +35,9 @@
 .tagsLabel {
 	-fx-text-fill: #ffffff;
 }
+.priorityLabel {
+	-fx-text-fill: #ffffff;
+}
 .messageTextArea {
     	-fx-background-color: LightGray;
 }
