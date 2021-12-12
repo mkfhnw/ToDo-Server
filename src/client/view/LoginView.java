@@ -123,7 +123,7 @@ public class LoginView extends BorderPane {
 	this.registrationDialog = new Dialog<ButtonType>();
 	this.registrationDialog.setTitle("Account erstellen");
 	Stage stage3 = (Stage) registrationDialog.getDialogPane().getScene().getWindow();
-	stage3.getIcons().add(new Image(this.getClass().getResource("/common/resources/howTo.png").toString()));
+	stage3.getIcons().add(new Image(this.getClass().getResource("/common/resources/User.png").toString()));
 	
 	this.registrationDialogPane = new RegistrationDialogPane();
 	this.registrationDialog.setDialogPane(registrationDialogPane);

@@ -184,7 +184,7 @@ public class ToDoView extends BorderPane {
 			this.changePasswordDialog = new Dialog<ButtonType>();
 			this.changePasswordDialog.setTitle("Passwort ändern");
 			Stage stage4 = (Stage) changePasswordDialog.getDialogPane().getScene().getWindow();
-			stage4.getIcons().add(new Image(this.getClass().getResource("/common/resources/howTo.png").toString()));
+			stage4.getIcons().add(new Image(this.getClass().getResource("/common/resources/einstellungen.png").toString()));
 			
 			this.changePasswordDialogPane = new ChangePasswordDialogPane();
 			this.changePasswordDialog.setDialogPane(changePasswordDialogPane);
