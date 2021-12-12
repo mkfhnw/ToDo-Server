@@ -18,13 +18,13 @@ public class ChangePasswordDialogPane extends DialogPane {
 	
 	private Label title;
 	
-	private Label oldPasswordLabel;
 	private Label newPasswordLabel;
+	private Label repeatPasswordLabel;
 	
-	private TextField oldPasswordField;
 	private TextField newPasswordField;
+	private TextField repeatPasswordField;
 	
-	// Layout
+	// Layout§
 	
 	private BorderPane borderPane;
 	private VBox header;
@@ -37,8 +37,8 @@ public class ChangePasswordDialogPane extends DialogPane {
 	private ButtonType cancelButtonType;
 	
 	// Spacing for Layout
-	private final int SPACING_OLDPASSWORD = 50;
-	private final int SPACING_NEWPASSWORD = 42;
+	private final int SPACING_NEWPASSWORD = 60;
+	private final int SPACING_REPEATPASSWORD = 19;
 	
 	// Size for TextFields
 	private final int SIZE_TEXTFIELDS = 250;
@@ -51,29 +51,29 @@ public class ChangePasswordDialogPane extends DialogPane {
 	this.title.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
 	this.title.setTextFill(Color.web("#181C54"));
 	
-	this.oldPasswordLabel = new Label("Altes Passwort");
-	this.oldPasswordLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
-	this.oldPasswordLabel.setTextFill(Color.web("#181C54"));
-	this.oldPasswordField = new TextField();
-	this.oldPasswordField.setPrefWidth(SIZE_TEXTFIELDS);
-	
 	this.newPasswordLabel = new Label("Neues Passwort");
 	this.newPasswordLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.newPasswordLabel.setTextFill(Color.web("#181C54"));
 	this.newPasswordField = new TextField();
 	this.newPasswordField.setPrefWidth(SIZE_TEXTFIELDS);
 	
+	this.repeatPasswordLabel = new Label("Passwort wiederholen");
+	this.repeatPasswordLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+	this.repeatPasswordLabel.setTextFill(Color.web("#181C54"));
+	this.repeatPasswordField = new TextField();
+	this.repeatPasswordField.setPrefWidth(SIZE_TEXTFIELDS);
+	
 	// Layout
 	this.borderPane = new BorderPane();
 	this.header = new VBox();
-	this.oldPassword = new HBox(SPACING_OLDPASSWORD);
-	this.newPassword = new HBox(SPACING_NEWPASSWORD);
+	this.oldPassword = new HBox(SPACING_NEWPASSWORD);
+	this.newPassword = new HBox(SPACING_REPEATPASSWORD);
 	this.general = new VBox();
 	
 	// Add Fields to Layout
 	this.header.getChildren().add(title);
-	this.oldPassword.getChildren().addAll(oldPasswordLabel, oldPasswordField);
-	this.newPassword.getChildren().addAll(newPasswordLabel, newPasswordField);
+	this.oldPassword.getChildren().addAll(newPasswordLabel, newPasswordField);
+	this.newPassword.getChildren().addAll(repeatPasswordLabel, repeatPasswordField);
 	this.general.getChildren().addAll(oldPassword, newPassword);
 	
 	this.borderPane.setTop(header);
@@ -103,19 +103,19 @@ public class ChangePasswordDialogPane extends DialogPane {
 	}
 
 	public Label getOldPasswordLabel() {
-		return oldPasswordLabel;
-	}
-
-	public Label getNewPasswordLabel() {
 		return newPasswordLabel;
 	}
 
+	public Label getNewPasswordLabel() {
+		return repeatPasswordLabel;
+	}
+
 	public TextField getOldPasswordField() {
-		return oldPasswordField;
+		return newPasswordField;
 	}
 
 	public TextField getNewPasswordField() {
-		return newPasswordField;
+		return repeatPasswordField;
 	}
 
 	public BorderPane getBorderPane() {
@@ -142,16 +142,24 @@ public class ChangePasswordDialogPane extends DialogPane {
 		return cancelButtonType;
 	}
 
-	public int getSPACING() {
-		return SPACING_NEWPASSWORD;
-	}
-	
-	public int getSPACING2() {
-		return SPACING_OLDPASSWORD;
-	}
-
 	public int getSIZE_TEXTFIELDS() {
 		return SIZE_TEXTFIELDS;
+	}
+	
+	public Label getRepeatPasswordLabel() {
+		return repeatPasswordLabel;
+	}
+
+	public TextField getRepeatPasswordField() {
+		return repeatPasswordField;
+	}
+
+	public int getSPACING_NEWPASSWORD() {
+		return SPACING_NEWPASSWORD;
+	}
+
+	public int getSPACING_REPEATPASSWORD() {
+		return SPACING_REPEATPASSWORD;
 	}
 	
 	
@@ -162,19 +170,19 @@ public class ChangePasswordDialogPane extends DialogPane {
 	}
 
 	public void setOldPasswordLabel(Label oldPasswordLabel) {
-		this.oldPasswordLabel = oldPasswordLabel;
+		this.newPasswordLabel = oldPasswordLabel;
 	}
 
 	public void setNewPasswordLabel(Label newPasswordLabel) {
-		this.newPasswordLabel = newPasswordLabel;
+		this.repeatPasswordLabel = newPasswordLabel;
 	}
 
 	public void setOldPasswordField(TextField oldPasswordField) {
-		this.oldPasswordField = oldPasswordField;
+		this.newPasswordField = oldPasswordField;
 	}
 
 	public void setNewPasswordField(TextField newPasswordField) {
-		this.newPasswordField = newPasswordField;
+		this.repeatPasswordField = newPasswordField;
 	}
 
 	public void setBorderPane(BorderPane borderPane) {
@@ -203,6 +211,14 @@ public class ChangePasswordDialogPane extends DialogPane {
 
 	public void setCancelButtonType(ButtonType cancelButtonType) {
 		this.cancelButtonType = cancelButtonType;
+	}
+
+	public void setRepeatPasswordLabel(Label repeatPasswordLabel) {
+		this.repeatPasswordLabel = repeatPasswordLabel;
+	}
+
+	public void setRepeatPasswordField(TextField repeatPasswordField) {
+		this.repeatPasswordField = repeatPasswordField;
 	}
 	
 	

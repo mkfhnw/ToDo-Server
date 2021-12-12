@@ -167,7 +167,6 @@ public class ToDoView extends BorderPane {
 			
 			this.focusTimerDialog = new FocusTimerDialogPane();
 			this.focusDialog.setDialogPane(focusTimerDialog);
-			
 			this.focusDialog.initModality(Modality.NONE);
 			
 			// Create and costumize HowTo Dialog
