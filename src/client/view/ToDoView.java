@@ -8,6 +8,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -54,6 +55,16 @@ public class ToDoView extends BorderPane {
 		private ChangePasswordDialogPane changePasswordDialogPane;
 		private Button changePasswordButton;
 				
+		private MenuItem changePasswordItem;
+		private MenuItem howToItem;
+		private Menu settings;
+		private Menu help;
+		private MenuBar menuBar;
+		private ImageView imageSetting;
+		private ImageView imageHelp;
+		private ImageView imageChangePassword;
+		private ImageView imageHowTo;
+		
 		private HBox hBoxHowTo;
 		private VBox vBoxBottom;
 		private HBox hBoxBottom;
@@ -124,6 +135,39 @@ public class ToDoView extends BorderPane {
 			
 						
 			this.vBox.getChildren().add(bc);
+			
+			// Menu for settings and help
+			this.changePasswordItem = new MenuItem("Passwort ändern");
+			this.imageChangePassword = new ImageView("/common/resources/einstellungen.png");
+			this.imageChangePassword.setFitHeight(20);
+			this.imageChangePassword.setFitWidth(20);
+			this.changePasswordItem.setGraphic(imageChangePassword);
+			
+			this.howToItem = new MenuItem("How To");
+			this.imageHowTo = new ImageView("/common/resources/howTo.png");
+			this.imageHowTo.setFitHeight(20);
+			this.imageHowTo.setFitWidth(20);
+			this.howToItem.setGraphic(imageHowTo);
+			
+			this.settings = new Menu("Einstellungen");
+			this.imageSetting = new ImageView("/common/resources/einstellungen.png");
+			this.imageSetting.setFitHeight(20);
+			this.imageSetting.setFitWidth(20);
+			this.settings.setGraphic(imageSetting);
+			
+			this.help = new Menu("Hilfe");
+			this.imageHelp = new ImageView("/common/resources/help.png");
+			this.imageHelp.setFitHeight(20);
+			this.imageHelp.setFitWidth(20);
+			this.help.setGraphic(imageHelp);
+			
+			this.settings.getItems().add(changePasswordItem);
+			this.help.getItems().add(howToItem);
+			
+			this.menuBar = new MenuBar();
+			menuBar.getMenus().addAll(settings, help);
+			
+			this.setTop(menuBar);
 			
 			/*
 			 * Button Focus timer for a focus timer dialog
@@ -409,6 +453,46 @@ public class ToDoView extends BorderPane {
 
 		public void setLogoutButton(Button logoutButton) {
 			this.logoutButton = logoutButton;
+		}
+
+		public MenuItem getChangePasswordItem() {
+			return changePasswordItem;
+		}
+
+		public MenuItem getHowToItem() {
+			return howToItem;
+		}
+
+		public Menu getSettings() {
+			return settings;
+		}
+
+		public Menu getHelp() {
+			return help;
+		}
+
+		public MenuBar getMenuBar() {
+			return menuBar;
+		}
+
+		public void setChangePasswordItem(MenuItem changePasswordItem) {
+			this.changePasswordItem = changePasswordItem;
+		}
+
+		public void setHowToItem(MenuItem howToItem) {
+			this.howToItem = howToItem;
+		}
+
+		public void setSettings(Menu settings) {
+			this.settings = settings;
+		}
+
+		public void setHelp(Menu help) {
+			this.help = help;
+		}
+
+		public void setMenuBar(MenuBar menuBar) {
+			this.menuBar = menuBar;
 		}
 
 }

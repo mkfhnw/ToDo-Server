@@ -103,9 +103,6 @@ public class ToDoController implements Serializable {
         // EventHandling for logout
         this.toDoView.getLogoutButton().setOnMouseClicked(this::logout);
         
-        // EventHandling for changing password
-        this.toDoView.getChangePasswordButton().setOnMouseClicked(this::changePassword);
-        
         // EventHandling for registration
         this.loginView.getRegisterButton().setOnMouseClicked(this::openRegistration);
         
@@ -839,9 +836,18 @@ public class ToDoController implements Serializable {
 	  
 	  }
   
-  public void changePassword(MouseEvent event) {
+  public void changePassword() {
 	  
-	  this.toDoView.getChangePasswordDialog().showAndWait();
+	  toDoView.getChangePasswordItem().setOnAction(new EventHandler<ActionEvent>() {
+
+		@Override
+		public void handle(ActionEvent e) {
+			 toDoView.getChangePasswordDialog().showAndWait();
+			
+		}
+		  
+	  });
+	  
 	  
 	  // validateNewPassword();
 	  
