@@ -115,6 +115,8 @@ public class ToDoController implements Serializable {
         // EventHandling to open ToDoApp
         this.loginView.getSignInButton().setOnMouseClicked(this::handleLogin);
        
+        // EventHandling for changing password
+        this.toDoView.getChangePasswordItem().setOnAction(this::changePassword);
 
         
         // Instantiate barchart with utils
@@ -840,10 +842,9 @@ public class ToDoController implements Serializable {
  
                 // show the dialog
                 alert.show();
-                
             }
         };
-  		
+        trueResultBoolean = false;		
   	}
   	
   }
@@ -893,26 +894,18 @@ public class ToDoController implements Serializable {
 	  
 	  }
   
-  public void changePassword() {
+  public void changePassword(ActionEvent event) {
 	  
-	  toDoView.getChangePasswordItem().setOnAction(new EventHandler<ActionEvent>() {
-
-		@Override
-		public void handle(ActionEvent e) {
 			 toDoView.getChangePasswordDialog().showAndWait();
-			
+			 
+			  // validateNewPassword();
+			  
+			  //String password = view.getPasswordField().getText();
+			  //this.clientNetworkPlugin.changePassword(password);
 		}
-		  
-	  });
-	  
-	  
-	  // validateNewPassword();
-	  
-	  //String password = view.getPasswordField().getText();
-	  //this.clientNetworkPlugin.changePassword(password);
-	  
-	  
-  }
+
+
+  
   
 //   public boolean validateNewPassword() {
   
