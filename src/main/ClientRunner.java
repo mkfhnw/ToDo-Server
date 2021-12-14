@@ -14,13 +14,6 @@ public class ClientRunner {
         // Create client
         ClientNetworkPlugin clientNetworkPlugin = new ClientNetworkPlugin();
 
-        // Send PING message
-        ArrayList<String> data = new ArrayList<>();
-        
-        // TEST
-        clientNetworkPlugin.sendMessage("PING", data);
-        clientNetworkPlugin.sendMessage("LOGOUT", data);
-
         try{ Thread.sleep(5000); } catch (Exception e) { System.out.println(e.getMessage()); }
 
         // Read incoming response

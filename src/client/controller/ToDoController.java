@@ -942,8 +942,6 @@ public class ToDoController implements Serializable {
 	  
   }
 
-
-
 }
 
 		
