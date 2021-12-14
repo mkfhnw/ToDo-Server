@@ -112,34 +112,35 @@ public class ClientNetworkPlugin {
 
     }
         
-        public String login(String emailLogin, String passwordLogin) {
+        public boolean login(String emailLogin, String passwordLogin) {
         
-        	String result = null;
+        	boolean result = false;
         	
         	try {
-        	ArrayList<String> loginData = new ArrayList<>();
-        	loginData.add(emailLogin);
-        	loginData.add(passwordLogin);
+        	    ArrayList<String> loginData = new ArrayList<>();
+        	    loginData.add(emailLogin);
+        	    loginData.add(passwordLogin);
         	
-        	sendMessage("LOGIN", loginData);
+        	    sendMessage("LOGIN", loginData);
 
-            // Receive server response case        	
-        	Message responseLogin = this.parseResponse();
+                // Receive server response case
+        	    Message responseLogin = this.parseResponse();
+
+                // Parse response result
+                result = Boolean.parseBoolean(responseLogin.getMessageParts().get(1));
+
         	
-        	// changes String to boolean because of true and false
-        	String trueResult = serverRunnable.getTrueResult();
-        	boolean trueResultBoolean = Boolean.parseBoolean(trueResult);
+        	    if (result == true) {
+            	    // set token
+            	    this.token = responseLogin.getToken();
+        	    } else {
+        		    result = false;
+        	    }
         	
-        	if (trueResultBoolean == true) {
-            	// set token
-            	this.token = responseLogin.getToken();
-        	} else {
-        		trueResultBoolean = false;
-        	}        	
-        	
-        	} catch (Exception e) {
-        		result = e.toString();
-        	}
+            } catch (Exception e) {
+                System.out.println("[NETWORK-PLUGIN] Exception: " + e.getMessage());
+                result = false;
+            }
         	
         	return result;
 

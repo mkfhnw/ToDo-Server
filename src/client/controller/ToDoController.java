@@ -55,12 +55,12 @@ public class ToDoController implements Serializable {
 
     // Constructor
     public ToDoController(
-    		ToDoView toDoView, 
-    		ToDo toDo, 
-    		ToDoList toDoList, 
-    		Stage stage, 
-    		Scene scene2, 
-    		LoginView loginView, 
+    		ToDoView toDoView,
+    		ToDo toDo,
+    		ToDoList toDoList,
+    		Stage stage,
+    		Scene scene2,
+    		LoginView loginView,
     		Scene scene1) {
 
         this.toDoView = toDoView;
@@ -73,7 +73,7 @@ public class ToDoController implements Serializable {
         this.focusModel = focusModel;
 
         this.clientNetworkPlugin = new ClientNetworkPlugin();
-        
+
         // Load items from database
         this.toDoList.updateSublists();
         System.out.println("Loaded items from database: " + this.toDoList.getToDoList().size());
@@ -108,7 +108,7 @@ public class ToDoController implements Serializable {
 
         // EventHandling for logout
         this.toDoView.getLogoutButton().setOnMouseClicked(this::logout);
-        
+
         // EventHandling for registration
         this.loginView.getRegisterButton().setOnMouseClicked(this::openRegistration);
         
@@ -810,7 +810,7 @@ public class ToDoController implements Serializable {
   
  /*
   * Parses login data and checks if ok.
-  * If ok, the App will open, 
+  * If ok, the App will open,
   * if not ok, Alert Box will open.
   */
   public void handleLogin(MouseEvent event) {
@@ -818,10 +818,9 @@ public class ToDoController implements Serializable {
 	String emailLogin = loginView.getUserField().getText();
   	String passwordLogin = loginView.getPasswordField().getText();
   	
-  	String result = this.clientNetworkPlugin.login(emailLogin, passwordLogin);
-  	boolean trueResultBoolean = Boolean.parseBoolean(result);
-  	
-  	if (trueResultBoolean == true) {
+  	boolean result = this.clientNetworkPlugin.login(emailLogin, passwordLogin);
+
+  	if (result) {
   		Platform.runLater(() -> {
   		this.stage.setScene(scene2);
   		stage.show();
@@ -829,24 +828,23 @@ public class ToDoController implements Serializable {
   	} else {
   		// Alertdialog if Login failed
   		Alert alert = new Alert(AlertType.NONE);
-  		
+
   		 // Action event
         EventHandler<ActionEvent> eventAlert = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)
             {
                 // set alert type
                 alert.setAlertType(AlertType.ERROR);
- 
+
                 // set content text
                 alert.setContentText("Error Login failed");
- 
+
                 // show the dialog
                 alert.show();
             }
         };
-        trueResultBoolean = false;		
   	}
-  	
+
   }
   
   public void getNewAccount() {
@@ -859,23 +857,23 @@ public class ToDoController implements Serializable {
   }
   
   public boolean validatePassword() {
-	  if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() >= 3 
+	  if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() >= 3
 		 && this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() <= 20) {
 		  return true;
 	  } else {
 		// Alertdialog if Login failed
 	  		Alert alert = new Alert(AlertType.NONE);
-	  		
+
 	  		 // Action event
 	        EventHandler<ActionEvent> eventAlert = new EventHandler<ActionEvent>() {
 	            public void handle(ActionEvent e)
 	            {
 	                // set alert type
 	                alert.setAlertType(AlertType.ERROR);
-	 
+
 	                // set content text
 	                alert.setContentText("Error Password failed");
-	 
+
 	                // show the dialog
 	                alert.show();
 	            }
@@ -897,16 +895,16 @@ public class ToDoController implements Serializable {
   public void changePassword(ActionEvent event) {
 	  
 			 toDoView.getChangePasswordDialog().showAndWait();
-			 
+
 			  // validateNewPassword();
-			  
+
 			  //String password = view.getPasswordField().getText();
 			  //this.clientNetworkPlugin.changePassword(password);
 		}
 
 
   
-  
+
 //   public boolean validateNewPassword() {
   
 //	  }
