@@ -94,11 +94,11 @@ public class ServerRunnable implements Runnable {
                 System.out.println("[SERVER-RUNNABLE] Received message: " + inputString);
 
                 // Parse messageString to a "message"
-                // Message clientMessage = new Message(this.recipient, this.sender, this.defaultToken, inputString);
                 Message clientMessage = null;
                 try {
                     clientMessage = new Message(inputString);
                 } catch (Exception e) {
+                    System.out.println("[SERVER-RUNNABLE] Exception building message @101: " + e.getMessage());
                     this.sendMessage(this.falseResult);
                 }
 
@@ -196,9 +196,11 @@ public class ServerRunnable implements Runnable {
             passwordIsValid = inputValidator.validatePassword(password);
             userDoesAlreadyExist = DatabaseManager.doesDatabaseExist(username.split("@")[0]);
         } catch (Exception e) {
+            System.out.println("[SERVER-RUNNABLE] Exception building message @199: " + e.getMessage());
+            System.out.println("[SERVER-RUNNABLE] Exception building message @199: Probably invalid user input");
             this.sendMessage(this.falseResult);
+            return;
         }
-
 
         // Return false if any of the checks above failed
         if(!usernameIsValid || !passwordIsValid || !userDoesAlreadyExist) {
@@ -270,7 +272,6 @@ public class ServerRunnable implements Runnable {
         if(!usernameIsValid || !passwordIsValid || userDoesAlreadyExist) {
             this.sendMessage(this.falseResult);
         }
-        
 
 	}
 
@@ -391,8 +392,7 @@ public class ServerRunnable implements Runnable {
                 this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
             }
         }
-    	
-		
+
 	}
     
     private void reactToGetToDo(Message clientMessage) {
@@ -428,8 +428,7 @@ public class ServerRunnable implements Runnable {
             Message message = new Message(itemData);
             this.sendMessage(message.getMessageString());
         }
-		
-	
+
 	}
     
     private void reactToDeleteToDo(Message clientMessage) {
@@ -466,7 +465,7 @@ public class ServerRunnable implements Runnable {
 
         // If we reach this line, something failed
         this.sendMessage(this.falseResult);
-		
+
 	}
     
     private void reactToListToDos(Message clientMessage) {
