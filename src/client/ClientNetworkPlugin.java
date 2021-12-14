@@ -93,11 +93,14 @@ public class ClientNetworkPlugin {
             // Parse the server response
             StringBuilder stringBuilder = new StringBuilder();
             String inputString;
+            // TODO: GET RID OF THIS WHILE LOOP
             while((inputString = this.inputReader.readLine()) != null && inputString.length() != 0) {
                 stringBuilder.append(inputString);
                 System.out.println("inputString = " + inputString);
             }
+            System.out.println("DEBUG: 1");
             String messageString = stringBuilder.toString();
+            System.out.println("DEBUG: 2");
             System.out.println("[CLIENT] Received message: " + messageString);
 
             // Create Message
@@ -117,7 +120,7 @@ public class ClientNetworkPlugin {
         	boolean result = false;
         	
         	try {
-        	    ArrayList<String> loginData = new ArrayList<>();
+                ArrayList<String> loginData = new ArrayList<>();
         	    loginData.add(emailLogin);
         	    loginData.add(passwordLogin);
         	
@@ -126,10 +129,12 @@ public class ClientNetworkPlugin {
                 // Receive server response case
         	    Message responseLogin = this.parseResponse();
 
+                System.out.println(result);
                 // Parse response result
                 result = Boolean.parseBoolean(responseLogin.getMessageParts().get(1));
 
-        	
+
+
         	    if (result == true) {
             	    // set token
             	    this.token = responseLogin.getToken();
