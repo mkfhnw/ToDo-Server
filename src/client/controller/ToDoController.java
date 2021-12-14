@@ -801,12 +801,24 @@ public class ToDoController implements Serializable {
   }
   
  
-  public void getLogin() {
+  public void getLogin() { // MouseEvent e - handleLogin
 	  	
 	String emailLogin = loginView.getUserField().getText();
   	String passwordLogin = loginView.getPasswordField().getText();
   	
-  	this.clientNetworkPlugin.login(emailLogin, passwordLogin);
+  	String result = this.clientNetworkPlugin.login(emailLogin, passwordLogin);
+
+  	// If - else
+	  // TRUE = App öffnen
+	  
+	 // Platform.runLater(() -> {
+	  // this.stage.setScene(scene2);
+	  // stage.show();
+
+//});
+	  
+	  // falls false, ALARMING
+  	
   }
   
   public void getNewAccount() {
@@ -875,7 +887,8 @@ public class ToDoController implements Serializable {
    */
   public void registrationDone() {
 	  
-	  Button okButton = (Button) this.loginView.getRegistrationDialogPane().lookupButton(this.loginView.getRegistrationDialogPane().getOkButtonType());
+	  Button okButton = (Button) this.loginView.getRegistrationDialogPane().lookupButton(
+			  this.loginView.getRegistrationDialogPane().getOkButtonType());
       okButton.addEventFilter(ActionEvent.ACTION,
               event -> {
             	  
@@ -896,11 +909,17 @@ public class ToDoController implements Serializable {
   
   public void openToDoApp(MouseEvent event) {
 	  
+	  // getLogin();
+	  // Auf Antwort von Server warten indem --> Result = true
+	  // App öffnen
+	  
 	  Platform.runLater(() -> {
 	  this.stage.setScene(scene2);
 	  stage.show();
   
   });
+	  
+	  // falls false, ALARMING
       
   }
 

@@ -24,7 +24,7 @@ public class ClientNetworkPlugin {
     private BufferedReader inputReader;
     private PrintWriter outputWriter;
     private String token;
-    private final String defaultToken = "3963c9cae5c5aeaa71f287190774db4d354287c7973e969e9d6c5722c1037a33";
+    private final String defaultToken = "3963c9cae5c5aeaa71f287190774db4d354287c7973e969e9d6c5722c1037a33"; // LÖSCHEN!!
     private final String sender = "Client";
     private final String recipient = "Server";
 
@@ -74,7 +74,7 @@ public class ClientNetworkPlugin {
     }
 
     // Message reading method
-    public void parseResponse() {
+    public Message parseResponse() {
 
         try {
             // Parse the server response
@@ -89,14 +89,21 @@ public class ClientNetworkPlugin {
 
             // Create Message
             Message message = new Message(messageString);
-
+    		return message;
+            
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return null;
         }
+		
+
     }
         
-        public void login(String emailLogin, String passwordLogin) {
+        public String login(String emailLogin, String passwordLogin) {
         
+        	String result = null;
+        	
+        	try {
         	ArrayList<String> loginData = new ArrayList<>();
         	loginData.add(emailLogin);
         	loginData.add(passwordLogin);
@@ -105,23 +112,32 @@ public class ClientNetworkPlugin {
 
             // Receive server response case        	
         
-        	// String responseLogin = this.parseResponse();
-        	// Message serverResponseLogin = new Message(responseLogin);
+        	Message responseLogin = this.parseResponse();
         	
+        	// Result (true/false) vom Server holen
+        	// true
         	// set token
-        	// this.token = serverResponseLogin.getToken();
+        	this.token = responseLogin.getToken();
+        	// false --> NULL
+        	
+        	
+        	} catch (Exception e) {
+        		result = e.toString();
+        	}
+        	
+        	return result;
 
         }
         
         public void logout() {
         	
         	// Token
+        	getToken();
         	
         	ArrayList<String> logoutData = new ArrayList<>();        	
         	
         	sendMessage("LOGOUT", logoutData);
         	
-        	getToken();
         	
         }
         
