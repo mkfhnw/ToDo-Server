@@ -120,13 +120,12 @@ public class ClientNetworkPlugin {
                 // Receive server response case
         	    Message responseLogin = this.parseResponse();
 
-                System.out.println(result);
                 // Parse response result
                 result = Boolean.parseBoolean(responseLogin.getMessageParts().get(1));
 
 
 
-        	    if (result == true) {
+        	    if (result) {
             	    // set token
             	    this.token = responseLogin.getToken();
         	    } else {
