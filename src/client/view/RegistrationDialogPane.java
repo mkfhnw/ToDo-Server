@@ -56,7 +56,6 @@ public class RegistrationDialogPane extends DialogPane {
 	private final int SIZE_TEXTFIELDS = 250;
 	
 	// Constructor
-	
 	public RegistrationDialogPane() {
 	
 		

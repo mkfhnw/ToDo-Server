@@ -258,6 +258,41 @@ public class ServerRunnable implements Runnable {
         
 
 	}
+
+    private void reactToChangePassword(Message clientMessage) {
+
+        // Parse out token
+        String tokenString = clientMessage.getToken();
+        Token token = this.parent.getToken(tokenString);
+
+        // If token is invalid, send negative response
+        InputValidator inputValidator = InputValidator.getInputValidator();
+        if(!inputValidator.isTokenStillAlive(token)) {
+            this.sendMessage(this.falseResult);
+            return;
+        }
+
+        // If token is valid, go ahead
+        if(inputValidator.isTokenStillAlive(token)) {
+
+            // Parse username & validate newPassword input
+            String username = token.getUser();
+
+            // We can't use the private .getPassword-method here since the newPassword is at index 0 in this case
+            String newPassword = clientMessage.getDataParts().get(0);
+
+            // Validate input, make changes if input is valid and return false otherwise
+            boolean passwordIsValid = inputValidator.validatePassword(newPassword);
+            if(passwordIsValid) {
+                // Create new instance of databaseManager and write the newPassword to the DB
+                DatabaseManager databaseManager = new DatabaseManager(username.split("@")[0]);
+                databaseManager.changePassword(newPassword);
+                this.sendMessage(this.trueResult);
+            } else { this.sendMessage(this.falseResult); }
+
+        }
+
+    }
     
     private void reactToCreateToDo(Message clientMessage) {
 
@@ -342,41 +377,6 @@ public class ServerRunnable implements Runnable {
             }
         }
     	
-		
-	}
-    
-    private void reactToChangePassword(Message clientMessage) {
-    	
-    	// Parse out token
-        String tokenString = clientMessage.getToken();
-        Token token = this.parent.getToken(tokenString);
-        
-        // If token is invalid, send negative response
-        InputValidator inputValidator = InputValidator.getInputValidator();
-        if(!inputValidator.isTokenStillAlive(token)) {
-            this.sendMessage(this.falseResult);
-            return;
-        }
-        
-        // If token is valid, go ahead
-        if(inputValidator.isTokenStillAlive(token)) {
-
-            // Parse username & validate newPassword input
-            String username = token.getUser();
-
-            // We can't use the private .getPassword-method here since the newPassword is at index 0 in this case
-            String newPassword = clientMessage.getDataParts().get(0);
-
-            // Validate input, make changes if input is valid and return false otherwise
-            boolean passwordIsValid = inputValidator.validatePassword(newPassword);
-            if(passwordIsValid) {
-                // Create new instance of databaseManager and write the newPassword to the DB
-                DatabaseManager databaseManager = new DatabaseManager(username.split("@")[0]);
-                databaseManager.changePassword(newPassword);
-                this.sendMessage(this.trueResult);
-            } else { this.sendMessage(this.falseResult); }
-
-        }
 		
 	}
     

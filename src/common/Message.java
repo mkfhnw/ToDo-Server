@@ -46,7 +46,7 @@ public class Message {
         else { stringParts = new String[1]; stringParts[0] = messageString; }
 
         this.messageString = messageString;
-        this.messageType = MessageType.valueOf(stringParts[0]);
+        this.messageType = MessageType.valueOf(stringParts[0].toUpperCase());
         this.messageParts = new ArrayList<>(Arrays.asList(stringParts));
 
         // Parse token
@@ -120,6 +120,11 @@ public class Message {
 
         // Delete last |-char
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+
+        // If message type LOGIN
+        if(messageType == MessageType.LOGIN) {
+            return messageType.toString() + "|" + stringBuilder.toString();
+        }
 
         // Check if message has a token
         if(token == null) {
