@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 /* The ClientRunnable class
  * The ClientRunnable is a class that implements the Runnable interface.
@@ -94,9 +95,14 @@ public class ServerRunnable implements Runnable {
 
                 // Parse messageString to a "message"
                 // Message clientMessage = new Message(this.recipient, this.sender, this.defaultToken, inputString);
-                Message clientMessage = new Message(inputString);
+                Message clientMessage = null;
+                try {
+                    clientMessage = new Message(inputString);
+                } catch (Exception e) {
+                    this.sendMessage(this.falseResult);
+                }
 
-                switch (clientMessage.getMessageType()) {
+                switch (Objects.requireNonNull(clientMessage).getMessageType()) {
 
                     // Perform action based on messageType
                     case LOGIN -> {
@@ -179,11 +185,20 @@ public class ServerRunnable implements Runnable {
         String username = this.getUsername(clientMessage);
         String password = this.getPassword(clientMessage);
 
+        boolean usernameIsValid = false;
+        boolean passwordIsValid = false;
+        boolean userDoesAlreadyExist = false;
+
         // Validate user input
-        InputValidator inputValidator = InputValidator.getInputValidator();
-        boolean usernameIsValid = inputValidator.validateUsername(username);
-        boolean passwordIsValid = inputValidator.validatePassword(password);
-        boolean userDoesAlreadyExist = DatabaseManager.doesDatabaseExist(username.split("@")[0]);
+        try {
+            InputValidator inputValidator = InputValidator.getInputValidator();
+            usernameIsValid = inputValidator.validateUsername(username);
+            passwordIsValid = inputValidator.validatePassword(password);
+            userDoesAlreadyExist = DatabaseManager.doesDatabaseExist(username.split("@")[0]);
+        } catch (Exception e) {
+            this.sendMessage(this.falseResult);
+        }
+
 
         // Return false if any of the checks above failed
         if(!usernameIsValid || !passwordIsValid || !userDoesAlreadyExist) {
