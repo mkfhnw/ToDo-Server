@@ -5,7 +5,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import server.models.ServerRunnable;
 import client.view.LoginView;
+import client.view.RegistrationDialogPane;
 import client.view.ToDoView;
 import client.model.ToDo;
 import client.model.ToDoList;
@@ -19,7 +21,6 @@ public class ToDoApp extends Application {
 	private ToDoList toDoList;
 	private ToDoView toDoView;
 	private ToDoController toDoController;
-	
 	private LoginView loginView;
 
 	// Starts the JavaFX application
@@ -45,7 +46,14 @@ public class ToDoApp extends Application {
 		// Scene for LoginView
 		Scene scene1 = new Scene(loginView);
 		
-		this.toDoController = new ToDoController(this.toDoView, this.todoModel, toDoList, stage, scene2, loginView, scene1);
+		this.toDoController = new ToDoController(
+				this.toDoView, 
+				this.todoModel, 
+				toDoList, 
+				stage, 
+				scene2, 
+				loginView,
+				scene1);
 
 		// Shows scene in a window (object stage)
 		stage.setScene(scene1);

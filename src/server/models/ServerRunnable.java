@@ -527,4 +527,8 @@ public class ServerRunnable implements Runnable {
     private String getPassword(Message clientMessage) {
         return clientMessage.getDataParts().get(1);
     }
+
+	public String getTrueResult() {
+		return trueResult;
+	}
 }

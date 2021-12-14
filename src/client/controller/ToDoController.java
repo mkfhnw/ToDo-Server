@@ -13,11 +13,14 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import server.models.ServerRunnable;
 import client.model.FocusTimerModel;
 import client.model.Priority;
 import client.model.ToDo;
@@ -49,10 +52,16 @@ public class ToDoController implements Serializable {
     
     private LoginView loginView;
     private ClientNetworkPlugin clientNetworkPlugin;
-    private RegistrationDialogPane registrationView;
 
     // Constructor
-    public ToDoController(ToDoView toDoView, ToDo toDo, ToDoList toDoList, Stage stage, Scene scene2, LoginView loginView, Scene scene1) {
+    public ToDoController(
+    		ToDoView toDoView, 
+    		ToDo toDo, 
+    		ToDoList toDoList, 
+    		Stage stage, 
+    		Scene scene2, 
+    		LoginView loginView, 
+    		Scene scene1) {
 
         this.toDoView = toDoView;
         this.toDo = toDo;
@@ -61,12 +70,9 @@ public class ToDoController implements Serializable {
         this.scene2 = scene2;
         this.loginView = loginView;
         this.scene1 = scene1;
-        
         this.focusModel = focusModel;
 
         this.clientNetworkPlugin = new ClientNetworkPlugin();
-        
-        this.registrationView = new RegistrationDialogPane();
         
         // Load items from database
         this.toDoList.updateSublists();
@@ -107,7 +113,7 @@ public class ToDoController implements Serializable {
         this.loginView.getRegisterButton().setOnMouseClicked(this::openRegistration);
         
         // EventHandling to open ToDoApp
-        this.loginView.getSignInButton().setOnMouseClicked(this::openToDoApp);
+        this.loginView.getSignInButton().setOnMouseClicked(this::handleLogin);
        
 
         
@@ -800,41 +806,80 @@ public class ToDoController implements Serializable {
 	  
   }
   
- 
-  public void getLogin() { // MouseEvent e - handleLogin
+ /*
+  * Parses login data and checks if ok.
+  * If ok, the App will open, 
+  * if not ok, Alert Box will open.
+  */
+  public void handleLogin(MouseEvent event) {
 	  	
 	String emailLogin = loginView.getUserField().getText();
   	String passwordLogin = loginView.getPasswordField().getText();
   	
   	String result = this.clientNetworkPlugin.login(emailLogin, passwordLogin);
-
-  	// If - else
-	  // TRUE = App öffnen
-	  
-	 // Platform.runLater(() -> {
-	  // this.stage.setScene(scene2);
-	  // stage.show();
-
-//});
-	  
-	  // falls false, ALARMING
+  	boolean trueResultBoolean = Boolean.parseBoolean(result);
+  	
+  	if (trueResultBoolean == true) {
+  		Platform.runLater(() -> {
+  		this.stage.setScene(scene2);
+  		stage.show();
+  		});
+  	} else {
+  		// Alertdialog if Login failed
+  		Alert alert = new Alert(AlertType.NONE);
+  		
+  		 // Action event
+        EventHandler<ActionEvent> eventAlert = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e)
+            {
+                // set alert type
+                alert.setAlertType(AlertType.ERROR);
+ 
+                // set content text
+                alert.setContentText("Error Login failed");
+ 
+                // show the dialog
+                alert.show();
+                
+            }
+        };
+  		
+  	}
   	
   }
   
   public void getNewAccount() {
 	  
-	String emailCreateLogin = registrationView.getEmailField().getText();
-  	String passwordCreateLogin = registrationView.getPasswordField().getText();
+	String emailCreateLogin = this.loginView.getRegistrationDialogPane().getEmailField().getText();
+  	String passwordCreateLogin = this.loginView.getRegistrationDialogPane().getPasswordField().getText();
   	
   	this.clientNetworkPlugin.createLogin(emailCreateLogin, passwordCreateLogin);
   	
   }
   
   public boolean validatePassword() {
-	  if (registrationView.getPasswordField().getText().length() >= 3 && registrationView.getPasswordField().getText().length() <= 20) {
+	  if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() >= 3 
+		 && this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() <= 20) {
 		  return true;
 	  } else {
-		  return false; // LABEL/ALARM --> TODO!
+		// Alertdialog if Login failed
+	  		Alert alert = new Alert(AlertType.NONE);
+	  		
+	  		 // Action event
+	        EventHandler<ActionEvent> eventAlert = new EventHandler<ActionEvent>() {
+	            public void handle(ActionEvent e)
+	            {
+	                // set alert type
+	                alert.setAlertType(AlertType.ERROR);
+	 
+	                // set content text
+	                alert.setContentText("Error Password failed");
+	 
+	                // show the dialog
+	                alert.show();
+	            }
+	        };
+		  return false;
 	  }
 	    
   }
@@ -905,25 +950,6 @@ public class ToDoController implements Serializable {
 	  
 	  
   }
-  
-  
-  public void openToDoApp(MouseEvent event) {
-	  
-	  // getLogin();
-	  // Auf Antwort von Server warten indem --> Result = true
-	  // App öffnen
-	  
-	  Platform.runLater(() -> {
-	  this.stage.setScene(scene2);
-	  stage.show();
-  
-  });
-	  
-	  // falls false, ALARMING
-      
-  }
-
-  
 
 
 

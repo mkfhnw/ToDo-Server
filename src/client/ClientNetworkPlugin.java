@@ -3,6 +3,7 @@ package client;
 import client.model.ToDo;
 import common.Message;
 import common.MessageType;
+import server.models.ServerRunnable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,6 +28,7 @@ public class ClientNetworkPlugin {
     private final String defaultToken = "3963c9cae5c5aeaa71f287190774db4d354287c7973e969e9d6c5722c1037a33"; // LÖSCHEN!!
     private final String sender = "Client";
     private final String recipient = "Server";
+    private ServerRunnable serverRunnable;
 
     // Constructor
     public ClientNetworkPlugin() {
@@ -62,10 +64,22 @@ public class ClientNetworkPlugin {
     }
 
     // Message sending method
-    public void sendMessage(String command, ArrayList<String> data) {
+    public void sendMessage(String command, ArrayList<String> data, String token) {
 
         // Create cient message based on input
         Message clientMessage = new Message(this.sender, this.recipient, this.defaultToken, command, data);
+
+        // Send message
+        this.outputWriter.write(clientMessage.getMessageString());
+        this.outputWriter.flush();
+        System.out.println("[CLIENT] Sent message: " + clientMessage.getMessageString());
+    }
+    
+ // Message sending method for login and ping
+    public void sendMessage(String command, ArrayList<String> data) {
+
+        // Create cient message based on input
+        Message clientMessage = new Message(this.sender, this.recipient, command, data);
 
         // Send message
         this.outputWriter.write(clientMessage.getMessageString());
@@ -111,15 +125,18 @@ public class ClientNetworkPlugin {
         	sendMessage("LOGIN", loginData);
 
             // Receive server response case        	
-        
         	Message responseLogin = this.parseResponse();
         	
-        	// Result (true/false) vom Server holen
-        	// true
-        	// set token
-        	this.token = responseLogin.getToken();
-        	// false --> NULL
+        	// changes String to boolean because of true and false
+        	String trueResult = serverRunnable.getTrueResult();
+        	boolean trueResultBoolean = Boolean.parseBoolean(trueResult);
         	
+        	if (trueResultBoolean == true) {
+            	// set token
+            	this.token = responseLogin.getToken();
+        	} else {
+        		trueResultBoolean = false;
+        	}        	
         	
         	} catch (Exception e) {
         		result = e.toString();
@@ -131,12 +148,11 @@ public class ClientNetworkPlugin {
         
         public void logout() {
         	
-        	// Token
         	getToken();
         	
         	ArrayList<String> logoutData = new ArrayList<>();        	
         	
-        	sendMessage("LOGOUT", logoutData);
+        	sendMessage("LOGOUT", logoutData, token);
         	
         	
         }
@@ -144,13 +160,16 @@ public class ClientNetworkPlugin {
         
         public void createLogin(String emailCreateLogin, String passwordCreateLogin) {
         	 
+        	getToken();
+        	
         	ArrayList<String> createLoginData = new ArrayList<>();
         	createLoginData.add(emailCreateLogin);
         	createLoginData.add(passwordCreateLogin);
         	
-        	sendMessage("CREATE_LOGIN", createLoginData);
+        	sendMessage("CREATE_LOGIN", createLoginData, token);
         	
-        	getToken();
+        	
+        	
         	
         	// Fails if name already taken, or invalid --> SERVER
         	// After creating an account, you still have to login --> CONTROLLER
@@ -160,6 +179,8 @@ public class ClientNetworkPlugin {
         
         public void createToDo(ToDo toDo) {
 
+            getToken();
+        	
             ArrayList<String> createToDoData = new ArrayList<>();
             createToDoData.add(toDo.getTitle());
             createToDoData.add(toDo.getPriority().toString());
@@ -168,9 +189,9 @@ public class ClientNetworkPlugin {
             
             //createToDoData.add(toDo.getCategory());
             
-            sendMessage("CREATE_TODO", createToDoData);
+            sendMessage("CREATE_TODO", createToDoData, token);
             
-            getToken();
+
             
         	// Token-Validation --> SERVER
             
@@ -178,15 +199,17 @@ public class ClientNetworkPlugin {
 
         public void changePassword(String newPassword) {
         	
-        	 ArrayList<String> changePasswordData = new ArrayList<>();
-        	 changePasswordData.add(newPassword);
+         	getToken();
+        	
+        	ArrayList<String> changePasswordData = new ArrayList<>();
+        	changePasswordData.add(newPassword);
         	
         	// change password --> CONTROLLER
         	// Token valid (SERVER))
-        	
-        	sendMessage("CHANGE_PASSWORD", changePasswordData);
+        	 
+        	sendMessage("CHANGE_PASSWORD", changePasswordData, token);
         
-        	getToken();
+
         	
         }
         
@@ -194,15 +217,21 @@ public class ClientNetworkPlugin {
         	// toDoList for each; --> SERVER
         	// Token-Validation --> SERVER
         	
+        	getToken();
+        	
         	ArrayList<String> toDoData = new ArrayList<>();
         	toDoData.add(Integer.toString(ID));
         	
-        	sendMessage("GET_TODO", toDoData);
+
         	
-        	getToken();
+        	sendMessage("GET_TODO", toDoData, token);
+        	
+
         }
         
         public void deleteToDo(int ID) {
+        	
+        	getToken();
         	
         	ArrayList<String> deletedToDoData = new ArrayList<>();
         	deletedToDoData.add(Integer.toString(ID));
@@ -211,34 +240,97 @@ public class ClientNetworkPlugin {
         	
         	// Token-Validation --> SERVER
         	
-        	sendMessage("DELETE_TODO", deletedToDoData);
+        	sendMessage("DELETE_TODO", deletedToDoData, token);
         	
-        	getToken();
         }
         
         public void listToDos() {
         	
+        	getToken();
+        	
         	ArrayList<String> listToDos = new ArrayList<>();
         	
         	// Token
+        	sendMessage("LIST_TODOS", listToDos, token);
         	
-        	sendMessage("LIST_TODOS", listToDos);
-        	
-        	getToken();
+
         }
         
         public void ping() {
-        	// With and without Token
+        	
+        	getToken();
         	
         	ArrayList<String> pingData = new ArrayList<>();
         	
-        	sendMessage("PING", pingData);
+        	/*
+        	 * Ping can be sent with and without token, 
+        	 * therefore we check if token is not "null"
+        	 */
+        	if (token != null) {
+        		sendMessage("PING", pingData, token);
+        	} else {
+        		sendMessage("PING", pingData);
+        	}
         	
-        	getToken();
+        	
+        	
+
         }
 
 		public String getToken() {
 			return token;
+		}
+
+		public int getPORT() {
+			return PORT;
+		}
+
+		public Socket getClientSocket() {
+			return clientSocket;
+		}
+
+		public BufferedReader getInputReader() {
+			return inputReader;
+		}
+
+		public PrintWriter getOutputWriter() {
+			return outputWriter;
+		}
+
+		public String getDefaultToken() {
+			return defaultToken;
+		}
+
+		public String getSender() {
+			return sender;
+		}
+
+		public String getRecipient() {
+			return recipient;
+		}
+
+		public ServerRunnable getServerRunnable() {
+			return serverRunnable;
+		}
+
+		public void setClientSocket(Socket clientSocket) {
+			this.clientSocket = clientSocket;
+		}
+
+		public void setInputReader(BufferedReader inputReader) {
+			this.inputReader = inputReader;
+		}
+
+		public void setOutputWriter(PrintWriter outputWriter) {
+			this.outputWriter = outputWriter;
+		}
+
+		public void setToken(String token) {
+			this.token = token;
+		}
+
+		public void setServerRunnable(ServerRunnable serverRunnable) {
+			this.serverRunnable = serverRunnable;
 		}
     
         
