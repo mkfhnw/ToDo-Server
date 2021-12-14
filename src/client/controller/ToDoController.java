@@ -76,7 +76,6 @@ public class ToDoController implements Serializable {
 
         // Load items from database
         this.toDoList.updateSublists();
-        System.out.println("Loaded items from database: " + this.toDoList.getToDoList().size());
 
         // Set default midPane & add initial event handling for searchbar
         this.plannedBarView = new PlannedBarView(this.toDoList.getToDoListPlanned());
