@@ -91,16 +91,7 @@ public class ClientNetworkPlugin {
 
         try {
             // Parse the server response
-            StringBuilder stringBuilder = new StringBuilder();
-            String inputString;
-            // TODO: GET RID OF THIS WHILE LOOP
-            while((inputString = this.inputReader.readLine()) != null && inputString.length() != 0) {
-                stringBuilder.append(inputString);
-                System.out.println("inputString = " + inputString);
-            }
-            System.out.println("DEBUG: 1");
-            String messageString = stringBuilder.toString();
-            System.out.println("DEBUG: 2");
+            String messageString = this.inputReader.readLine();
             System.out.println("[CLIENT] Received message: " + messageString);
 
             // Create Message
