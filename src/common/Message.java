@@ -26,6 +26,16 @@ public class Message {
         this.messageParts = new ArrayList<>(Arrays.asList(this.messageString.split("\\|")));
         this.dataParts = this.parseDataParts(data);
     }
+    
+    // Constructor used by the client to send login and ping message
+    public Message(String sender, String recipient, String command, ArrayList<String> data) {
+        this.sender = Addressor.valueOf(sender.toUpperCase());
+        this.recipient = Addressor.valueOf(recipient.toUpperCase());
+        this.messageType = MessageType.valueOf(command.toUpperCase());
+        this.messageString = this.buildMessageString(this.messageType, this.token, data);
+        this.messageParts = new ArrayList<>(Arrays.asList(this.messageString.split("\\|")));
+        this.dataParts = this.parseDataParts(data);
+    }
 
     // Constructor used to parse message from a messageString
     public Message(String messageString) {
