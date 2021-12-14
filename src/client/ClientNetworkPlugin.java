@@ -25,7 +25,6 @@ public class ClientNetworkPlugin {
     private BufferedReader inputReader;
     private PrintWriter outputWriter;
     private String token;
-    private final String defaultToken = "3963c9cae5c5aeaa71f287190774db4d354287c7973e969e9d6c5722c1037a33"; // LÖSCHEN!!
     private final String sender = "Client";
     private final String recipient = "Server";
     private ServerRunnable serverRunnable;
@@ -67,7 +66,7 @@ public class ClientNetworkPlugin {
     public void sendMessage(String command, ArrayList<String> data, String token) {
 
         // Create cient message based on input
-        Message clientMessage = new Message(this.sender, this.recipient, this.defaultToken, command, data);
+        Message clientMessage = new Message(this.sender, this.recipient, this.token, command, data);
 
         // Send message
         this.outputWriter.write(clientMessage.getMessageString());
@@ -148,11 +147,9 @@ public class ClientNetworkPlugin {
         
         public void logout() {
         	
-        	getToken();
-        	
         	ArrayList<String> logoutData = new ArrayList<>();        	
         	
-        	sendMessage("LOGOUT", logoutData, token);
+        	sendMessage("LOGOUT", logoutData, this.token);
         	
         	
         }
@@ -160,13 +157,12 @@ public class ClientNetworkPlugin {
         
         public void createLogin(String emailCreateLogin, String passwordCreateLogin) {
         	 
-        	getToken();
         	
         	ArrayList<String> createLoginData = new ArrayList<>();
         	createLoginData.add(emailCreateLogin);
         	createLoginData.add(passwordCreateLogin);
         	
-        	sendMessage("CREATE_LOGIN", createLoginData, token);
+        	sendMessage("CREATE_LOGIN", createLoginData, this.token);
         	
         	
         	
@@ -178,8 +174,6 @@ public class ClientNetworkPlugin {
         }
         
         public void createToDo(ToDo toDo) {
-
-            getToken();
         	
             ArrayList<String> createToDoData = new ArrayList<>();
             createToDoData.add(toDo.getTitle());
@@ -189,7 +183,7 @@ public class ClientNetworkPlugin {
             
             //createToDoData.add(toDo.getCategory());
             
-            sendMessage("CREATE_TODO", createToDoData, token);
+            sendMessage("CREATE_TODO", createToDoData, this.token);
             
 
             
@@ -199,15 +193,13 @@ public class ClientNetworkPlugin {
 
         public void changePassword(String newPassword) {
         	
-         	getToken();
-        	
         	ArrayList<String> changePasswordData = new ArrayList<>();
         	changePasswordData.add(newPassword);
         	
         	// change password --> CONTROLLER
         	// Token valid (SERVER))
         	 
-        	sendMessage("CHANGE_PASSWORD", changePasswordData, token);
+        	sendMessage("CHANGE_PASSWORD", changePasswordData, this.token);
         
 
         	
@@ -217,21 +209,17 @@ public class ClientNetworkPlugin {
         	// toDoList for each; --> SERVER
         	// Token-Validation --> SERVER
         	
-        	getToken();
-        	
         	ArrayList<String> toDoData = new ArrayList<>();
         	toDoData.add(Integer.toString(ID));
         	
 
         	
-        	sendMessage("GET_TODO", toDoData, token);
+        	sendMessage("GET_TODO", toDoData, this.token);
         	
 
         }
         
         public void deleteToDo(int ID) {
-        	
-        	getToken();
         	
         	ArrayList<String> deletedToDoData = new ArrayList<>();
         	deletedToDoData.add(Integer.toString(ID));
@@ -240,25 +228,21 @@ public class ClientNetworkPlugin {
         	
         	// Token-Validation --> SERVER
         	
-        	sendMessage("DELETE_TODO", deletedToDoData, token);
+        	sendMessage("DELETE_TODO", deletedToDoData, this.token);
         	
         }
         
         public void listToDos() {
         	
-        	getToken();
-        	
         	ArrayList<String> listToDos = new ArrayList<>();
         	
         	// Token
-        	sendMessage("LIST_TODOS", listToDos, token);
+        	sendMessage("LIST_TODOS", listToDos, this.token);
         	
 
         }
         
         public void ping() {
-        	
-        	getToken();
         	
         	ArrayList<String> pingData = new ArrayList<>();
         	
@@ -267,7 +251,7 @@ public class ClientNetworkPlugin {
         	 * therefore we check if token is not "null"
         	 */
         	if (token != null) {
-        		sendMessage("PING", pingData, token);
+        		sendMessage("PING", pingData, this.token);
         	} else {
         		sendMessage("PING", pingData);
         	}
@@ -295,10 +279,6 @@ public class ClientNetworkPlugin {
 
 		public PrintWriter getOutputWriter() {
 			return outputWriter;
-		}
-
-		public String getDefaultToken() {
-			return defaultToken;
 		}
 
 		public String getSender() {
