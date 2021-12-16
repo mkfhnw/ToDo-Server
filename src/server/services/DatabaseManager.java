@@ -20,6 +20,7 @@ public class DatabaseManager {
         this.connectionString = fileString + File.separator + "src" + File.separator + "server" + File.separator
                 + "database" + File.separator + accountName + ".db";
         this.connectionString = "jdbc:sqlite:" + connectionString;
+        
     }
 
     // Custom methods
