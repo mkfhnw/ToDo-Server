@@ -121,7 +121,7 @@ public class Message {
         // Delete last |-char
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
 
-        // If message type LOGIN
+        // If message type LOGIN or CREATE_LOGIN
         if(messageType == MessageType.LOGIN || messageType == MessageType.CREATE_LOGIN) {
             return messageType.toString() + "|" + stringBuilder.toString();
         }
