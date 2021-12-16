@@ -122,7 +122,7 @@ public class Message {
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
 
         // If message type LOGIN
-        if(messageType == MessageType.LOGIN) {
+        if(messageType == MessageType.LOGIN || messageType == MessageType.CREATE_LOGIN) {
             return messageType.toString() + "|" + stringBuilder.toString();
         }
 
