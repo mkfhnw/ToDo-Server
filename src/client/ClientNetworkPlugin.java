@@ -151,22 +151,35 @@ public class ClientNetworkPlugin {
         }
         
         
-        public void createLogin(String emailCreateLogin, String passwordCreateLogin) {
+        public boolean createLogin(String emailCreateLogin, String passwordCreateLogin) {
         	 
-        	
-        	ArrayList<String> createLoginData = new ArrayList<>();
-        	createLoginData.add(emailCreateLogin);
-        	createLoginData.add(passwordCreateLogin);
-        	
-        	sendMessage("CREATE_LOGIN", createLoginData, this.token);
+        	boolean result = false;
         	
         	
+        	try { 
+        		ArrayList<String> createLoginData = new ArrayList<>();
+        		createLoginData.add(emailCreateLogin);
+        		createLoginData.add(passwordCreateLogin);
+        	
+        		sendMessage("CREATE_LOGIN", createLoginData);
+        	
+        		// Receive server response case
+        		Message responseLogin = this.parseResponse();
+
+        		// Parse response result
+        		result = Boolean.parseBoolean(responseLogin.getMessageParts().get(1));
+
+    	
+        	} catch (Exception e) {
+        		System.out.println("[NETWORK-PLUGIN] Exception: " + e.getMessage());
+        		result = false;
+        }
         	
         	
         	// Fails if name already taken, or invalid --> SERVER
         	// After creating an account, you still have to login --> CONTROLLER
         	
-        	
+        	return result;
         }
         
         public void createToDo(ToDo toDo) {
