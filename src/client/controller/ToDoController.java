@@ -863,6 +863,9 @@ public class ToDoController implements Serializable {
 		 && this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() <= 20) {
 		  return true;
 	  } else {
+		  
+		 this.loginView.getRegistrationDialogPane().getPasswordField().getStyleClass().add("notOk");
+		 
 		// Alertdialog if Login failed
 	  		Alert alert = new Alert(AlertType.NONE);
 
@@ -896,12 +899,16 @@ public class ToDoController implements Serializable {
   
   public void changePassword(ActionEvent event) {
 	  
-			 toDoView.getChangePasswordDialog().showAndWait();
+			toDoView.getChangePasswordDialog().showAndWait();
+			 
+			String password = this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText();
+			this.clientNetworkPlugin.changePassword(password);
+			
+			
+			//Password validation, alarming if not between 3 and 20 characters
+			// validateNewPassword();
 
-			  // validateNewPassword();
-
-			  //String password = view.getPasswordField().getText();
-			  //this.clientNetworkPlugin.changePassword(password);
+			  
 		}
 
 
@@ -917,21 +924,24 @@ public class ToDoController implements Serializable {
       Button okButton = (Button) this.loginView.getRegistrationDialogPane().lookupButton(this.loginView.getRegistrationDialogPane().getOkButtonType());
       okButton.addEventFilter(ActionEvent.ACTION,
               event -> {
+            	  //Validation is not working right, you can create a user with a password that does not matches the requirements
+            	  //the registrationView closes anyway, even if password incorrect -> needs to be fixed
                   if (!validatePassword()) {
-                      event.consume();
+                	  event.consume();
+                      
+                  } else {
+                	  boolean result = getNewAccount();
+                	  if (result) {
+                    	  Platform.runLater(() -> {
+                    	  		this.stage.setScene(scene1);
+                    	  		stage.show();
+                    	  		});    		
+                      } else {
+                    	  
+                      }
                   }
               });
 
-      boolean result = getNewAccount();
-      
-      if (result) {
-    	  Platform.runLater(() -> {
-    	  		this.stage.setScene(scene1);
-    	  		stage.show();
-    	  		});    		
-      } else {
-    	  
-      }
 	  
   }
 
@@ -946,30 +956,7 @@ public void openRegistration(MouseEvent event) {
     	  // save login?
   }
   
-  /*
-   * After the registration is finished, the Login mask will open.
-   * The user has to login.
-   */
-  public void registrationDone() {
-	  
-	  Button okButton = (Button) this.loginView.getRegistrationDialogPane().lookupButton(
-			  this.loginView.getRegistrationDialogPane().getOkButtonType());
-      okButton.addEventFilter(ActionEvent.ACTION,
-              event -> {
-            	  
-            	  Platform.runLater(() -> {
-        			  this.stage.setScene(scene1);
-        			  stage.show();
-                  
-                  }
-              );
-		  
-		  });
-      
-      // + ADD LOGIN TO DATABASE?
-	  
-	  
-  }
+ 
 
 }
 

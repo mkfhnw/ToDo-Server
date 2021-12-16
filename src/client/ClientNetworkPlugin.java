@@ -141,13 +141,28 @@ public class ClientNetworkPlugin {
 
         }
         
-        public void logout() {
+        public boolean logout() {
         	
-        	ArrayList<String> logoutData = new ArrayList<>();        	
+        	boolean result = false;
         	
-        	sendMessage("LOGOUT", logoutData, this.token);
+        	try {
         	
+	        	ArrayList<String> logoutData = new ArrayList<>();        	
+	        	
+	        	sendMessage("LOGOUT", logoutData, this.token);
+	        	
+	        	// Receive server response case
+        	    Message responseLogin = this.parseResponse();
+
+                // Parse response result
+                result = Boolean.parseBoolean(responseLogin.getMessageParts().get(1));
         	
+        	} catch (Exception e){
+        		System.out.println("[NETWORK-PLUGIN] Exception: " + e.getMessage());
+                result = false;
+        	}
+        	
+        	return result;
         }
         
         
@@ -200,18 +215,31 @@ public class ClientNetworkPlugin {
             
 		}
 
-        public void changePassword(String newPassword) {
+        public boolean changePassword(String newPassword) {
         	
-        	ArrayList<String> changePasswordData = new ArrayList<>();
-        	changePasswordData.add(newPassword);
+        	boolean result = false;
         	
-        	// change password --> CONTROLLER
-        	// Token valid (SERVER))
-        	 
-        	sendMessage("CHANGE_PASSWORD", changePasswordData, this.token);
-        
+        	try {
+        		ArrayList<String> changePasswordData = new ArrayList<>();
+        		changePasswordData.add(newPassword);
+        	
+        		// change password --> CONTROLLER
+	        	// Token valid (SERVER))
+	        	 
+	        	sendMessage("CHANGE_PASSWORD", changePasswordData, this.token);
+	        
+	        	// Receive server response case
+	    		Message responseLogin = this.parseResponse();
+	
+	    		// Parse response result
+	    		result = Boolean.parseBoolean(responseLogin.getMessageParts().get(1));
 
-        	
+	
+        	} catch (Exception e) {
+	    		System.out.println("[NETWORK-PLUGIN] Exception: " + e.getMessage());
+	    		result = false;
+    }
+        	return result;
         }
         
         public void getToDo(int ID) { // NOCH NICHT FERTIG
