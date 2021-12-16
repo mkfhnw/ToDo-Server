@@ -846,14 +846,17 @@ public class ToDoController implements Serializable {
 
   }
   
-  public void getNewAccount() {
+  public boolean getNewAccount() {
 	  
 	String emailCreateLogin = this.loginView.getRegistrationDialogPane().getEmailField().getText();
   	String passwordCreateLogin = this.loginView.getRegistrationDialogPane().getPasswordField().getText();
   	
-  	this.clientNetworkPlugin.createLogin(emailCreateLogin, passwordCreateLogin);
+  	boolean result = this.clientNetworkPlugin.createLogin(emailCreateLogin, passwordCreateLogin);
+  	return result;
   	
   }
+  
+  
   
   public boolean validatePassword() {
 	  if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() >= 3
@@ -908,10 +911,37 @@ public class ToDoController implements Serializable {
   
 //	  }
   
-  public void openRegistration(MouseEvent event) {
+  public void registerAccount() {
+	  
+	// Set up event filter on OK-button to prevent dialog from closing when user input is not valid
+      Button okButton = (Button) this.loginView.getRegistrationDialogPane().lookupButton(this.loginView.getRegistrationDialogPane().getOkButtonType());
+      okButton.addEventFilter(ActionEvent.ACTION,
+              event -> {
+                  if (!validatePassword()) {
+                      event.consume();
+                  }
+              });
+
+      boolean result = getNewAccount();
+      
+      if (result) {
+    	  Platform.runLater(() -> {
+    	  		this.stage.setScene(scene1);
+    	  		stage.show();
+    	  		});    		
+      } else {
+    	  
+      }
+	  
+  }
+
+
+public void openRegistration(MouseEvent event) {
 	  
 	// show dialog
       this.loginView.getRegistrationDialog().showAndWait();
+      
+      registerAccount();
       
     	  // save login?
   }
