@@ -276,16 +276,34 @@ public class ClientNetworkPlugin {
 
         }
         
-        public void deleteToDo(int ID) {
+        public boolean deleteToDo(int ID) {
         	
-        	ArrayList<String> deletedToDoData = new ArrayList<>();
-        	deletedToDoData.add(Integer.toString(ID));
-
-        	// toDoController.deleteToDo(); --> SERVER
+        	boolean result = false;
         	
-        	// Token-Validation --> SERVER
+        	try {
         	
-        	sendMessage("DELETE_TODO", deletedToDoData, this.token);
+	        	ArrayList<String> deletedToDoData = new ArrayList<>();
+	        	deletedToDoData.add(Integer.toString(ID));
+	
+	        	// toDoController.deleteToDo(); --> SERVER
+	        	
+	        	// Token-Validation --> SERVER
+	        	
+	        	sendMessage("DELETE_TODO", deletedToDoData, this.token);
+	        	
+	        	// Receive server response case
+	    		Message responseLogin = this.parseResponse();
+	
+	    		// Parse response result
+	    		result = Boolean.parseBoolean(responseLogin.getMessageParts().get(1));
+	    		
+	        	
+        	} catch (Exception e) {
+        		System.out.println("[NETWORK-PLUGIN] Exception: " + e.getMessage());
+	    		result = false;
+        	}
+        	
+        	return result;
         	
         }
         
