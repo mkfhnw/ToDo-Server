@@ -115,6 +115,7 @@ public class AddToDoDialogPane extends DialogPane {
         // ComboBox for Priority
         priorityComboBox = new ComboBox<>();
         priorityComboBox.setItems(FXCollections.observableArrayList(Priority.values()));
+        priorityComboBox.setValue(Priority.Low);
         
         // Fill controls into containers
         titleBar.getChildren().addAll(titleLabel, titleTextfield);
