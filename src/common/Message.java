@@ -27,7 +27,7 @@ public class Message {
         this.dataParts = this.parseDataParts(data);
     }
     
-    // Constructor used by the client to send login and ping message
+    // Constructor used by the client to send login, create login and ping message
     public Message(String sender, String recipient, String command, ArrayList<String> data) {
         this.sender = Addressor.valueOf(sender.toUpperCase());
         this.recipient = Addressor.valueOf(recipient.toUpperCase());
