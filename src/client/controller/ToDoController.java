@@ -891,7 +891,12 @@ public class ToDoController implements Serializable {
   public void logout(MouseEvent event) {
 	// ALARMDIALOG?
 	
-	  this.clientNetworkPlugin.logout();
+	  boolean result = this.clientNetworkPlugin.logout();
+	  
+	  //if user logged out, show LoginView again
+	  if (result) {
+		  this.stage.setScene(scene1);
+	  }
 	  
 	  // Close App & back to LoginView (scene1)
 	  
