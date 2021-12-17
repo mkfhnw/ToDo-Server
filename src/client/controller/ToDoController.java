@@ -198,7 +198,7 @@ public class ToDoController implements Serializable {
     public void updateToDo(MouseEvent e) {
 
         // Check for double click
-        if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2) {
+        if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 8) {
 
             // Get clicked item
             MainBarView activeMidView = (MainBarView) this.getActiveMidView();
