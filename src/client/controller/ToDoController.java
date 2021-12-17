@@ -895,7 +895,9 @@ public class ToDoController implements Serializable {
 	  
 	  //if user logged out, show LoginView again
 	  if (result) {
+		  this.stage.close();
 		  this.stage.setScene(scene1);
+		  this.stage.show();
 	  }
 	  
 	  // Close App & back to LoginView (scene1)
