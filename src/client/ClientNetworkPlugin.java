@@ -199,18 +199,38 @@ public class ClientNetworkPlugin {
         
         public void createToDo(ToDo toDo) {
         	
-            ArrayList<String> createToDoData = new ArrayList<>();
-            createToDoData.add(toDo.getTitle());
-            createToDoData.add(toDo.getPriority().toString());
-            createToDoData.add(toDo.getMessage());
-            createToDoData.add(toDo.getDueDate().toString());
-            
-            //createToDoData.add(toDo.getCategory());
-            
-            sendMessage("CREATE_TODO", createToDoData, this.token);
+        	boolean result = false;
+        	int toDoID;
+        	
+        	try {
+        	
+	            ArrayList<String> createToDoData = new ArrayList<>();
+	            createToDoData.add(toDo.getTitle());
+	            createToDoData.add(toDo.getPriority().toString());
+	            createToDoData.add(toDo.getMessage());
+	            createToDoData.add(toDo.getDueDate().toString());
+	            
+	            //createToDoData.add(toDo.getCategory());
+	            
+	            sendMessage("CREATE_TODO", createToDoData, this.token);
+	            
+	            // Receive server response case
+        		Message responseLogin = this.parseResponse();
+        		
+        		// Parse response result
+        		result = Boolean.parseBoolean(responseLogin.getMessageParts().get(1));
+        		
+        		if (result) {
+        			toDoID = Integer.parseInt(responseLogin.getMessageParts().get(2));
+        		}
+        		
+        		       		
             
 
-            
+        	} catch (Exception e) {
+        		System.out.println("[NETWORK-PLUGIN] Exception: " + e.getMessage());
+        		
+        	}
         	// Token-Validation --> SERVER
             
 		}
