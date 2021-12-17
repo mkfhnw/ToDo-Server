@@ -10,7 +10,7 @@ public class Token {
     // Fields
     private String tokenString;
     private String user;
-    private final int timeToLive = 900000;
+    private final int timeToLive = 3600000;
     private final long unixTimeOfCreation = System.currentTimeMillis() / 1000L;
     private final long unixTimeOfDeath = this.unixTimeOfCreation + this.timeToLive;
     public static int globalCounter = 0;
