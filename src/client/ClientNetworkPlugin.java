@@ -231,7 +231,7 @@ public class ClientNetworkPlugin {
         		System.out.println("[NETWORK-PLUGIN] Exception: " + e.getMessage());
         		
         	}
-        	// Token-Validation --> SERVER
+        	
             
 		}
 
@@ -299,21 +299,35 @@ public class ClientNetworkPlugin {
 
         }
         
-        public void ping() {
+        public boolean ping() {
         	
-        	ArrayList<String> pingData = new ArrayList<>();
+        	boolean result = false;
         	
-        	/*
-        	 * Ping can be sent with and without token, 
-        	 * therefore we check if token is not "null"
-        	 */
-        	if (token != null) {
-        		sendMessage("PING", pingData, this.token);
-        	} else {
-        		sendMessage("PING", pingData);
+        	try {
+	        	ArrayList<String> pingData = new ArrayList<>();
+	        	
+	        	/*
+	        	 * Ping can be sent with and without token, 
+	        	 * therefore we check if token is not "null"
+	        	 */
+	        	if (token != null) {
+	        		sendMessage("PING", pingData, this.token);
+	        	} else {
+	        		sendMessage("PING", pingData);
+	        	}
+	        	
+	        	// Receive server response case
+	    		Message responseLogin = this.parseResponse();
+	
+	    		// Parse response result
+	    		result = Boolean.parseBoolean(responseLogin.getMessageParts().get(1));
+	        	
+        	} catch (Exception e) {
+        		System.out.println("[NETWORK-PLUGIN] Exception: " + e.getMessage());
+	    		result = false;
         	}
         	
-        	
+        	return result;
         	
 
         }
