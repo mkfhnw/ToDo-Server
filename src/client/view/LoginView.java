@@ -130,6 +130,7 @@ public class LoginView extends BorderPane {
 	
 	this.registrationDialog.initModality(Modality.NONE);
 	
+	
 	}
 
 

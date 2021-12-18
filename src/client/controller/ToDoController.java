@@ -592,7 +592,7 @@ public class ToDoController implements Serializable {
         this.toDoView.getAddToDoDialog().setTitle("Neue Aufgabe");
         Stage stage = (Stage) toDoView.getAddToDoDialog().getDialogPane().getScene().getWindow();
 		stage.getIcons().add(new Image(this.getClass().getResource("/common/resources/doneIcon4.png").toString()));
-		
+		stage.resizableProperty().setValue(Boolean.TRUE);
 
         // Set up event filter on OK-button to prevent dialog from closing when user input is not valid
         Button okButton = (Button) this.toDoView.getToDoDialogPane().lookupButton(this.toDoView.getToDoDialogPane().getOkButtonType());
@@ -818,6 +818,7 @@ public class ToDoController implements Serializable {
   	if (result) {
   		Platform.runLater(() -> {
   		this.stage.setScene(scene2);
+  		stage.resizableProperty().setValue(Boolean.TRUE);
   		stage.show();
   		});
   	} else {
@@ -893,6 +894,7 @@ public class ToDoController implements Serializable {
 	  if (result) {
 		  this.stage.close();
 		  this.stage.setScene(scene1);
+		  stage.resizableProperty().setValue(Boolean.FALSE);
 		  this.stage.show();
 	  }
 	  
@@ -937,6 +939,7 @@ public class ToDoController implements Serializable {
                 	  if (result) {
                     	  Platform.runLater(() -> {
                     	  		this.stage.setScene(scene1);
+                    	  		stage.resizableProperty().setValue(Boolean.FALSE);
                     	  		stage.show();
                     	  		});    		
                       } else {

@@ -40,6 +40,8 @@ public class ToDoApp extends Application {
 		// Instance for LoginView
 		this.loginView = new LoginView();
 		
+		stage.resizableProperty().setValue(Boolean.FALSE);
+		
 		// Passes the root to the scene
 		Scene scene2 = new Scene(toDoView);
 				
