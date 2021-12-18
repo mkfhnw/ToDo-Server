@@ -49,11 +49,9 @@ public class ToDoView extends BorderPane {
 		
 		private Dialog<ButtonType> howToDialog;
 		private HowToDialogPane howToDialogPane;
-		private Button howTo;
 		
 		private Dialog<ButtonType> changePasswordDialog;
 		private ChangePasswordDialogPane changePasswordDialogPane;
-		private Button changePasswordButton;
 				
 		private MenuItem changePasswordItem;
 		private MenuItem howToItem;
@@ -138,7 +136,7 @@ public class ToDoView extends BorderPane {
 			
 			// Menu for settings and help
 			this.changePasswordItem = new MenuItem("Passwort ändern");
-			this.imageChangePassword = new ImageView("/common/resources/einstellungen.png");
+			this.imageChangePassword = new ImageView("/common/resources/change.png");
 			this.imageChangePassword.setFitHeight(20);
 			this.imageChangePassword.setFitWidth(20);
 			this.changePasswordItem.setGraphic(imageChangePassword);
@@ -174,13 +172,11 @@ public class ToDoView extends BorderPane {
 			 * on the right side of the bottom of the BorderPane
 			 */
 			this.openFocusTimer = new Button("Fokus Timer");
-			this.howTo = new Button("How to");
 			this.logoutButton = new Button("Abmelden");
-			this.changePasswordButton = new Button("Passwort ändern");
 			
 			this.vBoxBottom = new VBox();
 			
-			this.vBoxBottom.getChildren().addAll(openFocusTimer, howTo, changePasswordButton, logoutButton);
+			this.vBoxBottom.getChildren().addAll(openFocusTimer, logoutButton);
 			this.vBoxBottom.setPadding(new Insets(50.0, 00.0, 50.0, 50.0));
 			this.vBoxBottom.setSpacing(30);
 			this.vBoxBottom.setAlignment(Pos.CENTER);
@@ -196,9 +192,7 @@ public class ToDoView extends BorderPane {
 			this.borderPane.getStyleClass().add("borderPane");
 			this.openFocusTimer.getStyleClass().add("openFocusTimer");
 			this.bc.getStylesheets().add(getClass().getResource("BarChartStyleSheet.css").toExternalForm());
-			this.howTo.getStyleClass().add("howTo");
 			this.logoutButton.getStyleClass().add("logoutButton");
-			this.changePasswordButton.getStyleClass().add("changePasswordButton");
 			
 	        
 			
@@ -228,7 +222,7 @@ public class ToDoView extends BorderPane {
 			this.changePasswordDialog = new Dialog<ButtonType>();
 			this.changePasswordDialog.setTitle("Passwort ändern");
 			Stage stage4 = (Stage) changePasswordDialog.getDialogPane().getScene().getWindow();
-			stage4.getIcons().add(new Image(this.getClass().getResource("/common/resources/einstellungen.png").toString()));
+			stage4.getIcons().add(new Image(this.getClass().getResource("/common/resources/change.png").toString()));
 			
 			this.changePasswordDialogPane = new ChangePasswordDialogPane();
 			this.changePasswordDialog.setDialogPane(changePasswordDialogPane);
@@ -322,17 +316,9 @@ public class ToDoView extends BorderPane {
 		public HowToDialogPane getHowToDialogPane() {
 			return howToDialogPane;
 		}
-
-		public Button getHowTo() {
-			return howTo;
-		}
 		
 		public Button getLogoutButton() {
 			return logoutButton;
-		}
-		
-		public Button getChangePasswordButton() {
-			return changePasswordButton;
 		}
 
 		public HBox gethBoxHowTo() {
@@ -415,10 +401,6 @@ public class ToDoView extends BorderPane {
 			this.howToDialogPane = howToDialogPane;
 		}
 
-		public void setHowTo(Button howTo) {
-			this.howTo = howTo;
-		}
-
 		public void sethBoxHowTo(HBox hBoxHowTo) {
 			this.hBoxHowTo = hBoxHowTo;
 		}
@@ -445,10 +427,6 @@ public class ToDoView extends BorderPane {
 
 		public void setChangePasswordDialogPane(ChangePasswordDialogPane changePasswordDialogPane) {
 			this.changePasswordDialogPane = changePasswordDialogPane;
-		}
-
-		public void setChangePasswordButton(Button changePasswordButton) {
-			this.changePasswordButton = changePasswordButton;
 		}
 
 		public void setLogoutButton(Button logoutButton) {
