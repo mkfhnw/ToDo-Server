@@ -11,6 +11,10 @@
 	-fx-padding: 10px;
 	-fx-spacing: 10px;
 }
+.notice {
+	-fx-background-color: #fdf8e5;
+	-fx-border-style: solid; 
+}	
 .newTaskLabel {
 	-fx-text-fill: #ffffff;
 	-fx-font-size: 20px;
