@@ -16,10 +16,6 @@ public class RegistrationDialogPane extends DialogPane {
 	
 	// Elements for registration
 	private Label title;
-	private Label firstnameLabel;
-	private TextField firstnameField;
-	private Label surnameLabel;
-	private TextField surnameField;
 	private Label emailLabel;
 	private TextField emailField;
 	private Label passwordLabel;
@@ -29,14 +25,11 @@ public class RegistrationDialogPane extends DialogPane {
 	
 	// Layout
 	private BorderPane borderPane;
-	private HBox firstnamePane;
-	private HBox surnamePane;
 	private HBox emailPane;
 	private HBox passwordPane;
 	private HBox repeatPasswordPane;
 	private VBox header;
 	private VBox vBox;
-	private HBox space;
 
 	
 	// Buttontypes for DialogPane
@@ -44,8 +37,6 @@ public class RegistrationDialogPane extends DialogPane {
 	private ButtonType cancelButtonType;
 	
 	// Spacing for Layout
-	private final int SPACING_FIRSTNAME = 100;
-	private final int SPACING_SURNAME = 90;
 	private final int SPACING_EMAIL = 60;
 	private final int SPACING_PASSWORD = 100;
 	private final int SPACING_REPEAT_PASSWORD = 12;
@@ -64,18 +55,6 @@ public class RegistrationDialogPane extends DialogPane {
 	this.title = new Label("Account erstellen");
 	this.title.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
 	this.title.setTextFill(Color.web("#181C54"));
-	
-	this.firstnameLabel = new Label("Vorname");
-	this.firstnameLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
-	this.firstnameLabel.setTextFill(Color.web("#181C54"));
-	this.firstnameField = new TextField();
-	this.firstnameField.setPrefWidth(SIZE_TEXTFIELDS);
-	
-	this.surnameLabel = new Label("Nachname");
-	this.surnameLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
-	this.surnameLabel.setTextFill(Color.web("#181C54"));
-	this.surnameField = new TextField();
-	this.surnameField.setPrefWidth(SIZE_TEXTFIELDS);
 	
 	this.emailLabel = new Label("E-Mail-Adresse");
 	this.emailLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
@@ -100,8 +79,6 @@ public class RegistrationDialogPane extends DialogPane {
 	
 	// Layout
 	this.borderPane = new BorderPane();
-	this.firstnamePane = new HBox(SPACING_FIRSTNAME);
-	this.surnamePane = new HBox(SPACING_SURNAME);
 	this.emailPane = new HBox(SPACING_EMAIL);
 	this.passwordPane = new HBox(SPACING_PASSWORD);
 	this.repeatPasswordPane = new HBox(SPACING_REPEAT_PASSWORD);
@@ -110,15 +87,11 @@ public class RegistrationDialogPane extends DialogPane {
 	
 	// Add Fields to Layout
 	this.header.getChildren().add(title);
-	this.firstnamePane.getChildren().addAll(firstnameLabel, firstnameField);
-	this.surnamePane.getChildren().addAll(surnameLabel, surnameField);
 	this.emailPane.getChildren().addAll(emailLabel, emailField);
 	this.passwordPane.getChildren().addAll(passwordLabel, passwordField);
 	this.repeatPasswordPane.getChildren().addAll(repeatPasswordLabel, repeatPasswordField);
 	this.vBox.getChildren().addAll(
 			header,
-			firstnamePane, 
-			surnamePane, 
 			emailPane, 
 			passwordPane,
 			repeatPasswordPane);
@@ -152,32 +125,6 @@ public class RegistrationDialogPane extends DialogPane {
 	public BorderPane getBorderPane() {
 		return borderPane;
 	}
-
-
-
-	public Label getFirstnameLabel() {
-		return firstnameLabel;
-	}
-
-
-
-	public TextField getFirstnameField() {
-		return firstnameField;
-	}
-
-
-
-	public Label getSurnameLabel() {
-		return surnameLabel;
-	}
-
-
-
-	public TextField getSurnameField() {
-		return surnameField;
-	}
-
-
 
 	public Label getEmailLabel() {
 		return emailLabel;
@@ -236,31 +183,6 @@ public class RegistrationDialogPane extends DialogPane {
 	public void setBorderPane(BorderPane borderPane) {
 		this.borderPane = borderPane;
 	}
-
-
-
-	public void setFirstnameLabel(Label firstnameLabel) {
-		this.firstnameLabel = firstnameLabel;
-	}
-
-
-
-	public void setFirstnameField(TextField firstnameField) {
-		this.firstnameField = firstnameField;
-	}
-
-
-
-	public void setSurnameLabel(Label surnameLabel) {
-		this.surnameLabel = surnameLabel;
-	}
-
-
-
-	public void setSurnameField(TextField surnameField) {
-		this.surnameField = surnameField;
-	}
-
 
 
 	public void setEmailLabel(Label emailLabel) {
