@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /* The ClientRunnable class
@@ -31,6 +32,7 @@ public class ServerRunnable implements Runnable {
     private final String trueResult = "Result|true\n";
     private final String trueResultWithoutNewline = "Result|true|";
     private final ToDoServer parent;
+    private final List<String> categories = Arrays.asList("Geplant", "Wichtig", "Erledigt");
 
     // Constructor
     public ServerRunnable(Socket clientSocket, ToDoServer parent) {
@@ -309,9 +311,8 @@ public class ServerRunnable implements Runnable {
         }
 
     }
-    
-    private void reactToCreateToDo(Message clientMessage) {
 
+    private void reactToCreateToDo(Message clientMessage) {
         // Parse out token
         String tokenString = clientMessage.getToken();
         Token token = this.parent.getToken(tokenString);
@@ -324,76 +325,113 @@ public class ServerRunnable implements Runnable {
         }
 
         // If token is valid, go ahead
-        if(inputValidator.isTokenStillAlive(token)) {
+        if (inputValidator.isTokenStillAlive(token)) {
 
-            // Parse username
+            // Setup db-manager
             String username = token.getUser();
-
-            // Create database manager
             DatabaseManager databaseManager = new DatabaseManager(username.split("@")[0]);
 
-            // Parse out item details to pass to the database manager
+            // Parse message - we always have title & priority at the same spot
             String title = clientMessage.getDataParts().get(0);
             String priority = clientMessage.getDataParts().get(1);
             String description = null;
             String dueDate = null;
+            String category = null;
 
-            // Check which parameter is missing by trying to convert the 3 parameter to a LocalDate
-            if(clientMessage.getDataParts().size() >= 3) {
-                try {
-
-                    // If we can convert the 3 parameter to a LocalDate, it is in fact a date
-                    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    LocalDate localDate = LocalDate.parse(clientMessage.getDataParts().get(2), dateTimeFormatter);
-                    dueDate = clientMessage.getDataParts().get(2);
-
-                } catch (Exception e) {
-
-                    // If we catch an exception, the string is a description and not a dueDate
-                    description = clientMessage.getDataParts().get(2);
-                    dueDate = null;
-
-                }
-            }
-
-            if(clientMessage.getDataParts().size() == 4) { dueDate = clientMessage.getDataParts().get(3); }
-
-            // Choose fitting constructor based on how many inputs we have
-
-            // 2 missing parameters
-            if(description == null && dueDate == null) {
+            // Data parts length is always between 2 (inc.) and 5 (inc.)
+            if (clientMessage.getDataParts().size() == 2) {
+                // No missing parameters, only title & priority
                 int itemID = databaseManager.createItem(title, priority);
                 this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
+                return;
             }
 
-            // Missing dueDate
-            if(description == null && dueDate != null) {
-                int itemID = databaseManager.createItem(title,
-                        priority,
-                        dueDate,
-                        "Description",
-                        true);
-                this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
-            }
+            // Loop through data parts and figure out ambiguous parameters
+            if (clientMessage.getDataParts().size() >= 3) {
+                int dataPartsLength = clientMessage.getDataParts().size();
+                for (String ambiguousParameter : clientMessage.getDataParts().subList(2, dataPartsLength)) {
+                    String parameterType = inputValidator.getParameterType(ambiguousParameter);
+                    switch (parameterType) {
 
-            // Missing description
-            if(description != null && dueDate == null) {
-                int itemID = databaseManager.createItem(title,
-                        priority,
-                        description,
-                        "DueDate",
-                        true);
-                this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
-            }
+                        case "Category" -> {
+                            category = ambiguousParameter;
+                        }
+                        case "Description" -> {
+                            description = ambiguousParameter;
+                        }
+                        case "DueDate" -> {
+                            dueDate = ambiguousParameter;
+                        }
+                        case "Undefined" -> {
+                            this.sendMessage(falseResult);
+                            return;
+                        }
+                    }
+                }
 
-            // No missing parameter
-            if(description != null && dueDate != null) {
-                int itemID = databaseManager.createItem(title, priority, description, dueDate);
-                this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
+
+                // Writing to the database
+
+                // Title & Priority only
+                if(title != null && priority != null && description == null && dueDate == null && category == null) {
+                    int itemID = databaseManager.createItem(title, priority);
+                    this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
+                    return;
+                }
+
+                // Title, Priority & Description
+                if(title != null && priority != null && description != null && dueDate == null && category == null) {
+                    int itemID = databaseManager.createItem(title, priority, description);
+                    this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
+                    return;
+                }
+
+                // Title, Priority & DueDate
+                if(title != null && priority != null && description == null && dueDate != null && category == null) {
+                    int itemID = databaseManager.createItem(title, priority, dueDate);
+                    this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
+                    return;
+                }
+
+                // title, Priority & Category
+                if(title != null && priority != null && description == null && dueDate == null && category != null) {
+                    int itemID = databaseManager.createItem(title, priority, category);
+                    this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
+                    return;
+                }
+
+                // Title, Priority, Description & DueDate
+                if(title != null && priority != null && description != null && dueDate != null && category == null) {
+                    int itemID = databaseManager.createItem(title, priority, description, dueDate);
+                    this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
+                    return;
+                }
+
+                // Title, Priority, Description & Category
+                if(title != null && priority != null && description != null && dueDate == null && category != null) {
+                    int itemID = databaseManager.createItem(title, priority, description, category);
+                    this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
+                    return;
+                }
+
+                // Title, Priority, DueDate & Category
+                if(title != null && priority != null && description == null && dueDate != null && category != null) {
+                    int itemID = databaseManager.createItem(title, priority, dueDate, category);
+                    this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
+                    return;
+                }
+
+                // All parameters
+                if(title != null && priority != null && description != null && dueDate != null && category != null) {
+                    int itemID = databaseManager.createItem(title, priority, description, dueDate, category);
+                    this.sendMessage(this.trueResultWithoutNewline + itemID + "\n");
+                }
+
+
             }
         }
+    }
 
-	}
     
     private void reactToGetToDo(Message clientMessage) {
 

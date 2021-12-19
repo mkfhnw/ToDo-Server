@@ -173,6 +173,17 @@ public class ToDoController implements Serializable {
 
     }
 
+    // CREATE Item overload method for missing dueDate
+    private void createToDo(String title, String message, String category,
+                            String priorityString, ArrayList<String> tagArrayList) {
+        ToDo toDo = new ToDo(title, message, category, priorityString, tagArrayList);
+        this.toDoList.addToDo(toDo);
+        this.toDoList.updateSublists();
+
+        // Send data to server
+        this.clientNetworkPlugin.createToDo(toDo);
+    }
+
     /* Read method
      * Returns a ToDo based on its ID
      */
@@ -527,11 +538,12 @@ public class ToDoController implements Serializable {
 
         // Parse category
         // Set default category if none is chosen
+        // We don't do default values for the project 2.0
         // Note that we need to update the stored variable as it is used for the validity check later
-        if (category == null) {
-            this.toDoView.getToDoDialogPane().getCategoryComboBox().setValue("Geplant");
-            category = this.toDoView.getToDoDialogPane().getCategoryComboBox().getValue();
-        }
+        // if (category == null) {
+            // this.toDoView.getToDoDialogPane().getCategoryComboBox().setValue("Geplant");
+            // category = this.toDoView.getToDoDialogPane().getCategoryComboBox().getValue();
+        // }
 
         // Parse priority - set default if non
         if (priority == null) {
@@ -542,14 +554,15 @@ public class ToDoController implements Serializable {
         // Validate easy inputs first
         boolean titleIsValid = title.length() >= 3 && title.length() <= 20;
         boolean messageIsValid = message.length() <= 255;
-        boolean categoryIsValid = this.toDoView.getListView().getItems().contains(category);
+        boolean categoryIsValid = this.toDoView.getListView().getItems().contains(category) || category == null;
         boolean tagsAreValid = false;
         String[] tagArray;
 
         // Validate date
         boolean dateIsValid = false;
-        LocalDate paneDate = LocalDate.parse(dueDateString);
-        if (paneDate.compareTo(LocalDate.now()) >= 0) {
+        LocalDate paneDate = null;
+        if(!dueDateString.equals("")) { paneDate = LocalDate.parse(dueDateString); }
+        if (dueDateString.equals("") || paneDate.compareTo(LocalDate.now()) >= 0) {
             dateIsValid = true;
         }
 
@@ -640,15 +653,27 @@ public class ToDoController implements Serializable {
             if (this.validateUserInput()) {
 
                 // Parse out data
+                String dueDateString = "";
                 String title = this.toDoView.getToDoDialogPane().getTitleTextfield().getText();
                 String category = this.toDoView.getToDoDialogPane().getCategoryComboBox().getValue();
                 String message = this.toDoView.getToDoDialogPane().getMessageTextArea().getText();
-                String dueDateString = this.toDoView.getToDoDialogPane().getDatePicker().getValue().toString();
+                if (this.toDoView.getToDoDialogPane().getDatePicker().getValue() == null) {
+                    dueDateString = null;
+                } else {
+                    dueDateString = this.toDoView.getToDoDialogPane().getDatePicker().getValue().toString();
+                }
                 String tags = this.toDoView.getToDoDialogPane().getTagsTextfield().getText();
                 String priorityString = this.toDoView.getToDoDialogPane().getPriorityComboBox().getValue().toString();
                 String[] tagArray = tags.replaceAll("\\s", "").split(";");
                 ArrayList<String> tagArrayList = new ArrayList<String>(List.of(tagArray));
-                this.createToDo(title, message, LocalDate.parse(dueDateString), category, priorityString, tagArrayList);
+
+                if (category == null) { category = ""; }
+
+                if(dueDateString != null && !dueDateString.equals("")) {
+                    this.createToDo(title, message, LocalDate.parse(dueDateString), category, priorityString, tagArrayList);
+                } else {
+                    this.createToDo(title, message, category, priorityString, tagArrayList);
+                }
 
             }
 
@@ -665,6 +690,8 @@ public class ToDoController implements Serializable {
         this.updateInstancedSublists();
 
     }
+
+
 
 
     // ---------------------------------- Focus timer methods
@@ -686,7 +713,6 @@ public class ToDoController implements Serializable {
     	});
     	this.toDoView.getFocusDialog().showAndWait();
     	}
-    	
 
     /*
      * Depending on which date filter (ComboBox) the user choosed,
@@ -771,7 +797,6 @@ public class ToDoController implements Serializable {
         }
     }
 
-    
     public void playTimer(MouseEvent event) {
     	focusModel.start();
     }
@@ -783,11 +808,9 @@ public class ToDoController implements Serializable {
     public void replayTimer(MouseEvent event) {
     	focusModel.restart();
     }
-    
-    
-    
+
     // Open a new focus timer window
-  public void createHowTo(ActionEvent event) {
+    public void createHowTo(ActionEvent event) {
     		  
         // show dialog
         this.toDoView.getHowToDialog().showAndWait();
@@ -801,23 +824,21 @@ public class ToDoController implements Serializable {
     }
   }
   
-  // Plays HowTo video
-  
-  public void playMedia(MouseEvent event) {
+    // Plays HowTo video
+    public void playMedia(MouseEvent event) {
 	  
 	  this.toDoView.getHowToDialogPane().getMediaPlayer().play();
   }
   
-  //Stops HowTo video
-  
-  public void stopMedia(MouseEvent event) {
+    //Stops HowTo video
+    public void stopMedia(MouseEvent event) {
 	  
 	  this.toDoView.getHowToDialogPane().getMediaPlayer().pause();
 	  
   }
-  //Replays HowTo video
-  
-  public void replayMedia(MouseEvent event) {
+
+    //Replays HowTo video
+    public void replayMedia(MouseEvent event) {
 	  
 	  this.toDoView.getHowToDialogPane().getMediaPlayer().stop();
 	  
@@ -872,9 +893,7 @@ public class ToDoController implements Serializable {
   	return result;
   	
   }
-  
-  
-  
+
   public boolean validatePassword() {
 	  if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() >= 3
 		 && this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() <= 20) {
@@ -985,13 +1004,4 @@ public void openRegistration(MouseEvent event) {
  
 
 }
-
-		
-	
-
-	
-
-	
-		
-	
 

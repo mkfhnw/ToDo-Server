@@ -251,6 +251,47 @@ public class ToDo {
 
 	}
 
+	// Constructor overload for missing dueDate
+	public ToDo(String title, String message, String category, String priorityString, ArrayList<String> tagArrayList) {
+		this.ID = globalToDoId + 1;
+		ToDo.globalToDoId++;
+		this.title = title;
+		this.message = message;
+		this.dateOfCreation = LocalDate.now();
+		this.isDone = false;
+		this.priority = Priority.valueOf(priorityString);
+		this.tags = tagArrayList;
+		this.category = category;
+
+		this.categories = null;
+		// Parse out category if not "Geplant". Since only 1 other category can be selected, we can use a simple for loop
+		// this.category = "";
+		if (this.category == null) { this.category = ""; }
+
+		// Buttons
+		this.doneButton = new Button();
+		ImageView done = new ImageView("/common/resources/doneIcon3.png");
+		done.setFitHeight(20);
+		done.setFitWidth(20);
+		this.doneButton.setGraphic(done);
+
+		this.garbageButton = new Button();
+		ImageView garbage = new ImageView("/common/resources/garbageIcon2.png");
+		garbage.setFitHeight(20);
+		garbage.setFitWidth(20);
+		this.garbageButton.setGraphic(garbage);
+
+		this.importantButton = new Button();
+		ImageView important = new ImageView("/common/resources/starIcon2.png");
+		important.setFitHeight(20);
+		important.setFitWidth(20);
+		this.importantButton.setGraphic(important);
+
+		this.doneButton.getStylesheets().add(getClass().getResource("ToDoButtonsStyle.css").toExternalForm());
+		this.garbageButton.getStylesheets().add(getClass().getResource("ToDoButtonsStyle.css").toExternalForm());
+		this.importantButton.getStylesheets().add(getClass().getResource("ToDoButtonsStyle.css").toExternalForm());
+	}
+
 	// Getters
 	public int getID() {
 		return this.ID;
