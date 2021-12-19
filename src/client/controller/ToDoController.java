@@ -1,6 +1,7 @@
 package client.controller;
 
 import client.ClientNetworkPlugin;
+import client.model.Priority;
 import client.view.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -50,14 +51,8 @@ public class ToDoController implements Serializable {
     private ClientNetworkPlugin clientNetworkPlugin;
 
     // Constructor
-    public ToDoController(
-    		ToDoView toDoView,
-    		ToDo toDo,
-    		ToDoList toDoList,
-    		Stage stage,
-    		Scene scene2,
-    		LoginView loginView,
-    		Scene scene1) {
+    public ToDoController(ToDoView toDoView, ToDo toDo, ToDoList toDoList, Stage stage, Scene scene2,
+                          LoginView loginView, Scene scene1) {
 
         this.toDoView = toDoView;
         this.toDo = toDo;
@@ -75,13 +70,13 @@ public class ToDoController implements Serializable {
 
         // Set default midPane & add initial event handling for searchbar
         this.plannedBarView = new PlannedBarView(this.toDoList.getToDoListPlanned());
-        plannedBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
-        plannedBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
+        this.plannedBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
+        this.plannedBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
         this.plannedBarView.getSearchField().setOnAction(this::searchItemAndGenerateView);
-        plannedBarView.getComboBox().setOnAction(this::changeCombo);
-        plannedBarView.getTableView().setOnMouseClicked(this::updateToDo);
+        this.plannedBarView.getComboBox().setOnAction(this::changeCombo);
+        this.plannedBarView.getTableView().setOnMouseClicked(this::updateToDo);
         this.linkTableViewListeners(plannedBarView.getTableView().getItems());
-        toDoView.getBorderPane().setCenter(plannedBarView);
+        this.toDoView.getBorderPane().setCenter(plannedBarView);
 
         // Register buttons EventHandling
         this.toDoView.getListView().setOnMouseClicked(this::changeCenterBar);
@@ -511,25 +506,37 @@ public class ToDoController implements Serializable {
         String category = this.toDoView.getToDoDialogPane().getCategoryComboBox().getValue();
         String message = this.toDoView.getToDoDialogPane().getMessageTextArea().getText();
         String dueDateString = "";
+        String priority = this.toDoView.getToDoDialogPane().getPriorityComboBox().getValue().toString();
+        String tags = this.toDoView.getToDoDialogPane().getTagsTextfield().getText();
+
+        // Parse dueDate string
         try {
             dueDateString = this.toDoView.getToDoDialogPane().getDatePicker().getValue().toString();
             if (dueDateString.equals("")) {
                 // Setting default date to today
-                this.toDoView.getToDoDialogPane().getDatePicker().setValue(LocalDate.now());
+                // Default value removed for project 2
+                // this.toDoView.getToDoDialogPane().getDatePicker().setValue(LocalDate.now());
             }
         } catch (NullPointerException e) {
             // Setting default date to today
-            this.toDoView.getToDoDialogPane().getDatePicker().setValue(LocalDate.now());
-            dueDateString = LocalDate.now().toString();
+            // Default value removed for project 2
+            // this.toDoView.getToDoDialogPane().getDatePicker().setValue(LocalDate.now());
+            // dueDateString = LocalDate.now().toString();
         }
 
-        String tags = this.toDoView.getToDoDialogPane().getTagsTextfield().getText();
 
+        // Parse category
         // Set default category if none is chosen
         // Note that we need to update the stored variable as it is used for the validity check later
         if (category == null) {
             this.toDoView.getToDoDialogPane().getCategoryComboBox().setValue("Geplant");
             category = this.toDoView.getToDoDialogPane().getCategoryComboBox().getValue();
+        }
+
+        // Parse priority - set default if non
+        if (priority == null) {
+            this.toDoView.getToDoDialogPane().getPriorityComboBox().setValue(Priority.Low);
+            priority = Priority.Low.toString();
         }
 
         // Validate easy inputs first
@@ -556,6 +563,16 @@ public class ToDoController implements Serializable {
             tagsAreValid = false;
         }
 
+        // Validate priority
+        boolean priorityIsValid = false;
+        Priority priorityValidation = Priority.valueOf(priority);
+        if (priorityValidation == Priority.Low
+                || priorityValidation == Priority.Medium
+                || priorityValidation == Priority.High) {
+            priorityIsValid = true;
+        }
+
+
         // Give graphical feedback
         if (!titleIsValid) {
             this.toDoView.getToDoDialogPane().getTitleTextfield().getStyleClass().add("notOk");
@@ -572,8 +589,11 @@ public class ToDoController implements Serializable {
         if (!tagsAreValid) {
             this.toDoView.getToDoDialogPane().getTagsTextfield().getStyleClass().add("notOk");
         }
+        if (!priorityIsValid) {
+            this.toDoView.getToDoDialogPane().getPriorityComboBox().getStyleClass().add("notOk");
+        }
 
-        return (titleIsValid && messageIsValid && categoryIsValid && dateIsValid && tagsAreValid);
+        return (titleIsValid && messageIsValid && categoryIsValid && dateIsValid && tagsAreValid && priorityIsValid);
 
     }
 

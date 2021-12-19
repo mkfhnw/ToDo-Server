@@ -140,7 +140,7 @@ public class AddToDoDialogPane extends DialogPane {
         notice.getChildren().addAll(attention, noticeLabel);
         topBar.getChildren().addAll(notice, headerBar);
         
-        leftPane.getChildren().addAll(titleBar, categoryBar, dueDateBar, priorityBar, tagsBar);
+        leftPane.getChildren().addAll(titleBar, categoryBar, dueDateBar, priorityBar);
         rightPane.getChildren().addAll(messageLabel, messageTextArea);
 
         // Set containers
@@ -154,7 +154,7 @@ public class AddToDoDialogPane extends DialogPane {
         categoryLabel.setTooltip(categoryToolTip);
         dueDateLabel.setTooltip(dateToolTip);
         priorityLabel.setTooltip(priorityTip);
-        tagsLabel.setTooltip(tagsToolTip);
+        // tagsLabel.setTooltip(tagsToolTip);
         
 
         // Add CSS styling
