@@ -32,6 +32,14 @@ public class ClientNetworkPlugin {
     // Constructor
     public ClientNetworkPlugin() {
 
+		// This try-catch / thread.sleep is only because my laptop isn't able to spin up the server fast enough..
+		try {
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+
         try {
             this.clientSocket = new Socket("localhost", this.PORT);
             this.inputReader = this.getInputReader(this.clientSocket);
@@ -203,14 +211,12 @@ public class ClientNetworkPlugin {
         	int toDoID;
         	
         	try {
-        	
 	            ArrayList<String> createToDoData = new ArrayList<>();
 	            createToDoData.add(toDo.getTitle());
 	            createToDoData.add(toDo.getPriority().toString());
-	            createToDoData.add(toDo.getMessage());
-	            createToDoData.add(toDo.getDueDate().toString());
-	            
-	            //createToDoData.add(toDo.getCategory());
+	            if (toDo.getMessage() != null) { createToDoData.add(toDo.getMessage()); }
+	            if (toDo.getDueDate() != null) { createToDoData.add(toDo.getDueDate().toString()); }
+				if (toDo.getCategory() != null) { createToDoData.add(toDo.getCategory()); }
 	            
 	            sendMessage("CREATE_TODO", createToDoData, this.token);
 	            
@@ -223,9 +229,7 @@ public class ClientNetworkPlugin {
         		if (result) {
         			toDoID = Integer.parseInt(responseLogin.getMessageParts().get(2));
         		}
-        		
-        		       		
-            
+
 
         	} catch (Exception e) {
         		System.out.println("[NETWORK-PLUGIN] Exception: " + e.getMessage());

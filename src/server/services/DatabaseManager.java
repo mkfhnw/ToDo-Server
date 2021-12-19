@@ -48,7 +48,8 @@ public class DatabaseManager {
                     "Title STRING NOT NULL," +
                     "Priority STRING NOT NULL," +
                     "Description STRING," +
-                    "DueDate STRING)");
+                    "DueDate STRING," +
+                    "Category STRING)");
 
         } catch (Exception e) {
             System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
@@ -127,101 +128,7 @@ public class DatabaseManager {
     }
 
     // CRUD-Methods
-    // CREATE Method with all parameters
-    public int createItem(String title, String priority, String description, String dueDate) {
-        try(Connection connection = DriverManager.getConnection(this.connectionString);
-            Statement statement = connection.createStatement()) {
 
-            // Build string
-            String insertString = "INSERT INTO Items(Account_ID, Title, Priority, Description, DueDate) VALUES(?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertString);
-            preparedStatement.setInt(1, 1);
-            preparedStatement.setString(2, title);
-            preparedStatement.setString(3, priority);
-            preparedStatement.setString(4, description);
-            preparedStatement.setString(5, dueDate);
-
-            // Execute update
-            preparedStatement.executeUpdate();
-
-            // Grab item ID
-            String selectStatement = "SELECT ToDo_ID FROM Items ORDER BY ToDo_ID";
-            ResultSet resultSet = statement.executeQuery(selectStatement);
-            int highestId = -1;
-            while(resultSet.next()) { highestId = resultSet.getInt("ToDo_ID"); }
-
-            return highestId;
-
-        } catch (Exception e) {
-            System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
-            return -1;
-        }
-    }
-
-    // CREATE Method with 1 missing parameter
-    // The boolean is just used to change the method signature, so we can overload it and still use 4 string parameters
-    public int createItem(String title, String priority, String thirdParameter, String nameOfMissingParameter, boolean hasMissingParameter) {
-        try(Connection connection = DriverManager.getConnection(this.connectionString);
-            Statement statement = connection.createStatement()) {
-
-
-            // Switch through the missing parameter
-            switch (nameOfMissingParameter) {
-
-                case "Description" -> {
-
-                    // Build string with missing description
-                    String insertString = "INSERT INTO Items(Account_ID, Title, Priority, DueDate) VALUES(?, ?, ?, ?)";
-                    PreparedStatement preparedStatement = connection.prepareStatement(insertString);
-                    preparedStatement.setInt(1, 1);
-                    preparedStatement.setString(2, title);
-                    preparedStatement.setString(3, priority);
-                    preparedStatement.setString(4, thirdParameter);
-
-                    // Execute update
-                    preparedStatement.executeUpdate();
-
-                    // Grab item ID
-                    String selectStatement = "SELECT ToDo_ID FROM Items ORDER BY ToDo_ID";
-                    ResultSet resultSet = statement.executeQuery(selectStatement);
-                    int highestId = -1;
-                    while(resultSet.next()) { highestId = resultSet.getInt("ToDo_ID"); }
-
-                    return highestId;
-                }
-
-                case "DueDate" -> {
-                    // Build string with missing dueDate
-                    String insertString = "INSERT INTO Items(Account_ID, Title, Priority, Description) VALUES(?, ?, ?, ?)";
-                    PreparedStatement preparedStatement = connection.prepareStatement(insertString);
-                    preparedStatement.setInt(1, 1);
-                    preparedStatement.setString(2, title);
-                    preparedStatement.setString(3, priority);
-                    preparedStatement.setString(4, thirdParameter);
-
-                    // Execute update
-                    preparedStatement.executeUpdate();
-
-                    // Grab item ID
-                    String selectStatement = "SELECT ToDo_ID FROM Items ORDER BY ToDo_ID";
-                    ResultSet resultSet = statement.executeQuery(selectStatement);
-                    int highestId = -1;
-                    while(resultSet.next()) { highestId = resultSet.getInt("ToDo_ID"); }
-
-                    return highestId;
-                }
-
-            }
-
-            return -1;
-
-        } catch (Exception e) {
-            System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
-            return -1;
-        }
-    }
-
-    // Create method with 2 missing parameter
     // CREATE Method with only title and priority
     public int createItem(String title, String priority) {
         try(Connection connection = DriverManager.getConnection(this.connectionString);
@@ -250,6 +157,195 @@ public class DatabaseManager {
             return -1;
         }
     }
+
+    // CREATE Method with all (5) parameters
+    public int createItem(String title, String priority, String description, String dueDate, String category) {
+        try(Connection connection = DriverManager.getConnection(this.connectionString);
+            Statement statement = connection.createStatement()) {
+
+            // Build string
+            String insertString = "INSERT INTO Items(Account_ID, Title, Priority, Description, DueDate, Category) VALUES(?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(insertString);
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setString(2, title);
+            preparedStatement.setString(3, priority);
+            preparedStatement.setString(4, description);
+            preparedStatement.setString(5, dueDate);
+            preparedStatement.setString(6, category);
+
+            // Execute update
+            preparedStatement.executeUpdate();
+
+            // Grab item ID
+            String selectStatement = "SELECT ToDo_ID FROM Items ORDER BY ToDo_ID";
+            ResultSet resultSet = statement.executeQuery(selectStatement);
+            int highestId = -1;
+            while(resultSet.next()) { highestId = resultSet.getInt("ToDo_ID"); }
+
+            return highestId;
+
+        } catch (Exception e) {
+            System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
+            return -1;
+        }
+    }
+
+    // CREATE Method with 4 parameters
+    public int createItem(String title, String priority, String thirdParameter, String fourthParameter) {
+        try(Connection connection = DriverManager.getConnection(this.connectionString);
+            Statement statement = connection.createStatement()) {
+
+            // Check what type the missing parameters are
+            InputValidator inputValidator = new InputValidator();
+            String thirdParameterType = inputValidator.getParameterType(thirdParameter);
+            String fourthParameterType = inputValidator.getParameterType(fourthParameter);
+
+            // Description & DueDate
+            if (thirdParameterType.equals("Description") && fourthParameterType.equals("DueDate")) {
+                // Set values
+                String description = thirdParameter;
+                String dueDate = fourthParameter;
+
+                // Build string
+                String insertString = "INSERT INTO Items(Account_ID, Title, Priority, Description, DueDate) VALUES(?, ?, ?, ?, ?)";
+                PreparedStatement preparedStatement = connection.prepareStatement(insertString);
+                preparedStatement.setInt(1, 1);
+                preparedStatement.setString(2, title);
+                preparedStatement.setString(3, priority);
+                preparedStatement.setString(4, description);
+                preparedStatement.setString(5, dueDate);
+
+                // Execute update
+                preparedStatement.executeUpdate();
+            }
+
+            // Description & Category
+            if (thirdParameterType.equals("Description") && fourthParameterType.equals("Category")) {
+                // Set values
+                String description = thirdParameter;
+                String category = fourthParameter;
+
+                // Build string
+                String insertString = "INSERT INTO Items(Account_ID, Title, Priority, Description, Category) VALUES(?, ?, ?, ?, ?)";
+                PreparedStatement preparedStatement = connection.prepareStatement(insertString);
+                preparedStatement.setInt(1, 1);
+                preparedStatement.setString(2, title);
+                preparedStatement.setString(3, priority);
+                preparedStatement.setString(4, description);
+                preparedStatement.setString(5, category);
+
+                // Execute update
+                preparedStatement.executeUpdate();
+            }
+
+            // DueDate & Category
+            if (thirdParameterType.equals("DueDate") && fourthParameterType.equals("Category")) {
+                // Set values
+                String dueDate = thirdParameter;
+                String category = fourthParameter;
+
+                // Build string
+                String insertString = "INSERT INTO Items(Account_ID, Title, Priority, DueDate, Category) VALUES(?, ?, ?, ?, ?)";
+                PreparedStatement preparedStatement = connection.prepareStatement(insertString);
+                preparedStatement.setInt(1, 1);
+                preparedStatement.setString(2, title);
+                preparedStatement.setString(3, priority);
+                preparedStatement.setString(4, dueDate);
+                preparedStatement.setString(5, category);
+
+                // Execute update
+                preparedStatement.executeUpdate();
+            }
+
+
+            // Grab item ID
+            String selectStatement = "SELECT ToDo_ID FROM Items ORDER BY ToDo_ID";
+            ResultSet resultSet = statement.executeQuery(selectStatement);
+            int highestId = -1;
+            while(resultSet.next()) { highestId = resultSet.getInt("ToDo_ID"); }
+
+            return highestId;
+
+        } catch (Exception e) {
+            System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
+            return -1;
+        }
+    }
+
+    // CREATE Method with 3 parameters
+    public int createItem(String title, String priority, String thirdParameter) {
+        try(Connection connection = DriverManager.getConnection(this.connectionString);
+            Statement statement = connection.createStatement()) {
+
+            // Check what type the missing parameters are
+            InputValidator inputValidator = new InputValidator();
+            String thirdParameterType = inputValidator.getParameterType(thirdParameter);
+
+            // Description
+            if (thirdParameterType.equals("Description")) {
+                // Set values
+                String description = thirdParameter;
+
+                // Build string
+                String insertString = "INSERT INTO Items(Account_ID, Title, Priority, Description) VALUES(?, ?, ?, ?)";
+                PreparedStatement preparedStatement = connection.prepareStatement(insertString);
+                preparedStatement.setInt(1, 1);
+                preparedStatement.setString(2, title);
+                preparedStatement.setString(3, priority);
+                preparedStatement.setString(4, description);
+
+                // Execute update
+                preparedStatement.executeUpdate();
+            }
+
+            // DueDate
+            if (thirdParameterType.equals("DueDate")) {
+                // Set values
+                String dueDate = thirdParameter;
+
+                // Build string
+                String insertString = "INSERT INTO Items(Account_ID, Title, Priority, DueDate) VALUES(?, ?, ?, ?)";
+                PreparedStatement preparedStatement = connection.prepareStatement(insertString);
+                preparedStatement.setInt(1, 1);
+                preparedStatement.setString(2, title);
+                preparedStatement.setString(3, priority);
+                preparedStatement.setString(4, dueDate);
+
+                // Execute update
+                preparedStatement.executeUpdate();
+            }
+
+            // Category
+            if (thirdParameterType.equals("Category")) {
+                // Set values
+                String category = thirdParameter;
+
+                // Build string
+                String insertString = "INSERT INTO Items(Account_ID, Title, Priority, Category) VALUES(?, ?, ?, ?)";
+                PreparedStatement preparedStatement = connection.prepareStatement(insertString);
+                preparedStatement.setInt(1, 1);
+                preparedStatement.setString(2, title);
+                preparedStatement.setString(3, priority);
+                preparedStatement.setString(4, category);
+                // Execute update
+                preparedStatement.executeUpdate();
+            }
+
+
+            // Grab item ID
+            String selectStatement = "SELECT ToDo_ID FROM Items ORDER BY ToDo_ID";
+            ResultSet resultSet = statement.executeQuery(selectStatement);
+            int highestId = -1;
+            while(resultSet.next()) { highestId = resultSet.getInt("ToDo_ID"); }
+
+            return highestId;
+
+        } catch (Exception e) {
+            System.out.println("[DATABASE-MANAGER] EXCEPTION: " + e.getMessage());
+            return -1;
+        }
+    }
+
 
     // READ method
     public ArrayList<String> getToDo(String idString) {

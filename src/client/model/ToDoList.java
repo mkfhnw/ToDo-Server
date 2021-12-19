@@ -72,6 +72,10 @@ public class ToDoList {
 				break;
 			case "Papierkorb":
 				this.garbageList.add(toDo);
+				break;
+			case "":
+				this.plannedList.add(toDo);
+
 		}
 
 	}
