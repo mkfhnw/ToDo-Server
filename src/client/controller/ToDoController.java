@@ -17,16 +17,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import server.models.ServerRunnable;
 import client.model.FocusTimerModel;
-import client.model.Priority;
 import client.model.ToDo;
 import client.model.ToDoList;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,8 +93,8 @@ public class ToDoController implements Serializable {
         this.dialog = new FocusTimerDialogPane();
         this.focusModel = new FocusTimerModel(null);
         
-        // HowTo Button EventHandling
-        this.toDoView.getHowTo().setOnMouseClicked(this::createHowTo);
+        // HowTo Menu EventHandling
+        this.toDoView.getHowToItem().setOnAction(this::createHowTo);
         
         // EventHandling for play, stop or replay How-To Video
         this.toDoView.getHowToDialogPane().getPlayButton().setOnMouseClicked(this::playMedia);
@@ -596,7 +592,7 @@ public class ToDoController implements Serializable {
         this.toDoView.getAddToDoDialog().setTitle("Neue Aufgabe");
         Stage stage = (Stage) toDoView.getAddToDoDialog().getDialogPane().getScene().getWindow();
 		stage.getIcons().add(new Image(this.getClass().getResource("/common/resources/doneIcon4.png").toString()));
-		
+		stage.resizableProperty().setValue(Boolean.TRUE);
 
         // Set up event filter on OK-button to prevent dialog from closing when user input is not valid
         Button okButton = (Button) this.toDoView.getToDoDialogPane().lookupButton(this.toDoView.getToDoDialogPane().getOkButtonType());
@@ -771,7 +767,7 @@ public class ToDoController implements Serializable {
     
     
     // Open a new focus timer window
-  public void createHowTo(MouseEvent e) {
+  public void createHowTo(ActionEvent event) {
     		  
         // show dialog
         this.toDoView.getHowToDialog().showAndWait();
@@ -822,6 +818,7 @@ public class ToDoController implements Serializable {
   	if (result) {
   		Platform.runLater(() -> {
   		this.stage.setScene(scene2);
+  		stage.resizableProperty().setValue(Boolean.TRUE);
   		stage.show();
   		});
   	} else {
@@ -897,6 +894,7 @@ public class ToDoController implements Serializable {
 	  if (result) {
 		  this.stage.close();
 		  this.stage.setScene(scene1);
+		  stage.resizableProperty().setValue(Boolean.FALSE);
 		  this.stage.show();
 	  }
 	  
@@ -941,6 +939,7 @@ public class ToDoController implements Serializable {
                 	  if (result) {
                     	  Platform.runLater(() -> {
                     	  		this.stage.setScene(scene1);
+                    	  		stage.resizableProperty().setValue(Boolean.FALSE);
                     	  		stage.show();
                     	  		});    		
                       } else {

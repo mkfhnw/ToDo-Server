@@ -3,6 +3,7 @@ package client.view;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -23,6 +24,8 @@ public class AddToDoDialogPane extends DialogPane {
     private HBox priorityBar;
     private HBox tagsBar;
     private VBox headerBar;
+    private HBox notice;
+    private VBox topBar;
 
     private Label newTaskLabel;
     private Label tippLabel;
@@ -32,6 +35,9 @@ public class AddToDoDialogPane extends DialogPane {
     private Label priorityLabel;
     private Label messageLabel;
     private Label tagsLabel;
+    private Label noticeLabel;
+    
+    private ImageView attention;
 
     private TextField titleTextfield;
     private TextField tagsTextfield;
@@ -74,7 +80,9 @@ public class AddToDoDialogPane extends DialogPane {
         priorityBar = new HBox(SPACING_PRIORITYBAR);
         tagsBar = new HBox(SPACING_TAGSBAR);
         headerBar = new VBox(SPACING_HEADERBAR);
-
+        notice = new HBox();
+        topBar = new VBox();
+        
         newTaskLabel = new Label("Neue Aufgabe");
         titleLabel = new Label("Titel");
         categoryLabel = new Label("Kategorie");
@@ -83,6 +91,11 @@ public class AddToDoDialogPane extends DialogPane {
         messageLabel = new Label("Beschreibung");
         tagsLabel = new Label("Tags");
         tippLabel = new Label("Bewegen Sie Ihren Mauszeiger über einen Schriftzug!");
+        noticeLabel = new Label("​Kategorien für ein ToDo können nur auf dem zur Applikation dazugehörigen Server gespeichert werden.");
+        
+        attention = new ImageView("/common/resources/attention.png");
+		attention.setFitHeight(15);
+		attention.setFitWidth(15);
 
         titleTextfield = new TextField();
         tagsTextfield = new TextField();
@@ -115,6 +128,7 @@ public class AddToDoDialogPane extends DialogPane {
         // ComboBox for Priority
         priorityComboBox = new ComboBox<>();
         priorityComboBox.setItems(FXCollections.observableArrayList(Priority.values()));
+        priorityComboBox.setValue(Priority.Low);
         
         // Fill controls into containers
         titleBar.getChildren().addAll(titleLabel, titleTextfield);
@@ -123,12 +137,14 @@ public class AddToDoDialogPane extends DialogPane {
         priorityBar.getChildren().addAll(priorityLabel, priorityComboBox);
         tagsBar.getChildren().addAll(tagsLabel, tagsTextfield);
         headerBar.getChildren().addAll(newTaskLabel, tippLabel);
-
+        notice.getChildren().addAll(attention, noticeLabel);
+        topBar.getChildren().addAll(notice, headerBar);
+        
         leftPane.getChildren().addAll(titleBar, categoryBar, dueDateBar, priorityBar, tagsBar);
         rightPane.getChildren().addAll(messageLabel, messageTextArea);
 
         // Set containers
-        root.setTop(headerBar);
+        root.setTop(topBar);
         root.setLeft(leftPane);
         root.setRight(rightPane);
 
@@ -155,7 +171,7 @@ public class AddToDoDialogPane extends DialogPane {
         this.tagsLabel.getStyleClass().add("tagsLabel");
         this.messageTextArea.getStyleClass().add("messageTextArea");
         this.priorityLabel.getStyleClass().add("priorityLabel");
-        
+        this.notice.getStyleClass().add("notice");
         
 
         // Add buttonTypes
