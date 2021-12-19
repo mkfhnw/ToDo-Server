@@ -1,11 +1,15 @@
 package client.view;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -16,6 +20,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class LoginView extends BorderPane {
 	
@@ -23,25 +28,39 @@ public class LoginView extends BorderPane {
 	private Label userLabel;
 	private Label passwordLabel;
 	private TextField userField;
-	private TextField passwordField;
+	private PasswordField passwordField;
 	private Button signInButton;
 	private Button registerButton;
 	private Label changePassword;
 	
 	private ImageView image;
+	private ImageView eyeImage;
+	private ImageView hiddenEyeImage;
+	
+	private Label label;
+	
+	private Tooltip tooltip;
 	
 	private VBox userVBox;
 	private VBox passwordVBox;
 	private VBox buttonVBox;
 	private VBox loginVBox;
 	private VBox spaceVBox;
+	private VBox vBoxSpace2;
 	private VBox imageVBox;
+	private HBox passwordHBox;
+	private VBox passwordFieldVBox;
+	private VBox eyeVBox;
+	private VBox vBoxSpace;
+	private VBox changePasswordVBox;
+	private HBox signInRegister;
 	
 	// Spacings
     private final int SPACING_BUTTON_VBOX = 20;
     private final int SPACING_LOGIN_VBOX = 15;
     private final int SPACING_IMAGE_VBOX = 20;
     private final int SPACING = 20;
+    private final int SPACING_PASSWORD_HBOX = 7;
 	
     // Dialog for CreateAccount
     private Dialog<ButtonType> registrationDialog;
@@ -50,11 +69,28 @@ public class LoginView extends BorderPane {
 	// Constructor
 	public LoginView() {
 	
-	// Content
-		
+	// Content	
 	this.image = new ImageView("/common/resources/User.png");
 	this.image.setFitHeight(140);
 	this.image.setFitWidth(140);
+	
+	/*
+	 * The eyeImage is here to change the visability of
+	 * the passwordField. If the user clicks on the image, 
+	 * the image will change and password will be visable oder not --> Handling in Controller
+	 */
+	this.eyeImage = new ImageView("/common/resources/eye.png");
+	this.eyeImage.setPickOnBounds(true);
+	this.eyeImage.setFitHeight(20);
+	this.eyeImage.setFitWidth(20);
+	
+	this.hiddenEyeImage = new ImageView("/common/resources/hiddeneye.png");
+	this.hiddenEyeImage.setPickOnBounds(true);
+	this.hiddenEyeImage.setFitHeight(20);
+	this.hiddenEyeImage.setFitWidth(20);
+	
+	// Label shows if Login failed --> Handling in Controller
+	this.label = new Label("");
 		
 	this.userLabel = new Label("Benutzername");
 	this.userLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
@@ -65,11 +101,11 @@ public class LoginView extends BorderPane {
 	
 	this.userField = new TextField();
 	this.userField.setPromptText("email@outlook.com");
-	this.userField.setMaxWidth(250);
+	this.userField.setMaxWidth(228);
 	
-	this.passwordField = new TextField();
+	this.passwordField = new PasswordField();
 	this.passwordField.setPromptText("Passwort");
-	this.passwordField.setMaxWidth(250);
+	this.passwordField.setMaxWidth(300);
 	
 	this.signInButton = new Button("Anmelden");
 	this.signInButton.setPrefSize(200, 50);
@@ -82,20 +118,42 @@ public class LoginView extends BorderPane {
 	this.changePassword = new Label("Passwort vergessen?");
 	this.changePassword.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
 	
+	this.tooltip = new Tooltip();
+	this.tooltip.setShowDelay(Duration.ZERO);
+	this.tooltip.setAutoHide(true);
+	this.tooltip.setMinWidth(50);
+	
 	// Layout
 
-	VBox vBoxSpace = new VBox(SPACING);
+	this.vBoxSpace = new VBox(SPACING);
+	this.vBoxSpace2 = new VBox(SPACING);
 	
 	this.imageVBox = new VBox(SPACING_IMAGE_VBOX);
-	this.imageVBox.getChildren().addAll(image, vBoxSpace);
+	this.imageVBox.getChildren().addAll(vBoxSpace, image, vBoxSpace2);
+	this.imageVBox.setSpacing(20);
 	this.imageVBox.setAlignment(Pos.CENTER);
 		
 	this.userVBox= new VBox();
 	this.userVBox.getChildren().addAll(userLabel, userField);
+	this.userVBox.setSpacing(10);
 	this.userVBox.setAlignment(Pos.CENTER);
 	
+	this.passwordFieldVBox = new VBox();
+	this.passwordFieldVBox.getChildren().add(passwordField);
+	this.passwordFieldVBox.setPrefWidth(250);
+	this.passwordFieldVBox.setPadding(new Insets(0.0, 0.0, 0.0, 24.0));
+	this.passwordFieldVBox.setAlignment(Pos.CENTER);
+	
+	this.eyeVBox = new VBox();
+	this.eyeVBox.getChildren().add(hiddenEyeImage);
+	
+	this.passwordHBox = new HBox(SPACING_PASSWORD_HBOX);
+	this.passwordHBox.getChildren().addAll(passwordFieldVBox, eyeVBox);
+	this.passwordHBox.setAlignment(Pos.CENTER);
+	
 	this.passwordVBox = new VBox();
-	this.passwordVBox.getChildren().addAll(passwordLabel, passwordField);
+	this.passwordVBox.getChildren().addAll(passwordLabel, passwordHBox);
+	this.passwordVBox.setSpacing(5);
 	this.passwordVBox.setAlignment(Pos.CENTER);
 	
 	this.spaceVBox = new VBox();
@@ -103,11 +161,12 @@ public class LoginView extends BorderPane {
 	this.loginVBox = new VBox(SPACING_LOGIN_VBOX);
 	this.loginVBox.getChildren().addAll(userVBox, passwordVBox, spaceVBox);
 	
-	VBox changePasswordVBox = new VBox();
-	changePasswordVBox.getChildren().add(changePassword);
-	changePasswordVBox.setAlignment(Pos.CENTER);
+	this.changePasswordVBox = new VBox();
+	this.changePasswordVBox.getChildren().addAll(changePassword, label);
+	this.changePasswordVBox.setSpacing(5);
+	this.changePasswordVBox.setAlignment(Pos.CENTER);
 	
-	HBox signInRegister = new HBox();
+	this.signInRegister = new HBox();
 	signInRegister.getChildren().addAll(registerButton, signInButton);
 	signInRegister.setAlignment(Pos.CENTER);	
 	
@@ -115,7 +174,8 @@ public class LoginView extends BorderPane {
 	this.buttonVBox.getChildren().addAll(changePasswordVBox, signInRegister);
 	this.buttonVBox.setAlignment(Pos.CENTER);
 	
-	this.setTop(imageVBox);	
+	this.setTop(imageVBox);
+	
 	this.setCenter(loginVBox);
 	this.setBottom(buttonVBox);
 	
@@ -239,7 +299,7 @@ public class LoginView extends BorderPane {
 	}
 
 
-	public void setPasswordField(TextField passwordField) {
+	public void setPasswordField(PasswordField passwordField) {
 		this.passwordField = passwordField;
 	}
 
@@ -311,6 +371,121 @@ public class LoginView extends BorderPane {
 
 	public void setRegistrationDialogPane(RegistrationDialogPane registrationDialogPane) {
 		this.registrationDialogPane = registrationDialogPane;
+	}
+
+
+	public ImageView getEyeImage() {
+		return eyeImage;
+	}
+
+
+	public ImageView getHiddenEyeImage() {
+		return hiddenEyeImage;
+	}
+
+
+	public Label getLabel() {
+		return label;
+	}
+
+
+	public VBox getvBoxSpace2() {
+		return vBoxSpace2;
+	}
+
+
+	public HBox getPasswordHBox() {
+		return passwordHBox;
+	}
+
+
+	public VBox getPasswordFieldVBox() {
+		return passwordFieldVBox;
+	}
+
+
+	public VBox getEyeVBox() {
+		return eyeVBox;
+	}
+
+
+	public VBox getvBoxSpace() {
+		return vBoxSpace;
+	}
+
+
+	public int getSPACING_PASSWORD_HBOX() {
+		return SPACING_PASSWORD_HBOX;
+	}
+
+
+	public void setEyeImage(ImageView eyeImage) {
+		this.eyeImage = eyeImage;
+	}
+
+
+	public void setHiddenEyeImage(ImageView hiddenEyeImage) {
+		this.hiddenEyeImage = hiddenEyeImage;
+	}
+
+
+	public void setLabel(Label label) {
+		this.label = label;
+	}
+
+
+	public void setvBoxSpace2(VBox vBoxSpace2) {
+		this.vBoxSpace2 = vBoxSpace2;
+	}
+
+
+	public void setPasswordHBox(HBox passwordHBox) {
+		this.passwordHBox = passwordHBox;
+	}
+
+
+	public void setPasswordFieldVBox(VBox passwordFieldVBox) {
+		this.passwordFieldVBox = passwordFieldVBox;
+	}
+
+
+	public void setEyeVBox(VBox eyeVBox) {
+		this.eyeVBox = eyeVBox;
+	}
+
+
+	public void setvBoxSpace(VBox vBoxSpace) {
+		this.vBoxSpace = vBoxSpace;
+	}
+
+
+	public VBox getChangePasswordVBox() {
+		return changePasswordVBox;
+	}
+
+
+	public HBox getSignInRegister() {
+		return signInRegister;
+	}
+
+
+	public void setChangePasswordVBox(VBox changePasswordVBox) {
+		this.changePasswordVBox = changePasswordVBox;
+	}
+
+
+	public void setSignInRegister(HBox signInRegister) {
+		this.signInRegister = signInRegister;
+	}
+
+
+	public Tooltip getTooltip() {
+		return tooltip;
+	}
+
+
+	public void setTooltip(Tooltip tooltip) {
+		this.tooltip = tooltip;
 	}
 	
 

@@ -5,10 +5,13 @@ import client.view.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.XYChart;
@@ -113,6 +116,13 @@ public class ToDoController implements Serializable {
         // EventHandling for changing password
         this.toDoView.getChangePasswordItem().setOnAction(this::changePassword);
 
+        // EventHandling to show Password and change Image
+        this.loginView.getHiddenEyeImage().setOnMouseClicked(this::showPassword);
+        
+        // EventHandling to hide Password and change Image
+        this.loginView.getEyeImage().setOnMouseClicked(this::hidePassword);
+        
+        
         
         // Instantiate barchart with utils
         Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(0.3), new EventHandler<ActionEvent>() {
@@ -952,7 +962,7 @@ public class ToDoController implements Serializable {
   }
 
 
-public void openRegistration(MouseEvent event) {
+  public void openRegistration(MouseEvent event) {
 	  
 	// show dialog
       this.loginView.getRegistrationDialog().showAndWait();
@@ -962,7 +972,42 @@ public void openRegistration(MouseEvent event) {
     	  // save login?
   }
   
- 
+  public void showPassword(MouseEvent event) {
+	 
+	  
+	  this.loginView.getEyeVBox().getChildren().clear();
+	  this.loginView.getEyeVBox().getChildren().add(this.loginView.getEyeImage());
+	  
+	  
+	  this.loginView.getPasswordField().setOnKeyTyped(e -> {
+
+		  Point2D p = this.loginView.getPasswordField().localToScene(
+			  	  this.loginView.getPasswordField().getBoundsInLocal().getMaxX(), 
+			  	  this.loginView.getPasswordField().getBoundsInLocal().getMaxY());
+	  
+		  this.loginView.getTooltip().setText(this.loginView.getPasswordField().getText());
+		  this.loginView.getTooltip().show(this.loginView.getPasswordField(),
+				  p.getX() + stage.getScene().getX() + stage.getX(),
+				  p.getY() + stage.getScene().getY() + stage.getY());
+		  
+		  }
+	  );
+	  
+	  
+	 
+  }
+  
+  public void hidePassword(MouseEvent event) {
+	  
+	  this.loginView.getEyeVBox().getChildren().clear();
+	  this.loginView.getEyeVBox().getChildren().add(this.loginView.getHiddenEyeImage());
+	  
+	  this.loginView.getTooltip().hide();
+	  
+	  
+  }
+  
+
 
 }
 
