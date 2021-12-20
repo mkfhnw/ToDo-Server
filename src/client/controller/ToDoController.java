@@ -935,12 +935,58 @@ public class ToDoController implements Serializable {
 			String password = this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText();
 			this.clientNetworkPlugin.changePassword(password);
 			
-			
 			//Password validation, alarming if not between 3 and 20 characters
 			// validateNewPassword();
-
 			  
 		}
+  
+  /*
+   * Checks if the changed password has between 3 and 20 characters,
+   * if OK, OK,
+   * if NOT OK, the label for "failed" will appear. 
+   */
+  public boolean validateChangedPassword() {
+	  
+	  if (this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().length() >= 3
+				&& this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().length() <= 20) { 
+		  	
+				 return true;
+	  } else {
+						  
+		  		this.toDoView.getChangePasswordDialogPane().getLabel().setText("Das Passwort muss zwischen 3 und 20 Zeichen lang sein.");
+		  		this.toDoView.getChangePasswordDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+		  		this.toDoView.getChangePasswordDialogPane().getLabel().setTextFill(Color.web("#C00000"));
+						 
+				return false;
+			 }	  
+	  
+  }
+  
+  /*
+   * Checks if the new password and the repeated password are equal, 
+   * if OK, the label for change "succeeded" will appear,
+   * if NOT OK, the label for "failed" will appear.
+   */
+  public boolean validateNewAndRepeatedPassword() {
+	  
+	  if (this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().getText()
+		 == this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText()) {
+		  
+		  this.toDoView.getChangePasswordDialogPane().getLabel().setText("Passwort wurde geändert.");
+		  this.toDoView.getChangePasswordDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+		  this.toDoView.getChangePasswordDialogPane().getLabel().setTextFill(Color.web("#00B050"));
+		  
+		  return true;
+		  
+	  } else {
+		  this.toDoView.getChangePasswordDialogPane().getLabel().setText("Passwörter stimmen nicht überein!");
+		  this.toDoView.getChangePasswordDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+		  this.toDoView.getChangePasswordDialogPane().getLabel().setTextFill(Color.web("#C00000"));
+		  
+		  return false;
+	  }
+	  
+  }
 
 
   
@@ -959,6 +1005,8 @@ public class ToDoController implements Serializable {
             	  //the registrationView closes anyway, even if password incorrect -> needs to be fixed
                   if (!validatePassword()) {
                 	  event.consume();
+                	  
+                	  // Delete data in textfields TODO!
                       
                   } else {
                 	  boolean result = getNewAccount();

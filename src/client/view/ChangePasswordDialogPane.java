@@ -25,6 +25,8 @@ public class ChangePasswordDialogPane extends DialogPane {
 	private PasswordField newPasswordField;
 	private PasswordField repeatPasswordField;
 	
+	private Label label;
+	
 	// Layout§
 	
 	private BorderPane borderPane;
@@ -33,6 +35,7 @@ public class ChangePasswordDialogPane extends DialogPane {
 	private HBox newPassword;
 	private VBox general;
 	private VBox space;
+	private VBox labelVBox;
 	
 	// Buttontypes for DialogPane
 	private ButtonType okButtonType;
@@ -50,7 +53,7 @@ public class ChangePasswordDialogPane extends DialogPane {
 		
 	// Fields for the registration formula and design
 		
-	this.title = new Label("Account erstellen");
+	this.title = new Label("Passwort ändern");
 	this.title.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
 	this.title.setTextFill(Color.web("#181C54"));
 	
@@ -72,19 +75,25 @@ public class ChangePasswordDialogPane extends DialogPane {
 	this.repeatPasswordField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	this.repeatPasswordField.setPrefWidth(SIZE_TEXTFIELDS);
 	
+	this.label = new Label("");
+	this.label.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+	this.label.setTextFill(Color.web("#181C54"));
+	
 	// Layout
 	this.borderPane = new BorderPane();
 	this.header = new VBox(SPACING);
 	this.space = new VBox(SPACING);
 	this.oldPassword = new HBox(SPACING_NEWPASSWORD);
 	this.newPassword = new HBox(SPACING_REPEATPASSWORD);
+	this.labelVBox = new VBox();
 	this.general = new VBox(SPACING);
 	
 	// Add Fields to Layout
 	this.header.getChildren().add(title);
 	this.oldPassword.getChildren().addAll(newPasswordLabel, newPasswordField);
 	this.newPassword.getChildren().addAll(repeatPasswordLabel, repeatPasswordField);
-	this.general.getChildren().addAll(space, oldPassword, newPassword);
+	this.labelVBox.getChildren().add(label);
+	this.general.getChildren().addAll(space, oldPassword, newPassword, label);
 	
 	this.borderPane.setTop(header);
 	this.borderPane.setCenter(general);
@@ -229,6 +238,34 @@ public class ChangePasswordDialogPane extends DialogPane {
 
 	public void setRepeatPasswordField(PasswordField repeatPasswordField) {
 		this.repeatPasswordField = repeatPasswordField;
+	}
+
+	public Label getLabel() {
+		return label;
+	}
+
+	public VBox getSpace() {
+		return space;
+	}
+
+	public VBox getLabelVBox() {
+		return labelVBox;
+	}
+
+	public int getSPACING() {
+		return SPACING;
+	}
+
+	public void setLabel(Label label) {
+		this.label = label;
+	}
+
+	public void setSpace(VBox space) {
+		this.space = space;
+	}
+
+	public void setLabelVBox(VBox labelVBox) {
+		this.labelVBox = labelVBox;
 	}
 	
 	
