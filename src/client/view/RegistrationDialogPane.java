@@ -60,23 +60,30 @@ public class RegistrationDialogPane extends DialogPane {
 	this.emailLabel = new Label("E-Mail-Adresse");
 	this.emailLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.emailLabel.setTextFill(Color.web("#181C54"));
+	
 	this.emailField = new TextField();
 	this.emailField = new TextField();
+	this.emailField.setPromptText("email@outlook.com");
 	this.emailField.setPrefWidth(SIZE_TEXTFIELDS);
+	this.emailField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	
 	this.passwordLabel = new Label("Passwort");
 	this.passwordLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.passwordLabel.setTextFill(Color.web("#181C54"));
+	
 	this.passwordField = new TextField();
-	this.passwordField = new TextField();
+	this.passwordField.setPromptText("Passwort");
 	this.passwordField.setPrefWidth(SIZE_TEXTFIELDS);
+	this.passwordField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	
 	this.repeatPasswordLabel = new Label("Passwort wiederholen");
 	this.repeatPasswordLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.repeatPasswordLabel.setTextFill(Color.web("#181C54"));
+	
 	this.repeatPasswordField = new TextField();
-	this.repeatPasswordField = new TextField();
+	this.repeatPasswordField.setPromptText("Passwort wiederholen");
 	this.repeatPasswordField.setPrefWidth(SIZE_TEXTFIELDS);
+	this.repeatPasswordField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	
 	// Layout
 	this.borderPane = new BorderPane();

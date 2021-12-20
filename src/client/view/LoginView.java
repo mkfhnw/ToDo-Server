@@ -4,7 +4,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -103,12 +102,12 @@ public class LoginView extends BorderPane {
 	this.userField = new TextField();
 	this.userField.setPromptText("email@outlook.com");
 	this.userField.setMaxWidth(228);
-	this.userField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 11));
+	this.userField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	
 	this.passwordField = new PasswordField();
 	this.passwordField.setPromptText("Passwort");
 	this.passwordField.setMaxWidth(300);
-	this.passwordField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 11));
+	this.passwordField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	
 	this.signInButton = new Button("Anmelden");
 	this.signInButton.setPrefSize(200, 50);

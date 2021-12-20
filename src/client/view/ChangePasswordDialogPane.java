@@ -4,6 +4,7 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -21,8 +22,8 @@ public class ChangePasswordDialogPane extends DialogPane {
 	private Label newPasswordLabel;
 	private Label repeatPasswordLabel;
 	
-	private TextField newPasswordField;
-	private TextField repeatPasswordField;
+	private PasswordField newPasswordField;
+	private PasswordField repeatPasswordField;
 	
 	// Layout§
 	
@@ -31,6 +32,7 @@ public class ChangePasswordDialogPane extends DialogPane {
 	private HBox oldPassword;
 	private HBox newPassword;
 	private VBox general;
+	private VBox space;
 	
 	// Buttontypes for DialogPane
 	private ButtonType okButtonType;
@@ -39,6 +41,7 @@ public class ChangePasswordDialogPane extends DialogPane {
 	// Spacing for Layout
 	private final int SPACING_NEWPASSWORD = 60;
 	private final int SPACING_REPEATPASSWORD = 19;
+	private final int SPACING = 15;
 	
 	// Size for TextFields
 	private final int SIZE_TEXTFIELDS = 250;
@@ -54,27 +57,34 @@ public class ChangePasswordDialogPane extends DialogPane {
 	this.newPasswordLabel = new Label("Neues Passwort");
 	this.newPasswordLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.newPasswordLabel.setTextFill(Color.web("#181C54"));
-	this.newPasswordField = new TextField();
+	
+	this.newPasswordField = new PasswordField();
+	this.newPasswordField.setPromptText("Neues Passwort");
+	this.newPasswordField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	this.newPasswordField.setPrefWidth(SIZE_TEXTFIELDS);
 	
 	this.repeatPasswordLabel = new Label("Passwort wiederholen");
 	this.repeatPasswordLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.repeatPasswordLabel.setTextFill(Color.web("#181C54"));
-	this.repeatPasswordField = new TextField();
+	
+	this.repeatPasswordField = new PasswordField();
+	this.repeatPasswordField.setPromptText("Neues Passwort bestätigen");
+	this.repeatPasswordField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	this.repeatPasswordField.setPrefWidth(SIZE_TEXTFIELDS);
 	
 	// Layout
 	this.borderPane = new BorderPane();
-	this.header = new VBox();
+	this.header = new VBox(SPACING);
+	this.space = new VBox(SPACING);
 	this.oldPassword = new HBox(SPACING_NEWPASSWORD);
 	this.newPassword = new HBox(SPACING_REPEATPASSWORD);
-	this.general = new VBox();
+	this.general = new VBox(SPACING);
 	
 	// Add Fields to Layout
 	this.header.getChildren().add(title);
 	this.oldPassword.getChildren().addAll(newPasswordLabel, newPasswordField);
 	this.newPassword.getChildren().addAll(repeatPasswordLabel, repeatPasswordField);
-	this.general.getChildren().addAll(oldPassword, newPassword);
+	this.general.getChildren().addAll(space, oldPassword, newPassword);
 	
 	this.borderPane.setTop(header);
 	this.borderPane.setCenter(general);
@@ -177,11 +187,11 @@ public class ChangePasswordDialogPane extends DialogPane {
 		this.repeatPasswordLabel = newPasswordLabel;
 	}
 
-	public void setOldPasswordField(TextField oldPasswordField) {
+	public void setOldPasswordField(PasswordField oldPasswordField) {
 		this.newPasswordField = oldPasswordField;
 	}
 
-	public void setNewPasswordField(TextField newPasswordField) {
+	public void setNewPasswordField(PasswordField newPasswordField) {
 		this.repeatPasswordField = newPasswordField;
 	}
 
@@ -217,7 +227,7 @@ public class ChangePasswordDialogPane extends DialogPane {
 		this.repeatPasswordLabel = repeatPasswordLabel;
 	}
 
-	public void setRepeatPasswordField(TextField repeatPasswordField) {
+	public void setRepeatPasswordField(PasswordField repeatPasswordField) {
 		this.repeatPasswordField = repeatPasswordField;
 	}
 	
