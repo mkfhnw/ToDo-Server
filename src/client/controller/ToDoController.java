@@ -935,8 +935,8 @@ public class ToDoController implements Serializable {
 			String password = this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText();
 			this.clientNetworkPlugin.changePassword(password);
 			
-			//Password validation, alarming if not between 3 and 20 characters
-			// validateNewPassword();
+			validateChangedPassword();
+			validateNewAndRepeatedPassword();
 			  
 		}
   
