@@ -30,6 +30,7 @@ public class RegistrationDialogPane extends DialogPane {
 	private HBox repeatPasswordPane;
 	private VBox header;
 	private VBox vBox;
+	private VBox space;
 
 	
 	// Buttontypes for DialogPane
@@ -84,14 +85,16 @@ public class RegistrationDialogPane extends DialogPane {
 	this.repeatPasswordPane = new HBox(SPACING_REPEAT_PASSWORD);
 	this.header = new VBox(SPACING_HEADER);
 	this.vBox = new VBox(SPACING);
+	this.space = new VBox(SPACING);
 	
 	// Add Fields to Layout
-	this.header.getChildren().add(title);
+	this.header.getChildren().addAll(title);
 	this.emailPane.getChildren().addAll(emailLabel, emailField);
 	this.passwordPane.getChildren().addAll(passwordLabel, passwordField);
 	this.repeatPasswordPane.getChildren().addAll(repeatPasswordLabel, repeatPasswordField);
 	this.vBox.getChildren().addAll(
 			header,
+			space,
 			emailPane, 
 			passwordPane,
 			repeatPasswordPane);

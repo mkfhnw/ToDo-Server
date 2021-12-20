@@ -98,25 +98,32 @@ public class LoginView extends BorderPane {
 	
 	this.passwordLabel = new Label("Passwort");
 	this.passwordLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
+	this.passwordLabel.setTextFill(Color.web("#181C54"));
 	
 	this.userField = new TextField();
 	this.userField.setPromptText("email@outlook.com");
 	this.userField.setMaxWidth(228);
+	this.userField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 11));
 	
 	this.passwordField = new PasswordField();
 	this.passwordField.setPromptText("Passwort");
 	this.passwordField.setMaxWidth(300);
+	this.passwordField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 11));
 	
 	this.signInButton = new Button("Anmelden");
 	this.signInButton.setPrefSize(200, 50);
 	this.signInButton.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+	this.signInButton.setTextFill(Color.web("#181C54"));
 	
 	this.registerButton = new Button("Registrieren");
 	this.registerButton.setPrefSize(200, 50);
 	this.registerButton.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+	this.registerButton.setTextFill(Color.web("#181C54"));
 	
 	this.changePassword = new Label("Passwort vergessen?");
-	this.changePassword.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
+	this.changePassword.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
+	this.changePassword.setTextFill(Color.web("#181C54"));
+	
 	
 	this.tooltip = new Tooltip();
 	this.tooltip.setShowDelay(Duration.ZERO);
@@ -175,7 +182,6 @@ public class LoginView extends BorderPane {
 	this.buttonVBox.setAlignment(Pos.CENTER);
 	
 	this.setTop(imageVBox);
-	
 	this.setCenter(loginVBox);
 	this.setBottom(buttonVBox);
 	

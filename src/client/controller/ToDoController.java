@@ -21,6 +21,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import client.model.FocusTimerModel;
@@ -873,23 +876,10 @@ public class ToDoController implements Serializable {
   		stage.show();
   		});
   	} else {
-  		// Alertdialog if Login failed
-  		Alert alert = new Alert(AlertType.NONE);
-
-  		 // Action event
-        EventHandler<ActionEvent> eventAlert = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e)
-            {
-                // set alert type
-                alert.setAlertType(AlertType.ERROR);
-
-                // set content text
-                alert.setContentText("Error Login failed");
-
-                // show the dialog
-                alert.show();
-            }
-        };
+  		
+  		 this.loginView.getLabel().setText("Anmeldung fehlgeschlagen - Benutzername ist ungültig!");
+		 this.loginView.getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+		 this.loginView.getLabel().setTextFill(Color.web("#C00000"));
   	}
 
   }
@@ -912,23 +902,10 @@ public class ToDoController implements Serializable {
 		  
 		 this.loginView.getRegistrationDialogPane().getPasswordField().getStyleClass().add("notOk");
 		 
-		// Alertdialog if Login failed
-	  		Alert alert = new Alert(AlertType.NONE);
-
-	  		 // Action event
-	        EventHandler<ActionEvent> eventAlert = new EventHandler<ActionEvent>() {
-	            public void handle(ActionEvent e)
-	            {
-	                // set alert type
-	                alert.setAlertType(AlertType.ERROR);
-
-	                // set content text
-	                alert.setContentText("Error Password failed");
-
-	                // show the dialog
-	                alert.show();
-	            }
-	        };
+		 this.loginView.getLabel().setText("Anmeldung fehlgeschlagen - Passwort ist falsch!");
+		 this.loginView.getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+		 this.loginView.getLabel().setTextFill(Color.web("#C00000"));
+		 
 		  return false;
 	  }
 	    

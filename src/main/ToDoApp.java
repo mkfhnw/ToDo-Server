@@ -4,6 +4,9 @@ import client.controller.ToDoController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import server.models.ServerRunnable;
 import client.view.LoginView;
@@ -59,7 +62,7 @@ public class ToDoApp extends Application {
 
 		// Shows scene in a window (object stage)
 		stage.setScene(scene1);
-		stage.setTitle("ToDo-App");
+		stage.setTitle("ToDo-App");		
 		stage.show();
 		
 		// Adds an icon to the window
