@@ -176,15 +176,15 @@ public class ToDoController implements Serializable {
      * Needs input from ToDoView
      */
     public void createToDo(String title, String message, LocalDate dueDate, String category, String priorityString,
-                           ArrayList<String> tags) {
-        ToDo toDo = new ToDo(title, message, dueDate, category, priorityString, tags);
-        this.toDoList.addToDo(toDo);
-        this.toDoList.updateSublists();
+            ArrayList<String> tags) {
+    	ToDo toDo = new ToDo(title, message, dueDate, category, priorityString, tags);
+    	this.toDoList.addToDo(toDo);
+    	this.toDoList.updateSublists();
 
-        // Send data to server
-        this.clientNetworkPlugin.createToDo(toDo);
+    	// Send data to server
+    	this.clientNetworkPlugin.createToDo(toDo);
 
-    }
+}
 
     // CREATE Item overload method for missing dueDate
     private void createToDo(String title, String message, String category,
@@ -873,6 +873,36 @@ public class ToDoController implements Serializable {
   		Platform.runLater(() -> {
   		this.stage.setScene(scene2);
   		stage.resizableProperty().setValue(Boolean.TRUE);
+  		//send ListToDo request to server
+  		//receive ArrayList with ToDoID's for the user
+  		ArrayList <String> resultList = this.clientNetworkPlugin.listToDos();
+  		
+  		//go through the list and send a getToDo request for each ID
+  		
+  		for (String ID : resultList) {
+  			int intID = Integer.parseInt(ID);
+  			
+  			ArrayList<String> itemData = this.clientNetworkPlugin.getToDo(intID);
+  			String title = itemData.get(1);
+  			String priority = itemData.get(2);
+  			String description = itemData.get(3);
+  			
+  			LocalDate dueDate = null;
+  			if (itemData.get(4) != null) {
+  				String dueDateAsString = itemData.get(4);
+  				dueDate = LocalDate.parse(dueDateAsString);
+  				//Constructor needed which supports no dueDate
+  			}
+  			
+  			//create a ToDo object out of every getToDo result
+  			ToDo toDo = new ToDo(title, priority, description, dueDate);
+  			
+  		}
+  		
+  		 /* add the ToDo object to the toDoList
+  		 * NOTE: if category of object is null -> add it to plannedBarView
+  		 */
+  		
   		stage.show();
   		});
   	} else {

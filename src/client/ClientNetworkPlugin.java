@@ -266,16 +266,27 @@ public class ClientNetworkPlugin {
         	return result;
         }
         
-        public void getToDo(int ID) { // NOCH NICHT FERTIG
-        	// toDoList for each; --> SERVER
-        	// Token-Validation --> SERVER
+        public ArrayList<String> getToDo(int ID) {
         	
-        	ArrayList<String> toDoData = new ArrayList<>();
-        	toDoData.add(Integer.toString(ID));
         	
-
+        	try {
+        		ArrayList<String> toDoData = new ArrayList<>();
+        		toDoData.add(Integer.toString(ID));
+            	
+            	
+            	sendMessage("GET_TODO", toDoData, this.token);
+            	
+            	// Receive server response case
+        		Message responseLogin = this.parseResponse();
+        		
+        		ArrayList<String> itemData = responseLogin.getDataParts();
+        		return itemData;
+        		
+        	} catch (Exception e) {
+        		System.out.println("[NETWORK-PLUGIN] Exception: " + e.getMessage());
+        		return null;
+        	}
         	
-        	sendMessage("GET_TODO", toDoData, this.token);
         	
 
         }
@@ -311,12 +322,28 @@ public class ClientNetworkPlugin {
         	
         }
         
-        public void listToDos() {
+        public ArrayList<String> listToDos() {
         	
-        	ArrayList<String> listToDos = new ArrayList<>();
+        	try {
+        		
+        		ArrayList<String> listToDos = new ArrayList<>();
+            	
+        	    sendMessage("LIST_TODOS", listToDos, this.token);
+        	    
+        	 // Receive server response case
+	    		Message responseLogin = this.parseResponse();
+	    		
+	    		ArrayList<String> resultList = responseLogin.getDataParts();
+	    		
+	    		return resultList;
+	    		
+        		
+        	} catch (Exception e) {
+        		System.out.println("[NETWORK-PLUGIN] Exception: " + e.getMessage());
+        		return null;
+        	}
         	
-        	// Token
-        	sendMessage("LIST_TODOS", listToDos, this.token);
+        
         	
 
         }
