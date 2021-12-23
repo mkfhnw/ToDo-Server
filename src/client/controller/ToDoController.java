@@ -884,32 +884,9 @@ public class ToDoController implements Serializable {
 
   }
   
-  public boolean getNewAccount() {
-	  
-	String emailCreateLogin = this.loginView.getRegistrationDialogPane().getEmailField().getText();
-  	String passwordCreateLogin = this.loginView.getRegistrationDialogPane().getPasswordField().getText();
-  	
-  	boolean result = this.clientNetworkPlugin.createLogin(emailCreateLogin, passwordCreateLogin);
-  	return result;
-  	
-  }
 
-  public boolean validatePassword() {
-	  if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() >= 3
-		 && this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() <= 20) {
-		  return true;
-	  } else {
-		  
-		 this.loginView.getRegistrationDialogPane().getPasswordField().getStyleClass().add("notOk");
-		 
-		 this.loginView.getLabel().setText("Anmeldung fehlgeschlagen - Passwort ist falsch!");
-		 this.loginView.getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
-		 this.loginView.getLabel().setTextFill(Color.web("#C00000"));
-		 
-		  return false;
-	  }
-	    
-  }
+
+  
   
   public void logout(MouseEvent event) {
 	// ALARMDIALOG?
@@ -931,26 +908,60 @@ public class ToDoController implements Serializable {
   public void changePassword(ActionEvent event) {
 	  
 			toDoView.getChangePasswordDialog().showAndWait();
-			 
-			String password = this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText();
-			this.clientNetworkPlugin.changePassword(password);
+			System.out.println("1");
+			this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().clear();
+			this.toDoView.getChangePasswordDialogPane().getNewPasswordField().clear();
+			this.toDoView.getChangePasswordDialogPane().getLabel().setText("");
+			System.out.println("2");
+			Button okButton = (Button) this.toDoView.getChangePasswordDialogPane().lookupButton(this.toDoView.getChangePasswordDialogPane().getOkButtonType());
+			okButton.addEventFilter(ActionEvent.ACTION,
+					e -> {
+						System.out.println("3");
+						if(!validateChangedPassword()) {
+							System.out.println("4");
+							e.consume();
+						}
+					});
 			
-			validateChangedPassword();
-			validateNewAndRepeatedPassword();
-			  
+						
+			
 		}
   
   /*
-   * Checks if the changed password has between 3 and 20 characters,
+   * Checks if the changed password has between 3 and 20 characters and if the passwords are similar
    * if OK, OK,
    * if NOT OK, the label for "failed" will appear. 
    */
   public boolean validateChangedPassword() {
 	  
+	  
 	  if (this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().length() >= 3
 				&& this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().length() <= 20) { 
-		  	
+		  
+		  if (this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().getText()
+					 == this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText()) {
+					  
+					  this.toDoView.getChangePasswordDialogPane().getLabel().setText("Passwort wurde geändert.");
+					  this.toDoView.getChangePasswordDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+					  this.toDoView.getChangePasswordDialogPane().getLabel().setTextFill(Color.web("#00B050"));
+					  					
+							
+					  String password = this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText();
+					  this.clientNetworkPlugin.changePassword(password);
+					
 				 return true;
+				 
+				 
+		  } else {
+			  
+			  this.toDoView.getChangePasswordDialogPane().getLabel().setText("Passwörter stimmen nicht überein!");
+			  this.toDoView.getChangePasswordDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+			  this.toDoView.getChangePasswordDialogPane().getLabel().setTextFill(Color.web("#C00000"));
+			  
+			  return false;
+			  
+		  }
+		  
 	  } else {
 						  
 		  		this.toDoView.getChangePasswordDialogPane().getLabel().setText("Das Passwort muss zwischen 3 und 20 Zeichen lang sein.");
@@ -958,42 +969,27 @@ public class ToDoController implements Serializable {
 		  		this.toDoView.getChangePasswordDialogPane().getLabel().setTextFill(Color.web("#C00000"));
 						 
 				return false;
-			 }	  
+				
+			 }
+	  
+	  
 	  
   }
+ 
   
-  /*
-   * Checks if the new password and the repeated password are equal, 
-   * if OK, the label for change "succeeded" will appear,
-   * if NOT OK, the label for "failed" will appear.
-   */
-  public boolean validateNewAndRepeatedPassword() {
+  public void openRegistration(MouseEvent event) {
 	  
-	  if (this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().getText()
-		 == this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText()) {
-		  
-		  this.toDoView.getChangePasswordDialogPane().getLabel().setText("Passwort wurde geändert.");
-		  this.toDoView.getChangePasswordDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
-		  this.toDoView.getChangePasswordDialogPane().getLabel().setTextFill(Color.web("#00B050"));
-		  
-		  return true;
-		  
-	  } else {
-		  this.toDoView.getChangePasswordDialogPane().getLabel().setText("Passwörter stimmen nicht überein!");
-		  this.toDoView.getChangePasswordDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
-		  this.toDoView.getChangePasswordDialogPane().getLabel().setTextFill(Color.web("#C00000"));
-		  
-		  return false;
-	  }
+		// show dialog
 	  
+	    this.loginView.getRegistrationDialog().showAndWait();
+	    this.loginView.getRegistrationDialogPane().getEmailField().clear();
+	    this.loginView.getRegistrationDialogPane().getRepeatPasswordField().clear();
+	    this.loginView.getRegistrationDialogPane().getPasswordField().clear();
+	    this.loginView.getRegistrationDialogPane().getLabel().setText("");
+	    
+	    registerAccount();
+	      
   }
-
-
-  
-
-//   public boolean validateNewPassword() {
-  
-//	  }
   
   public void registerAccount() {
 	  
@@ -1006,7 +1002,6 @@ public class ToDoController implements Serializable {
                   if (!validatePassword()) {
                 	  event.consume();
                 	  
-                	  // Delete data in textfields TODO!
                       
                   } else {
                 	  boolean result = getNewAccount();
@@ -1016,8 +1011,6 @@ public class ToDoController implements Serializable {
                     	  		stage.resizableProperty().setValue(Boolean.FALSE);
                     	  		stage.show();
                     	  		});    		
-                      } else {
-                    	  
                       }
                   }
               });
@@ -1025,16 +1018,58 @@ public class ToDoController implements Serializable {
 	  
   }
 
-
-  public void openRegistration(MouseEvent event) {
+  public boolean validatePassword() {
 	  
-	// show dialog
-      this.loginView.getRegistrationDialog().showAndWait();
-      
-      registerAccount();
-      
-    	  // save login?
+	  if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() >= 3
+				&& this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() <= 20) { 
+		  
+		  if (this.loginView.getRegistrationDialogPane().getPasswordField().getText()
+					 == this.loginView.getRegistrationDialogPane().getRepeatPasswordField().getText()) {
+					  
+					  this.loginView.getRegistrationDialogPane().getLabel().setText("Passwort wurde geändert.");
+					  this.loginView.getRegistrationDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+					  this.loginView.getRegistrationDialogPane().getLabel().setTextFill(Color.web("#00B050"));
+					  					
+							
+					  String password = this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText();
+					  this.clientNetworkPlugin.changePassword(password);
+					
+				 return true;
+				 
+				 
+		  } else {
+			  
+			  this.loginView.getRegistrationDialogPane().getLabel().setText("Passwörter stimmen nicht überein!");
+			  this.loginView.getRegistrationDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+			  this.loginView.getRegistrationDialogPane().getLabel().setTextFill(Color.web("#C00000"));
+			  
+			  return false;
+			  
+		  }
+		  
+	  } else {
+						  
+		  		this.loginView.getRegistrationDialogPane().getLabel().setText("Das Passwort muss zwischen 3 und 20 Zeichen lang sein.");
+		  		this.loginView.getRegistrationDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+		  		this.loginView.getRegistrationDialogPane().getLabel().setTextFill(Color.web("#C00000"));
+						 
+				return false;
+				
+			 }
+	    
   }
+  
+  public boolean getNewAccount() {
+	  
+	String emailCreateLogin = this.loginView.getRegistrationDialogPane().getEmailField().getText();
+  	String passwordCreateLogin = this.loginView.getRegistrationDialogPane().getPasswordField().getText();
+  	
+  	boolean result = this.clientNetworkPlugin.createLogin(emailCreateLogin, passwordCreateLogin);
+  	return result;
+  	
+  }
+  
+  
   
   public void showPassword(MouseEvent event) {
 	 

@@ -4,6 +4,7 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -17,11 +18,12 @@ public class RegistrationDialogPane extends DialogPane {
 	// Elements for registration
 	private Label title;
 	private Label emailLabel;
+	private Label label;
 	private TextField emailField;
 	private Label passwordLabel;
-	private TextField passwordField;
+	private PasswordField passwordField;
 	private Label repeatPasswordLabel;
-	private TextField repeatPasswordField;
+	private PasswordField repeatPasswordField;
 	
 	// Layout
 	private BorderPane borderPane;
@@ -31,6 +33,7 @@ public class RegistrationDialogPane extends DialogPane {
 	private VBox header;
 	private VBox vBox;
 	private VBox space;
+	private VBox labelVBox;
 
 	
 	// Buttontypes for DialogPane
@@ -61,6 +64,8 @@ public class RegistrationDialogPane extends DialogPane {
 	this.emailLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.emailLabel.setTextFill(Color.web("#181C54"));
 	
+	this.label = new Label("");
+	
 	this.emailField = new TextField();
 	this.emailField = new TextField();
 	this.emailField.setPromptText("email@outlook.com");
@@ -71,7 +76,7 @@ public class RegistrationDialogPane extends DialogPane {
 	this.passwordLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.passwordLabel.setTextFill(Color.web("#181C54"));
 	
-	this.passwordField = new TextField();
+	this.passwordField = new PasswordField();
 	this.passwordField.setPromptText("Passwort");
 	this.passwordField.setPrefWidth(SIZE_TEXTFIELDS);
 	this.passwordField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
@@ -80,7 +85,7 @@ public class RegistrationDialogPane extends DialogPane {
 	this.repeatPasswordLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.repeatPasswordLabel.setTextFill(Color.web("#181C54"));
 	
-	this.repeatPasswordField = new TextField();
+	this.repeatPasswordField = new PasswordField();
 	this.repeatPasswordField.setPromptText("Passwort wiederholen");
 	this.repeatPasswordField.setPrefWidth(SIZE_TEXTFIELDS);
 	this.repeatPasswordField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
@@ -93,18 +98,21 @@ public class RegistrationDialogPane extends DialogPane {
 	this.header = new VBox(SPACING_HEADER);
 	this.vBox = new VBox(SPACING);
 	this.space = new VBox(SPACING);
+	this.labelVBox = new VBox();
 	
 	// Add Fields to Layout
 	this.header.getChildren().addAll(title);
 	this.emailPane.getChildren().addAll(emailLabel, emailField);
 	this.passwordPane.getChildren().addAll(passwordLabel, passwordField);
 	this.repeatPasswordPane.getChildren().addAll(repeatPasswordLabel, repeatPasswordField);
+	this.labelVBox.getChildren().add(label);
 	this.vBox.getChildren().addAll(
 			header,
 			space,
 			emailPane, 
 			passwordPane,
-			repeatPasswordPane);
+			repeatPasswordPane,
+			labelVBox);
 	
 	this.borderPane.setTop(header);
 	this.borderPane.setCenter(vBox);
@@ -124,121 +132,171 @@ public class RegistrationDialogPane extends DialogPane {
 		
 	}
 
-
-
 	public Label getTitle() {
 		return title;
-	}
-
-
-
-	public BorderPane getBorderPane() {
-		return borderPane;
 	}
 
 	public Label getEmailLabel() {
 		return emailLabel;
 	}
 
-
+	public Label getLabel() {
+		return label;
+	}
 
 	public TextField getEmailField() {
 		return emailField;
 	}
 
-
-
 	public Label getPasswordLabel() {
 		return passwordLabel;
 	}
 
-
-
-	public TextField getPasswordField() {
+	public PasswordField getPasswordField() {
 		return passwordField;
 	}
-
-
 
 	public Label getRepeatPasswordLabel() {
 		return repeatPasswordLabel;
 	}
 
-
-
-	public TextField getRepeatPasswordField() {
+	public PasswordField getRepeatPasswordField() {
 		return repeatPasswordField;
 	}
 
+	public BorderPane getBorderPane() {
+		return borderPane;
+	}
 
+	public HBox getEmailPane() {
+		return emailPane;
+	}
+
+	public HBox getPasswordPane() {
+		return passwordPane;
+	}
+
+	public HBox getRepeatPasswordPane() {
+		return repeatPasswordPane;
+	}
+
+	public VBox getvBox() {
+		return vBox;
+	}
+
+	public VBox getSpace() {
+		return space;
+	}
+
+	public VBox getLabelVBox() {
+		return labelVBox;
+	}
 
 	public ButtonType getOkButtonType() {
 		return okButtonType;
 	}
 
-
-
 	public ButtonType getCancelButtonType() {
 		return cancelButtonType;
 	}
 
+	public int getSPACING_EMAIL() {
+		return SPACING_EMAIL;
+	}
 
+	public int getSPACING_PASSWORD() {
+		return SPACING_PASSWORD;
+	}
+
+	public int getSPACING_REPEAT_PASSWORD() {
+		return SPACING_REPEAT_PASSWORD;
+	}
+
+	public int getSPACING_HEADER() {
+		return SPACING_HEADER;
+	}
+
+	public int getSPACING() {
+		return SPACING;
+	}
+
+	public int getSIZE_TEXTFIELDS() {
+		return SIZE_TEXTFIELDS;
+	}
 
 	public void setTitle(Label title) {
 		this.title = title;
 	}
 
-
-
-	public void setBorderPane(BorderPane borderPane) {
-		this.borderPane = borderPane;
-	}
-
-
 	public void setEmailLabel(Label emailLabel) {
 		this.emailLabel = emailLabel;
 	}
 
-
+	public void setLabel(Label label) {
+		this.label = label;
+	}
 
 	public void setEmailField(TextField emailField) {
 		this.emailField = emailField;
 	}
 
-
-
 	public void setPasswordLabel(Label passwordLabel) {
 		this.passwordLabel = passwordLabel;
 	}
 
-
-
-	public void setPasswordField(TextField passwordField) {
+	public void setPasswordField(PasswordField passwordField) {
 		this.passwordField = passwordField;
 	}
-
-
 
 	public void setRepeatPasswordLabel(Label repeatPasswordLabel) {
 		this.repeatPasswordLabel = repeatPasswordLabel;
 	}
 
-
-
-	public void setRepeatPasswordField(TextField repeatPasswordField) {
+	public void setRepeatPasswordField(PasswordField repeatPasswordField) {
 		this.repeatPasswordField = repeatPasswordField;
 	}
 
+	public void setBorderPane(BorderPane borderPane) {
+		this.borderPane = borderPane;
+	}
 
+	public void setEmailPane(HBox emailPane) {
+		this.emailPane = emailPane;
+	}
+
+	public void setPasswordPane(HBox passwordPane) {
+		this.passwordPane = passwordPane;
+	}
+
+	public void setRepeatPasswordPane(HBox repeatPasswordPane) {
+		this.repeatPasswordPane = repeatPasswordPane;
+	}
+
+	public void setHeader(VBox header) {
+		this.header = header;
+	}
+
+	public void setvBox(VBox vBox) {
+		this.vBox = vBox;
+	}
+
+	public void setSpace(VBox space) {
+		this.space = space;
+	}
+
+	public void setLabelVBox(VBox labelVBox) {
+		this.labelVBox = labelVBox;
+	}
 
 	public void setOkButtonType(ButtonType okButtonType) {
 		this.okButtonType = okButtonType;
 	}
 
-
-
 	public void setCancelButtonType(ButtonType cancelButtonType) {
 		this.cancelButtonType = cancelButtonType;
 	}
+
+
+
 
 }

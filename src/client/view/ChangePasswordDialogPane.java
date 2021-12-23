@@ -116,25 +116,28 @@ public class ChangePasswordDialogPane extends DialogPane {
 		
 	}
 
-	// Getter
 	public Label getTitle() {
 		return title;
 	}
 
-	public Label getOldPasswordLabel() {
+	public Label getNewPasswordLabel() {
 		return newPasswordLabel;
 	}
 
-	public Label getNewPasswordLabel() {
+	public Label getRepeatPasswordLabel() {
 		return repeatPasswordLabel;
 	}
 
-	public TextField getOldPasswordField() {
+	public PasswordField getNewPasswordField() {
 		return newPasswordField;
 	}
 
-	public TextField getNewPasswordField() {
+	public PasswordField getRepeatPasswordField() {
 		return repeatPasswordField;
+	}
+
+	public Label getLabel() {
+		return label;
 	}
 
 	public BorderPane getBorderPane() {
@@ -153,24 +156,20 @@ public class ChangePasswordDialogPane extends DialogPane {
 		return general;
 	}
 
+	public VBox getSpace() {
+		return space;
+	}
+
+	public VBox getLabelVBox() {
+		return labelVBox;
+	}
+
 	public ButtonType getOkButtonType() {
 		return okButtonType;
 	}
 
 	public ButtonType getCancelButtonType() {
 		return cancelButtonType;
-	}
-
-	public int getSIZE_TEXTFIELDS() {
-		return SIZE_TEXTFIELDS;
-	}
-	
-	public Label getRepeatPasswordLabel() {
-		return repeatPasswordLabel;
-	}
-
-	public TextField getRepeatPasswordField() {
-		return repeatPasswordField;
 	}
 
 	public int getSPACING_NEWPASSWORD() {
@@ -180,28 +179,37 @@ public class ChangePasswordDialogPane extends DialogPane {
 	public int getSPACING_REPEATPASSWORD() {
 		return SPACING_REPEATPASSWORD;
 	}
-	
-	
-	//Setter
+
+	public int getSPACING() {
+		return SPACING;
+	}
+
+	public int getSIZE_TEXTFIELDS() {
+		return SIZE_TEXTFIELDS;
+	}
 
 	public void setTitle(Label title) {
 		this.title = title;
 	}
 
-	public void setOldPasswordLabel(Label oldPasswordLabel) {
-		this.newPasswordLabel = oldPasswordLabel;
-	}
-
 	public void setNewPasswordLabel(Label newPasswordLabel) {
-		this.repeatPasswordLabel = newPasswordLabel;
+		this.newPasswordLabel = newPasswordLabel;
 	}
 
-	public void setOldPasswordField(PasswordField oldPasswordField) {
-		this.newPasswordField = oldPasswordField;
+	public void setRepeatPasswordLabel(Label repeatPasswordLabel) {
+		this.repeatPasswordLabel = repeatPasswordLabel;
 	}
 
 	public void setNewPasswordField(PasswordField newPasswordField) {
-		this.repeatPasswordField = newPasswordField;
+		this.newPasswordField = newPasswordField;
+	}
+
+	public void setRepeatPasswordField(PasswordField repeatPasswordField) {
+		this.repeatPasswordField = repeatPasswordField;
+	}
+
+	public void setLabel(Label label) {
+		this.label = label;
 	}
 
 	public void setBorderPane(BorderPane borderPane) {
@@ -224,6 +232,14 @@ public class ChangePasswordDialogPane extends DialogPane {
 		this.general = general;
 	}
 
+	public void setSpace(VBox space) {
+		this.space = space;
+	}
+
+	public void setLabelVBox(VBox labelVBox) {
+		this.labelVBox = labelVBox;
+	}
+
 	public void setOkButtonType(ButtonType okButtonType) {
 		this.okButtonType = okButtonType;
 	}
@@ -232,41 +248,7 @@ public class ChangePasswordDialogPane extends DialogPane {
 		this.cancelButtonType = cancelButtonType;
 	}
 
-	public void setRepeatPasswordLabel(Label repeatPasswordLabel) {
-		this.repeatPasswordLabel = repeatPasswordLabel;
-	}
-
-	public void setRepeatPasswordField(PasswordField repeatPasswordField) {
-		this.repeatPasswordField = repeatPasswordField;
-	}
-
-	public Label getLabel() {
-		return label;
-	}
-
-	public VBox getSpace() {
-		return space;
-	}
-
-	public VBox getLabelVBox() {
-		return labelVBox;
-	}
-
-	public int getSPACING() {
-		return SPACING;
-	}
-
-	public void setLabel(Label label) {
-		this.label = label;
-	}
-
-	public void setSpace(VBox space) {
-		this.space = space;
-	}
-
-	public void setLabelVBox(VBox labelVBox) {
-		this.labelVBox = labelVBox;
-	}
+	
 	
 	
 	
