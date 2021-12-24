@@ -968,8 +968,8 @@ public class ToDoController implements Serializable {
 	  if (this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().length() >= 3
 				&& this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().length() <= 20) { 
 		  
-		  if (this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().getText()
-					 == this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText()) {
+		  if (this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().equals(
+					  this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().getText())) { 
 					  
 					  this.toDoView.getChangePasswordDialogPane().getLabel().setText("Passwort wurde geändert.");
 					  this.toDoView.getChangePasswordDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
@@ -1053,8 +1053,8 @@ public class ToDoController implements Serializable {
 	  if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() >= 3
 				&& this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() <= 20) { 
 		  
-		  if (this.loginView.getRegistrationDialogPane().getPasswordField().getText()
-					 == this.loginView.getRegistrationDialogPane().getRepeatPasswordField().getText()) {
+		  if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().equals(
+					 this.loginView.getRegistrationDialogPane().getRepeatPasswordField().getText())) {
 					  
 					  this.loginView.getRegistrationDialogPane().getLabel().setText("Passwort wurde geändert.");
 					  this.loginView.getRegistrationDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
@@ -1127,6 +1127,8 @@ public class ToDoController implements Serializable {
   }
   
   public void hidePassword(MouseEvent event) {
+	  
+	  this.loginView.getTooltip().setText("");
 	  
 	  this.loginView.getEyeVBox().getChildren().clear();
 	  this.loginView.getEyeVBox().getChildren().add(this.loginView.getHiddenEyeImage());
