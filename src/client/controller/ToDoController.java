@@ -1061,8 +1061,7 @@ public class ToDoController implements Serializable {
 					  this.loginView.getRegistrationDialogPane().getLabel().setTextFill(Color.web("#00B050"));
 					  					
 							
-					  String password = this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText();
-					  this.clientNetworkPlugin.changePassword(password);
+			
 					
 				 return true;
 				 
