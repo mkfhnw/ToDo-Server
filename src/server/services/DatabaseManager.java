@@ -364,6 +364,7 @@ public class DatabaseManager {
                 String priority = resultSet.getString("Priority");
                 String description = resultSet.getString("Description");
                 String dueDate = resultSet.getString("DueDate");
+                String category = resultSet.getString("Category");
 
                 // Parse out nulls
                 if(id != null && !id.equals("null")) { resultList.add(id); }
@@ -371,6 +372,7 @@ public class DatabaseManager {
                 if(priority != null && !priority.equals("null")) { resultList.add(priority); }
                 if(description != null && !description.equals("null")) { resultList.add(description); }
                 if(dueDate != null && !dueDate.equals("null")) { resultList.add(dueDate); }
+                if(category != null && !category.equals("null")) {resultList.add(category); }
             }
 
             // Return contents

@@ -431,7 +431,6 @@ public class ServerRunnable implements Runnable {
             }
         }
     }
-
     
     private void reactToGetToDo(Message clientMessage) {
 
