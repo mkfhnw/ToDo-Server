@@ -29,7 +29,10 @@ import javafx.util.Duration;
 import client.model.FocusTimerModel;
 import client.model.ToDo;
 import client.model.ToDoList;
+import server.services.InputValidator;
+
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +55,7 @@ public class ToDoController implements Serializable {
     private SearchBarView searchBarView;
     private final FocusTimerDialogPane dialog;
     private FocusTimerModel focusModel;
-    
+
     private LoginView loginView;
     private ClientNetworkPlugin clientNetworkPlugin;
 
@@ -93,10 +96,10 @@ public class ToDoController implements Serializable {
         // Add focus timer dialog and model 
         this.dialog = new FocusTimerDialogPane();
         this.focusModel = new FocusTimerModel(null);
-        
+
         // HowTo Menu EventHandling
         this.toDoView.getHowToItem().setOnAction(this::createHowTo);
-        
+
         // EventHandling for play, stop or replay How-To Video
         this.toDoView.getHowToDialogPane().getPlayButton().setOnMouseClicked(this::playMedia);
         this.toDoView.getHowToDialogPane().getStopButton().setOnMouseClicked(this::stopMedia);
@@ -110,18 +113,18 @@ public class ToDoController implements Serializable {
 
         // EventHandling to open ToDoApp
         this.loginView.getSignInButton().setOnMouseClicked(this::handleLogin);
-       
+
         // EventHandling for changing password
         this.toDoView.getChangePasswordItem().setOnAction(this::changePassword);
 
         // EventHandling to show Password and change Image
         this.loginView.getHiddenEyeImage().setOnMouseClicked(this::showPassword);
-        
+
         // EventHandling to hide Password and change Image
         this.loginView.getEyeImage().setOnMouseClicked(this::hidePassword);
-        
-        
-        
+
+
+
         // Instantiate barchart with utils
         Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(0.3), new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -138,7 +141,7 @@ public class ToDoController implements Serializable {
     }
 
 
-	// ---------------------------------- Classic Getters
+    // ---------------------------------- Classic Getters
     public ToDoView getToDoView() {
         return toDoView;
     }
@@ -176,15 +179,15 @@ public class ToDoController implements Serializable {
      * Needs input from ToDoView
      */
     public void createToDo(String title, String message, LocalDate dueDate, String category, String priorityString,
-            ArrayList<String> tags) {
-    	ToDo toDo = new ToDo(title, message, dueDate, category, priorityString, tags);
-    	this.toDoList.addToDo(toDo);
-    	this.toDoList.updateSublists();
+                           ArrayList<String> tags) {
+        ToDo toDo = new ToDo(title, message, dueDate, category, priorityString, tags);
+        this.toDoList.addToDo(toDo);
+        this.toDoList.updateSublists();
 
-    	// Send data to server
-    	this.clientNetworkPlugin.createToDo(toDo);
+        // Send data to server
+        this.clientNetworkPlugin.createToDo(toDo);
 
-}
+    }
 
     // CREATE Item overload method for missing dueDate
     private void createToDo(String title, String message, String category,
@@ -201,8 +204,8 @@ public class ToDoController implements Serializable {
      * Returns a ToDo based on its ID
      */
     public ToDo getToDo(int ID) {
-    	this.clientNetworkPlugin.getToDo(ID);
-    	return this.toDoList.getToDo(ID);
+        this.clientNetworkPlugin.getToDo(ID);
+        return this.toDoList.getToDo(ID);
 
     }
 
@@ -275,8 +278,8 @@ public class ToDoController implements Serializable {
         // Fetch ToDo item
         ToDo itemToRemove = this.toDoList.getToDo(ID);
         this.toDoList.removeToDo(itemToRemove);
-        
-        
+
+
     }
 
 
@@ -314,7 +317,7 @@ public class ToDoController implements Serializable {
         int ID = toDo.getID();
         this.clientNetworkPlugin.deleteToDo(ID);
         this.updateInstancedSublists();
-        
+
 
     }
 
@@ -375,7 +378,7 @@ public class ToDoController implements Serializable {
     // Takes the enter key instead of a mouseclick on the search button
     private void searchItemAndGenerateView(ActionEvent ae) {
 
-    	 // Fetch input
+        // Fetch input
         MainBarView midView = (MainBarView) this.getActiveMidView();
         String searchString = midView.getSearchField().getText();
 
@@ -493,7 +496,7 @@ public class ToDoController implements Serializable {
                 plannedBarView.getTableView().setOnMouseClicked(this::updateToDo);
                 linkTableViewListeners(plannedBarView.getTableView().getItems());
                 toDoView.getBorderPane().setCenter(plannedBarView);
-                
+
             }
             case 2 -> {
                 doneBarView = new DoneBarView(this.toDoList.getToDoListDone());
@@ -554,8 +557,8 @@ public class ToDoController implements Serializable {
         // We don't do default values for the project 2.0
         // Note that we need to update the stored variable as it is used for the validity check later
         // if (category == null) {
-            // this.toDoView.getToDoDialogPane().getCategoryComboBox().setValue("Geplant");
-            // category = this.toDoView.getToDoDialogPane().getCategoryComboBox().getValue();
+        // this.toDoView.getToDoDialogPane().getCategoryComboBox().setValue("Geplant");
+        // category = this.toDoView.getToDoDialogPane().getCategoryComboBox().getValue();
         // }
 
         // Parse priority - set default if non
@@ -637,8 +640,8 @@ public class ToDoController implements Serializable {
 
         this.toDoView.getAddToDoDialog().setTitle("Neue Aufgabe");
         Stage stage = (Stage) toDoView.getAddToDoDialog().getDialogPane().getScene().getWindow();
-		stage.getIcons().add(new Image(this.getClass().getResource("/common/resources/doneIcon4.png").toString()));
-		stage.resizableProperty().setValue(Boolean.TRUE);
+        stage.getIcons().add(new Image(this.getClass().getResource("/common/resources/doneIcon4.png").toString()));
+        stage.resizableProperty().setValue(Boolean.TRUE);
 
         // Set up event filter on OK-button to prevent dialog from closing when user input is not valid
         Button okButton = (Button) this.toDoView.getToDoDialogPane().lookupButton(this.toDoView.getToDoDialogPane().getOkButtonType());
@@ -712,20 +715,20 @@ public class ToDoController implements Serializable {
     // Open a new focus timer window
     public void createFocusTimer(MouseEvent e) {
 
-    	this.toDoView.getFocusTimerDialog().getModel().restart();
-    	this.toDoView.getFocusTimerDialog().getModel().stop();
+        this.toDoView.getFocusTimerDialog().getModel().restart();
+        this.toDoView.getFocusTimerDialog().getModel().stop();
 
-    	((FocusTimerDialogPane) this.toDoView.getFocusDialog().getDialogPane()).getPlayButton().setOnAction(a->{
-    	this.toDoView.getFocusTimerDialog().getModel().start();
-    	});
-    	((FocusTimerDialogPane) this.toDoView.getFocusDialog().getDialogPane()).getStopButton().setOnAction(a->{
-    	this.toDoView.getFocusTimerDialog().getModel().stop();
-    	});
-    	((FocusTimerDialogPane) this.toDoView.getFocusDialog().getDialogPane()).getReplayButton().setOnAction(a->{
-    	this.toDoView.getFocusTimerDialog().getModel().restart();
-    	});
-    	this.toDoView.getFocusDialog().showAndWait();
-    	}
+        ((FocusTimerDialogPane) this.toDoView.getFocusDialog().getDialogPane()).getPlayButton().setOnAction(a->{
+            this.toDoView.getFocusTimerDialog().getModel().start();
+        });
+        ((FocusTimerDialogPane) this.toDoView.getFocusDialog().getDialogPane()).getStopButton().setOnAction(a->{
+            this.toDoView.getFocusTimerDialog().getModel().stop();
+        });
+        ((FocusTimerDialogPane) this.toDoView.getFocusDialog().getDialogPane()).getReplayButton().setOnAction(a->{
+            this.toDoView.getFocusTimerDialog().getModel().restart();
+        });
+        this.toDoView.getFocusDialog().showAndWait();
+    }
 
     /*
      * Depending on which date filter (ComboBox) the user choosed,
@@ -806,332 +809,351 @@ public class ToDoController implements Serializable {
                 main.getTableView().getItems().clear();
                 main.getTableView().getItems().addAll(observableListToday);
             }
-            
+
         }
     }
 
     public void playTimer(MouseEvent event) {
-    	focusModel.start();
+        focusModel.start();
     }
-    
+
     public void stopTimer(MouseEvent event) {
-    	focusModel.stop();
+        focusModel.stop();
     }
-    
+
     public void replayTimer(MouseEvent event) {
-    	focusModel.restart();
+        focusModel.restart();
     }
 
     // Open a new focus timer window
     public void createHowTo(ActionEvent event) {
-    		  
+
         // show dialog
         this.toDoView.getHowToDialog().showAndWait();
-	  	this.toDoView.getHowToDialogPane().getMediaPlayer().stop();
-        
-        
+        this.toDoView.getHowToDialogPane().getMediaPlayer().stop();
+
+
         // If ButtonType "beenden" is clicked, stop the Video
         if (toDoView.getHowToDialogPane().getCloseButtonType().getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE) {
- 		   
- 		   toDoView.getHowToDialogPane().getMediaPlayer().stop();  
+
+            toDoView.getHowToDialogPane().getMediaPlayer().stop();
+        }
     }
-  }
-  
+
     // Plays HowTo video
     public void playMedia(MouseEvent event) {
-	  
-	  this.toDoView.getHowToDialogPane().getMediaPlayer().play();
-  }
-  
+
+        this.toDoView.getHowToDialogPane().getMediaPlayer().play();
+    }
+
     //Stops HowTo video
     public void stopMedia(MouseEvent event) {
-	  
-	  this.toDoView.getHowToDialogPane().getMediaPlayer().pause();
-	  
-  }
+
+        this.toDoView.getHowToDialogPane().getMediaPlayer().pause();
+
+    }
 
     //Replays HowTo video
     public void replayMedia(MouseEvent event) {
-	  
-	  this.toDoView.getHowToDialogPane().getMediaPlayer().stop();
-	  
-  }
-  
- /*
-  * Parses login data and checks if ok.
-  * If ok, the App will open,
-  * if not ok, Alert Box will open.
-  */
-  public void handleLogin(MouseEvent event) {
-	  	
-	String emailLogin = loginView.getUserField().getText();
-  	String passwordLogin = loginView.getPasswordField().getText();
-  	
-  	boolean result = this.clientNetworkPlugin.login(emailLogin, passwordLogin);
 
-  	if (result) {
-  		Platform.runLater(() -> {
-  		this.stage.setScene(scene2);
-  		stage.resizableProperty().setValue(Boolean.TRUE);
-  		//send ListToDo request to server
-  		//receive ArrayList with ToDoID's for the user
-  		ArrayList <String> resultList = this.clientNetworkPlugin.listToDos();
-  		
-  		//go through the list and send a getToDo request for each ID
-  		
-  		for (String ID : resultList) {
-  			int intID = Integer.parseInt(ID);
-  			
-  			ArrayList<String> itemData = this.clientNetworkPlugin.getToDo(intID);
-  			String title = itemData.get(1);
-  			String priority = itemData.get(2);
-  			String description = itemData.get(3);
-  			
-  			LocalDate dueDate = null;
-  			if (itemData.get(4) != null) {
-  				String dueDateAsString = itemData.get(4);
-  				dueDate = LocalDate.parse(dueDateAsString);
-  				//Constructor needed which supports no dueDate
-  			}
-  			
-  			//create a ToDo object out of every getToDo result
-  			ToDo toDo = new ToDo(title, priority, description, dueDate);
-  			
-  		}
-  		
-  		 /* add the ToDo object to the toDoList
-  		 * NOTE: if category of object is null -> add it to plannedBarView
-  		 */
-  		
-  		stage.show();
-  		});
-  	} else {
-  		
-  		 this.loginView.getLabel().setText("Anmeldung fehlgeschlagen - Benutzername oder Passwort ist ungültig!");
-		 this.loginView.getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
-		 this.loginView.getLabel().setTextFill(Color.web("#C00000"));
-  	}
+        this.toDoView.getHowToDialogPane().getMediaPlayer().stop();
 
-  }
-  
+    }
+
+    /*
+     * Parses login data and checks if ok.
+     * If ok, the App will open,
+     * if not ok, Alert Box will open.
+     */
+    public void handleLogin(MouseEvent event) {
+
+        String emailLogin = loginView.getUserField().getText();
+        String passwordLogin = loginView.getPasswordField().getText();
+
+        boolean result = this.clientNetworkPlugin.login(emailLogin, passwordLogin);
+
+        if (result) {
+            Platform.runLater(() -> {
+                this.stage.setScene(scene2);
+                stage.resizableProperty().setValue(Boolean.TRUE);
+                //send ListToDo request to server
+                //receive ArrayList with ToDoID's for the user
+                ArrayList <String> resultList = this.clientNetworkPlugin.listToDos();
+
+                //go through the list and send a getToDo request for each ID
+
+                for (String ID : resultList) {
+                    int intID = Integer.parseInt(ID);
+
+                    ArrayList<String> itemData = this.clientNetworkPlugin.getToDo(intID);
 
 
-  
-  
-  public void logout(MouseEvent event) {
-	// ALARMDIALOG?
-	
-	  boolean result = this.clientNetworkPlugin.logout();
-	  
-	  //if user logged out, show LoginView again
-	  if (result) {
-		  this.stage.close();
-		  this.stage.setScene(scene1);
-		  stage.resizableProperty().setValue(Boolean.FALSE);
-		  this.stage.show();
-	  }
-	  
-	  // Close App & back to LoginView (scene1)
-	  
-	  }
-  
-  public void changePassword(ActionEvent event) {
-	  
-			
-			this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().clear();
-			this.toDoView.getChangePasswordDialogPane().getNewPasswordField().clear();
-			this.toDoView.getChangePasswordDialogPane().getLabel().setText("");
-			Button okButton = (Button) this.toDoView.getChangePasswordDialogPane().lookupButton(this.toDoView.getChangePasswordDialogPane().getOkButtonType());
-			okButton.addEventFilter(ActionEvent.ACTION,
-					e -> {
-						if(!validateChangedPassword()) {
-							e.consume();
-						}
-					});
-			
-			toDoView.getChangePasswordDialog().showAndWait();		
-			
-		}
-  
-  /*
-   * Checks if the changed password has between 3 and 20 characters and if the passwords are similar
-   * if OK, OK,
-   * if NOT OK, the label for "failed" will appear. 
-   */
-  public boolean validateChangedPassword() {
-	  
-	  
-	  if (this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().length() >= 3
-				&& this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().length() <= 20) { 
-		  
-		  if (this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().equals(
-					  this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().getText())) { 
-					  
-					  this.toDoView.getChangePasswordDialogPane().getLabel().setText("Passwort wurde geändert.");
-					  this.toDoView.getChangePasswordDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
-					  this.toDoView.getChangePasswordDialogPane().getLabel().setTextFill(Color.web("#00B050"));
-					  					
-							
-					  String password = this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText();
-					  this.clientNetworkPlugin.changePassword(password);
-					
-				 return true;
-				 
-				 
-		  } else {
-			  
-			  this.toDoView.getChangePasswordDialogPane().getLabel().setText("Passwörter stimmen nicht überein!");
-			  this.toDoView.getChangePasswordDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
-			  this.toDoView.getChangePasswordDialogPane().getLabel().setTextFill(Color.web("#C00000"));
-			  
-			  return false;
-			  
-		  }
-		  
-	  } else {
-						  
-		  		this.toDoView.getChangePasswordDialogPane().getLabel().setText("Das Passwort muss zwischen 3 und 20 Zeichen lang sein.");
-		  		this.toDoView.getChangePasswordDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
-		  		this.toDoView.getChangePasswordDialogPane().getLabel().setTextFill(Color.web("#C00000"));
-						 
-				return false;
-				
-			 }
-	  
-	  
-	  
-  }
- 
-  
-  public void openRegistration(MouseEvent event) {
-	  
-		// show dialog
-	  
-	    this.loginView.getRegistrationDialogPane().getEmailField().clear();
-	    this.loginView.getRegistrationDialogPane().getRepeatPasswordField().clear();
-	    this.loginView.getRegistrationDialogPane().getPasswordField().clear();
-	    this.loginView.getRegistrationDialogPane().getLabel().setText("");
-	    
-	    registerAccount();
-	    this.loginView.getRegistrationDialog().showAndWait();  
-  }
-  
-  public void registerAccount() {
-	  
-	// Set up event filter on OK-button to prevent dialog from closing when user input is not valid
-      Button okButton = (Button) this.loginView.getRegistrationDialogPane().lookupButton(this.loginView.getRegistrationDialogPane().getOkButtonType());
-      okButton.addEventFilter(ActionEvent.ACTION,
-              event -> {
-            	  //Validation is not working right, you can create a user with a password that does not matches the requirements
-            	  //the registrationView closes anyway, even if password incorrect -> needs to be fixed
-                  if (!validatePassword()) {
-                	  event.consume();
-                	  
-                      
-                  } else {
-                	  boolean result = getNewAccount();
-                	  if (result) {
-                    	  Platform.runLater(() -> {
-                    	  		this.stage.setScene(scene1);
-                    	  		stage.resizableProperty().setValue(Boolean.FALSE);
-                    	  		stage.show();
-                    	  		});    		
-                      }
-                  }
-              });
 
-	  
-  }
+                    String title = itemData.get(1);
+                    String priority = itemData.get(2);
+                    String description = itemData.get(3);
 
-  public boolean validatePassword() {
-	  
-	  if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() >= 3
-				&& this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() <= 20) { 
-		  
-		  if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().equals(
-					 this.loginView.getRegistrationDialogPane().getRepeatPasswordField().getText())) {
-					  
-					  this.loginView.getRegistrationDialogPane().getLabel().setText("Passwort wurde geändert.");
-					  this.loginView.getRegistrationDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
-					  this.loginView.getRegistrationDialogPane().getLabel().setTextFill(Color.web("#00B050"));
-					  					
-							
-			
-					
-				 return true;
-				 
-				 
-		  } else {
-			  
-			  this.loginView.getRegistrationDialogPane().getLabel().setText("Passwörter stimmen nicht überein!");
-			  this.loginView.getRegistrationDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
-			  this.loginView.getRegistrationDialogPane().getLabel().setTextFill(Color.web("#C00000"));
-			  
-			  return false;
-			  
-		  }
-		  
-	  } else {
-						  
-		  		this.loginView.getRegistrationDialogPane().getLabel().setText("Das Passwort muss zwischen 3 und 20 Zeichen lang sein.");
-		  		this.loginView.getRegistrationDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
-		  		this.loginView.getRegistrationDialogPane().getLabel().setTextFill(Color.web("#C00000"));
-						 
-				return false;
-				
-			 }
-	    
-  }
-  
-  public boolean getNewAccount() {
-	  
-	String emailCreateLogin = this.loginView.getRegistrationDialogPane().getEmailField().getText();
-  	String passwordCreateLogin = this.loginView.getRegistrationDialogPane().getPasswordField().getText();
-  	
-  	boolean result = this.clientNetworkPlugin.createLogin(emailCreateLogin, passwordCreateLogin);
-  	return result;
-  	
-  }
-  
-  
-  
-  public void showPassword(MouseEvent event) {
-	 
-	  
-	  this.loginView.getEyeVBox().getChildren().clear();
-	  this.loginView.getEyeVBox().getChildren().add(this.loginView.getEyeImage());
-	  
-	  
-	  this.loginView.getPasswordField().setOnKeyTyped(e -> {
+                    LocalDate dueDate = null;
+                    if (itemData.get(4) != null) {
+                        String dueDateAsString = itemData.get(4);
+                        dueDate = LocalDate.parse(dueDateAsString);
+                        //Constructor needed which supports no dueDate
+                    }
 
-		  Point2D p = this.loginView.getPasswordField().localToScene(
-			  	  this.loginView.getPasswordField().getBoundsInLocal().getMaxX(), 
-			  	  this.loginView.getPasswordField().getBoundsInLocal().getMaxY());
-	  
-		  this.loginView.getTooltip().setText(this.loginView.getPasswordField().getText());
-		  this.loginView.getTooltip().show(this.loginView.getPasswordField(),
-				  p.getX() + stage.getScene().getX() + stage.getX(),
-				  p.getY() + stage.getScene().getY() + stage.getY());
-		  
-		  }
-	  );
-	  
-	  
-	 
-  }
-  
-  public void hidePassword(MouseEvent event) {
-	  
-	  this.loginView.getTooltip().setText("");
-	  
-	  this.loginView.getEyeVBox().getChildren().clear();
-	  this.loginView.getEyeVBox().getChildren().add(this.loginView.getHiddenEyeImage());
-	  
-	  this.loginView.getTooltip().hide();
-	  
-	  
-  }
-  
+                    //create a ToDo object out of every getToDo result
+                    ToDo toDo = new ToDo(title, priority, description, dueDate);
+
+                }
+
+                /* add the ToDo object to the toDoList
+                 * NOTE: if category of object is null -> add it to plannedBarView
+                 */
+
+                stage.show();
+            });
+        } else {
+
+            this.loginView.getLabel().setText("Anmeldung fehlgeschlagen - Benutzername oder Passwort ist ungültig!");
+            this.loginView.getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+            this.loginView.getLabel().setTextFill(Color.web("#C00000"));
+        }
+
+    }
+
+
+    // Method to parse Instance of Model out of message string
+    public ToDo parseItemFromMessageString(ArrayList<String> itemData) {
+        ToDo returnItem = null;
+
+        // Grab fixed components
+        String title = itemData.get(1);
+        String priority = itemData.get(2);
+        String description = null;
+        String dueDate = null;
+        String category = null;
+
+        // Parse dynamic parts
+        InputValidator inputValidator = new InputValidator();
+
+
+        return returnItem;
+    }
+
+
+    public void logout(MouseEvent event) {
+        // ALARMDIALOG?
+
+        boolean result = this.clientNetworkPlugin.logout();
+
+        //if user logged out, show LoginView again
+        if (result) {
+            this.stage.close();
+            this.stage.setScene(scene1);
+            stage.resizableProperty().setValue(Boolean.FALSE);
+            this.stage.show();
+        }
+
+        // Close App & back to LoginView (scene1)
+
+    }
+
+    public void changePassword(ActionEvent event) {
+
+
+        this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().clear();
+        this.toDoView.getChangePasswordDialogPane().getNewPasswordField().clear();
+        this.toDoView.getChangePasswordDialogPane().getLabel().setText("");
+        Button okButton = (Button) this.toDoView.getChangePasswordDialogPane().lookupButton(this.toDoView.getChangePasswordDialogPane().getOkButtonType());
+        okButton.addEventFilter(ActionEvent.ACTION,
+                e -> {
+                    if(!validateChangedPassword()) {
+                        e.consume();
+                    }
+                });
+
+        toDoView.getChangePasswordDialog().showAndWait();
+
+    }
+
+    /*
+     * Checks if the changed password has between 3 and 20 characters and if the passwords are similar
+     * if OK, OK,
+     * if NOT OK, the label for "failed" will appear.
+     */
+    public boolean validateChangedPassword() {
+
+
+        if (this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().length() >= 3
+                && this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().length() <= 20) {
+
+            if (this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().equals(
+                    this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().getText())) {
+
+                this.toDoView.getChangePasswordDialogPane().getLabel().setText("Passwort wurde geändert.");
+                this.toDoView.getChangePasswordDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+                this.toDoView.getChangePasswordDialogPane().getLabel().setTextFill(Color.web("#00B050"));
+
+
+                String password = this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText();
+                this.clientNetworkPlugin.changePassword(password);
+
+                return true;
+
+
+            } else {
+
+                this.toDoView.getChangePasswordDialogPane().getLabel().setText("Passwörter stimmen nicht überein!");
+                this.toDoView.getChangePasswordDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+                this.toDoView.getChangePasswordDialogPane().getLabel().setTextFill(Color.web("#C00000"));
+
+                return false;
+
+            }
+
+        } else {
+
+            this.toDoView.getChangePasswordDialogPane().getLabel().setText("Das Passwort muss zwischen 3 und 20 Zeichen lang sein.");
+            this.toDoView.getChangePasswordDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+            this.toDoView.getChangePasswordDialogPane().getLabel().setTextFill(Color.web("#C00000"));
+
+            return false;
+
+        }
+
+
+
+    }
+
+
+    public void openRegistration(MouseEvent event) {
+
+        // show dialog
+
+        this.loginView.getRegistrationDialogPane().getEmailField().clear();
+        this.loginView.getRegistrationDialogPane().getRepeatPasswordField().clear();
+        this.loginView.getRegistrationDialogPane().getPasswordField().clear();
+        this.loginView.getRegistrationDialogPane().getLabel().setText("");
+
+        registerAccount();
+        this.loginView.getRegistrationDialog().showAndWait();
+    }
+
+    public void registerAccount() {
+
+        // Set up event filter on OK-button to prevent dialog from closing when user input is not valid
+        Button okButton = (Button) this.loginView.getRegistrationDialogPane().lookupButton(this.loginView.getRegistrationDialogPane().getOkButtonType());
+        okButton.addEventFilter(ActionEvent.ACTION,
+                event -> {
+                    //Validation is not working right, you can create a user with a password that does not matches the requirements
+                    //the registrationView closes anyway, even if password incorrect -> needs to be fixed
+                    if (!validatePassword()) {
+                        event.consume();
+
+
+                    } else {
+                        boolean result = getNewAccount();
+                        if (result) {
+                            Platform.runLater(() -> {
+                                this.stage.setScene(scene1);
+                                stage.resizableProperty().setValue(Boolean.FALSE);
+                                stage.show();
+                            });
+                        }
+                    }
+                });
+
+
+    }
+
+    public boolean validatePassword() {
+
+        if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() >= 3
+                && this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() <= 20) {
+
+            if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().equals(
+                    this.loginView.getRegistrationDialogPane().getRepeatPasswordField().getText())) {
+
+                this.loginView.getRegistrationDialogPane().getLabel().setText("Passwort wurde geändert.");
+                this.loginView.getRegistrationDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+                this.loginView.getRegistrationDialogPane().getLabel().setTextFill(Color.web("#00B050"));
+
+
+
+
+                return true;
+
+
+            } else {
+
+                this.loginView.getRegistrationDialogPane().getLabel().setText("Passwörter stimmen nicht überein!");
+                this.loginView.getRegistrationDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+                this.loginView.getRegistrationDialogPane().getLabel().setTextFill(Color.web("#C00000"));
+
+                return false;
+
+            }
+
+        } else {
+
+            this.loginView.getRegistrationDialogPane().getLabel().setText("Das Passwort muss zwischen 3 und 20 Zeichen lang sein.");
+            this.loginView.getRegistrationDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+            this.loginView.getRegistrationDialogPane().getLabel().setTextFill(Color.web("#C00000"));
+
+            return false;
+
+        }
+
+    }
+
+    public boolean getNewAccount() {
+
+        String emailCreateLogin = this.loginView.getRegistrationDialogPane().getEmailField().getText();
+        String passwordCreateLogin = this.loginView.getRegistrationDialogPane().getPasswordField().getText();
+
+        boolean result = this.clientNetworkPlugin.createLogin(emailCreateLogin, passwordCreateLogin);
+        return result;
+
+    }
+
+
+
+    public void showPassword(MouseEvent event) {
+
+
+        this.loginView.getEyeVBox().getChildren().clear();
+        this.loginView.getEyeVBox().getChildren().add(this.loginView.getEyeImage());
+
+
+        this.loginView.getPasswordField().setOnKeyTyped(e -> {
+
+                    Point2D p = this.loginView.getPasswordField().localToScene(
+                            this.loginView.getPasswordField().getBoundsInLocal().getMaxX(),
+                            this.loginView.getPasswordField().getBoundsInLocal().getMaxY());
+
+                    this.loginView.getTooltip().setText(this.loginView.getPasswordField().getText());
+                    this.loginView.getTooltip().show(this.loginView.getPasswordField(),
+                            p.getX() + stage.getScene().getX() + stage.getX(),
+                            p.getY() + stage.getScene().getY() + stage.getY());
+
+                }
+        );
+
+
+
+    }
+
+    public void hidePassword(MouseEvent event) {
+
+        this.loginView.getTooltip().setText("");
+
+        this.loginView.getEyeVBox().getChildren().clear();
+        this.loginView.getEyeVBox().getChildren().add(this.loginView.getHiddenEyeImage());
+
+        this.loginView.getTooltip().hide();
+
+
+    }
+
 
 
 }

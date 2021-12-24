@@ -354,7 +354,7 @@ public class DatabaseManager {
 
             // Grab item from database and parse out contents
             ArrayList<String> resultList = new ArrayList<>();
-            String queryString = "SELECT ToDo_ID, Title, Priority, Description, DueDate FROM main.Items WHERE ToDo_ID=" + idString;
+            String queryString = "SELECT ToDo_ID, Title, Priority, Description, DueDate, Category FROM main.Items WHERE ToDo_ID=" + idString;
             ResultSet resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
 
