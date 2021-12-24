@@ -907,7 +907,7 @@ public class ToDoController implements Serializable {
   		});
   	} else {
   		
-  		 this.loginView.getLabel().setText("Anmeldung fehlgeschlagen - Benutzername ist ungültig!");
+  		 this.loginView.getLabel().setText("Anmeldung fehlgeschlagen - Benutzername oder Passwort ist ungültig!");
 		 this.loginView.getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
 		 this.loginView.getLabel().setTextFill(Color.web("#C00000"));
   	}
