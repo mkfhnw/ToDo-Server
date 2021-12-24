@@ -19,7 +19,7 @@ public class ToDoList {
 	private final ObservableList<ToDo> plannedList = FXCollections.observableArrayList();
 	private final ObservableList<ToDo> doneList = FXCollections.observableArrayList();
 	private final ObservableList<ToDo> garbageList = FXCollections.observableArrayList();
-	
+
 	//potential list to separate categorys between done ToDo-Objects and undone
 	//protected static ArrayList<String> categoryListDoneObjects = new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class ToDoList {
 	public ArrayList <ToDo> getToDoList(){
 		return this.toDoList;
 	}
-	
+
 	//retrieves a specific ToDo object from the toDoList
 	public ToDo getToDo(int ID) {
 		ToDo returnVal = null;
@@ -60,22 +60,29 @@ public class ToDoList {
 		this.toDoList.add(toDo);
 
 		// Adding the ToDo to a subset, depending on its category.
-		switch(toDo.getCategory()) {
-			case "Wichtig":
-				this.importantList.add(toDo);
-				break;
-			case "Geplant":
-				this.plannedList.add(toDo);
-				break;
-			case "Erledigt":
-				this.doneList.add(toDo);
-				break;
-			case "Papierkorb":
-				this.garbageList.add(toDo);
-				break;
-			case "":
-				this.plannedList.add(toDo);
+		if(toDo.getCategory() != null ) {
+			switch(toDo.getCategory()) {
+				case "Wichtig":
+					this.importantList.add(toDo);
+					break;
+				case "Geplant":
+					this.plannedList.add(toDo);
+					break;
+				case "Erledigt":
+					this.doneList.add(toDo);
+					break;
+				case "Papierkorb":
+					this.garbageList.add(toDo);
+					break;
+				case "":
+					this.plannedList.add(toDo);
+					break;
+				default:
+					this.plannedList.add(toDo);
+			}
 
+		} else {
+			this.plannedList.add(toDo);
 		}
 
 	}
@@ -105,12 +112,18 @@ public class ToDoList {
 		this.garbageList.clear();
 
 		for(ToDo toDo : this.toDoList) {
-			switch (toDo.getCategory()) {
-				case "Wichtig" -> { this.importantList.add(toDo); this.plannedList.add(toDo); }
-				case "Geplant" -> this.plannedList.add(toDo);
-				case "Erledigt" -> this.doneList.add(toDo);
-				case "Papierkorb" -> this.garbageList.add(toDo);
+			if(toDo.getCategory() != null) {
+				switch (toDo.getCategory()) {
+					case "Wichtig" -> { this.importantList.add(toDo); this.plannedList.add(toDo); }
+					case "Geplant" -> this.plannedList.add(toDo);
+					case "Erledigt" -> this.doneList.add(toDo);
+					case "Papierkorb" -> this.garbageList.add(toDo);
+					default -> this.plannedList.add(toDo);
+				}
+			} else {
+				this.plannedList.add(toDo);
 			}
+
 		}
 	}
 
@@ -129,10 +142,10 @@ public class ToDoList {
 	}
 
 	public ArrayList<ToDo> searchLocalToday() {
-		
+
 		LocalDate now = LocalDate.now();
-		
-		ArrayList<ToDo> returnToday = new ArrayList<>();	
+
+		ArrayList<ToDo> returnToday = new ArrayList<>();
 		for(ToDo toDo : this.toDoList) {
 			if (toDo.getDueDate().equals(now)) {
 				returnToday.add(toDo);
@@ -140,31 +153,31 @@ public class ToDoList {
 		}
 		return returnToday;
 	}
-	
-	public void removeToDo(ToDo toDo) { 
+
+	public void removeToDo(ToDo toDo) {
 		this.toDoList.remove(toDo);
 		ToDo.globalToDoId -= 1;
 		ToDoList.categoryList.remove(toDo.getCategory());
 
 		// Delete item from all sublists
 
-		
+
 	}
 	public int getNumberOfCategoryTypes() {
 		HashSet<String> uniqueValues = new HashSet<>(ToDoList.categoryList);
 		int uniqueTypes = uniqueValues.size();
 		return uniqueTypes;
-		
+
 	}
-		
+
 	public int getDoneNumber() {
-		int doneCount = 0;		
+		int doneCount = 0;
 		for (String category : ToDoList.categoryList) {
 			if(category.equals("Erledigt")) {
 				doneCount++;
 			}
 		}
-		return doneCount;		
+		return doneCount;
 	}
 
 	// Get subsets of toDos

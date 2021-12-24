@@ -214,7 +214,9 @@ public class ClientNetworkPlugin {
 	            ArrayList<String> createToDoData = new ArrayList<>();
 	            createToDoData.add(toDo.getTitle());
 	            createToDoData.add(toDo.getPriority().toString());
-	            if (toDo.getMessage() != null) { createToDoData.add(toDo.getMessage()); }
+	            if (toDo.getMessage() != null && !toDo.getMessage().equals("") && !toDo.getMessage().equals(" ")) {
+					createToDoData.add(toDo.getMessage());
+				}
 	            if (toDo.getDueDate() != null) { createToDoData.add(toDo.getDueDate().toString()); }
 				if (toDo.getCategory() != null) { createToDoData.add(toDo.getCategory()); }
 	            

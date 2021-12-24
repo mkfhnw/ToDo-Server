@@ -886,22 +886,9 @@ public class ToDoController implements Serializable {
                     int intID = Integer.parseInt(ID);
 
                     ArrayList<String> itemData = this.clientNetworkPlugin.getToDo(intID);
-
-
-
-                    String title = itemData.get(1);
-                    String priority = itemData.get(2);
-                    String description = itemData.get(3);
-
-                    LocalDate dueDate = null;
-                    if (itemData.get(4) != null) {
-                        String dueDateAsString = itemData.get(4);
-                        dueDate = LocalDate.parse(dueDateAsString);
-                        //Constructor needed which supports no dueDate
-                    }
-
-                    //create a ToDo object out of every getToDo result
-                    ToDo toDo = new ToDo(title, priority, description, dueDate);
+                    ToDo item = this.parseItemFromMessageString(itemData);
+                    this.toDoList.addToDo(item);
+                    this.updateInstancedSublists();
 
                 }
 
@@ -920,12 +907,11 @@ public class ToDoController implements Serializable {
 
     }
 
-
     // Method to parse Instance of Model out of message string
     public ToDo parseItemFromMessageString(ArrayList<String> itemData) {
         ToDo returnItem = null;
 
-        // Grab fixed components
+        // Grab fixed components & set ambiguous components to null
         String title = itemData.get(1);
         String priority = itemData.get(2);
         String description = null;
@@ -935,10 +921,72 @@ public class ToDoController implements Serializable {
         // Parse dynamic parts
         InputValidator inputValidator = new InputValidator();
 
+        // Loop through data parts and figure out ambiguous parameters
+        if (itemData.size() >= 3) {
+            int dataPartsLength = itemData.size();
+            for (String ambiguousParameter : itemData.subList(3, dataPartsLength)) {
+                String parameterType = inputValidator.getParameterType(ambiguousParameter);
+                switch (parameterType) {
 
+                    case "Category" -> {
+                        category = ambiguousParameter;
+                    }
+                    case "Description" -> {
+                        description = ambiguousParameter;
+                    }
+                    case "DueDate" -> {
+                        dueDate = ambiguousParameter;
+                    }
+                    case "Undefined" -> {
+                        return null;
+                    }
+                }
+            }
+        }
+
+        // Create new Item
+
+        // 3 missing parameters
+        if(description == null && dueDate == null && category == null) {
+            return new ToDo(title, priority);
+        }
+
+        // Missing 2 parameters
+        // Missing dueDate and category
+        if(description != null && dueDate == null && category == null) {
+            return new ToDo(title, priority, description);
+        }
+
+        // Missing description and category
+        if(description == null && dueDate != null && category == null) {
+            return new ToDo(title, priority, dueDate);
+        }
+
+        // Missing description and dueDate
+        if(description == null && dueDate == null && category != null) {
+            return new ToDo(title, priority, category);
+        }
+
+        // Missing 1 parameter
+        // Missing category
+        if(description != null && dueDate != null && category == null) {
+            return new ToDo(title, priority, description, dueDate);
+        }
+
+        // Missing dueDate
+        if(description != null && dueDate == null && category != null) {
+            return new ToDo(title, priority, description, category);
+        }
+
+        // Missing description
+        if(description == null && dueDate != null && category != null) {
+            return new ToDo(title, priority, dueDate, category);
+        }
+
+        // No missing parameters
+        returnItem = new ToDo(title, priority, description, dueDate, category);
         return returnItem;
     }
-
 
     public void logout(MouseEvent event) {
         // ALARMDIALOG?
