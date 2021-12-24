@@ -107,7 +107,7 @@ public class ToDoController implements Serializable {
 
         // EventHandling for registration
         this.loginView.getRegisterButton().setOnMouseClicked(this::openRegistration);
-        
+
         // EventHandling to open ToDoApp
         this.loginView.getSignInButton().setOnMouseClicked(this::handleLogin);
        
