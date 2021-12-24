@@ -937,7 +937,7 @@ public class ToDoController implements Serializable {
   
   public void changePassword(ActionEvent event) {
 	  
-			toDoView.getChangePasswordDialog().showAndWait();
+			//toDoView.getChangePasswordDialog().showAndWait();
 			System.out.println("1");
 			this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().clear();
 			this.toDoView.getChangePasswordDialogPane().getNewPasswordField().clear();
@@ -953,7 +953,7 @@ public class ToDoController implements Serializable {
 						}
 					});
 			
-						
+			toDoView.getChangePasswordDialog().showAndWait();		
 			
 		}
   
@@ -1011,14 +1011,14 @@ public class ToDoController implements Serializable {
 	  
 		// show dialog
 	  
-	    this.loginView.getRegistrationDialog().showAndWait();
+	    //this.loginView.getRegistrationDialog().showAndWait();
 	    this.loginView.getRegistrationDialogPane().getEmailField().clear();
 	    this.loginView.getRegistrationDialogPane().getRepeatPasswordField().clear();
 	    this.loginView.getRegistrationDialogPane().getPasswordField().clear();
 	    this.loginView.getRegistrationDialogPane().getLabel().setText("");
 	    
 	    registerAccount();
-	      
+	    this.loginView.getRegistrationDialog().showAndWait();  
   }
   
   public void registerAccount() {
