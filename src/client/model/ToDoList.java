@@ -87,6 +87,38 @@ public class ToDoList {
 
 	}
 
+	public void addAll(ArrayList<ToDo> toDoList) {
+		for(ToDo item : toDoList) {
+			this.toDoList.add(item);
+
+			// Adding the ToDo to a subset, depending on its category.
+			if(item.getCategory() != null ) {
+				switch(item.getCategory()) {
+					case "Wichtig":
+						this.importantList.add(item);
+						break;
+					case "Geplant":
+						this.plannedList.add(item);
+						break;
+					case "Erledigt":
+						this.doneList.add(item);
+						break;
+					case "Papierkorb":
+						this.garbageList.add(item);
+						break;
+					case "":
+						this.plannedList.add(item);
+						break;
+					default:
+						this.plannedList.add(item);
+				}
+
+			} else {
+				this.plannedList.add(item);
+			}
+		}
+	}
+
 	// By updating an item we don't change the global ID counter
 	public void updateToDo(ToDo oldItem, ToDo newItem) {
 		for(ToDo item : this.toDoList) {

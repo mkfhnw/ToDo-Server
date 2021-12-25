@@ -33,11 +33,11 @@ public class ClientNetworkPlugin {
     public ClientNetworkPlugin() {
 
 		// This try-catch / thread.sleep is only because my laptop isn't able to spin up the server fast enough..
-		try {
-			Thread.sleep(3000);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+//		try {
+//			Thread.sleep(3000);
+//		} catch (Exception e) {
+//			System.out.println(e.getMessage());
+//		}
 
 
         try {

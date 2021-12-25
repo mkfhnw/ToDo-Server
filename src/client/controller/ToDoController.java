@@ -1,7 +1,7 @@
 package client.controller;
 
 import client.ClientNetworkPlugin;
-import client.model.Priority;
+import client.model.*;
 import client.view.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -26,9 +26,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import client.model.FocusTimerModel;
-import client.model.ToDo;
-import client.model.ToDoList;
 import server.services.InputValidator;
 
 import java.io.Serializable;
@@ -37,6 +34,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class ToDoController implements Serializable {
 
@@ -58,6 +59,7 @@ public class ToDoController implements Serializable {
 
     private LoginView loginView;
     private ClientNetworkPlugin clientNetworkPlugin;
+    private ExecutorService executorService;
 
     // Constructor
     public ToDoController(ToDoView toDoView, ToDo toDo, ToDoList toDoList, Stage stage, Scene scene2,
@@ -73,6 +75,7 @@ public class ToDoController implements Serializable {
         this.focusModel = focusModel;
 
         this.clientNetworkPlugin = new ClientNetworkPlugin();
+        this.executorService = Executors.newFixedThreadPool(3);
 
         // Load items from database
         this.toDoList.updateSublists();
@@ -709,7 +712,6 @@ public class ToDoController implements Serializable {
 
 
 
-
     // ---------------------------------- Focus timer methods
 
     // Open a new focus timer window
@@ -873,31 +875,32 @@ public class ToDoController implements Serializable {
         boolean result = this.clientNetworkPlugin.login(emailLogin, passwordLogin);
 
         if (result) {
+
+            // Grab Items from database
+            // Grab all IDs from database and split them across 3 sublists
+            ArrayList <String> resultList = this.clientNetworkPlugin.listToDos();
+
+            // Make the calls in a separate thread to not block the UI
+            LoadTasksCallable loadTasksCallable_1 = new LoadTasksCallable(resultList, this.clientNetworkPlugin);
+            Future<ArrayList<ToDo>> future_1 = this.executorService.submit(loadTasksCallable_1);
+
+            // Update UI
             Platform.runLater(() -> {
                 this.stage.setScene(scene2);
                 stage.resizableProperty().setValue(Boolean.TRUE);
-                //send ListToDo request to server
-                //receive ArrayList with ToDoID's for the user
-                ArrayList <String> resultList = this.clientNetworkPlugin.listToDos();
 
-                //go through the list and send a getToDo request for each ID
-
-                for (String ID : resultList) {
-                    int intID = Integer.parseInt(ID);
-
-                    ArrayList<String> itemData = this.clientNetworkPlugin.getToDo(intID);
-                    ToDo item = this.parseItemFromMessageString(itemData);
-                    this.toDoList.addToDo(item);
-                    this.updateInstancedSublists();
-
+                ArrayList<ToDo> addList_1 = new ArrayList<>();
+                try {
+                    addList_1 = future_1.get();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
                 }
 
-                /* add the ToDo object to the toDoList
-                 * NOTE: if category of object is null -> add it to plannedBarView
-                 */
-
+                this.toDoList.addAll(addList_1);
+                this.updateInstancedSublists();
                 stage.show();
-            });
+            }
+            );
         } else {
 
             this.loginView.getLabel().setText("Anmeldung fehlgeschlagen - Benutzername oder Passwort ist ungültig!");
@@ -1072,7 +1075,6 @@ public class ToDoController implements Serializable {
 
     }
 
-
     public void openRegistration(MouseEvent event) {
 
         // show dialog
@@ -1162,8 +1164,6 @@ public class ToDoController implements Serializable {
         return result;
 
     }
-
-
 
     public void showPassword(MouseEvent event) {
 

@@ -601,8 +601,14 @@ public class ToDo {
 	public void setCategory(String category) {
 
 		// Remove old category
-		String oldCategory = this.getCategory();
-		this.categories.remove(oldCategory);
+		if (this.getCategory() != null) {
+			String oldCategory = this.getCategory();
+			this.categories.remove(oldCategory);
+		}
+
+		if(this.categories == null) {
+			this.categories = new ArrayList<>();
+		}
 
 		// If category is set on 'done' or 'deleted', remove all other categories since those states are absolute
 		if(category.equals("Erledigt") || category.equals("Papierkorb")) {

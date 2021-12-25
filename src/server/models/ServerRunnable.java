@@ -579,7 +579,4 @@ public class ServerRunnable implements Runnable {
         return clientMessage.getDataParts().get(1);
     }
 
-	public String getTrueResult() {
-		return trueResult;
-	}
 }
