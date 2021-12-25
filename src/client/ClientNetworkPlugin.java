@@ -39,11 +39,7 @@ public class ClientNetworkPlugin {
 //			System.out.println(e.getMessage());
 //		}
 
-
-
         System.out.println("[CLIENT] New ToDoClient created.");
-        
-
     }
 
 	// Public method to connect to server
@@ -170,6 +166,8 @@ public class ClientNetworkPlugin {
 
                 // Parse response result
                 result = Boolean.parseBoolean(responseLogin.getMessageParts().get(1));
+				System.out.println("[NETWORK-PLUGIN] User logged out, shutting down socket connection.");
+				this.clientSocket.close();
         	
         	} catch (Exception e){
         		System.out.println("[NETWORK-PLUGIN] Exception: " + e.getMessage());
@@ -224,7 +222,8 @@ public class ClientNetworkPlugin {
 					createToDoData.add(toDo.getMessage());
 				}
 	            if (toDo.getDueDate() != null) { createToDoData.add(toDo.getDueDate().toString()); }
-				if (toDo.getCategory() != null) { createToDoData.add(toDo.getCategory()); }
+				if (toDo.getCategory() != null && !toDo.getCategory().equals("") && !toDo.getCategory().equals(" ")) {
+					createToDoData.add(toDo.getCategory()); }
 	            
 	            sendMessage("CREATE_TODO", createToDoData, this.token);
 	            

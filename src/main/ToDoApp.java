@@ -76,7 +76,8 @@ public class ToDoApp extends Application {
 
 		// Kill all items that are marked as garbage
 		ArrayList<ToDo> garbageList = this.toDoController.getToDoList().getGarbageList();
-
+		System.gc();
+		System.exit(130);
 
 	}
 	
