@@ -195,6 +195,16 @@ public class ToDoList {
 
 
 	}
+
+	public void clearLists() {
+		this.toDoList.clear();
+		this.plannedList.clear();
+		this.doneList.clear();
+		this.garbageList.clear();
+		this.importantList.clear();
+		categoryList.clear();
+	}
+
 	public int getNumberOfCategoryTypes() {
 		HashSet<String> uniqueValues = new HashSet<>(ToDoList.categoryList);
 		int uniqueTypes = uniqueValues.size();

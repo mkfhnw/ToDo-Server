@@ -75,7 +75,7 @@ public class ToDoController implements Serializable {
         this.focusModel = focusModel;
 
         this.clientNetworkPlugin = new ClientNetworkPlugin();
-        this.executorService = Executors.newFixedThreadPool(3);
+
 
         // Load items from database
         this.toDoList.updateSublists();
@@ -869,12 +869,20 @@ public class ToDoController implements Serializable {
      */
     public void handleLogin(MouseEvent event) {
 
+        // Set up connection
+        this.clientNetworkPlugin.connect("localhost", 50002);
+        this.executorService = Executors.newFixedThreadPool(3);
+
         String emailLogin = loginView.getUserField().getText();
         String passwordLogin = loginView.getPasswordField().getText();
 
         boolean result = this.clientNetworkPlugin.login(emailLogin, passwordLogin);
 
         if (result) {
+
+            // Clear lists
+            this.toDoList.clearLists();
+            this.updateInstancedSublists();
 
             // Grab Items from database
             // Grab all IDs from database and split them across 3 sublists
@@ -883,6 +891,7 @@ public class ToDoController implements Serializable {
             // Make the calls in a separate thread to not block the UI
             LoadTasksCallable loadTasksCallable_1 = new LoadTasksCallable(resultList, this.clientNetworkPlugin);
             Future<ArrayList<ToDo>> future_1 = this.executorService.submit(loadTasksCallable_1);
+            this.executorService.shutdown();
 
             // Update UI
             Platform.runLater(() -> {

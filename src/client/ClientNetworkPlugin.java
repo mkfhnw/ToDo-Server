@@ -40,17 +40,23 @@ public class ClientNetworkPlugin {
 //		}
 
 
-        try {
-            this.clientSocket = new Socket("localhost", this.PORT);
-            this.inputReader = this.getInputReader(this.clientSocket);
-            this.outputWriter = this.getOutputWriter(this.clientSocket);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+
         System.out.println("[CLIENT] New ToDoClient created.");
         
 
     }
+
+	// Public method to connect to server
+	public void connect(String IP, int port) {
+		try {
+			this.clientSocket = new Socket(IP, port);
+			this.inputReader = this.getInputReader(this.clientSocket);
+			this.outputWriter = this.getOutputWriter(this.clientSocket);
+			System.out.println("[CLIENT] ToDo-Client connected to server");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 
     // Private helper methods to keep constructor clean of try/catch-clauses
     private BufferedReader getInputReader(Socket clientSocket) {
