@@ -868,6 +868,16 @@ public class ToDoController implements Serializable {
      * if not ok, Alert Box will open.
      */
     public void handleLogin(MouseEvent event) {
+    	
+    	/*
+    	 * If the password is not hidden, it will change to hidden
+    	 * when the user clicks on Login. We need this for the Login-Connection
+    	 */
+    	this.loginView.getPasswordField().setText(this.loginView.getShowedPasswordField().getText());
+         
+        this.loginView.getPasswordFieldVBox().getChildren().clear();
+        this.loginView.getPasswordFieldVBox().getChildren().add(this.loginView.getPasswordField());
+    	
 
         // Set up connection
         this.clientNetworkPlugin.connect("localhost", 50002);
@@ -916,7 +926,7 @@ public class ToDoController implements Serializable {
             this.loginView.getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
             this.loginView.getLabel().setTextFill(Color.web("#C00000"));
         }
-
+        
     }
 
     // Method to parse Instance of Model out of message string
@@ -1179,35 +1189,29 @@ public class ToDoController implements Serializable {
 
         this.loginView.getEyeVBox().getChildren().clear();
         this.loginView.getEyeVBox().getChildren().add(this.loginView.getEyeImage());
-
-
-        this.loginView.getPasswordField().setOnKeyTyped(e -> {
-
-                    Point2D p = this.loginView.getPasswordField().localToScene(
-                            this.loginView.getPasswordField().getBoundsInLocal().getMaxX(),
-                            this.loginView.getPasswordField().getBoundsInLocal().getMaxY());
-
-                    this.loginView.getTooltip().setText(this.loginView.getPasswordField().getText());
-                    this.loginView.getTooltip().show(this.loginView.getPasswordField(),
-                            p.getX() + stage.getScene().getX() + stage.getX(),
-                            p.getY() + stage.getScene().getY() + stage.getY());
-
-                }
-        );
-
-
+        
+        this.loginView.getShowedPasswordField().setText(this.loginView.getPasswordField().getText());
+        
+        this.loginView.getPasswordFieldVBox().getChildren().clear();
+        this.loginView.getPasswordFieldVBox().getChildren().add(this.loginView.getShowedPasswordField());
 
     }
 
     public void hidePassword(MouseEvent event) {
 
-        this.loginView.getTooltip().setText("");
+//        this.loginView.getTooltip().setText("");
 
         this.loginView.getEyeVBox().getChildren().clear();
         this.loginView.getEyeVBox().getChildren().add(this.loginView.getHiddenEyeImage());
 
-        this.loginView.getTooltip().hide();
+//        this.loginView.getTooltip().hide();
 
+        this.loginView.getPasswordField().setText(this.loginView.getShowedPasswordField().getText());
+        
+        this.loginView.getPasswordFieldVBox().getChildren().clear();
+        this.loginView.getPasswordFieldVBox().getChildren().add(this.loginView.getPasswordField());
+        
+        
 
     }
 

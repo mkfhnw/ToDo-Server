@@ -28,6 +28,7 @@ public class LoginView extends BorderPane {
 	private Label passwordLabel;
 	private TextField userField;
 	private PasswordField passwordField;
+	private TextField showedPasswordField;
 	private Button signInButton;
 	private Button registerButton;
 	private Label changePassword;
@@ -37,8 +38,6 @@ public class LoginView extends BorderPane {
 	private ImageView hiddenEyeImage;
 	
 	private Label label;
-	
-	private Tooltip tooltip;
 	
 	private VBox userVBox;
 	private VBox passwordVBox;
@@ -101,7 +100,7 @@ public class LoginView extends BorderPane {
 	
 	this.userField = new TextField();
 	this.userField.setPromptText("email@outlook.com");
-	this.userField.setMaxWidth(228);
+	this.userField.setMaxWidth(283);
 	this.userField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	
 	this.passwordField = new PasswordField();
@@ -109,25 +108,24 @@ public class LoginView extends BorderPane {
 	this.passwordField.setMaxWidth(300);
 	this.passwordField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	
+	this.showedPasswordField = new TextField();
+	this.showedPasswordField.setPromptText("Passwort");
+	this.showedPasswordField.setMaxWidth(300);
+	this.showedPasswordField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
+	
 	this.signInButton = new Button("Anmelden");
-	this.signInButton.setPrefSize(200, 50);
+	this.signInButton.setPrefSize(300, 50);
 	this.signInButton.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.signInButton.setTextFill(Color.web("#181C54"));
 	
 	this.registerButton = new Button("Registrieren");
-	this.registerButton.setPrefSize(200, 50);
+	this.registerButton.setPrefSize(300, 50);
 	this.registerButton.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.registerButton.setTextFill(Color.web("#181C54"));
 	
 	this.changePassword = new Label("Passwort vergessen?");
 	this.changePassword.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	this.changePassword.setTextFill(Color.web("#181C54"));
-	
-	
-	this.tooltip = new Tooltip();
-	this.tooltip.setShowDelay(Duration.ZERO);
-	this.tooltip.setAutoHide(true);
-	this.tooltip.setMinWidth(50);
 	
 	// Layout
 
@@ -147,7 +145,7 @@ public class LoginView extends BorderPane {
 	this.passwordFieldVBox = new VBox();
 	this.passwordFieldVBox.getChildren().add(passwordField);
 	this.passwordFieldVBox.setPrefWidth(250);
-	this.passwordFieldVBox.setPadding(new Insets(0.0, 0.0, 0.0, 24.0));
+	this.passwordFieldVBox.setPadding(new Insets(0.0, -34.0, 0.0, -2.0));
 	this.passwordFieldVBox.setAlignment(Pos.CENTER);
 	
 	this.eyeVBox = new VBox();
@@ -183,6 +181,8 @@ public class LoginView extends BorderPane {
 	this.setTop(imageVBox);
 	this.setCenter(loginVBox);
 	this.setBottom(buttonVBox);
+	
+	this.setPrefSize(500, 450);
 	
 	// Create and costumize Registration Dialog
 	this.registrationDialog = new Dialog<ButtonType>();
@@ -484,13 +484,13 @@ public class LoginView extends BorderPane {
 	}
 
 
-	public Tooltip getTooltip() {
-		return tooltip;
+	public TextField getShowedPasswordField() {
+		return showedPasswordField;
 	}
 
 
-	public void setTooltip(Tooltip tooltip) {
-		this.tooltip = tooltip;
+	public void setShowedPasswordField(TextField showedPasswordField) {
+		this.showedPasswordField = showedPasswordField;
 	}
 	
 
