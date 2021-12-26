@@ -123,6 +123,9 @@ public class ToDoController implements Serializable {
         // EventHandling CheckBox to show and hide changed password
         this.toDoView.getChangePasswordDialogPane().getShowPassword().setOnAction(this::showHideChangedPassword);
 
+        // EventHandling CheckBox to show and hide passwords in registration
+        this.loginView.getRegistrationDialogPane().getShowPassword().setOnAction(this::showHideRegistrationPW);
+        
         // Instantiate barchart with utils
         Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(0.3), new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -1254,6 +1257,50 @@ public class ToDoController implements Serializable {
         	}
 
     }
+    
+    public void showHideRegistrationPW(ActionEvent event) {
+    	
+    	if (this.loginView.getRegistrationDialogPane().getShowPassword().isSelected()) {
+      		 
+    		this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().clear();
+    		this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().clear();
+     
+    		this.loginView.getRegistrationDialogPane().getPasswordTextField().setText(
+    				this.loginView.getRegistrationDialogPane().getPasswordField().getText());
+    	    
+    		this.loginView.getRegistrationDialogPane().getRepeatTextField().setText(
+    				this.loginView.getRegistrationDialogPane().getRepeatPasswordField().getText());
+    		
+    		this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().addAll(
+    				this.loginView.getRegistrationDialogPane().getPasswordLabel(), 
+    				this.loginView.getRegistrationDialogPane().getPasswordTextField());
+
+    		this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().addAll(
+    				this.loginView.getRegistrationDialogPane().getRepeatPasswordLabel(), 
+    				this.loginView.getRegistrationDialogPane().getRepeatTextField());
+    	} else {
+    		
+    		this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().clear();
+    		this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().clear();
+     
+    		this.loginView.getRegistrationDialogPane().getPasswordField().setText(
+    				this.loginView.getRegistrationDialogPane().getPasswordTextField().getText());
+    	    
+    		this.loginView.getRegistrationDialogPane().getRepeatPasswordField().setText(
+    				this.loginView.getRegistrationDialogPane().getRepeatTextField().getText());
+    		
+    		this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().addAll(
+    				this.loginView.getRegistrationDialogPane().getPasswordLabel(), 
+    				this.loginView.getRegistrationDialogPane().getPasswordField());
+
+    		this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().addAll(
+    				this.loginView.getRegistrationDialogPane().getRepeatPasswordLabel(), 
+    				this.loginView.getRegistrationDialogPane().getRepeatPasswordField());
+    	    
+    	}
+    	
+    }
+    
     
 
 }

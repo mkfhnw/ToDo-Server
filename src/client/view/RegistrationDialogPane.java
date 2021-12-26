@@ -2,6 +2,7 @@ package client.view;
 
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -22,8 +23,12 @@ public class RegistrationDialogPane extends DialogPane {
 	private TextField emailField;
 	private Label passwordLabel;
 	private PasswordField passwordField;
+	private TextField passwordTextField;
 	private Label repeatPasswordLabel;
 	private PasswordField repeatPasswordField;
+	private TextField repeatTextField;
+	
+	private CheckBox showPassword;
 	
 	// Layout
 	private BorderPane borderPane;
@@ -32,9 +37,9 @@ public class RegistrationDialogPane extends DialogPane {
 	private HBox repeatPasswordPane;
 	private VBox header;
 	private VBox vBox;
+	private HBox showPasswordHBox; 
 	private VBox space;
 	private VBox labelVBox;
-
 	
 	// Buttontypes for DialogPane
 	private ButtonType okButtonType;
@@ -90,6 +95,18 @@ public class RegistrationDialogPane extends DialogPane {
 	this.repeatPasswordField.setPrefWidth(SIZE_TEXTFIELDS);
 	this.repeatPasswordField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	
+	this.passwordTextField = new TextField();
+	this.passwordTextField.setPromptText("Passwort");
+	this.passwordTextField.setPrefWidth(SIZE_TEXTFIELDS);
+	this.passwordTextField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
+	
+	this.repeatTextField = new TextField();
+	this.repeatTextField.setPromptText("Passwort wiederholen");
+	this.repeatTextField.setPrefWidth(SIZE_TEXTFIELDS);
+	this.repeatTextField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
+	
+	this.showPassword = new CheckBox("Passwörter zeigen");
+	
 	// Layout
 	this.borderPane = new BorderPane();
 	this.emailPane = new HBox(SPACING_EMAIL);
@@ -98,6 +115,7 @@ public class RegistrationDialogPane extends DialogPane {
 	this.header = new VBox(SPACING_HEADER);
 	this.vBox = new VBox(SPACING);
 	this.space = new VBox(SPACING);
+	this.showPasswordHBox = new HBox();
 	this.labelVBox = new VBox();
 	
 	// Add Fields to Layout
@@ -105,6 +123,7 @@ public class RegistrationDialogPane extends DialogPane {
 	this.emailPane.getChildren().addAll(emailLabel, emailField);
 	this.passwordPane.getChildren().addAll(passwordLabel, passwordField);
 	this.repeatPasswordPane.getChildren().addAll(repeatPasswordLabel, repeatPasswordField);
+	this.showPasswordHBox.getChildren().add(showPassword);
 	this.labelVBox.getChildren().add(label);
 	this.vBox.getChildren().addAll(
 			header,
@@ -112,6 +131,7 @@ public class RegistrationDialogPane extends DialogPane {
 			emailPane, 
 			passwordPane,
 			repeatPasswordPane,
+			showPasswordHBox,
 			labelVBox);
 	
 	this.borderPane.setTop(header);
@@ -294,6 +314,38 @@ public class RegistrationDialogPane extends DialogPane {
 
 	public void setCancelButtonType(ButtonType cancelButtonType) {
 		this.cancelButtonType = cancelButtonType;
+	}
+
+	public TextField getPasswordTextField() {
+		return passwordTextField;
+	}
+
+	public TextField getRepeatTextField() {
+		return repeatTextField;
+	}
+
+	public void setPasswordTextField(TextField passwordTextField) {
+		this.passwordTextField = passwordTextField;
+	}
+
+	public void setRepeatTextField(TextField repeatTextField) {
+		this.repeatTextField = repeatTextField;
+	}
+
+	public CheckBox getShowPassword() {
+		return showPassword;
+	}
+
+	public HBox getShowPasswordHBox() {
+		return showPasswordHBox;
+	}
+
+	public void setShowPassword(CheckBox showPassword) {
+		this.showPassword = showPassword;
+	}
+
+	public void setShowPasswordHBox(HBox showPasswordHBox) {
+		this.showPasswordHBox = showPasswordHBox;
 	}
 
 
