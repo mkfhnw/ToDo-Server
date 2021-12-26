@@ -6,18 +6,14 @@ import client.view.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -27,9 +23,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import server.services.InputValidator;
-
 import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +120,8 @@ public class ToDoController implements Serializable {
         // EventHandling to hide Password and change Image
         this.loginView.getEyeImage().setOnMouseClicked(this::hidePassword);
 
-
+        // EventHandling CheckBox to show and hide changed password
+        this.toDoView.getChangePasswordDialogPane().getShowPassword().setOnAction(this::showHideChangedPassword);
 
         // Instantiate barchart with utils
         Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(0.3), new EventHandler<ActionEvent>() {
@@ -873,10 +868,14 @@ public class ToDoController implements Serializable {
     	 * If the password is not hidden, it will change to hidden
     	 * when the user clicks on Login. We need this for the Login-Connection
     	 */
-    	this.loginView.getPasswordField().setText(this.loginView.getShowedPasswordField().getText());
-         
-        this.loginView.getPasswordFieldVBox().getChildren().clear();
-        this.loginView.getPasswordFieldVBox().getChildren().add(this.loginView.getPasswordField());
+    	
+    	if (this.loginView.getPasswordFieldVBox().getChildren().contains(this.loginView.getShowedPasswordField())) {
+    		
+    		this.loginView.getPasswordField().setText(this.loginView.getShowedPasswordField().getText());
+            
+            this.loginView.getPasswordFieldVBox().getChildren().clear();
+            this.loginView.getPasswordFieldVBox().getChildren().add(this.loginView.getPasswordField());
+    	}
     	
 
         // Set up connection
@@ -1020,6 +1019,8 @@ public class ToDoController implements Serializable {
             this.stage.close();
             this.stage.setScene(scene1);
             stage.resizableProperty().setValue(Boolean.FALSE);
+            this.loginView.getUserField().setText("");
+            this.loginView.getPasswordField().setText("");
             this.stage.show();
         }
 
@@ -1027,8 +1028,7 @@ public class ToDoController implements Serializable {
 
     }
 
-    public void changePassword(ActionEvent event) {
-
+    public void changePassword(ActionEvent event) {    	
 
         this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().clear();
         this.toDoView.getChangePasswordDialogPane().getNewPasswordField().clear();
@@ -1210,12 +1210,51 @@ public class ToDoController implements Serializable {
         
         this.loginView.getPasswordFieldVBox().getChildren().clear();
         this.loginView.getPasswordFieldVBox().getChildren().add(this.loginView.getPasswordField());
-        
-        
+    }
+    
+    public void showHideChangedPassword(ActionEvent event) {
+    		
+    		if (this.toDoView.getChangePasswordDialogPane().getShowPassword().isSelected()) {
+       		 
+        		this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().clear();
+        		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().clear();
+         
+        		this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField().setText(
+        				this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText());
+        	    
+        		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordTextField().setText(
+        				this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().getText());
+        		
+        	    this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().addAll(
+        	    		this.toDoView.getChangePasswordDialogPane().getNewPasswordLabel(), 
+        	    		this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField());
+
+        	    this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().addAll(
+        	    		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordLabel(), 
+        	    		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordTextField());
+        	} else {
+        		
+        		this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().clear();
+        		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().clear();
+         
+        		this.toDoView.getChangePasswordDialogPane().getNewPasswordField().setText(
+        				this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField().getText());
+        	    
+        		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().setText(
+        				this.toDoView.getChangePasswordDialogPane().getRepeatPasswordTextField().getText());
+        		
+        	    this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().addAll(
+        	    		this.toDoView.getChangePasswordDialogPane().getNewPasswordLabel(), 
+        	    		this.toDoView.getChangePasswordDialogPane().getNewPasswordField());
+
+        	    this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().addAll(
+        	    		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordLabel(), 
+        	    		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField());
+        	    
+        	}
 
     }
-
-
+    
 
 }
 

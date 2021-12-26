@@ -58,6 +58,7 @@ public class ToDoView extends BorderPane {
 		private Menu settings;
 		private Menu help;
 		private MenuBar menuBar;
+		
 		private ImageView imageSetting;
 		private ImageView imageHelp;
 		private ImageView imageChangePassword;
@@ -227,7 +228,7 @@ public class ToDoView extends BorderPane {
 			this.changePasswordDialogPane = new ChangePasswordDialogPane();
 			this.changePasswordDialog.setDialogPane(changePasswordDialogPane);
 			
-			this.changePasswordDialog.initModality(Modality.NONE);
+			this.changePasswordDialog.initModality(Modality.APPLICATION_MODAL);
 			
 
 

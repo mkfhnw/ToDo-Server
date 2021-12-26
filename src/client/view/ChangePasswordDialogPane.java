@@ -2,10 +2,12 @@ package client.view;
 
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -24,6 +26,9 @@ public class ChangePasswordDialogPane extends DialogPane {
 	
 	private PasswordField newPasswordField;
 	private PasswordField repeatPasswordField;
+	private TextField newPasswordTextField;
+	private TextField repeatPasswordTextField;
+	private CheckBox showPassword;
 	
 	private Label label;
 	
@@ -31,11 +36,12 @@ public class ChangePasswordDialogPane extends DialogPane {
 	
 	private BorderPane borderPane;
 	private VBox header;
-	private HBox oldPassword;
-	private HBox newPassword;
+	private HBox newPasswordHBox;
+	private HBox repeatPasswordHBox;
 	private VBox general;
 	private VBox space;
 	private VBox labelVBox;
+	private HBox showPasswordHBox;
 	
 	// Buttontypes for DialogPane
 	private ButtonType okButtonType;
@@ -79,21 +85,35 @@ public class ChangePasswordDialogPane extends DialogPane {
 	this.label.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.label.setTextFill(Color.web("#181C54"));
 	
+	this.newPasswordTextField = new TextField();
+	this.newPasswordTextField.setPromptText("Passwort wiederholen");
+	this.newPasswordTextField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
+	this.newPasswordTextField.setPrefWidth(SIZE_TEXTFIELDS);
+	
+	this.repeatPasswordTextField = new TextField();
+	this.repeatPasswordTextField.setPromptText("Neues Passwort bestätigen");
+	this.repeatPasswordTextField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
+	this.repeatPasswordTextField.setPrefWidth(SIZE_TEXTFIELDS);
+	
+	
 	// Layout
 	this.borderPane = new BorderPane();
 	this.header = new VBox(SPACING);
 	this.space = new VBox(SPACING);
-	this.oldPassword = new HBox(SPACING_NEWPASSWORD);
-	this.newPassword = new HBox(SPACING_REPEATPASSWORD);
+	this.newPasswordHBox = new HBox(SPACING_NEWPASSWORD);
+	this.repeatPasswordHBox = new HBox(SPACING_REPEATPASSWORD);
 	this.labelVBox = new VBox();
+	this.showPasswordHBox = new HBox();
+	this.showPassword = new CheckBox("Passwörter anzeigen");
 	this.general = new VBox(SPACING);
 	
 	// Add Fields to Layout
 	this.header.getChildren().add(title);
-	this.oldPassword.getChildren().addAll(newPasswordLabel, newPasswordField);
-	this.newPassword.getChildren().addAll(repeatPasswordLabel, repeatPasswordField);
+	this.newPasswordHBox.getChildren().addAll(newPasswordLabel, newPasswordField);
+	this.repeatPasswordHBox.getChildren().addAll(repeatPasswordLabel, repeatPasswordField);
 	this.labelVBox.getChildren().add(label);
-	this.general.getChildren().addAll(space, oldPassword, newPassword, label);
+	this.showPasswordHBox.getChildren().addAll(showPassword);
+	this.general.getChildren().addAll(space, newPasswordHBox, repeatPasswordHBox, showPasswordHBox, label);
 	
 	this.borderPane.setTop(header);
 	this.borderPane.setCenter(general);
@@ -109,10 +129,7 @@ public class ChangePasswordDialogPane extends DialogPane {
     // set content and text for content
 	this.setContentText("Passwort ändern");
 	
-	this.setContent(borderPane);
-	
-	
-		
+	this.setContent(borderPane);		
 		
 	}
 
@@ -136,6 +153,18 @@ public class ChangePasswordDialogPane extends DialogPane {
 		return repeatPasswordField;
 	}
 
+	public TextField getNewPasswordTextField() {
+		return newPasswordTextField;
+	}
+
+	public TextField getRepeatPasswordTextField() {
+		return repeatPasswordTextField;
+	}
+
+	public CheckBox getShowPassword() {
+		return showPassword;
+	}
+
 	public Label getLabel() {
 		return label;
 	}
@@ -144,12 +173,12 @@ public class ChangePasswordDialogPane extends DialogPane {
 		return borderPane;
 	}
 
-	public HBox getOldPassword() {
-		return oldPassword;
+	public HBox getNewPasswordHBox() {
+		return newPasswordHBox;
 	}
 
-	public HBox getNewPassword() {
-		return newPassword;
+	public HBox getRepeatPasswordHBox() {
+		return repeatPasswordHBox;
 	}
 
 	public VBox getGeneral() {
@@ -162,6 +191,10 @@ public class ChangePasswordDialogPane extends DialogPane {
 
 	public VBox getLabelVBox() {
 		return labelVBox;
+	}
+
+	public HBox getShowPasswordHBox() {
+		return showPasswordHBox;
 	}
 
 	public ButtonType getOkButtonType() {
@@ -208,6 +241,18 @@ public class ChangePasswordDialogPane extends DialogPane {
 		this.repeatPasswordField = repeatPasswordField;
 	}
 
+	public void setNewPasswordTextField(TextField newPasswordTextField) {
+		this.newPasswordTextField = newPasswordTextField;
+	}
+
+	public void setRepeatPasswordTextField(TextField repeatPasswordTextField) {
+		this.repeatPasswordTextField = repeatPasswordTextField;
+	}
+
+	public void setShowPassword(CheckBox showPassword) {
+		this.showPassword = showPassword;
+	}
+
 	public void setLabel(Label label) {
 		this.label = label;
 	}
@@ -216,16 +261,12 @@ public class ChangePasswordDialogPane extends DialogPane {
 		this.borderPane = borderPane;
 	}
 
-	public void setHeader(VBox header) {
-		this.header = header;
+	public void setNewPasswordHBox(HBox newPasswordHBox) {
+		this.newPasswordHBox = newPasswordHBox;
 	}
 
-	public void setOldPassword(HBox oldPassword) {
-		this.oldPassword = oldPassword;
-	}
-
-	public void setNewPassword(HBox newPassword) {
-		this.newPassword = newPassword;
+	public void setRepeatPasswordHBox(HBox repeatPasswordHBox) {
+		this.repeatPasswordHBox = repeatPasswordHBox;
 	}
 
 	public void setGeneral(VBox general) {
@@ -240,6 +281,10 @@ public class ChangePasswordDialogPane extends DialogPane {
 		this.labelVBox = labelVBox;
 	}
 
+	public void setShowPasswordHBox(HBox showPasswordHBox) {
+		this.showPasswordHBox = showPasswordHBox;
+	}
+
 	public void setOkButtonType(ButtonType okButtonType) {
 		this.okButtonType = okButtonType;
 	}
@@ -248,9 +293,6 @@ public class ChangePasswordDialogPane extends DialogPane {
 		this.cancelButtonType = cancelButtonType;
 	}
 
-	
-	
-	
 	
 	
 	
