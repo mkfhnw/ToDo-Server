@@ -54,7 +54,7 @@ public class LoginView extends BorderPane {
 	private HBox signInRegister;
 	
 	// Spacings
-    private final int SPACING_BUTTON_VBOX = 20;
+    private final int SPACING_BUTTON_VBOX = 30;
     private final int SPACING_LOGIN_VBOX = 15;
     private final int SPACING_IMAGE_VBOX = 20;
     private final int SPACING = 20;
@@ -114,12 +114,12 @@ public class LoginView extends BorderPane {
 	this.showedPasswordField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	
 	this.signInButton = new Button("Anmelden");
-	this.signInButton.setPrefSize(300, 50);
+	this.signInButton.setPrefSize(320, 60);
 	this.signInButton.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.signInButton.setTextFill(Color.web("#181C54"));
 	
 	this.registerButton = new Button("Registrieren");
-	this.registerButton.setPrefSize(300, 50);
+	this.registerButton.setPrefSize(320, 60);
 	this.registerButton.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.registerButton.setTextFill(Color.web("#181C54"));
 	
@@ -182,7 +182,7 @@ public class LoginView extends BorderPane {
 	this.setCenter(loginVBox);
 	this.setBottom(buttonVBox);
 	
-	this.setPrefSize(500, 450);
+	this.setPrefSize(650, 450);
 	
 	// Create and costumize Registration Dialog
 	this.registrationDialog = new Dialog<ButtonType>();
