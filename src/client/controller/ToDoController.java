@@ -109,7 +109,7 @@ public class ToDoController implements Serializable {
         this.loginView.getRegisterButton().setOnMouseClicked(this::openRegistration);
 
         // EventHandling to open ToDoApp
-        this.loginView.getSignInButton().setOnMouseClicked(this::handleLogin);
+        this.loginView.getSignInButton().setOnAction(this::handleLogin);
 
         // EventHandling for changing password
         this.toDoView.getChangePasswordItem().setOnAction(this::changePassword);
@@ -865,7 +865,7 @@ public class ToDoController implements Serializable {
      * If ok, the App will open,
      * if not ok, Alert Box will open.
      */
-    public void handleLogin(MouseEvent event) {
+    public void handleLogin(ActionEvent event) {
     	
     	/*
     	 * If the password is not hidden, it will change to hidden

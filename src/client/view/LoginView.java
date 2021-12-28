@@ -117,6 +117,7 @@ public class LoginView extends BorderPane {
 	this.signInButton.setPrefSize(325, 60);
 	this.signInButton.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.signInButton.setTextFill(Color.web("#181C54"));
+	this.signInButton.setDefaultButton(true);
 	
 	this.registerButton = new Button("Registrieren");
 	this.registerButton.setPrefSize(325, 60);
