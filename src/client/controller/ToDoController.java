@@ -1099,15 +1099,19 @@ public class ToDoController implements Serializable {
 
     public void openRegistration(MouseEvent event) {
 
-        // show dialog
+        // Build connection to server
+//         this.clientNetworkPlugin.connect("localhost", 50002);
 
+        // show dialog
         this.loginView.getRegistrationDialogPane().getEmailField().clear();
         this.loginView.getRegistrationDialogPane().getRepeatPasswordField().clear();
         this.loginView.getRegistrationDialogPane().getPasswordField().clear();
         this.loginView.getRegistrationDialogPane().getLabel().setText("");
 
+
         registerAccount();
         this.loginView.getRegistrationDialog().showAndWait();
+//        this.clientNetworkPlugin.disconnect();
     }
 
     public void registerAccount() {

@@ -54,6 +54,14 @@ public class ClientNetworkPlugin {
 		}
 	}
 
+	public void disconnect() {
+		try {
+			this.clientSocket.close();
+		} catch (Exception e) {
+			System.out.println("[CLIENT] Cannot close socket.");
+		}
+	}
+
     // Private helper methods to keep constructor clean of try/catch-clauses
     private BufferedReader getInputReader(Socket clientSocket) {
         try {
