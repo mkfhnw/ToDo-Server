@@ -23,15 +23,12 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import server.services.InputValidator;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class ToDoController implements Serializable {
 
@@ -128,7 +125,7 @@ public class ToDoController implements Serializable {
 
         // EventHandling CheckBox to show and hide passwords in registration
         this.loginView.getRegistrationDialogPane().getShowPassword().setOnAction(this::showHideRegistrationPW);
-        
+
         // Instantiate barchart with utils
         Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(0.3), new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -149,30 +146,39 @@ public class ToDoController implements Serializable {
     public ToDoView getToDoView() {
         return toDoView;
     }
+
     public ToDo getToDo() {
         return toDo;
     }
+
     public ToDoList getToDoList() {
         return toDoList;
     }
+
     public ImportantBarView getImportantBarView() {
         return importantBarView;
     }
+
     public GarbageBarView getGarbageBarView() {
         return garbageBarView;
     }
+
     public PlannedBarView getPlannedBarView() {
         return plannedBarView;
     }
+
     public DoneBarView getDoneBarView() {
         return doneBarView;
     }
+
     public SearchBarView getSearchBarView() {
         return searchBarView;
     }
+
     public FocusTimerDialogPane getDialog() {
         return dialog;
     }
+
     public FocusTimerModel getModel() {
         return focusModel;
     }
@@ -581,7 +587,9 @@ public class ToDoController implements Serializable {
         // Validate date
         boolean dateIsValid = false;
         LocalDate paneDate = null;
-        if(!dueDateString.equals("")) { paneDate = LocalDate.parse(dueDateString); }
+        if (!dueDateString.equals("")) {
+            paneDate = LocalDate.parse(dueDateString);
+        }
         if (dueDateString.equals("") || paneDate.compareTo(LocalDate.now()) >= 0) {
             dateIsValid = true;
         }
@@ -687,9 +695,11 @@ public class ToDoController implements Serializable {
                 String[] tagArray = tags.replaceAll("\\s", "").split(";");
                 ArrayList<String> tagArrayList = new ArrayList<String>(List.of(tagArray));
 
-                if (category == null) { category = ""; }
+                if (category == null) {
+                    category = "";
+                }
 
-                if(dueDateString != null && !dueDateString.equals("")) {
+                if (dueDateString != null && !dueDateString.equals("")) {
                     this.createToDo(title, message, LocalDate.parse(dueDateString), category, priorityString, tagArrayList);
                 } else {
                     this.createToDo(title, message, category, priorityString, tagArrayList);
@@ -712,7 +722,6 @@ public class ToDoController implements Serializable {
     }
 
 
-
     // ---------------------------------- Focus timer methods
 
     // Open a new focus timer window
@@ -721,13 +730,13 @@ public class ToDoController implements Serializable {
         this.toDoView.getFocusTimerDialog().getModel().restart();
         this.toDoView.getFocusTimerDialog().getModel().stop();
 
-        ((FocusTimerDialogPane) this.toDoView.getFocusDialog().getDialogPane()).getPlayButton().setOnAction(a->{
+        ((FocusTimerDialogPane) this.toDoView.getFocusDialog().getDialogPane()).getPlayButton().setOnAction(a -> {
             this.toDoView.getFocusTimerDialog().getModel().start();
         });
-        ((FocusTimerDialogPane) this.toDoView.getFocusDialog().getDialogPane()).getStopButton().setOnAction(a->{
+        ((FocusTimerDialogPane) this.toDoView.getFocusDialog().getDialogPane()).getStopButton().setOnAction(a -> {
             this.toDoView.getFocusTimerDialog().getModel().stop();
         });
-        ((FocusTimerDialogPane) this.toDoView.getFocusDialog().getDialogPane()).getReplayButton().setOnAction(a->{
+        ((FocusTimerDialogPane) this.toDoView.getFocusDialog().getDialogPane()).getReplayButton().setOnAction(a -> {
             this.toDoView.getFocusTimerDialog().getModel().restart();
         });
         this.toDoView.getFocusDialog().showAndWait();
@@ -780,29 +789,37 @@ public class ToDoController implements Serializable {
 
                     case "Geplant": {
                         ArrayList<ToDo> arrayListToday = this.toDoList.searchLocalToday();
-                        for(ToDo item : arrayListToday) {
-                            if(item.getCategories().contains("Geplant")) { resultSet.add(item); }
+                        for (ToDo item : arrayListToday) {
+                            if (item.getCategories().contains("Geplant")) {
+                                resultSet.add(item);
+                            }
                         }
                         break;
                     }
                     case "Wichtig": {
                         ArrayList<ToDo> arrayListToday = this.toDoList.searchLocalToday();
-                        for(ToDo item : arrayListToday) {
-                            if(item.getCategories().contains("Wichtig")) { resultSet.add(item); }
+                        for (ToDo item : arrayListToday) {
+                            if (item.getCategories().contains("Wichtig")) {
+                                resultSet.add(item);
+                            }
                         }
                         break;
                     }
                     case "Papierkorb": {
                         ArrayList<ToDo> arrayListToday = this.toDoList.searchLocalToday();
-                        for(ToDo item : arrayListToday) {
-                            if(item.getCategories().contains("Papierkorb")) { resultSet.add(item); }
+                        for (ToDo item : arrayListToday) {
+                            if (item.getCategories().contains("Papierkorb")) {
+                                resultSet.add(item);
+                            }
                         }
                         break;
                     }
                     case "Erledigt": {
                         ArrayList<ToDo> arrayListToday = this.toDoList.searchLocalToday();
-                        for(ToDo item : arrayListToday) {
-                            if(item.getCategories().contains("Erledigt")) { resultSet.add(item); }
+                        for (ToDo item : arrayListToday) {
+                            if (item.getCategories().contains("Erledigt")) {
+                                resultSet.add(item);
+                            }
                         }
                     }
 
@@ -869,19 +886,19 @@ public class ToDoController implements Serializable {
      * if not ok, Alert Box will open.
      */
     public void handleLogin(ActionEvent event) {
-    	
-    	/*
-    	 * If the password is not hidden, it will change to hidden
-    	 * when the user clicks on Login. We need this for the Login-Connection
-    	 */
-    	
-    	if (this.loginView.getPasswordFieldVBox().getChildren().contains(this.loginView.getShowedPasswordField())) {
-    		
-    		this.loginView.getPasswordField().setText(this.loginView.getShowedPasswordField().getText());
-            
+
+        /*
+         * If the password is not hidden, it will change to hidden
+         * when the user clicks on Login. We need this for the Login-Connection
+         */
+
+        if (this.loginView.getPasswordFieldVBox().getChildren().contains(this.loginView.getShowedPasswordField())) {
+
+            this.loginView.getPasswordField().setText(this.loginView.getShowedPasswordField().getText());
+
             this.loginView.getPasswordFieldVBox().getChildren().clear();
             this.loginView.getPasswordFieldVBox().getChildren().add(this.loginView.getPasswordField());
-    	}
+        }
 
         // Set up connection
         this.clientNetworkPlugin.connect("localhost", 50002);
@@ -897,7 +914,7 @@ public class ToDoController implements Serializable {
 
             // Grab Items from database
             // Grab all IDs from database and split them across 3 sublists
-            ArrayList <String> resultList = this.clientNetworkPlugin.listToDos();
+            ArrayList<String> resultList = this.clientNetworkPlugin.listToDos();
 
             // Get each item in a separate thread
             for (String id : resultList) {
@@ -909,13 +926,13 @@ public class ToDoController implements Serializable {
 
             // Update UI
             Platform.runLater(() -> {
-                this.stage.setScene(scene2);
-                stage.resizableProperty().setValue(Boolean.TRUE);
+                        this.stage.setScene(scene2);
+                        stage.resizableProperty().setValue(Boolean.TRUE);
 
-                this.toDoList.addAll(this.returnItems);
-                this.updateInstancedSublists();
-                stage.show();
-            }
+                        this.toDoList.addAll(this.returnItems);
+                        this.updateInstancedSublists();
+                        stage.show();
+                    }
             );
         } else {
 
@@ -923,7 +940,7 @@ public class ToDoController implements Serializable {
             this.loginView.getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
             this.loginView.getLabel().setTextFill(Color.web("#C00000"));
         }
-        
+
     }
 
     // Method to parse Instance of Model out of message string
@@ -966,39 +983,39 @@ public class ToDoController implements Serializable {
         // Create new Item
 
         // 3 missing parameters
-        if(description == null && dueDate == null && category == null) {
+        if (description == null && dueDate == null && category == null) {
             return new ToDo(title, priority);
         }
 
         // Missing 2 parameters
         // Missing dueDate and category
-        if(description != null && dueDate == null && category == null) {
+        if (description != null && dueDate == null && category == null) {
             return new ToDo(title, priority, description);
         }
 
         // Missing description and category
-        if(description == null && dueDate != null && category == null) {
+        if (description == null && dueDate != null && category == null) {
             return new ToDo(title, priority, dueDate);
         }
 
         // Missing description and dueDate
-        if(description == null && dueDate == null && category != null) {
+        if (description == null && dueDate == null && category != null) {
             return new ToDo(title, priority, category);
         }
 
         // Missing 1 parameter
         // Missing category
-        if(description != null && dueDate != null && category == null) {
+        if (description != null && dueDate != null && category == null) {
             return new ToDo(title, priority, description, dueDate);
         }
 
         // Missing dueDate
-        if(description != null && dueDate == null && category != null) {
+        if (description != null && dueDate == null && category != null) {
             return new ToDo(title, priority, description, category);
         }
 
         // Missing description
-        if(description == null && dueDate != null && category != null) {
+        if (description == null && dueDate != null && category != null) {
             return new ToDo(title, priority, dueDate, category);
         }
 
@@ -1026,7 +1043,7 @@ public class ToDoController implements Serializable {
 
     }
 
-    public void changePassword(ActionEvent event) {    	
+    public void changePassword(ActionEvent event) {
 
         this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().clear();
         this.toDoView.getChangePasswordDialogPane().getNewPasswordField().clear();
@@ -1034,7 +1051,7 @@ public class ToDoController implements Serializable {
         Button okButton = (Button) this.toDoView.getChangePasswordDialogPane().lookupButton(this.toDoView.getChangePasswordDialogPane().getOkButtonType());
         okButton.addEventFilter(ActionEvent.ACTION,
                 e -> {
-                    if(!validateChangedPassword()) {
+                    if (!validateChangedPassword()) {
                         e.consume();
                     }
                 });
@@ -1089,52 +1106,58 @@ public class ToDoController implements Serializable {
         }
 
 
-
     }
 
     public void openRegistration(MouseEvent event) {
 
-        // Build connection to server
-//         this.clientNetworkPlugin.connect("localhost", 50002);
+        // Build up connection to server
+        this.clientNetworkPlugin.connect("localhost", 50002);
 
-        // show dialog
+        // Prepare Dialog Pane
         this.loginView.getRegistrationDialogPane().getEmailField().clear();
         this.loginView.getRegistrationDialogPane().getRepeatPasswordField().clear();
         this.loginView.getRegistrationDialogPane().getPasswordField().clear();
         this.loginView.getRegistrationDialogPane().getLabel().setText("");
 
-
-        registerAccount();
-        this.loginView.getRegistrationDialog().showAndWait();
-//        this.clientNetworkPlugin.disconnect();
-    }
-
-    public void registerAccount() {
-
         // Set up event filter on OK-button to prevent dialog from closing when user input is not valid
         Button okButton = (Button) this.loginView.getRegistrationDialogPane().lookupButton(this.loginView.getRegistrationDialogPane().getOkButtonType());
         okButton.addEventFilter(ActionEvent.ACTION,
-                event -> {
-                    //Validation is not working right, you can create a user with a password that does not matches the requirements
-                    //the registrationView closes anyway, even if password incorrect -> needs to be fixed
+                eventHandler -> {
                     if (!validatePassword()) {
                         event.consume();
-
-
-                    } else {
-                        boolean result = getNewAccount();
-                        if (result) {
-                            Platform.runLater(() -> {
-                                this.stage.setScene(scene1);
-                                stage.resizableProperty().setValue(Boolean.FALSE);
-                                stage.show();
-                            });
-                        }
                     }
                 });
+        //Validation is not working right, you can create a user with a password that does not matches the requirements
+        //the registrationView closes anyway, even if password incorrect -> needs to be fixed
+//                    else {
+//                        boolean result = getNewAccount();
+//                        if (result) {
+//                            Platform.runLater(() -> {
+//                                this.stage.setScene(scene1);
+//                                stage.resizableProperty().setValue(Boolean.FALSE);
+//                                stage.show();
+//                            });
+//                        }
+//                    }
 
+
+        // Wait for user input
+        Optional<ButtonType> result = this.loginView.getRegistrationDialog().showAndWait();
+
+        // Catch result from the dialog
+        if (result.isPresent() && result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+            boolean accountCreationWasSuccessful = createLogin();
+            if(accountCreationWasSuccessful) {
+                Platform.runLater(() -> {
+                    this.stage.setScene(scene1);
+                    stage.resizableProperty().setValue(Boolean.FALSE);
+                    stage.show();
+                });
+            }
+        }
 
     }
+
 
     public boolean validatePassword() {
 
@@ -1147,8 +1170,6 @@ public class ToDoController implements Serializable {
                 this.loginView.getRegistrationDialogPane().getLabel().setText("Passwort wurde geändert.");
                 this.loginView.getRegistrationDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
                 this.loginView.getRegistrationDialogPane().getLabel().setTextFill(Color.web("#00B050"));
-
-
 
 
                 return true;
@@ -1176,7 +1197,7 @@ public class ToDoController implements Serializable {
 
     }
 
-    public boolean getNewAccount() {
+    public boolean createLogin() {
 
         String emailCreateLogin = this.loginView.getRegistrationDialogPane().getEmailField().getText();
         String passwordCreateLogin = this.loginView.getRegistrationDialogPane().getPasswordField().getText();
@@ -1191,9 +1212,9 @@ public class ToDoController implements Serializable {
 
         this.loginView.getEyeVBox().getChildren().clear();
         this.loginView.getEyeVBox().getChildren().add(this.loginView.getEyeImage());
-        
+
         this.loginView.getShowedPasswordField().setText(this.loginView.getPasswordField().getText());
-        
+
         this.loginView.getPasswordFieldVBox().getChildren().clear();
         this.loginView.getPasswordFieldVBox().getChildren().add(this.loginView.getShowedPasswordField());
 
@@ -1209,95 +1230,95 @@ public class ToDoController implements Serializable {
 //        this.loginView.getTooltip().hide();
 
         this.loginView.getPasswordField().setText(this.loginView.getShowedPasswordField().getText());
-        
+
         this.loginView.getPasswordFieldVBox().getChildren().clear();
         this.loginView.getPasswordFieldVBox().getChildren().add(this.loginView.getPasswordField());
     }
-    
+
     public void showHideChangedPassword(ActionEvent event) {
-    		
-    		if (this.toDoView.getChangePasswordDialogPane().getShowPassword().isSelected()) {
-       		 
-        		this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().clear();
-        		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().clear();
-         
-        		this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField().setText(
-        				this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText());
-        	    
-        		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordTextField().setText(
-        				this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().getText());
-        		
-        	    this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().addAll(
-        	    		this.toDoView.getChangePasswordDialogPane().getNewPasswordLabel(), 
-        	    		this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField());
 
-        	    this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().addAll(
-        	    		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordLabel(), 
-        	    		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordTextField());
-        	} else {
-        		
-        		this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().clear();
-        		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().clear();
-         
-        		this.toDoView.getChangePasswordDialogPane().getNewPasswordField().setText(
-        				this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField().getText());
-        	    
-        		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().setText(
-        				this.toDoView.getChangePasswordDialogPane().getRepeatPasswordTextField().getText());
-        		
-        	    this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().addAll(
-        	    		this.toDoView.getChangePasswordDialogPane().getNewPasswordLabel(), 
-        	    		this.toDoView.getChangePasswordDialogPane().getNewPasswordField());
+        if (this.toDoView.getChangePasswordDialogPane().getShowPassword().isSelected()) {
 
-        	    this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().addAll(
-        	    		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordLabel(), 
-        	    		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField());
-        	    
-        	}
+            this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().clear();
+            this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().clear();
+
+            this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField().setText(
+                    this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText());
+
+            this.toDoView.getChangePasswordDialogPane().getRepeatPasswordTextField().setText(
+                    this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().getText());
+
+            this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().addAll(
+                    this.toDoView.getChangePasswordDialogPane().getNewPasswordLabel(),
+                    this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField());
+
+            this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().addAll(
+                    this.toDoView.getChangePasswordDialogPane().getRepeatPasswordLabel(),
+                    this.toDoView.getChangePasswordDialogPane().getRepeatPasswordTextField());
+        } else {
+
+            this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().clear();
+            this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().clear();
+
+            this.toDoView.getChangePasswordDialogPane().getNewPasswordField().setText(
+                    this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField().getText());
+
+            this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().setText(
+                    this.toDoView.getChangePasswordDialogPane().getRepeatPasswordTextField().getText());
+
+            this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().addAll(
+                    this.toDoView.getChangePasswordDialogPane().getNewPasswordLabel(),
+                    this.toDoView.getChangePasswordDialogPane().getNewPasswordField());
+
+            this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().addAll(
+                    this.toDoView.getChangePasswordDialogPane().getRepeatPasswordLabel(),
+                    this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField());
+
+        }
 
     }
-    
+
     public void showHideRegistrationPW(ActionEvent event) {
-    	
-    	if (this.loginView.getRegistrationDialogPane().getShowPassword().isSelected()) {
-      		 
-    		this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().clear();
-    		this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().clear();
-     
-    		this.loginView.getRegistrationDialogPane().getPasswordTextField().setText(
-    				this.loginView.getRegistrationDialogPane().getPasswordField().getText());
-    	    
-    		this.loginView.getRegistrationDialogPane().getRepeatTextField().setText(
-    				this.loginView.getRegistrationDialogPane().getRepeatPasswordField().getText());
-    		
-    		this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().addAll(
-    				this.loginView.getRegistrationDialogPane().getPasswordLabel(), 
-    				this.loginView.getRegistrationDialogPane().getPasswordTextField());
 
-    		this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().addAll(
-    				this.loginView.getRegistrationDialogPane().getRepeatPasswordLabel(), 
-    				this.loginView.getRegistrationDialogPane().getRepeatTextField());
-    	} else {
-    		
-    		this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().clear();
-    		this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().clear();
-     
-    		this.loginView.getRegistrationDialogPane().getPasswordField().setText(
-    				this.loginView.getRegistrationDialogPane().getPasswordTextField().getText());
-    	    
-    		this.loginView.getRegistrationDialogPane().getRepeatPasswordField().setText(
-    				this.loginView.getRegistrationDialogPane().getRepeatTextField().getText());
-    		
-    		this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().addAll(
-    				this.loginView.getRegistrationDialogPane().getPasswordLabel(), 
-    				this.loginView.getRegistrationDialogPane().getPasswordField());
+        if (this.loginView.getRegistrationDialogPane().getShowPassword().isSelected()) {
 
-    		this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().addAll(
-    				this.loginView.getRegistrationDialogPane().getRepeatPasswordLabel(), 
-    				this.loginView.getRegistrationDialogPane().getRepeatPasswordField());
-    	    
-    	}
-    	
+            this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().clear();
+            this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().clear();
+
+            this.loginView.getRegistrationDialogPane().getPasswordTextField().setText(
+                    this.loginView.getRegistrationDialogPane().getPasswordField().getText());
+
+            this.loginView.getRegistrationDialogPane().getRepeatTextField().setText(
+                    this.loginView.getRegistrationDialogPane().getRepeatPasswordField().getText());
+
+            this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().addAll(
+                    this.loginView.getRegistrationDialogPane().getPasswordLabel(),
+                    this.loginView.getRegistrationDialogPane().getPasswordTextField());
+
+            this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().addAll(
+                    this.loginView.getRegistrationDialogPane().getRepeatPasswordLabel(),
+                    this.loginView.getRegistrationDialogPane().getRepeatTextField());
+        } else {
+
+            this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().clear();
+            this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().clear();
+
+            this.loginView.getRegistrationDialogPane().getPasswordField().setText(
+                    this.loginView.getRegistrationDialogPane().getPasswordTextField().getText());
+
+            this.loginView.getRegistrationDialogPane().getRepeatPasswordField().setText(
+                    this.loginView.getRegistrationDialogPane().getRepeatTextField().getText());
+
+            this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().addAll(
+                    this.loginView.getRegistrationDialogPane().getPasswordLabel(),
+                    this.loginView.getRegistrationDialogPane().getPasswordField());
+
+            this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().addAll(
+                    this.loginView.getRegistrationDialogPane().getRepeatPasswordLabel(),
+                    this.loginView.getRegistrationDialogPane().getRepeatPasswordField());
+
+        }
+
     }
 
     // Thread safe methods
