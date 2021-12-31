@@ -53,7 +53,8 @@ public class ToDoController implements Serializable {
 
     private LoginView loginView;
     private ClientNetworkPlugin clientNetworkPlugin;
-    private ExecutorService executorService;
+    private volatile ArrayList<ToDo> returnItems;
+    private ArrayList<Thread> threadPool;
 
     // Constructor
     public ToDoController(ToDoView toDoView, ToDo toDo, ToDoList toDoList, Stage stage, Scene scene2,
@@ -69,6 +70,8 @@ public class ToDoController implements Serializable {
         this.focusModel = focusModel;
 
         this.clientNetworkPlugin = new ClientNetworkPlugin();
+        this.returnItems = new ArrayList<>();
+        this.threadPool = new ArrayList<>();
 
 
         // Load items from database
@@ -409,7 +412,7 @@ public class ToDoController implements Serializable {
     /* Method to update local as well as instantiated sublists
      * Updates the sublists of the controller, as well as each sublist in the different instantiated views
      */
-    private void updateInstancedSublists() {
+    public synchronized void updateInstancedSublists() {
 
         // Update current sublists
         this.toDoList.updateSublists();
@@ -879,15 +882,11 @@ public class ToDoController implements Serializable {
             this.loginView.getPasswordFieldVBox().getChildren().clear();
             this.loginView.getPasswordFieldVBox().getChildren().add(this.loginView.getPasswordField());
     	}
-    	
 
         // Set up connection
         this.clientNetworkPlugin.connect("localhost", 50002);
-        this.executorService = Executors.newFixedThreadPool(3);
-
         String emailLogin = loginView.getUserField().getText();
         String passwordLogin = loginView.getPasswordField().getText();
-
         boolean result = this.clientNetworkPlugin.login(emailLogin, passwordLogin);
 
         if (result) {
@@ -900,24 +899,20 @@ public class ToDoController implements Serializable {
             // Grab all IDs from database and split them across 3 sublists
             ArrayList <String> resultList = this.clientNetworkPlugin.listToDos();
 
-            // Make the calls in a separate thread to not block the UI
-            LoadTasksCallable loadTasksCallable_1 = new LoadTasksCallable(resultList, this.clientNetworkPlugin);
-            Future<ArrayList<ToDo>> future_1 = this.executorService.submit(loadTasksCallable_1);
-            this.executorService.shutdown();
+            // Get each item in a separate thread
+            for (String id : resultList) {
+                Thread callThread = new Thread(new LoadTasksRunnable(id, this.clientNetworkPlugin, this));
+                callThread.setDaemon(true);
+                this.threadPool.add(callThread);
+                callThread.start();
+            }
 
             // Update UI
             Platform.runLater(() -> {
                 this.stage.setScene(scene2);
                 stage.resizableProperty().setValue(Boolean.TRUE);
 
-                ArrayList<ToDo> addList_1 = new ArrayList<>();
-                try {
-                    addList_1 = future_1.get();
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-
-                this.toDoList.addAll(addList_1);
+                this.toDoList.addAll(this.returnItems);
                 this.updateInstancedSublists();
                 stage.show();
             }
@@ -1304,8 +1299,13 @@ public class ToDoController implements Serializable {
     	}
     	
     }
-    
-    
+
+    // Thread safe methods
+    public synchronized void passItems(ToDo item) {
+        this.toDoList.addToDo(item);
+        this.updateInstancedSublists();
+    }
+
 
 }
 

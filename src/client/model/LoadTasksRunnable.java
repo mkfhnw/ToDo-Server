@@ -1,41 +1,41 @@
 package client.model;
 
 import client.ClientNetworkPlugin;
+import client.controller.ToDoController;
 import server.services.InputValidator;
 
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
 
-public class LoadTasksCallable implements Callable {
+public class LoadTasksRunnable implements Runnable {
 
     // Fields
     private ClientNetworkPlugin clientNetworkPlugin;
-    private ArrayList<String> taskIDs;
-    private ArrayList<ToDo> tasks;
+    private String itemID;
+    private ToDoController parent;
 
     // Constructor
-    public LoadTasksCallable(ArrayList<String> taskIDs, ClientNetworkPlugin clientNetworkPlugin) {
+    public LoadTasksRunnable(String itemID, ClientNetworkPlugin clientNetworkPlugin, ToDoController parent) {
         this.clientNetworkPlugin = clientNetworkPlugin;
-        this.taskIDs = taskIDs;
-        this.tasks = new ArrayList<>();
+        this.itemID = itemID;
+        this.parent = parent;
     }
 
-    // Run Method
+    // Fetch each item returned
     @Override
-    public ArrayList<ToDo> call() throws Exception {
-        System.out.println("[LOAD-TASKS-CALLABLE] Started loading tasks from database...");
+    public void run() {
+        System.out.println("[LOAD-TASKS-RUNNABLE] Started loading task " + this.itemID + " from database...");
 
-        for (String ID : this.taskIDs) {
-            int intID = Integer.parseInt(ID);
-            ArrayList<String> itemData = this.clientNetworkPlugin.getToDo(intID);
-            ToDo item = this.parseItemFromMessageString(itemData);
-            this.tasks.add(item);
-        }
-        int length = this.tasks.size();
-        System.out.println("[LOAD-TASKS-CALLABLE] Scraped " + length + " tasks from the database.");
-        return this.tasks;
+        // Make call for the item ID
+        int intID = Integer.parseInt(this.itemID);
+        ArrayList<String> itemData = this.clientNetworkPlugin.getToDo(intID);
+        ToDo item = this.parseItemFromMessageString(itemData);
+
+        // Stuff the contents of returnList into the controller
+        parent.passItems(item);
+
     }
 
+    // Helper method
     // Method to parse Instance of Model out of message string
     public ToDo parseItemFromMessageString(ArrayList<String> itemData) {
         ToDo returnItem = null;
