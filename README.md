@@ -39,7 +39,7 @@
 
 ### Other features 
 - [x] Graphic user interface
-- [ ] MVC  
+- [x] MVC  
 - [x] Show and hide passwords
 - [x] How-To Tutorial
 - [x] Focus-Timer (Pomodoro)
