@@ -25,8 +25,14 @@
 ## Features
 ### Server-Side features
 - [x] User input validation
+- [x] User account management
+- [x] User passwords are stored hashed.
 - [x] Store information in SQLite database
-- [x] Tokens have a 15min time to live
+- [x] Messaging Protocol was implemented as described
+- [x] Server upgraded to handle (optional) categorization of items
+- [x] Data load happens threaded in the background, not blocking the UI
+- [x] Server runs robust, any call not described in the messaging protocol simply returns Result|false
+- [x] Tokens have a 15min time to live & are somewhat robust against the [Birthday Problem](https://en.wikipedia.org/wiki/Birthday_problem)
 
 ### Client-Side features
 - [x] 
@@ -37,7 +43,7 @@
 2. Open up Powershell (type Poweshell in the Windows Searchbar)
 3. Type **ipconfig** in Powershell
 4. At the bottom of the result, it returns **IPv4 Address**. This is your IP-address - copy it
-5. Type **test-netconnection IPADDRESS -port 9999**. Change IPADDRESS to your IP-address that you copied from the last step.
+5. Type **test-netconnection IPADDRESS -port 50002**. Change IPADDRESS to your IP-address that you copied from the last step.
 6. The console from the ServerRunner should give you an output. test-netconnection sends a TCP-packet to your server.
 
 ## Messaging protocol format
