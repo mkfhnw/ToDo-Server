@@ -26,16 +26,25 @@
 ### Server-Side features
 - [x] User input validation
 - [x] User account management
-- [x] User passwords are stored hashed.
+- [x] User passwords are stored hashed
 - [x] Store information in SQLite database
 - [x] Messaging Protocol was implemented as described
 - [x] Server upgraded to handle (optional) categorization of items
 - [x] Data load happens threaded in the background, not blocking the UI
 - [x] Server runs robust, any call not described in the messaging protocol simply returns Result|false
-- [x] Tokens have a 15min time to live & are somewhat robust against the [Birthday Problem](https://en.wikipedia.org/wiki/Birthday_problem)
+- [x] Tokens have a 60 minutes time to live & are somewhat robust against the [Birthday Problem](https://en.wikipedia.org/wiki/Birthday_problem)
 
 ### Client-Side features
-- [x] 
+- [x] Messaging Protocol was implemented as described
+
+### Other features 
+- [x] Graphic user interface
+- [ ] MVC  
+- [x] Show and hide passwords
+- [x] How-To Tutorial
+- [x] Focus-Timer (Pomodoro)
+- [x] Chart
+- [x] Categories (only with the associated server)
 
 
 ## How to test your server
