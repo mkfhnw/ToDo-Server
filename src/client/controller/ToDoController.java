@@ -1129,17 +1129,6 @@ public class ToDoController implements Serializable {
                 });
         //Validation is not working right, you can create a user with a password that does not matches the requirements
         //the registrationView closes anyway, even if password incorrect -> needs to be fixed
-//                    else {
-//                        boolean result = getNewAccount();
-//                        if (result) {
-//                            Platform.runLater(() -> {
-//                                this.stage.setScene(scene1);
-//                                stage.resizableProperty().setValue(Boolean.FALSE);
-//                                stage.show();
-//                            });
-//                        }
-//                    }
-
 
         // Wait for user input
         Optional<ButtonType> result = this.loginView.getRegistrationDialog().showAndWait();
