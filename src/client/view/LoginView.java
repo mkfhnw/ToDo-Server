@@ -8,7 +8,6 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -19,7 +18,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class LoginView extends BorderPane {
 	
@@ -31,7 +29,6 @@ public class LoginView extends BorderPane {
 	private TextField showedPasswordField;
 	private Button signInButton;
 	private Button registerButton;
-	private Label changePassword;
 	
 	private ImageView image;
 	private ImageView eyeImage;
@@ -124,10 +121,6 @@ public class LoginView extends BorderPane {
 	this.registerButton.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.registerButton.setTextFill(Color.web("#181C54"));
 	
-	this.changePassword = new Label("Passwort vergessen?");
-	this.changePassword.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
-	this.changePassword.setTextFill(Color.web("#181C54"));
-	
 	// Layout
 
 	this.vBoxSpace = new VBox(SPACING);
@@ -167,7 +160,7 @@ public class LoginView extends BorderPane {
 	this.loginVBox.getChildren().addAll(userVBox, passwordVBox, spaceVBox);
 	
 	this.changePasswordVBox = new VBox();
-	this.changePasswordVBox.getChildren().addAll(changePassword, label);
+	this.changePasswordVBox.getChildren().add(label);
 	this.changePasswordVBox.setSpacing(5);
 	this.changePasswordVBox.setAlignment(Pos.CENTER);
 	
@@ -227,11 +220,6 @@ public class LoginView extends BorderPane {
 
 	public Button getRegisterButton() {
 		return registerButton;
-	}
-
-
-	public Label getChangePassword() {
-		return changePassword;
 	}
 
 
@@ -317,11 +305,6 @@ public class LoginView extends BorderPane {
 
 	public void setRegisterButton(Button registerButton) {
 		this.registerButton = registerButton;
-	}
-
-
-	public void setChangePassword(Label changePassword) {
-		this.changePassword = changePassword;
 	}
 
 
