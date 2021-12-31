@@ -1025,7 +1025,6 @@ public class ToDoController implements Serializable {
     }
 
     public void logout(MouseEvent event) {
-        // ALARMDIALOG?
 
         boolean result = this.clientNetworkPlugin.logout();
 
@@ -1038,8 +1037,6 @@ public class ToDoController implements Serializable {
             this.loginView.getPasswordField().setText("");
             this.stage.show();
         }
-
-        // Close App & back to LoginView (scene1)
 
     }
 
@@ -1127,8 +1124,6 @@ public class ToDoController implements Serializable {
                         event.consume();
                     }
                 });
-        //Validation is not working right, you can create a user with a password that does not matches the requirements
-        //the registrationView closes anyway, even if password incorrect -> needs to be fixed
 
         // Wait for user input
         Optional<ButtonType> result = this.loginView.getRegistrationDialog().showAndWait();
@@ -1211,12 +1206,8 @@ public class ToDoController implements Serializable {
 
     public void hidePassword(MouseEvent event) {
 
-//        this.loginView.getTooltip().setText("");
-
         this.loginView.getEyeVBox().getChildren().clear();
         this.loginView.getEyeVBox().getChildren().add(this.loginView.getHiddenEyeImage());
-
-//        this.loginView.getTooltip().hide();
 
         this.loginView.getPasswordField().setText(this.loginView.getShowedPasswordField().getText());
 
