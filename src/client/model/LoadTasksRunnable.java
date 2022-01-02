@@ -105,7 +105,6 @@ public class LoadTasksRunnable implements Runnable {
 
         // Missing dueDate
         if(description != null && dueDate == null && category != null) {
-            System.out.println("LoadTasksRunnable: Missing DueDate Case");
             return new ToDo(title, priority, description, category);
         }
 

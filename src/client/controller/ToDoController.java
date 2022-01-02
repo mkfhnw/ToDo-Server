@@ -302,7 +302,9 @@ public class ToDoController implements Serializable {
         ToDo toDo = toDoList.getToDo((Button) e.getSource());
         this.toDoList.removeToDo(toDo);
         this.clientNetworkPlugin.deleteToDo(toDo.getID());
-        this.toDoList.getGarbageList().remove(toDo);
+        if (toDo.getCategory().equals("Papierkorb")) {
+            this.toDoList.getGarbageList().remove(toDo);
+        }
         toDo.setCategory("Erledigt");
         toDo.setDone(true);
         this.clientNetworkPlugin.createToDo(toDo);
@@ -316,7 +318,9 @@ public class ToDoController implements Serializable {
     private void setToDoAsImportant(MouseEvent e) {
         ToDo toDo = toDoList.getToDo((Button) e.getSource());
         this.toDoList.removeToDo(toDo);
-        this.toDoList.getGarbageList().remove(toDo);
+        if (toDo.getCategory().equals("Papierkorb")) {
+            this.toDoList.getGarbageList().remove(toDo);
+        }
         this.clientNetworkPlugin.deleteToDo(toDo.getID());
         toDo.setCategory("Wichtig");
         this.clientNetworkPlugin.createToDo(toDo);
@@ -334,7 +338,8 @@ public class ToDoController implements Serializable {
         ToDo toDo = toDoList.getToDo((Button) e.getSource());
         if (toDo.getCategory() != null && toDo.getCategory().equals("Papierkorb")) {
             this.clientNetworkPlugin.deleteToDo(toDo.getID());
-            this.toDoList.getToDoList().remove(toDo);
+            // this.toDoList.getToDoList().remove(toDo);
+            this.toDoList.removeToDo(toDo);
             this.updateInstancedSublists();
             return;
         }
