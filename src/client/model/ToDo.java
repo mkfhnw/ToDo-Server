@@ -149,7 +149,7 @@ public class ToDo {
 		this.message = message;
 		this.dateOfCreation = LocalDate.now();
 		this.dueDate = dueDate;
-		this.dueDateString = this.dueDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+		this.dueDateString = LocalDate.parse(this.dueDate.toString()).format(DateTimeFormatter.ISO_DATE);
 		this.isDone = false;
 		this.tags = tags;
 		this.priority = Priority.valueOf(priorityString);
