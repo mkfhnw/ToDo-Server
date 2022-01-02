@@ -327,7 +327,7 @@ public class ToDoController implements Serializable {
         // Check if item already was deleted, purge it if so
         ToDo toDo = toDoList.getToDo((Button) e.getSource());
         if (toDo.getCategory() != null && toDo.getCategory().equals("Papierkorb")) {
-            this.clientNetworkPlugin.deleteToDo(toDo.ID);
+            this.clientNetworkPlugin.deleteToDo(toDo.getID());
             this.toDoList.getToDoList().remove(toDo);
             this.updateInstancedSublists();
             return;
