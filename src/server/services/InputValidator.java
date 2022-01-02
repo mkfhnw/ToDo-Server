@@ -14,7 +14,7 @@ public class InputValidator {
 
     // Singleton field
     private static InputValidator inputValidator;
-    private final List<String> categories = Arrays.asList("Geplant", "Wichtig", "Erledigt");
+    private final List<String> categories = Arrays.asList("Geplant", "Wichtig", "Erledigt", "Papierkorb");
 
     // Private constructor since we work with a factory method
     public static InputValidator getInputValidator() {
