@@ -90,7 +90,7 @@ public class ToDoController implements Serializable {
         // Focus timer button EventHandling
         this.toDoView.getOpenFocusTimer().setOnMouseClicked(this::createFocusTimer);
 
-        // Add focus timer dialog and model 
+        // Add focus timer dialog and model
         this.dialog = new FocusTimerDialogPane();
         this.focusModel = new FocusTimerModel(null);
 
@@ -300,11 +300,10 @@ public class ToDoController implements Serializable {
      */
     public void setToDoOnDone(MouseEvent e) {
         ToDo toDo = toDoList.getToDo((Button) e.getSource());
-        // TODO: Either write new constructor for a ToDo where we pass in an existing instance of a ToDo together with
-        // a string that is being set as category. Or use an existing constructor and pass in all the elements
-        // so we have an old and a new item to pass into the sqliteManager.update() method.
+        this.clientNetworkPlugin.deleteToDo(toDo.ID);
         toDo.setCategory("Erledigt");
         toDo.setDone(true);
+        this.clientNetworkPlugin.createToDo(toDo);
         this.updateInstancedSublists();
     }
 
@@ -313,7 +312,9 @@ public class ToDoController implements Serializable {
      */
     private void setToDoAsImportant(MouseEvent e) {
         ToDo toDo = toDoList.getToDo((Button) e.getSource());
+        this.clientNetworkPlugin.deleteToDo(toDo.ID);
         toDo.setCategory("Wichtig");
+        this.clientNetworkPlugin.createToDo(toDo);
         this.updateInstancedSublists();
     }
 
@@ -322,12 +323,21 @@ public class ToDoController implements Serializable {
      * Deletes the item from the database as well.
      */
     private void setToDoAsGarbage(MouseEvent e) {
-        ToDo toDo = toDoList.getToDo((Button) e.getSource());
-        toDo.setCategory("Papierkorb");
-        int ID = toDo.getID();
-        this.clientNetworkPlugin.deleteToDo(ID);
-        this.updateInstancedSublists();
 
+        // Check if item already was deleted, purge it if so
+        ToDo toDo = toDoList.getToDo((Button) e.getSource());
+        if (toDo.getCategory() != null && toDo.getCategory().equals("Papierkorb")) {
+            this.clientNetworkPlugin.deleteToDo(toDo.ID);
+            this.toDoList.getToDoList().remove(toDo);
+            this.updateInstancedSublists();
+            return;
+        }
+
+        // Recreate if first delete
+        this.clientNetworkPlugin.deleteToDo(toDo.ID);
+        toDo.setCategory("Papierkorb");
+        this.clientNetworkPlugin.createToDo(toDo);
+        this.updateInstancedSublists();
 
     }
 
