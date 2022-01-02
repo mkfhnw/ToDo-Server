@@ -978,6 +978,7 @@ public class ToDoController implements Serializable {
             this.loginView.getLabel().setText("Anmeldung fehlgeschlagen - Benutzername oder Passwort ist ungültig!");
             this.loginView.getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
             this.loginView.getLabel().setTextFill(Color.web("#C00000"));
+        	
         }
 
     }
@@ -1070,6 +1071,9 @@ public class ToDoController implements Serializable {
 
         //if user logged out, show LoginView again
         if (result) {
+        	
+        	this.toDoList.clearLists();
+        	
             this.stage.close();
             this.stage.setScene(scene1);
             stage.resizableProperty().setValue(Boolean.FALSE);

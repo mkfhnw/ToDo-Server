@@ -55,6 +55,7 @@ public class LoginView extends BorderPane {
     private final int SPACING_LOGIN_VBOX = 15;
     private final int SPACING_IMAGE_VBOX = 20;
     private final int SPACING = 20;
+    private final int SPACING_TOP = 100;
     private final int SPACING_PASSWORD_HBOX = 7;
 	
     // Dialog for CreateAccount
@@ -121,9 +122,12 @@ public class LoginView extends BorderPane {
 	this.registerButton.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.registerButton.setTextFill(Color.web("#181C54"));
 	
+	Label label2 = new Label("");
+	
 	// Layout
 
-	this.vBoxSpace = new VBox(SPACING);
+	this.vBoxSpace = new VBox(SPACING_TOP);
+	this.vBoxSpace.getChildren().add(label2);
 	this.vBoxSpace2 = new VBox(SPACING);
 	
 	this.imageVBox = new VBox(SPACING_IMAGE_VBOX);
