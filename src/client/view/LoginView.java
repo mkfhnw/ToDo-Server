@@ -189,6 +189,8 @@ public class LoginView extends BorderPane {
 	
 	this.registrationDialog.initModality(Modality.NONE);
 	
+	this.getStylesheets().add(getClass().getResource("FocusAndHowToDialogPaneStyleSheet.css").toExternalForm());
+	
 	
 	}
 

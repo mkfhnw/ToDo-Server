@@ -129,7 +129,9 @@ public class ChangePasswordDialogPane extends DialogPane {
     // set content and text for content
 	this.setContentText("Passwort ändern");
 	
-	this.setContent(borderPane);		
+	this.setContent(borderPane);
+	
+	this.getStylesheets().add(getClass().getResource("FocusAndHowToDialogPaneStyleSheet.css").toExternalForm());
 		
 	}
 

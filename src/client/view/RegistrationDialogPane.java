@@ -149,6 +149,8 @@ public class RegistrationDialogPane extends DialogPane {
 	this.setContentText("Account erstellen");
 	
 	this.setContent(borderPane);
+	
+	this.getStylesheets().add(getClass().getResource("FocusAndHowToDialogPaneStyleSheet.css").toExternalForm());
 		
 	}
 
