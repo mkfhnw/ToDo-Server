@@ -55,6 +55,7 @@ public class LoadTasksRunnable implements Runnable {
             int dataPartsLength = itemData.size();
             for (String ambiguousParameter : itemData.subList(3, dataPartsLength)) {
                 String parameterType = inputValidator.getParameterType(ambiguousParameter);
+
                 switch (parameterType) {
 
                     case "Category" -> {
@@ -104,6 +105,7 @@ public class LoadTasksRunnable implements Runnable {
 
         // Missing dueDate
         if(description != null && dueDate == null && category != null) {
+            System.out.println("LoadTasksRunnable: Missing DueDate Case");
             return new ToDo(title, priority, description, category);
         }
 
@@ -114,6 +116,7 @@ public class LoadTasksRunnable implements Runnable {
 
         // No missing parameters
         returnItem = new ToDo(title, priority, description, dueDate, category);
+
         return returnItem;
     }
 

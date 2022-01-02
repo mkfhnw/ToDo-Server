@@ -387,40 +387,57 @@ public class ToDo {
 		InputValidator inputValidator = new InputValidator();
 		String thirdParameterType = inputValidator.getParameterType(thirdParameter);
 		String fourthParameterType = inputValidator.getParameterType(fourthParameter);
-		ArrayList<String> ambiguousParameterTypes = new ArrayList<>();
-		ambiguousParameterTypes.add(thirdParameterType);
-		ambiguousParameterTypes.add(fourthParameterType);
 
-		// Switch through ambiguous parameter types
-		for (String ambiguousParameterType : ambiguousParameterTypes) {
-
-			switch (ambiguousParameterType) {
-
-				case "DueDate" -> {
-					try {
-						this.dueDateString = ambiguousParameterType;
-						DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-						this.dueDate = LocalDate.parse(ambiguousParameterType, dateTimeFormatter);
-					} catch (Exception e) {
-						System.out.println("[TODO] Exception: " + e.getMessage());
-						System.out.println("ParamType: " + ambiguousParameterType);
-						System.out.println("Param: " + thirdParameter);
-					}
-
-				}
-
-				case "Category" -> {
-					this.category = ambiguousParameterType;
-					this.categories.add(ambiguousParameterType);
-				}
-
-				case "Description" -> {
-					this.message = ambiguousParameterType;
+		// Switch through third parameter type
+		switch (thirdParameterType) {
+			case "DueDate" -> {
+				try {
+					this.dueDateString = thirdParameter;
+					DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+					this.dueDate = LocalDate.parse(thirdParameter, dateTimeFormatter);
+				} catch (Exception e) {
+					System.out.println("[TODO] Exception: " + e.getMessage());
+					System.out.println("ParamType: " + thirdParameter);
+					System.out.println("Param: " + thirdParameter);
 				}
 
 			}
 
+			case "Category" -> {
+				this.category = thirdParameter;
+				this.categories.add(thirdParameter);
+			}
+
+			case "Description" -> {
+				this.message = thirdParameter;
+			}
 		}
+
+		// Switch through fourth parameter type
+		switch (fourthParameterType) {
+			case "DueDate" -> {
+				try {
+					this.dueDateString = fourthParameter;
+					DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+					this.dueDate = LocalDate.parse(fourthParameter, dateTimeFormatter);
+				} catch (Exception e) {
+					System.out.println("[TODO] Exception: " + e.getMessage());
+					System.out.println("ParamType: " + fourthParameter);
+					System.out.println("Param: " + fourthParameter);
+				}
+
+			}
+
+			case "Category" -> {
+				this.category = fourthParameter;
+				this.categories.add(fourthParameter);
+			}
+
+			case "Description" -> {
+				this.message = fourthParameter;
+			}
+		}
+
 
 		// Buttons
 		this.doneButton = new Button();
