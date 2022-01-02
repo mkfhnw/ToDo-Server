@@ -217,10 +217,9 @@ public class ClientNetworkPlugin {
         	return result;
         }
         
-        public void createToDo(ToDo toDo) {
+        public int createToDo(ToDo toDo) {
         	
         	boolean result = false;
-        	int toDoID;
         	
         	try {
 	            ArrayList<String> createToDoData = new ArrayList<>();
@@ -242,7 +241,7 @@ public class ClientNetworkPlugin {
         		result = Boolean.parseBoolean(responseLogin.getMessageParts().get(1));
         		
         		if (result) {
-        			toDoID = Integer.parseInt(responseLogin.getMessageParts().get(2));
+        			return Integer.parseInt(responseLogin.getMessageParts().get(2));
         		}
 
 
@@ -251,7 +250,7 @@ public class ClientNetworkPlugin {
         		
         	}
         	
-            
+            return -1;
 		}
 
         public boolean changePassword(String newPassword) {

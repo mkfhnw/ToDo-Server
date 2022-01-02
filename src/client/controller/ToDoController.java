@@ -195,7 +195,10 @@ public class ToDoController implements Serializable {
         this.toDoList.updateSublists();
 
         // Send data to server
-        this.clientNetworkPlugin.createToDo(toDo);
+        int itemID = this.clientNetworkPlugin.createToDo(toDo);
+
+        // Set returned ID to created item
+        toDo.setID(itemID);
 
     }
 
@@ -206,8 +209,11 @@ public class ToDoController implements Serializable {
         this.toDoList.addToDo(toDo);
         this.toDoList.updateSublists();
 
-        // Send data to server
-        this.clientNetworkPlugin.createToDo(toDo);
+        // Send data to server & catch ID
+        int itemID = this.clientNetworkPlugin.createToDo(toDo);
+
+        // Set returned ID to created item
+        toDo.setID(itemID);
     }
 
     /* Read method

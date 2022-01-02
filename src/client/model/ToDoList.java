@@ -188,7 +188,7 @@ public class ToDoList {
 
 	public void removeToDo(ToDo toDo) {
 		this.toDoList.remove(toDo);
-		ToDo.globalToDoId -= 1;
+		// ToDo.globalToDoId -= 1;
 		ToDoList.categoryList.remove(toDo.getCategory());
 
 		// Delete item from all sublists

@@ -14,7 +14,7 @@ import java.util.Set;
 public class ToDo {
 
 	// Fields
-	public final int ID;
+	public int ID;
 	public static int globalToDoId = 0;
 	private String title;
 	private String message;
@@ -90,7 +90,7 @@ public class ToDo {
 
 
 	public ToDo(String title, String message, LocalDate dueDate, String category) {
-		this.ID = globalToDoId + 1;
+		this.ID = 0;
 		globalToDoId++;
 		this.title = title;
 		this.message = message;
@@ -143,7 +143,7 @@ public class ToDo {
 	// Used by the controller method createToDo()
 	public ToDo(String title, String message, LocalDate dueDate, String category, String priorityString,
 				ArrayList<String> tags) {
-		this.ID = globalToDoId + 1;
+		this.ID = 0;
 		globalToDoId++;
 		this.title = title;
 		this.message = message;
@@ -198,7 +198,7 @@ public class ToDo {
 	public ToDo(String title, String message, LocalDate dateOfCreation,
 				LocalDate dueDate, ArrayList<String> categories, ArrayList<String> tags) {
 
-		this.ID = globalToDoId + 1;
+		this.ID = 0;
 		ToDo.globalToDoId++;
 		this.title = title;
 		this.message = message;
@@ -304,7 +304,7 @@ public class ToDo {
 
 	// Constructor overload for missing dueDate
 	public ToDo(String title, String message, String category, String priorityString, ArrayList<String> tagArrayList) {
-		this.ID = globalToDoId + 1;
+		this.ID = 0;
 		ToDo.globalToDoId++;
 		this.title = title;
 		this.message = message;
@@ -345,7 +345,7 @@ public class ToDo {
 
 	// Constructor with only title and priority
 	public ToDo(String title, String priority) {
-		this.ID = globalToDoId += 1;
+		this.ID = 0;
 		ToDo.globalToDoId++;
 		this.title = title;
 		this.priority = Priority.valueOf(priority);
@@ -377,7 +377,7 @@ public class ToDo {
 
 	// Constructor for 4 parameters
 	public ToDo(String title, String priority, String thirdParameter, String fourthParameter) {
-		this.ID = globalToDoId += 1;
+		this.ID = 0;
 		ToDo.globalToDoId++;
 		this.title = title;
 		this.priority = Priority.valueOf(priority);
@@ -466,7 +466,7 @@ public class ToDo {
 
 	// Constructor for 3 parameters
 	public ToDo(String title, String priority, String thirdParameter) {
-		this.ID = globalToDoId += 1;
+		this.ID = 0;
 		ToDo.globalToDoId++;
 		this.title = title;
 		this.priority = Priority.valueOf(priority);
@@ -522,7 +522,7 @@ public class ToDo {
 
 	// Constructor with all parameters
 	public ToDo(String title, String priority, String description, String dueDateString, String category) {
-		this.ID = globalToDoId += 1;
+		this.ID = 0;
 		ToDo.globalToDoId++;
 		this.title = title;
 		this.priority = Priority.valueOf(priority);
@@ -661,4 +661,7 @@ public class ToDo {
 	}
 	public void setTags(ArrayList<String> tags) { this.tags = tags; }
 
+	public void setID(int itemID) {
+		this.ID = itemID;
+	}
 }
