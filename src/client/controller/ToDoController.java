@@ -300,7 +300,7 @@ public class ToDoController implements Serializable {
      */
     public void setToDoOnDone(MouseEvent e) {
         ToDo toDo = toDoList.getToDo((Button) e.getSource());
-        this.clientNetworkPlugin.deleteToDo(toDo.ID);
+        this.clientNetworkPlugin.deleteToDo(toDo.getID());
         toDo.setCategory("Erledigt");
         toDo.setDone(true);
         this.clientNetworkPlugin.createToDo(toDo);
