@@ -829,7 +829,7 @@ public class ToDoController implements Serializable {
                     case "Geplant": {
                         ArrayList<ToDo> arrayListToday = this.toDoList.searchLocalToday();
                         for (ToDo item : arrayListToday) {
-                            if (item.getCategories().contains("Geplant")) {
+                            if (item.getCategory()== null || item.getCategories().contains("Geplant")) {
                                 resultSet.add(item);
                             }
                         }

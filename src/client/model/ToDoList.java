@@ -179,7 +179,7 @@ public class ToDoList {
 
 		ArrayList<ToDo> returnToday = new ArrayList<>();
 		for(ToDo toDo : this.toDoList) {
-			if (toDo.getDueDate().equals(now)) {
+			if (toDo.getDueDate()!= null && toDo.getDueDate().equals(now)) {
 				returnToday.add(toDo);
 			}
 		}

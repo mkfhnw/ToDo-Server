@@ -151,7 +151,8 @@ public class RegistrationDialogPane extends DialogPane {
 	this.setContent(borderPane);
 	
 	this.getStylesheets().add(getClass().getResource("FocusAndHowToDialogPaneStyleSheet.css").toExternalForm());
-		
+	
+	
 	}
 
 	public Label getTitle() {
