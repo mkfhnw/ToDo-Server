@@ -12,14 +12,14 @@
 ## Adding the SQLite-JDBC driver in Eclipse
 1. Open the project in Eclipse
 2. Click with the right side of the mouse on yout project
-3. Click on **Build Path**
-4. Click on **Configure Build Path**
+3. Click on Build Path
+4. Click on Configure Build Path
 5. Make sure you are in the Java Build Path Folder
-6. Click on **Modulepath**
-7. Then **Add JARs...**
-8. Open this path: ToDo-List/scr/lib
+6. Click on Modulepath
+7. Then Add JARs...
+8. Open this path: ToDo-Server/scr/lib
 9. Click on the jar file and apply with "ok"
-10. Click on **Apply and Close** You're able to use the jdbc-sqlite driver now.
+10. Click on Apply and Close You're able to use the jdbc-sqlite driver now.
 
 
 ## Features
