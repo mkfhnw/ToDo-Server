@@ -1060,6 +1060,9 @@ public class ToDoController implements Serializable {
 
         //if user logged out, show LoginView again
         if (result) {
+        	
+        	this.toDoList.clearLists();
+        	
             this.stage.close();
             this.stage.setScene(scene1);
             stage.resizableProperty().setValue(Boolean.FALSE);
