@@ -531,6 +531,12 @@ public class ServerRunnable implements Runnable {
             // Forge mesasge
             Message response = new Message(data);
 
+            // Adjust for "null" in message string
+            if(response.getMessageString().contains("null")) {
+                this.sendMessage(this.trueResult);
+                return;
+            }
+
             // Send response
             this.sendMessage(response.getMessageString());
             return;

@@ -83,7 +83,8 @@ public class Message {
         this.messageString = this.buildMessageString(this.messageType, this.token, dataParts);
         String[] stringParts = this.messageString.split("\\|");
         this.messageParts = new ArrayList<>(Arrays.asList(stringParts));
-        this.dataParts = new ArrayList<>(this.messageParts.subList(2, this.messageParts.size()));
+        this.dataParts = this.parseDataParts(dataParts);
+
     }
 
     // DEPRECATED
@@ -113,6 +114,7 @@ public class Message {
 
         // Return MessageType & Token if data is empty
         if(data.size() == 0) { return messageType.toString() + "|" + token; }
+
 
         // If data is not empty, build messagestring
         StringBuilder stringBuilder = new StringBuilder();
