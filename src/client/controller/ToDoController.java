@@ -338,9 +338,11 @@ public class ToDoController implements Serializable {
         }
 
         // Recreate if first delete
-        this.clientNetworkPlugin.deleteToDo(toDo.ID);
+        this.clientNetworkPlugin.deleteToDo(toDo.getID());
+        this.toDoList.removeToDo(toDo);
         toDo.setCategory("Papierkorb");
         this.clientNetworkPlugin.createToDo(toDo);
+        this.toDoList.addToDo(toDo);
         this.updateInstancedSublists();
 
     }
