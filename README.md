@@ -36,8 +36,6 @@
 
 ### Client-Side features
 - [x] Messaging Protocol was implemented as described
-
-### Other features 
 - [x] Graphic user interface
 - [x] MVC  
 - [x] Show and hide passwords
@@ -45,6 +43,8 @@
 - [x] Focus-Timer (Pomodoro)
 - [x] Chart
 - [x] Categories (only with the associated server)
+- [x] Search function
+- [x] ToDo-item filter (all and today)
 
 
 ## How to test your server
