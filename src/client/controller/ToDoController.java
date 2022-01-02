@@ -1034,8 +1034,8 @@ public class ToDoController implements Serializable {
         return returnItem;
     }
 
+    // Signs the user out.
     public void logout(MouseEvent event) {
-        // ALARMDIALOG?
 
         boolean result = this.clientNetworkPlugin.logout();
 
@@ -1049,18 +1049,46 @@ public class ToDoController implements Serializable {
             this.stage.show();
         }
 
-        // Close App & back to LoginView (scene1)
-
     }
 
+    // Change password when signed in.
     public void changePassword(ActionEvent event) {
 
         this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().clear();
         this.toDoView.getChangePasswordDialogPane().getNewPasswordField().clear();
         this.toDoView.getChangePasswordDialogPane().getLabel().setText("");
-        Button okButton = (Button) this.toDoView.getChangePasswordDialogPane().lookupButton(this.toDoView.getChangePasswordDialogPane().getOkButtonType());
+        Button okButton = (Button) this.toDoView.getChangePasswordDialogPane().lookupButton(
+        		this.toDoView.getChangePasswordDialogPane().getOkButtonType());
         okButton.addEventFilter(ActionEvent.ACTION,
                 e -> {
+                	
+                	/*
+                	 * Changes the TextField to PasswordField, when user clicks button, 
+                	 * because PasswordField is used in the further processes
+                	 */
+                	if (this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().contains(
+                			this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField()) 
+                			&& this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().contains(
+                					this.toDoView.getChangePasswordDialogPane().getRepeatPasswordTextField())) {
+                		
+                		this.toDoView.getChangePasswordDialogPane().getNewPasswordField().setText(
+                				this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField().getText());
+                		
+                		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().setText(
+                				this.toDoView.getChangePasswordDialogPane().getRepeatPasswordTextField().getText());
+                		
+                		this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().clear();
+                		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().clear();
+                		
+                		this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().add(
+                				this.toDoView.getChangePasswordDialogPane().getNewPasswordField());
+                		
+                		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().add(
+                				this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField());
+                	}
+                	
+                	
+                	
                     if (!validateChangedPassword()) {
                         e.consume();
                     }
@@ -1137,8 +1165,6 @@ public class ToDoController implements Serializable {
                         event.consume();
                     }
                 });
-        //Validation is not working right, you can create a user with a password that does not matches the requirements
-        //the registrationView closes anyway, even if password incorrect -> needs to be fixed
 
         // Wait for user input
         Optional<ButtonType> result = this.loginView.getRegistrationDialog().showAndWait();
@@ -1158,6 +1184,12 @@ public class ToDoController implements Serializable {
     }
 
 
+    /*
+     * Validates password in Registration. 
+     * It must be >= 3 and <= 20 characters long and the password and the repeated password must match. 
+     * If this is the case, the corresponding label is displayed. 
+     * If it does not match or is too short/too long, another label is used.
+     */
     public boolean validatePassword() {
 
         if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() >= 3
@@ -1196,6 +1228,7 @@ public class ToDoController implements Serializable {
 
     }
 
+    // creates Login
     public boolean createLogin() {
 
         String emailCreateLogin = this.loginView.getRegistrationDialogPane().getEmailField().getText();
@@ -1206,6 +1239,7 @@ public class ToDoController implements Serializable {
 
     }
 
+    // Shows password in LoginView, when "open eye" (image) is clicked
     public void showPassword(MouseEvent event) {
 
 
@@ -1219,14 +1253,11 @@ public class ToDoController implements Serializable {
 
     }
 
+    // Hides password in LoginView, when "crossed out eye" (image) is clicked
     public void hidePassword(MouseEvent event) {
-
-//        this.loginView.getTooltip().setText("");
 
         this.loginView.getEyeVBox().getChildren().clear();
         this.loginView.getEyeVBox().getChildren().add(this.loginView.getHiddenEyeImage());
-
-//        this.loginView.getTooltip().hide();
 
         this.loginView.getPasswordField().setText(this.loginView.getShowedPasswordField().getText());
 
@@ -1234,6 +1265,7 @@ public class ToDoController implements Serializable {
         this.loginView.getPasswordFieldVBox().getChildren().add(this.loginView.getPasswordField());
     }
 
+    // If CheckBox is clicked, password can be seen, if not, password will be hidden.
     public void showHideChangedPassword(ActionEvent event) {
 
         if (this.toDoView.getChangePasswordDialogPane().getShowPassword().isSelected()) {
