@@ -312,7 +312,7 @@ public class ToDoController implements Serializable {
      */
     private void setToDoAsImportant(MouseEvent e) {
         ToDo toDo = toDoList.getToDo((Button) e.getSource());
-        this.clientNetworkPlugin.deleteToDo(toDo.ID);
+        this.clientNetworkPlugin.deleteToDo(toDo.getID());
         toDo.setCategory("Wichtig");
         this.clientNetworkPlugin.createToDo(toDo);
         this.updateInstancedSublists();
