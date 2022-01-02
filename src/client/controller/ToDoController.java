@@ -300,10 +300,12 @@ public class ToDoController implements Serializable {
      */
     public void setToDoOnDone(MouseEvent e) {
         ToDo toDo = toDoList.getToDo((Button) e.getSource());
+        this.toDoList.removeToDo(toDo);
         this.clientNetworkPlugin.deleteToDo(toDo.getID());
         toDo.setCategory("Erledigt");
         toDo.setDone(true);
         this.clientNetworkPlugin.createToDo(toDo);
+        this.toDoList.addToDo(toDo);
         this.updateInstancedSublists();
     }
 
@@ -313,8 +315,10 @@ public class ToDoController implements Serializable {
     private void setToDoAsImportant(MouseEvent e) {
         ToDo toDo = toDoList.getToDo((Button) e.getSource());
         this.clientNetworkPlugin.deleteToDo(toDo.getID());
+        this.toDoList.removeToDo(toDo);
         toDo.setCategory("Wichtig");
         this.clientNetworkPlugin.createToDo(toDo);
+        this.toDoList.addToDo(toDo);
         this.updateInstancedSublists();
     }
 
