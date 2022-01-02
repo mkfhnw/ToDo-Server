@@ -613,7 +613,6 @@ public class ToDo {
 		}
 
 
-
 		// If category is set on 'done' or 'deleted', remove all other categories since those states are absolute
 		if(category.equals("Erledigt") || category.equals("Papierkorb")) {
 			this.categories.clear();
