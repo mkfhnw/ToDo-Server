@@ -166,7 +166,9 @@ public class ToDoList {
 
 		ArrayList<ToDo> returnList = new ArrayList<>();
 		for(ToDo toDo : this.toDoList) {
-			if (toDo.getTitle().contains(searchString) || toDo.getMessage().contains(searchString)) {
+			if (toDo.getTitle().contains(searchString) || (
+					toDo.getMessage() != null && toDo.getMessage().isEmpty() && 
+					toDo.getMessage().contains(searchString))) {
 				returnList.add(toDo);
 			}
 		}
