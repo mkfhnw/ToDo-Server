@@ -349,6 +349,7 @@ public class ToDo {
 		ToDo.globalToDoId++;
 		this.title = title;
 		this.priority = Priority.valueOf(priority);
+		this.categories = new ArrayList<>();
 
 		// Buttons
 		this.doneButton = new Button();
@@ -603,6 +604,7 @@ public class ToDo {
 		// Remove old category
 		if (this.getCategory() != null) {
 			String oldCategory = this.getCategory();
+
 			this.categories.remove(oldCategory);
 		}
 
