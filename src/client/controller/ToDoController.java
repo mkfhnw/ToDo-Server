@@ -26,6 +26,7 @@ import server.services.InputValidator;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -739,7 +740,9 @@ public class ToDoController implements Serializable {
                 }
 
                 if (dueDateString != null && !dueDateString.equals("")) {
-                    this.createToDo(title, message, LocalDate.parse(dueDateString), category, priorityString, tagArrayList);
+                    String parsedDateString = LocalDate.parse(dueDateString).format(DateTimeFormatter.ISO_DATE);
+                    LocalDate parsedDate = LocalDate.parse(parsedDateString);
+                    this.createToDo(title, message, parsedDate, category, priorityString, tagArrayList);
                 } else {
                     this.createToDo(title, message, category, priorityString, tagArrayList);
                 }
