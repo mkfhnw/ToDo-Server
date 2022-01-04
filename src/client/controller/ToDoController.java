@@ -978,7 +978,8 @@ public class ToDoController implements Serializable {
         boolean result = this.clientNetworkPlugin.login(emailLogin, passwordLogin);
 
         if (result) {
-
+        	
+        	this.loginView.getLabel().setText("");
             // Clear lists
             this.toDoList.clearLists();
             this.updateInstancedSublists();
