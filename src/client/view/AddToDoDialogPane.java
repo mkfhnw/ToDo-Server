@@ -103,8 +103,8 @@ public class AddToDoDialogPane extends DialogPane {
         // Instantiate tooltips
         titleToolTip = new Tooltip("Ihr Titel muss zwischen 3 - 20 Zeichen lang sein.");
         messageToolTip = new Tooltip("Ihre Beschreibung muss < 255 Zeichen lang sein.");
-        categoryToolTip = new Tooltip("Die Kategorie muss einen Wert enthalten.");
-        dateToolTip = new Tooltip("Ihr Datum muss im Format DD.MM.YYYY sein und in der Zukunft liegen.");
+        categoryToolTip = new Tooltip("Die Kategorie ist optional.");
+        dateToolTip = new Tooltip("Ihr Datum muss im Format YYYY.MM.DD sein und in der Zukunft liegen.");
         priorityTip = new Tooltip("Die Priorität muss einen Wert enthalten.");
         tagsToolTip = new Tooltip("Ihre Tags müssen einzelne Wörter sein, separiert mit einem Semikolon (;).");
 
