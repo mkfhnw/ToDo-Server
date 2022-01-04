@@ -40,55 +40,6 @@ public class ToDo {
 		this.ID = -1;
 	}
 
-//	//Constructor used for getToDo
-//	public ToDo(String title, String priorityString, String description, LocalDate dueDate) {
-//		this.ID = globalToDoId + 1;
-//		globalToDoId++;
-//		this.title = title;
-//		this.message = description;
-//		this.priority = Priority.valueOf(priorityString);
-//		this.dueDate = dueDate;
-//		this.dueDateString = this.dueDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-//		this.isDone = false;
-//
-//		// Sort out categories using a set
-//		Set<String> categorySet = new HashSet<String>(this.categories);
-//		this.categories.clear();
-//		this.categories.addAll(categorySet);
-//
-//		// Select other category than "Geplant" if available
-//		this.category = "Geplant";
-//		for(String cat : this.categories) {
-//			if(!cat.equals("Geplant")) { this.category = cat; }
-//		}
-//
-//		this.doneButton = new Button();
-//		ImageView done = new ImageView("/common/resources/doneIcon3.png");
-//		done.setFitHeight(20);
-//		done.setFitWidth(20);
-//		this.doneButton.setGraphic(done);
-//
-//		this.garbageButton = new Button();
-//		ImageView garbage = new ImageView("/common/resources/garbageIcon2.png");
-//		garbage.setFitHeight(20);
-//		garbage.setFitWidth(20);
-//		this.garbageButton.setGraphic(garbage);
-//
-//		this.importantButton = new Button();
-//		ImageView important = new ImageView("/common/resources/starIcon2.png");
-//		important.setFitHeight(20);
-//		important.setFitWidth(20);
-//		this.importantButton.setGraphic(important);
-//
-//		this.doneButton.getStylesheets().add(getClass().getResource("ToDoButtonsStyle.css").toExternalForm());
-//		this.garbageButton.getStylesheets().add(getClass().getResource("ToDoButtonsStyle.css").toExternalForm());
-//		this.importantButton.getStylesheets().add(getClass().getResource("ToDoButtonsStyle.css").toExternalForm());
-//		this.doneButton.getStyleClass().add("button");
-//		this.garbageButton.getStyleClass().add("button");
-//		this.importantButton.getStyleClass().add("button");
-//	}
-
-
 	public ToDo(String title, String message, LocalDate dueDate, String category) {
 		this.ID = 0;
 		globalToDoId++;
