@@ -27,6 +27,7 @@
 - [x] User input validation
 - [x] User account management
 - [x] User passwords are stored hashed
+- [x] Database names are hashed since they contain identifying information
 - [x] Store information in SQLite database
 - [x] Messaging Protocol was implemented as described
 - [x] Server upgraded to handle (optional) categorization of items
