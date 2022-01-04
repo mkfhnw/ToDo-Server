@@ -49,10 +49,16 @@ public class HowToDialogPane extends DialogPane {
 	this.mediaPlayer = new MediaPlayer(media);
 	this.mediaView = new MediaView();
 	this.mediaView.setMediaPlayer(mediaPlayer);
+	
+	this.mediaView.setFitHeight(2200);
+	this.mediaView.setFitWidth(1450);
 
 	// BorderPane
 	this.howToBorderPane = new BorderPane();
 	this.howToBorderPane.setCenter(mediaView);
+	this.howToBorderPane.setMinWidth(1400);
+	this.howToBorderPane.setMinHeight(600);
+
 	
 	// Icon for PlayButton
 	this.playIcon = new ImageView("/common/resources/startIcon.png");
@@ -114,7 +120,7 @@ public class HowToDialogPane extends DialogPane {
 	
 	
 	this.setContent(howToBorderPane);
-	this.setPrefSize(1400, 800);
+	this.setPrefSize(1700, 900);
 	
 	//Add css-styling
 	this.getStylesheets().add(getClass().getResource("FocusAndHowToDialogPaneStyleSheet.css").toExternalForm());
