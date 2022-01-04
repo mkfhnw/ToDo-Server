@@ -184,8 +184,10 @@ public class ServerRunnable implements Runnable {
 	private void reactToLogin(Message clientMessage) {
 
         // Grab data - username first, then password
-        String username = this.getUsername(clientMessage);
+        String userEmail = this.getUsername(clientMessage);
+        String username = userEmail.replace("@", "-");
         String password = this.getPassword(clientMessage);
+        String hashedUsername = new HashDigest(username).getDigest();
 
         boolean usernameIsValid = false;
         boolean passwordIsValid = false;
@@ -194,9 +196,9 @@ public class ServerRunnable implements Runnable {
         // Validate user input
         try {
             InputValidator inputValidator = InputValidator.getInputValidator();
-            usernameIsValid = inputValidator.validateUsername(username);
+            usernameIsValid = inputValidator.validateUsername(userEmail);
             passwordIsValid = inputValidator.validatePassword(password);
-            userDoesAlreadyExist = DatabaseManager.doesDatabaseExist(username.replace("@", "-"));
+            userDoesAlreadyExist = DatabaseManager.doesDatabaseExist(hashedUsername);
         } catch (Exception e) {
             System.out.println("[SERVER-RUNNABLE] Exception building message @199: " + e.getMessage());
             System.out.println("[SERVER-RUNNABLE] Exception building message @199: Probably invalid user input");
@@ -211,7 +213,7 @@ public class ServerRunnable implements Runnable {
         }
 
         // See if password matches
-        DatabaseManager databaseManager = new DatabaseManager(username.replace("@", "-"));
+        DatabaseManager databaseManager = new DatabaseManager(hashedUsername);
         String storedPassword = databaseManager.getPassword();
         String hashedPasswordInput = new HashDigest(password).getDigest();
 
@@ -254,18 +256,21 @@ public class ServerRunnable implements Runnable {
     private void reactToCreateLogin(Message clientMessage) {
 
         // Grab data - username first, then password
-        String username = this.getUsername(clientMessage);
+        String userEmail = this.getUsername(clientMessage);
+        String username = userEmail.replace("@", "-");
         String password = this.getPassword(clientMessage);
+        String hashedUsername = new HashDigest(username).getDigest();
+
 
         // Validate user input
         InputValidator inputValidator = InputValidator.getInputValidator();
-        boolean usernameIsValid = inputValidator.validateUsername(username);
+        boolean usernameIsValid = inputValidator.validateUsername(userEmail);
         boolean passwordIsValid = inputValidator.validatePassword(password);
-        boolean userDoesAlreadyExist = DatabaseManager.doesDatabaseExist(username.replace("@", "-"));
+        boolean userDoesAlreadyExist = DatabaseManager.doesDatabaseExist(hashedUsername);
 
         // Create new database and store login credentials for the user if input is valid
         if(usernameIsValid && passwordIsValid && !userDoesAlreadyExist) {
-            DatabaseManager databaseManager = new DatabaseManager(username.replace("@", "-"));
+            DatabaseManager databaseManager = new DatabaseManager(hashedUsername);
             databaseManager.initializeDatabase();
             databaseManager.storeLoginCredentials(username, password);
             this.sendMessage(this.trueResult);
@@ -295,7 +300,8 @@ public class ServerRunnable implements Runnable {
         if(inputValidator.isTokenStillAlive(token)) {
 
             // Parse username & validate newPassword input
-            String username = token.getUser();
+            String username = token.getUser().replace("@", "-");
+            String hashedUsername = new HashDigest(username).getDigest();
 
             // We can't use the private .getPassword-method here since the newPassword is at index 0 in this case
             String newPassword = clientMessage.getDataParts().get(0);
@@ -304,7 +310,7 @@ public class ServerRunnable implements Runnable {
             boolean passwordIsValid = inputValidator.validatePassword(newPassword);
             if(passwordIsValid) {
                 // Create new instance of databaseManager and write the newPassword to the DB
-                DatabaseManager databaseManager = new DatabaseManager(username.replace("@", "-"));
+                DatabaseManager databaseManager = new DatabaseManager(hashedUsername);
                 databaseManager.changePassword(newPassword);
                 this.sendMessage(this.trueResult);
             } else { this.sendMessage(this.falseResult); }
@@ -329,8 +335,9 @@ public class ServerRunnable implements Runnable {
         if (inputValidator.isTokenStillAlive(token)) {
 
             // Setup db-manager
-            String username = token.getUser();
-            DatabaseManager databaseManager = new DatabaseManager(username.replace("@", "-"));
+            String username = token.getUser().replace("@", "-");
+            String hashedUsername = new HashDigest(username).getDigest();
+            DatabaseManager databaseManager = new DatabaseManager(hashedUsername);
 
             // Parse message - we always have title & priority at the same spot
             String title = clientMessage.getDataParts().get(0);
@@ -451,9 +458,10 @@ public class ServerRunnable implements Runnable {
 
             // Parse username
             String username = token.getUser().replace("@", "-");
+            String hashedUsername = new HashDigest(username).getDigest();
 
             // Create DatabaseManager
-            DatabaseManager databaseManager = new DatabaseManager(username);
+            DatabaseManager databaseManager = new DatabaseManager(hashedUsername);
             ArrayList<String> itemData = databaseManager.getToDo(clientMessage.getDataParts().get(0));
 
             // If itemData is empty, the item in question does not exist - return false
@@ -486,10 +494,11 @@ public class ServerRunnable implements Runnable {
         if(inputValidator.isTokenStillAlive(token)) {
 
             // Parse username
-            String username = token.getUser();
+            String username = token.getUser().replace("@", "-");
+            String hashedUsername = new HashDigest(username).getDigest();
             
             // Create database manager
-            DatabaseManager databaseManager = new DatabaseManager(username.replace("@", "-"));
+            DatabaseManager databaseManager = new DatabaseManager(hashedUsername);
             
             //Parse out item ID to delete
             String ID = clientMessage.getDataParts().get(0);
@@ -523,10 +532,11 @@ public class ServerRunnable implements Runnable {
         if(inputValidator.isTokenStillAlive(token)) {
 
             // Parse username
-            String username = token.getUser();
+            String username = token.getUser().replace("@", "-");
+            String hashedUsername = new HashDigest(username).getDigest();
 
             // Grab all ToDo_IDs from database
-            DatabaseManager databaseManager = new DatabaseManager(username.replace("@", "-"));
+            DatabaseManager databaseManager = new DatabaseManager(hashedUsername);
             ArrayList<String> data = databaseManager.listToDos();
 
             // Forge mesasge
