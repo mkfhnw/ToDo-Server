@@ -3,12 +3,15 @@ package client.view;
 import java.io.File;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -16,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.util.Duration;
 
 public class HowToDialogPane extends DialogPane {
 	
@@ -28,14 +32,17 @@ public class HowToDialogPane extends DialogPane {
 	private ImageView replayIcon;
 
 	private HBox hBoxButtons; 
-	
 	private VBox vBoxPlay;
 	private VBox vBoxStop;
 	private VBox vBoxReplay;
+	private VBox sliderVBox;
+	private VBox general;
 	
 	private Media media;
 	private MediaPlayer mediaPlayer;
 	private MediaView mediaView;
+	
+	private Slider slider;
 	
 	private BorderPane howToBorderPane;
 	
@@ -87,13 +94,16 @@ public class HowToDialogPane extends DialogPane {
 	this.stopButton.setAlignment(Pos.CENTER);
 	this.stopButton.setPrefSize(40, 40);
 	
-	//ReplayButton
+	// ReplayButton
 	this.replayButton = new Button();
 	this.replayButton.setGraphic(replayIcon);
 	this.replayButton.setAlignment(Pos.CENTER);
 	this.replayButton.setPrefSize(40, 40);
 	
+	// Slider for video
+	this.slider = new Slider();
 	
+	// Layout
 	this.vBoxPlay = new VBox();
 	this.vBoxPlay.getChildren().add(playButton);
 	this.vBoxPlay.setSpacing(10);
@@ -106,13 +116,19 @@ public class HowToDialogPane extends DialogPane {
 	this.vBoxReplay.getChildren().add(replayButton);
 	this.vBoxReplay.setSpacing(10);
 	
+	this.sliderVBox = new VBox();
+	this.sliderVBox.getChildren().add(slider);
+	
 	this.hBoxButtons = new HBox();
 	this.hBoxButtons.getChildren().addAll(vBoxPlay, vBoxStop, vBoxReplay);
 	this.hBoxButtons.setSpacing(10);
 	this.hBoxButtons.setAlignment(Pos.CENTER);
 	this.hBoxButtons.setPadding(new Insets(50.0, 0.0, 0.0, 20.0));
 	
-	this.howToBorderPane.setBottom(hBoxButtons);
+	this.general = new VBox();
+	this.general.getChildren().addAll(hBoxButtons, sliderVBox);
+	
+	this.howToBorderPane.setBottom(general);
 	
 	// Add ButtonType
 	this.closeButtonType = new ButtonType("Beenden", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -128,6 +144,7 @@ public class HowToDialogPane extends DialogPane {
 	this.playButton.getStyleClass().add("button");
 	this.stopButton.getStyleClass().add("button");
 	}
+	
 
 	public MediaPlayer getMediaPlayer() {
 		return mediaPlayer;
@@ -151,6 +168,156 @@ public class HowToDialogPane extends DialogPane {
 	
 	public MediaView getMediaView() {
 		return mediaView;
+	}
+
+
+	public ImageView getPlayIcon() {
+		return playIcon;
+	}
+
+
+	public ImageView getStopIcon() {
+		return stopIcon;
+	}
+
+
+	public ImageView getReplayIcon() {
+		return replayIcon;
+	}
+
+
+	public HBox gethBoxButtons() {
+		return hBoxButtons;
+	}
+
+
+	public VBox getvBoxPlay() {
+		return vBoxPlay;
+	}
+
+
+	public VBox getvBoxStop() {
+		return vBoxStop;
+	}
+
+
+	public VBox getvBoxReplay() {
+		return vBoxReplay;
+	}
+
+
+	public VBox getSliderVBox() {
+		return sliderVBox;
+	}
+
+
+	public VBox getGeneral() {
+		return general;
+	}
+
+
+	public Media getMedia() {
+		return media;
+	}
+
+
+	public Slider getSlider() {
+		return slider;
+	}
+
+
+	public BorderPane getHowToBorderPane() {
+		return howToBorderPane;
+	}
+
+
+	public void setPlayButton(Button playButton) {
+		this.playButton = playButton;
+	}
+
+
+	public void setStopButton(Button stopButton) {
+		this.stopButton = stopButton;
+	}
+
+
+	public void setReplayButton(Button replayButton) {
+		this.replayButton = replayButton;
+	}
+
+
+	public void setPlayIcon(ImageView playIcon) {
+		this.playIcon = playIcon;
+	}
+
+
+	public void setStopIcon(ImageView stopIcon) {
+		this.stopIcon = stopIcon;
+	}
+
+
+	public void setReplayIcon(ImageView replayIcon) {
+		this.replayIcon = replayIcon;
+	}
+
+
+	public void sethBoxButtons(HBox hBoxButtons) {
+		this.hBoxButtons = hBoxButtons;
+	}
+
+
+	public void setvBoxPlay(VBox vBoxPlay) {
+		this.vBoxPlay = vBoxPlay;
+	}
+
+
+	public void setvBoxStop(VBox vBoxStop) {
+		this.vBoxStop = vBoxStop;
+	}
+
+
+	public void setvBoxReplay(VBox vBoxReplay) {
+		this.vBoxReplay = vBoxReplay;
+	}
+
+
+	public void setSliderVBox(VBox sliderVBox) {
+		this.sliderVBox = sliderVBox;
+	}
+
+
+	public void setGeneral(VBox general) {
+		this.general = general;
+	}
+
+
+	public void setMedia(Media media) {
+		this.media = media;
+	}
+
+
+	public void setMediaPlayer(MediaPlayer mediaPlayer) {
+		this.mediaPlayer = mediaPlayer;
+	}
+
+
+	public void setMediaView(MediaView mediaView) {
+		this.mediaView = mediaView;
+	}
+
+
+	public void setSlider(Slider slider) {
+		this.slider = slider;
+	}
+
+
+	public void setHowToBorderPane(BorderPane howToBorderPane) {
+		this.howToBorderPane = howToBorderPane;
+	}
+
+
+	public void setCloseButtonType(ButtonType closeButtonType) {
+		this.closeButtonType = closeButtonType;
 	}
 	
 	}

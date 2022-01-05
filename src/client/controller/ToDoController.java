@@ -6,6 +6,8 @@ import client.view.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -126,6 +128,9 @@ public class ToDoController implements Serializable {
 
         // EventHandling CheckBox to show and hide passwords in registration
         this.loginView.getRegistrationDialogPane().getShowPassword().setOnAction(this::showHideRegistrationPW);
+        
+        // EventHandling for slider in video
+        this.toDoView.getHowToDialogPane().getSlider().setOnMouseClicked(this::clickedSliderMediaPlayer);
 
         // Instantiate barchart with utils
         Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(0.3), new EventHandler<ActionEvent>() {
@@ -948,6 +953,9 @@ public class ToDoController implements Serializable {
     public void replayMedia(MouseEvent event) {
 
         this.toDoView.getHowToDialogPane().getMediaPlayer().stop();
+        
+        // Sets slider to zero
+        this.toDoView.getHowToDialogPane().getSlider().setValue(0);
 
     }
 
@@ -1424,6 +1432,21 @@ public class ToDoController implements Serializable {
         this.updateInstancedSublists();
     }
 
-
+    // Bind slider to video
+    public void slideMediaPlayer() {
+    	this.toDoView.getHowToDialogPane().getMediaPlayer().currentTimeProperty().addListener(new ChangeListener<Duration>() {
+    		@Override
+    		public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+    			toDoView.getHowToDialogPane().getSlider().setValue(newValue.toSeconds());
+		}
+	});
+	
+	
+    }
+    // click slider
+	public void clickedSliderMediaPlayer(MouseEvent event) {
+		toDoView.getHowToDialogPane().getMediaPlayer().seek(Duration.seconds(toDoView.getHowToDialogPane().getSlider().getValue()));
+	}
+    
 }
 
