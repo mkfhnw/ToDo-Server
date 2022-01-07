@@ -15,6 +15,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import client.ClientNetworkPlugin;
 import client.model.ToDo;
 import client.model.ToDoList;
 
@@ -71,7 +73,7 @@ public class ToDoView extends BorderPane {
 		private HBox hBoxBottom;
 		
 		private Button logoutButton;
-		
+
 		/*
 		 * Instantiates all necessary control elements
 		 * and adds them to the container
@@ -82,7 +84,7 @@ public class ToDoView extends BorderPane {
 			this.toDoModel = toDoModel;
 			this.toDoListModel = toDoListModel;
 			
-			// Creates a ListView with items and sets the active item
+			// Creates a ListView with items and sets the active item		
 			this.listView = new ListView<String>();
 			listView.getItems().addAll(
 					"Wichtig",
@@ -90,6 +92,7 @@ public class ToDoView extends BorderPane {
 					"Erledigt",
 					"Papierkorb");
 			listView.getSelectionModel().select(1);
+			
 			
 			// Creates a VBox in the BorderPane and includes the listView
 			this.vBox = new VBox();

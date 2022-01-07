@@ -7,6 +7,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import client.ClientNetworkPlugin;
 import client.model.Priority;
@@ -27,6 +30,7 @@ public class AddToDoDialogPane extends DialogPane {
     private VBox headerBar;
     private HBox notice;
     private VBox topBar;
+    private VBox space;
 
     private Label newTaskLabel;
     private Label tippLabel;
@@ -61,12 +65,14 @@ public class AddToDoDialogPane extends DialogPane {
     ButtonType okButtonType;
 
     // Fields
-    private final int SPACING_CATEGORYBAR = 15;
+    private final int SPACING_CATEGORYBAR = 8;
     private final int SPACING_TITLEBAR = 43;
-    private final int SPACING_DUEDATEBAR = 28;
-    private final int SPACING_PRIORITYBAR = 22;
+    private final int SPACING_DUEDATEBAR = 26;
+    private final int SPACING_PRIORITYBAR = 18;
     private final int SPACING_TAGSBAR = 40;
     private final int SPACING_HEADERBAR = -10;
+    private final int SPACE = 20;
+    
     private final Duration DURATION_UNTIL_SHOW = Duration.seconds(0.2);
 
 
@@ -87,23 +93,49 @@ public class AddToDoDialogPane extends DialogPane {
         headerBar = new VBox(SPACING_HEADERBAR);
         notice = new HBox();
         topBar = new VBox();
+        space = new VBox(SPACE);
         
         newTaskLabel = new Label("Neue Aufgabe");
+        newTaskLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+        newTaskLabel.setTextFill(Color.web("#181C54"));
+        
         titleLabel = new Label("Titel");
+        titleLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        titleLabel.setTextFill(Color.web("#181C54"));
+        
         categoryLabel = new Label("Kategorie");
+        categoryLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        categoryLabel.setTextFill(Color.web("#181C54"));
+        
         dueDateLabel = new Label("Termin");
+        dueDateLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        dueDateLabel.setTextFill(Color.web("#181C54"));
+        
         priorityLabel = new Label("Priorität");
+        priorityLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        priorityLabel.setTextFill(Color.web("#181C54"));
+        
         messageLabel = new Label("Beschreibung");
+        messageLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        messageLabel.setTextFill(Color.web("#181C54"));
+        
         tagsLabel = new Label("Tags");
         tippLabel = new Label("Bewegen Sie Ihren Mauszeiger über einen Schriftzug!");
+        tippLabel.setFont(Font.font("Verdana", FontWeight.NORMAL, 11));
+        tippLabel.setTextFill(Color.web("#181C54"));
+        
         noticeLabel = new Label("​Kategorien für ein ToDo können nur auf dem zur Applikation dazugehörigen Server gespeichert werden.");
+        noticeLabel.setFont(Font.font("Verdana", FontWeight.NORMAL, 10));
+        noticeLabel.setTextFill(Color.web("BLACK"));
         
         attention = new ImageView("/common/resources/attention.png");
 		attention.setFitHeight(15);
 		attention.setFitWidth(15);
 
         titleTextfield = new TextField();
+        titleTextfield.setFont(Font.font("Verdana", FontWeight.NORMAL, 10));
         tagsTextfield = new TextField();
+        tagsTextfield.setFont(Font.font("Verdana", FontWeight.NORMAL, 10));
 
         // Instantiate tooltips
         titleToolTip = new Tooltip("Ihr Titel muss zwischen 3 - 20 Zeichen lang sein.");
@@ -129,16 +161,17 @@ public class AddToDoDialogPane extends DialogPane {
         categoryComboBox.setItems(copy);
         
         
-        // If Server is "147.86.8.31", the category CheckBox, Label and the header note will be disabled or cleared.
-        if (this.clientNetworkPlugin.getIP().equals("147.86.8.31")) {
+        // If Server is not "localhost", the category CheckBox and Label will be disabled and a note will be shown.
+        if (!this.clientNetworkPlugin.getIP().equals("localhost")) {
         	this.categoryComboBox.setDisable(true);
         	this.categoryLabel.setDisable(true);
             this.notice.getChildren().addAll(attention, noticeLabel);
-        	        
         }
+
                 
         datePicker = new DatePicker();
         messageTextArea = new TextArea();
+        messageTextArea.setFont(Font.font("Verdana", FontWeight.NORMAL, 10));
 
         // ComboBox for Priority
         priorityComboBox = new ComboBox<>();
@@ -154,7 +187,7 @@ public class AddToDoDialogPane extends DialogPane {
         headerBar.getChildren().addAll(newTaskLabel, tippLabel);
         topBar.getChildren().addAll(notice, headerBar);
         
-        leftPane.getChildren().addAll(titleBar, categoryBar, dueDateBar, priorityBar);
+        leftPane.getChildren().addAll(space, titleBar, categoryBar, dueDateBar, priorityBar);
         rightPane.getChildren().addAll(messageLabel, messageTextArea);
 
         // Set containers
@@ -170,7 +203,7 @@ public class AddToDoDialogPane extends DialogPane {
         priorityLabel.setTooltip(priorityTip);
         // tagsLabel.setTooltip(tagsToolTip);
         
-
+        
         // Add CSS styling
         this.getStylesheets().add(getClass().getResource("DialogPaneStyleSheet.css").toExternalForm());
         this.root.getStyleClass().add("root");
@@ -340,10 +373,16 @@ public class AddToDoDialogPane extends DialogPane {
     // Disabled all controls
     public void disableAllControls() {
         this.titleTextfield.setDisable(true);
+        this.titleLabel.setDisable(true);
         this.categoryComboBox.setDisable(true);
+        this.categoryLabel.setDisable(true);
         this.datePicker.setDisable(true);
+        this.dueDateLabel.setDisable(true);
         this.messageTextArea.setDisable(true);
+        this.messageLabel.setDisable(true);
         this.priorityComboBox.setDisable(true);
+        this.priorityLabel.setDisable(true);
+        this.tippLabel.setText("");
     }
 
 	public BorderPane getRoot() {

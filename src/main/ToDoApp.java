@@ -1,5 +1,6 @@
 package main;
 
+import client.ClientNetworkPlugin;
 import client.controller.ToDoController;
 import javafx.application.Application;
 import javafx.scene.Scene;
