@@ -172,12 +172,17 @@ public class AddToDoDialogPane extends DialogPane {
         this.messageTextArea.getStyleClass().add("messageTextArea");
         this.priorityLabel.getStyleClass().add("priorityLabel");
         this.notice.getStyleClass().add("notice");
+        this.categoryComboBox.getStyleClass().add("comboBox");
+        this.categoryComboBox.getStyleClass().add("combo-box");
+        this.priorityComboBox.getStyleClass().add("comboBox");
+        this.priorityComboBox.getStyleClass().add("combo-box");
         
 
         // Add buttonTypes
         okButtonType = new ButtonType("Erstellen", ButtonBar.ButtonData.OK_DONE);
         this.getButtonTypes().add(new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE));
         this.getButtonTypes().add(okButtonType);
+        this.getStylesheets().add(getClass().getResource("FocusAndHowToDialogPaneStyleSheet.css").toExternalForm());
 
         // Set content
         this.setContent(root);

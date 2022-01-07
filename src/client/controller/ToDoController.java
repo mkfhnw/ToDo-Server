@@ -1259,9 +1259,9 @@ public class ToDoController implements Serializable {
         // Set up event filter on OK-button to prevent dialog from closing when user input is not valid
         Button okButton = (Button) this.loginView.getRegistrationDialogPane().lookupButton(this.loginView.getRegistrationDialogPane().getOkButtonType());
         okButton.addEventFilter(ActionEvent.ACTION,
-                eventHandler -> {
+                anonymousEvent -> {
                     if (!validatePassword()) {
-                        event.consume();
+                        anonymousEvent.consume();
                     }
                 });
 
@@ -1291,30 +1291,26 @@ public class ToDoController implements Serializable {
      */
     public boolean validatePassword() {
 
-        if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() >= 3
-                && this.loginView.getRegistrationDialogPane().getPasswordField().getText().length() <= 20) {
+        // Upper password
+        String upperPassword = this.loginView.getRegistrationDialogPane().getPasswordField().getText();
+        String bottomPassword = this.loginView.getRegistrationDialogPane().getRepeatPasswordField().getText();
 
-            if (this.loginView.getRegistrationDialogPane().getPasswordField().getText().equals(
-                    this.loginView.getRegistrationDialogPane().getRepeatPasswordField().getText())) {
-
+        // Check upper password for length
+        if(upperPassword.length() >= 3 && upperPassword.length() <= 20) {
+            // Check if upper & bottom password match
+            if(upperPassword.equals(bottomPassword)) {
                 this.loginView.getRegistrationDialogPane().getLabel().setText("Passwort wurde geändert.");
                 this.loginView.getRegistrationDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
                 this.loginView.getRegistrationDialogPane().getLabel().setTextFill(Color.web("#00B050"));
 
-
                 return true;
-
-
             } else {
-
                 this.loginView.getRegistrationDialogPane().getLabel().setText("Passwörter stimmen nicht überein!");
                 this.loginView.getRegistrationDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
                 this.loginView.getRegistrationDialogPane().getLabel().setTextFill(Color.web("#C00000"));
 
                 return false;
-
             }
-
         } else {
 
             this.loginView.getRegistrationDialogPane().getLabel().setText("Das Passwort muss zwischen 3 und 20 Zeichen lang sein.");

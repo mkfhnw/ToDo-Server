@@ -42,7 +42,7 @@
 - [x] Show and hide passwords
 - [x] How-To Tutorial
 - [x] Focus-Timer (Pomodoro)
-- [x] Chart
+- [x] Charting
 - [x] Categories (only with the associated server)
 - [x] Search function
 - [x] ToDo-item filter (all and today)
