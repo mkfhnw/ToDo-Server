@@ -35,7 +35,14 @@ public class LoginView extends BorderPane {
 	private ImageView hiddenEyeImage;
 	
 	private Label label;
+	private Label IPAdressLabel;
+	private Label portLabel;
+	private TextField IPAdressTextField;
+	private TextField portTextField;
 	
+	private HBox IPAdressHBox;
+	private HBox portHBox;
+	private VBox IPAdressPortVBox;
 	private VBox userVBox;
 	private VBox passwordVBox;
 	private VBox buttonVBox;
@@ -57,7 +64,7 @@ public class LoginView extends BorderPane {
     private final int SPACING_LOGIN_VBOX = 15;
     private final int SPACING_IMAGE_VBOX = 20;
     private final int SPACING = 20;
-    private final int SPACING_TOP = 100;
+    private final int SPACING_TOP = 50;
     private final int SPACING_PASSWORD_HBOX = 7;
 	
     // Dialog for CreateAccount
@@ -89,7 +96,25 @@ public class LoginView extends BorderPane {
 	
 	// Label shows if Login failed --> Handling in Controller
 	this.label = new Label("");
-		
+	
+	this.IPAdressLabel = new Label("IP Adresse");
+	this.IPAdressLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+	this.IPAdressLabel.setTextFill(Color.web("#181C54"));
+	
+	this.portLabel = new Label("Port");
+	this.portLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 11));
+	this.portLabel.setTextFill(Color.web("#181C54"));
+	
+	this.IPAdressTextField = new TextField();
+	this.IPAdressTextField.setPromptText("IP Adresse");
+	this.IPAdressTextField.setMaxWidth(283);
+	this.IPAdressTextField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
+	
+	this.portTextField = new TextField();
+	this.portTextField.setPromptText("Port");
+	this.portTextField.setMaxWidth(283);
+	this.portTextField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
+	
 	this.userLabel = new Label("Benutzername");
 	this.userLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
 	this.userLabel.setTextFill(Color.web("#181C54"));
@@ -129,18 +154,23 @@ public class LoginView extends BorderPane {
 	Label label2 = new Label("");
 	
 	// Layout
-
+	
 	this.vBoxSpace = new VBox(SPACING_TOP);
 	this.vBoxSpace.getChildren().add(label2);
 	this.vBoxSpace2 = new VBox(SPACING);
 	
 	this.imageVBox = new VBox(SPACING_IMAGE_VBOX);
-	this.imageVBox.getChildren().addAll(vBoxSpace, image, vBoxSpace2);
+	this.imageVBox.getChildren().addAll(image, vBoxSpace2);
 	this.imageVBox.setSpacing(20);
 	this.imageVBox.setAlignment(Pos.CENTER);
-		
+	
+	this.IPAdressHBox = new HBox();
+	this.IPAdressHBox.getChildren().addAll(IPAdressLabel, IPAdressTextField, portLabel, portTextField);
+	this.IPAdressHBox.setAlignment(Pos.CENTER);
+	this.IPAdressHBox.setSpacing(10);
+	
 	this.userVBox= new VBox();
-	this.userVBox.getChildren().addAll(userLabel, userField);
+	this.userVBox.getChildren().addAll(vBoxSpace, userLabel, userField);
 	this.userVBox.setSpacing(10);
 	this.userVBox.setAlignment(Pos.CENTER);
 	
@@ -172,7 +202,7 @@ public class LoginView extends BorderPane {
 	this.spaceVBox = new VBox();
 	
 	this.loginVBox = new VBox(SPACING_LOGIN_VBOX);
-	this.loginVBox.getChildren().addAll(userVBox, passwordVBox, spaceVBox);
+	this.loginVBox.getChildren().addAll(IPAdressHBox, userVBox, passwordVBox, spaceVBox);
 	
 	this.changePasswordVBox = new VBox();
 	this.changePasswordVBox.getChildren().add(label);
