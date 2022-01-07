@@ -398,28 +398,30 @@ public class ToDoController implements Serializable {
 
         // Reset action handler
         this.searchBarView.getSearchButton().setOnMouseClicked(this::searchItem);
-        this.searchBarView.getSearchField().setOnAction(this::searchItemWithEnter);
+        this.searchBarView.getSearchField().setOnKeyPressed(this::searchItemWithEnter);
 
     }
     
-    private void searchItemWithEnter(ActionEvent e) {
+    private void searchItemWithEnter(KeyEvent ke) {
 
-        // Fetch input
-        SearchBarView midView = (SearchBarView) this.getActiveMidView();
-        String searchString = midView.getSearchField().getText();
+        if (ke.getCode().equals(KeyCode.ENTER)) {
+            // Fetch input
+            SearchBarView midView = (SearchBarView) this.getActiveMidView();
+            String searchString = midView.getSearchField().getText();
 
-        // Clear pane
-        midView.getTableView().getItems().clear();
+            // Clear pane
+            midView.getTableView().getItems().clear();
 
-        // Search items
-        ArrayList<ToDo> searchList = this.toDoList.searchItem(searchString);
+            // Search items
+            ArrayList<ToDo> searchList = this.toDoList.searchItem(searchString);
 
-        // Populate list
-        midView.getTableView().getItems().addAll(searchList);
+            // Populate list
+            midView.getTableView().getItems().addAll(searchList);
 
-        // Reset action handler
-        this.searchBarView.getSearchButton().setOnMouseClicked(this::searchItem);
-        this.searchBarView.getSearchField().setOnAction(this::searchItemWithEnter);
+            // Reset action handler
+            this.searchBarView.getSearchButton().setOnMouseClicked(this::searchItem);
+            this.searchBarView.getSearchField().setOnKeyPressed(this::searchItemWithEnter);
+        }
 
     }
     
@@ -447,7 +449,7 @@ public class ToDoController implements Serializable {
             this.linkTableViewListeners(searchBarView.getTableView().getItems());
             this.searchBarView.getTableView().setOnMouseClicked(this::updateToDo);
             this.searchBarView.getSearchButton().setOnMouseClicked(this::searchItem);
-            this.searchBarView.getSearchField().setOnAction(this::searchItemWithEnter);
+            this.searchBarView.getSearchField().setOnKeyPressed(this::searchItemWithEnter);
 
             // Put it on main view
             toDoView.getBorderPane().setCenter(this.searchBarView);
@@ -480,7 +482,7 @@ public class ToDoController implements Serializable {
                 this.linkTableViewListeners(searchBarView.getTableView().getItems());
                 this.searchBarView.getTableView().setOnMouseClicked(this::updateToDo);
                 this.searchBarView.getSearchButton().setOnMouseClicked(this::searchItem);
-                this.searchBarView.getSearchField().setOnAction(this::searchItemWithEnter);
+                this.searchBarView.getSearchField().setOnKeyPressed(this::searchItemWithEnter);
 
                 // Put it on main view
                 toDoView.getBorderPane().setCenter(this.searchBarView);
