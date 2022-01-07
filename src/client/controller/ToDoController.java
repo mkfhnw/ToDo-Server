@@ -19,6 +19,8 @@ import javafx.scene.Scene;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -94,7 +96,7 @@ public class ToDoController implements Serializable {
         this.plannedBarView = new PlannedBarView(this.toDoList.getToDoListPlanned());
         this.plannedBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
         this.plannedBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
-        this.plannedBarView.getSearchField().setOnAction(this::searchItemAndGenerateView);
+        this.plannedBarView.getSearchField().setOnKeyPressed(this::searchItemAndGenerateView);
         this.plannedBarView.getComboBox().setOnAction(this::changeCombo);
         this.plannedBarView.getTableView().setOnMouseClicked(this::updateToDo);
         this.linkTableViewListeners(plannedBarView.getTableView().getItems());
@@ -456,34 +458,42 @@ public class ToDoController implements Serializable {
     }
 
     // Takes the enter key instead of a mouseclick on the search button
-    private void searchItemAndGenerateView(ActionEvent ae) {
+    private void searchItemAndGenerateView(KeyEvent ae) {
 
-        // Fetch input
-        MainBarView midView = (MainBarView) this.getActiveMidView();
-        String searchString = midView.getSearchField().getText();
+    	if (ae.getCode().equals(KeyCode.ENTER)) {
+    		
+    		  // Fetch input
+            MainBarView midView = (MainBarView) this.getActiveMidView();
+            String searchString = midView.getSearchField().getText();
 
-        // Only go ahead if input is not empty
-        if (searchString.length() != 0) {
+            // Only go ahead if input is not empty
+            if (searchString.length() != 0) {
 
-            // Search items
-            ArrayList<ToDo> searchList = this.toDoList.searchItem(searchString);
-            ObservableList<ToDo> observableSearchList = FXCollections.observableArrayList(searchList);
+                // Search items
+                ArrayList<ToDo> searchList = this.toDoList.searchItem(searchString);
+                ObservableList<ToDo> observableSearchList = FXCollections.observableArrayList(searchList);
 
-            // Generate new searchView
-            this.searchBarView = new SearchBarView(observableSearchList);
-            this.searchBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
-            this.linkTableViewListeners(searchBarView.getTableView().getItems());
-            this.searchBarView.getTableView().setOnMouseClicked(this::updateToDo);
-            this.searchBarView.getSearchButton().setOnMouseClicked(this::searchItem);
-            this.searchBarView.getSearchField().setOnAction(this::searchItemWithEnter);
+                // Generate new searchView
+                this.searchBarView = new SearchBarView(observableSearchList);
+                this.searchBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
+                this.linkTableViewListeners(searchBarView.getTableView().getItems());
+                this.searchBarView.getTableView().setOnMouseClicked(this::updateToDo);
+                this.searchBarView.getSearchButton().setOnMouseClicked(this::searchItem);
+                this.searchBarView.getSearchField().setOnAction(this::searchItemWithEnter);
 
-            // Put it on main view
-            toDoView.getBorderPane().setCenter(this.searchBarView);
-
-        }
-
+                // Put it on main view
+                toDoView.getBorderPane().setCenter(this.searchBarView);
+            }
+            
+            // Otherwise just consume the event
+            ae.consume();
+    	}
+    	
         // Otherwise just consume the event
-        ae.consume();
+        ae.consume(); 	
+      
+
+
     }
 
     /* Method to update local as well as instantiated sublists
@@ -569,7 +579,7 @@ public class ToDoController implements Serializable {
                 importantBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
                 linkTableViewListeners(importantBarView.getTableView().getItems());
                 importantBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
-                importantBarView.getSearchButton().setOnAction(this::searchItemAndGenerateView);
+                importantBarView.getSearchButton().setOnKeyPressed(this::searchItemAndGenerateView);
                 importantBarView.getComboBox().setOnAction(this::changeCombo);
                 importantBarView.getTableView().setOnMouseClicked(this::updateToDo);
 
@@ -580,7 +590,7 @@ public class ToDoController implements Serializable {
                 plannedBarView = new PlannedBarView(this.toDoList.getToDoListPlanned());
                 plannedBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
                 plannedBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
-                plannedBarView.getSearchButton().setOnAction(this::searchItemAndGenerateView);
+                plannedBarView.getSearchButton().setOnKeyPressed(this::searchItemAndGenerateView);
                 plannedBarView.getComboBox().setOnAction(this::changeCombo);
                 plannedBarView.getTableView().setOnMouseClicked(this::updateToDo);
                 linkTableViewListeners(plannedBarView.getTableView().getItems());
@@ -591,7 +601,7 @@ public class ToDoController implements Serializable {
                 doneBarView = new DoneBarView(this.toDoList.getToDoListDone());
                 doneBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
                 doneBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
-                doneBarView.getSearchButton().setOnAction(this::searchItemAndGenerateView);
+                doneBarView.getSearchButton().setOnKeyPressed(this::searchItemAndGenerateView);
                 doneBarView.getComboBox().setOnAction(this::changeCombo);
                 doneBarView.getTableView().setOnMouseClicked(this::updateToDo);
                 linkTableViewListeners(doneBarView.getTableView().getItems());
@@ -601,7 +611,7 @@ public class ToDoController implements Serializable {
                 garbageBarView = new GarbageBarView(this.toDoList.getToDoListGarbage());
                 garbageBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
                 garbageBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
-                garbageBarView.getSearchButton().setOnAction(this::searchItemAndGenerateView);
+                garbageBarView.getSearchButton().setOnKeyPressed(this::searchItemAndGenerateView);
                 garbageBarView.getComboBox().setOnAction(this::changeCombo);
                 garbageBarView.getTableView().setOnMouseClicked(this::updateToDo);
                 linkTableViewListeners(garbageBarView.getTableView().getItems());

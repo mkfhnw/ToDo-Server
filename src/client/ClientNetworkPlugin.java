@@ -22,8 +22,10 @@ public class ClientNetworkPlugin {
     // Fields
     private final int PORT = 50002;
     private final String IP = "147.86.8.31";
+    
 //    private final int PORT = 51234;
 //    private final String IP = "localhost";
+    
     private Socket clientSocket;
     private BufferedReader inputReader;
     private PrintWriter outputWriter;
