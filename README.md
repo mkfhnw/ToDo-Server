@@ -1,5 +1,9 @@
 # ToDo-Server
 
+## How to change the target server IP
+> You can find the target server IP the client connects to inside the ClientNetworkPlugin class.
+> Hence, if you want the IP the client connects to, you must update the given field inside the ClientNetworkPlugin.
+
 ## Adding the SQLite-JDBC driver in IntelliJ
 1. Open the project in IntelliJ
 2. On the top left, click on **File** and select **Project Structure** (File -> Project Structure)
@@ -47,8 +51,7 @@
 - [x] Search function
 - [x] ToDo-item filter (all and today)
 
-
-## How to test your server
+## How to connect to your server via powershell
 1. Let the ServerRunner run
 2. Open up Powershell (type Poweshell in the Windows Searchbar)
 3. Type **ipconfig** in Powershell
@@ -56,6 +59,3 @@
 5. Type **test-netconnection IPADDRESS -port 50002**. Change IPADDRESS to your IP-address that you copied from the last step.
 6. The console from the ServerRunner should give you an output. test-netconnection sends a TCP-packet to your server.
 
-## Messaging protocol format
-- Client -> Server: ClientMessageType|Token|Data
-- Server -> Client: ServerMessageType|Token|Data
