@@ -22,7 +22,6 @@ public class ClientNetworkPlugin {
     // Fields
     private final int PORT = 50002;
 	private final String IP = "147.86.8.31";
-	// private final String IP = "147.86.8.31";
     private Socket clientSocket;
     private BufferedReader inputReader;
     private PrintWriter outputWriter;
@@ -30,17 +29,11 @@ public class ClientNetworkPlugin {
     private final String sender = "Client";
     private final String recipient = "Server";
     private ServerRunnable serverRunnable;
+	private boolean isConnectedToPrivateServer;
 
     // Constructor
     public ClientNetworkPlugin() {
-
-		// This try-catch / thread.sleep is only because my laptop isn't able to spin up the server fast enough..
-//		try {
-//			Thread.sleep(3000);
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage());
-//		}
-
+		this.isConnectedToPrivateServer = false;
         System.out.println("[CLIENT] New ToDoClient created.");
     }
 
@@ -50,6 +43,10 @@ public class ClientNetworkPlugin {
 			this.clientSocket = new Socket(this.IP, this.PORT);
 			this.inputReader = this.getInputReader(this.clientSocket);
 			this.outputWriter = this.getOutputWriter(this.clientSocket);
+
+			// Check if connected to mother server
+			if(this.PORT == 51234) { this.isConnectedToPrivateServer = true; }
+
 			System.out.println("[CLIENT] ToDo-Client connected to server");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
