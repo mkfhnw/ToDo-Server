@@ -2,12 +2,25 @@
 	-fx-background-color: #101b53;
     	-fx-text-fill: #ffffff;
 }
+.slider .track {
+	-fx-background-color: #1ec4dc;
+	-fx-pref-height: 4;
+}
+.slider .thumb{
+	-fx-background-color: #101b53;
+	-fx-pref-height: 15; 
+}
 .root {
 	-fx-background-color: #ffffff;
 }
 .button {
-    	-fx-background-color: #1ec4dc;
-    	-fx-text-fill: #ffffff;
+    -fx-background-color: #1ec4dc;
+    -fx-text-fill: #ffffff;
+}
+.login {
+    -fx-background-color: linear-gradient(to top, #1EC4DA, #1EC4DC);
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );
 }
 .button:hover {
     	-fx-border-size: 3px;
