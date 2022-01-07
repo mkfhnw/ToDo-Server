@@ -6,6 +6,8 @@ import client.view.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -128,9 +130,6 @@ public class ToDoController implements Serializable {
 
         // EventHandling CheckBox to show and hide passwords in registration
         this.loginView.getRegistrationDialogPane().getShowPassword().setOnAction(this::showHideRegistrationPW);
-        
-        // EventHandling for slider in video
-        this.toDoView.getHowToDialogPane().getSlider().setOnMouseClicked(this::clickedSliderMediaPlayer);
 
         // Instantiate barchart with utils
         Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(0.3), new EventHandler<ActionEvent>() {
@@ -936,10 +935,36 @@ public class ToDoController implements Serializable {
         }
     }
 
-    // Plays HowTo video
+    // Plays HowTo video and binds slider
     public void playMedia(MouseEvent event) {
 
         this.toDoView.getHowToDialogPane().getMediaPlayer().play();
+        
+        toDoView.getHowToDialogPane().getSlider().setMax(toDoView.getHowToDialogPane().getMediaPlayer().getTotalDuration().toSeconds());
+    	
+    	toDoView.getHowToDialogPane().getMediaPlayer().currentTimeProperty().addListener(new ChangeListener<Duration>() {
+    		@Override
+    		public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+    			toDoView.getHowToDialogPane().getSlider().setValue(newValue.toSeconds());
+    		}
+    	});
+	
+    	toDoView.getHowToDialogPane().getSlider().setOnMousePressed(new EventHandler <MouseEvent>() {
+    		@Override
+    		public void handle(MouseEvent event) {
+    			toDoView.getHowToDialogPane().getMediaPlayer().seek(Duration.seconds(toDoView.getHowToDialogPane().getSlider().getValue()));
+    		}
+    		
+    	});
+    	
+    	toDoView.getHowToDialogPane().getMediaPlayer().setOnReady(new Runnable() {
+    		@Override
+    		public void run() {
+    			Duration total = toDoView.getHowToDialogPane().getMedia().getDuration();
+    			toDoView.getHowToDialogPane().getSlider().setMax(total.toSeconds());
+    		}
+    	});
+        
     }
 
     //Stops HowTo video
@@ -1432,21 +1457,6 @@ public class ToDoController implements Serializable {
         this.updateInstancedSublists();
     }
 
-    // Bind slider to video
-    public void slideMediaPlayer() {
-    	this.toDoView.getHowToDialogPane().getMediaPlayer().currentTimeProperty().addListener(new ChangeListener<Duration>() {
-    		@Override
-    		public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-    			toDoView.getHowToDialogPane().getSlider().setValue(newValue.toSeconds());
-		}
-	});
-	
-	
-    }
-    // click slider
-	public void clickedSliderMediaPlayer(MouseEvent event) {
-		toDoView.getHowToDialogPane().getMediaPlayer().seek(Duration.seconds(toDoView.getHowToDialogPane().getSlider().getValue()));
-	}
     
 }
 

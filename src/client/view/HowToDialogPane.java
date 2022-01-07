@@ -36,6 +36,7 @@ public class HowToDialogPane extends DialogPane {
 	private VBox vBoxStop;
 	private VBox vBoxReplay;
 	private VBox sliderVBox;
+	private VBox spacing;
 	private VBox general;
 	
 	private Media media;
@@ -123,10 +124,13 @@ public class HowToDialogPane extends DialogPane {
 	this.hBoxButtons.getChildren().addAll(vBoxPlay, vBoxStop, vBoxReplay);
 	this.hBoxButtons.setSpacing(10);
 	this.hBoxButtons.setAlignment(Pos.CENTER);
-	this.hBoxButtons.setPadding(new Insets(50.0, 0.0, 0.0, 20.0));
+	this.hBoxButtons.setPadding(new Insets(50.0, 0.0, 0.0, 30.0));
+	
+	this.spacing = new VBox(30);
 	
 	this.general = new VBox();
-	this.general.getChildren().addAll(hBoxButtons, sliderVBox);
+	this.general.getChildren().addAll(spacing, hBoxButtons, sliderVBox);
+	this.general.setSpacing(10);
 	
 	this.howToBorderPane.setBottom(general);
 	
@@ -143,6 +147,7 @@ public class HowToDialogPane extends DialogPane {
 	this.howToBorderPane.getStyleClass().add("root");
 	this.playButton.getStyleClass().add("button");
 	this.stopButton.getStyleClass().add("button");
+	this.slider.getStyleClass().add("slider");
 	}
 	
 
