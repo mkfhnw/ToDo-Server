@@ -21,7 +21,7 @@ public class ClientNetworkPlugin {
 
     // Fields
     private final int PORT = 50002;
-	private final String IP = "147.86.8.31";
+	private String IP = "147.86.8.31";
     private Socket clientSocket;
     private BufferedReader inputReader;
     private PrintWriter outputWriter;
@@ -461,6 +461,14 @@ public class ClientNetworkPlugin {
 
 		public void setServerRunnable(ServerRunnable serverRunnable) {
 			this.serverRunnable = serverRunnable;
+		}
+
+		public String getIP() {
+			return IP;
+		}
+
+		public void setIP(String iP) {
+			IP = iP;
 		}
     
         
