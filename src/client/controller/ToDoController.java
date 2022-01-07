@@ -105,8 +105,9 @@ public class ToDoController implements Serializable {
         // Register buttons EventHandling
         if(this.clientNetworkPlugin.isConnectedToPrivateServer()) {
             this.toDoView.getListView().setOnMouseClicked(this::changeCenterBar);
+        } else {
+            this.toDoView.getListView().setOnMouseClicked(this::changeToPlannedBarView);
         }
-
 
         // Focus timer button EventHandling
         this.toDoView.getOpenFocusTimer().setOnMouseClicked(this::createFocusTimer);
@@ -397,28 +398,30 @@ public class ToDoController implements Serializable {
 
         // Reset action handler
         this.searchBarView.getSearchButton().setOnMouseClicked(this::searchItem);
-        this.searchBarView.getSearchField().setOnAction(this::searchItemWithEnter);
+        this.searchBarView.getSearchField().setOnKeyPressed(this::searchItemWithEnter);
 
     }
     
-    private void searchItemWithEnter(ActionEvent e) {
+    private void searchItemWithEnter(KeyEvent ke) {
 
-        // Fetch input
-        SearchBarView midView = (SearchBarView) this.getActiveMidView();
-        String searchString = midView.getSearchField().getText();
+        if (ke.getCode().equals(KeyCode.ENTER)) {
+            // Fetch input
+            SearchBarView midView = (SearchBarView) this.getActiveMidView();
+            String searchString = midView.getSearchField().getText();
 
-        // Clear pane
-        midView.getTableView().getItems().clear();
+            // Clear pane
+            midView.getTableView().getItems().clear();
 
-        // Search items
-        ArrayList<ToDo> searchList = this.toDoList.searchItem(searchString);
+            // Search items
+            ArrayList<ToDo> searchList = this.toDoList.searchItem(searchString);
 
-        // Populate list
-        midView.getTableView().getItems().addAll(searchList);
+            // Populate list
+            midView.getTableView().getItems().addAll(searchList);
 
-        // Reset action handler
-        this.searchBarView.getSearchButton().setOnMouseClicked(this::searchItem);
-        this.searchBarView.getSearchField().setOnAction(this::searchItemWithEnter);
+            // Reset action handler
+            this.searchBarView.getSearchButton().setOnMouseClicked(this::searchItem);
+            this.searchBarView.getSearchField().setOnKeyPressed(this::searchItemWithEnter);
+        }
 
     }
     
@@ -446,7 +449,7 @@ public class ToDoController implements Serializable {
             this.linkTableViewListeners(searchBarView.getTableView().getItems());
             this.searchBarView.getTableView().setOnMouseClicked(this::updateToDo);
             this.searchBarView.getSearchButton().setOnMouseClicked(this::searchItem);
-            this.searchBarView.getSearchField().setOnAction(this::searchItemWithEnter);
+            this.searchBarView.getSearchField().setOnKeyPressed(this::searchItemWithEnter);
 
             // Put it on main view
             toDoView.getBorderPane().setCenter(this.searchBarView);
@@ -479,7 +482,7 @@ public class ToDoController implements Serializable {
                 this.linkTableViewListeners(searchBarView.getTableView().getItems());
                 this.searchBarView.getTableView().setOnMouseClicked(this::updateToDo);
                 this.searchBarView.getSearchButton().setOnMouseClicked(this::searchItem);
-                this.searchBarView.getSearchField().setOnAction(this::searchItemWithEnter);
+                this.searchBarView.getSearchField().setOnKeyPressed(this::searchItemWithEnter);
 
                 // Put it on main view
                 toDoView.getBorderPane().setCenter(this.searchBarView);
@@ -618,6 +621,17 @@ public class ToDoController implements Serializable {
                 toDoView.getBorderPane().setCenter(garbageBarView);
             }
         }
+    }
+
+    public void changeToPlannedBarView(MouseEvent event) {
+        plannedBarView = new PlannedBarView(this.toDoList.getToDoListPlanned());
+        plannedBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
+        plannedBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
+        plannedBarView.getSearchButton().setOnKeyPressed(this::searchItemAndGenerateView);
+        plannedBarView.getComboBox().setOnAction(this::changeCombo);
+        plannedBarView.getTableView().setOnMouseClicked(this::updateToDo);
+        linkTableViewListeners(plannedBarView.getTableView().getItems());
+        toDoView.getBorderPane().setCenter(plannedBarView);
     }
 
 
@@ -1066,6 +1080,7 @@ public class ToDoController implements Serializable {
 
             // Update UI
             Platform.runLater(() -> {
+            			toDoView.getLoggedOnUser().setText("Welcome " + emailLogin);
                         this.stage.setScene(scene2);
                         stage.resizableProperty().setValue(Boolean.TRUE);
 

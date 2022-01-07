@@ -2,10 +2,17 @@
 
 ## Important Note
 > Our server listens at port 51234. This is important because **our** client identifies **our** server over this port.
-> Therefore, if you want to connect other clients to our server, please use port 51234 - or if you want to connect
-> our client to other servers, please change the port (as explained below) to the port the server is listening on.
+> This is due to our client supporting features, that are **not** supported by the defined standard (e.g.: setting categories).
+> Our client therefore checks on application startup, to which port he got connected. If the client connected to a server
+> listening on port 51234, it recognizes that it connected to our client and is therefore able to fully take advantage of
+> the supported features. If the client connects to port 50002 however, we disable these features to stay compliant to the
+> defined standard. Therefore, if you want to connect other clients to our server, please use port 51234. If you want to
+> connect our client to other servers, please change the port (as explained below) to the port the server is listening on.
+> <br>
+> <br>
+> ![img.png](img.png)
 
-## How to change the target server IP
+## How to change the target server IP & Port
 > You can find the target server IP the client connects to inside the ClientNetworkPlugin class.
 > Hence, if you want the IP the client connects to, you must update the given field inside the ClientNetworkPlugin.
 
@@ -47,6 +54,7 @@
 ### Client-Side features
 - [x] Messaging Protocol was implemented as described
 - [x] Graphic user interface
+- [x] Client recognizes if connected to own server or not and adjusts functionality accordingly
 - [x] MVC  
 - [x] Show and hide passwords
 - [x] How-To Tutorial
@@ -56,6 +64,7 @@
 - [x] Search function
 - [x] ToDo-item filter (all and today)
 
+
 ## How to connect to your server via powershell
 1. Let the ServerRunner run
 2. Open up Powershell (type Poweshell in the Windows Searchbar)
@@ -64,3 +73,7 @@
 5. Type **test-netconnection IPADDRESS -port 50002**. Change IPADDRESS to your IP-address that you copied from the last step.
 6. The console from the ServerRunner should give you an output. test-netconnection sends a TCP-packet to your server.
 
+## Contributors
+- Margareta Karaqi
+- Nico Sträuli
+- Joel Läubin / MadMowgli

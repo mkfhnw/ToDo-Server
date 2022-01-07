@@ -3,19 +3,19 @@
   	-fx-padding: 0;
 }
 .list-cell {
-	-fx-cell-size: 35;
+	-fx-cell-size: 50;
 }
 .list-cell:even {
     	-fx-background-color: #101b53;
     	-fx-text-fill: white;
     	-fx-border-style: none;
-    	-fx-font: 12pt "Verdana";
+    	-fx-font: 20pt "Verdana";
 }
 .list-cell: odd {
     	-fx-background-color: #101b53;
     	-fx-text-fill: white;
     	-fx-border-style: none;
-    	-fx-font: 12pt "Verdana";
+    	-fx-font: 20pt "Verdana";
 }
 .list-cell:filled:selected {
     	-fx-text-fill: red;
