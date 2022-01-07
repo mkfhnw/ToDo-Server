@@ -1078,6 +1078,7 @@ public class ToDoController implements Serializable {
 
             // Update UI
             Platform.runLater(() -> {
+            			toDoView.getLoggedOnUser().setText("Welcome " + emailLogin);
                         this.stage.setScene(scene2);
                         stage.resizableProperty().setValue(Boolean.TRUE);
 

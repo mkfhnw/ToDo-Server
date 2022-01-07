@@ -30,13 +30,13 @@ public class ToDoApp extends Application {
 	
 	public void start(Stage stage) {
 		
+		// Instance for LoginView
+		this.loginView = new LoginView();
+		
 		// Instantiates the root todoView
 		this.todoModel = new ToDo();
 		this.toDoList = new ToDoList();
-		this.toDoView = new ToDoView(todoModel, toDoList);
-		
-		// Instance for LoginView
-		this.loginView = new LoginView();
+		this.toDoView = new ToDoView(todoModel, toDoList, loginView);
 		
 		stage.resizableProperty().setValue(Boolean.FALSE);
 		
