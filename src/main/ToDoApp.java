@@ -1,17 +1,11 @@
 package main;
 
-import client.ClientNetworkPlugin;
 import client.controller.ToDoController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import server.models.ServerRunnable;
 import client.view.LoginView;
-import client.view.RegistrationDialogPane;
 import client.view.ToDoView;
 import client.model.ToDo;
 import client.model.ToDoList;

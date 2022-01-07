@@ -2,6 +2,7 @@ package client.view;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -157,12 +158,14 @@ public class AddToDoDialogPane extends DialogPane {
         categoryComboBox = new ComboBox<>();
         ObservableList<String> copy = FXCollections.observableArrayList();
         copy.addAll(listViewItems);
-        copy.remove(3);
+        if(this.clientNetworkPlugin.isConnectedToPrivateServer()) {
+            copy.remove(3);
+        }
         categoryComboBox.setItems(copy);
         
         
         // If Server is not "localhost", the category CheckBox and Label will be disabled and a note will be shown.
-        if (!this.clientNetworkPlugin.getIP().equals("localhost")) {
+        if (!this.clientNetworkPlugin.isConnectedToPrivateServer()) {
         	this.categoryComboBox.setDisable(true);
         	this.categoryLabel.setDisable(true);
             this.notice.getChildren().addAll(attention, noticeLabel);
@@ -246,7 +249,10 @@ public class AddToDoDialogPane extends DialogPane {
     }
 
     // Constructor overload method used for updating an item
-    public AddToDoDialogPane(ObservableList<String> listViewItems, ToDo todo) {
+    public AddToDoDialogPane(ObservableList<String> listViewItems, ToDo todo, ClientNetworkPlugin clientNetworkPlugin) {
+
+        // Set clientNetworkPlugin
+        this.clientNetworkPlugin = clientNetworkPlugin;
 
         // Instantiate components
         root = new BorderPane();
@@ -285,7 +291,9 @@ public class AddToDoDialogPane extends DialogPane {
         // Remove Papierkorb
         ObservableList<String> copy = FXCollections.observableArrayList();
         copy.addAll(listViewItems);
-        copy.remove(3);
+        if(this.clientNetworkPlugin.isConnectedToPrivateServer()) {
+            copy.remove(3);
+        }
 
         // Instantiate the rest of the items
         categoryComboBox = new ComboBox<>();
@@ -303,12 +311,25 @@ public class AddToDoDialogPane extends DialogPane {
         priorityComboBox.setItems(FXCollections.observableArrayList(validPriorities));
         priorityComboBox.setValue(Priority.Low);
 
+        // Notification
+        noticeLabel = new Label("Diese Darstellung dient nur zur Ansicht. Informationen können nicht geändert werden.");
+        noticeLabel.setFont(Font.font("Verdana", FontWeight.NORMAL, 10));
+        noticeLabel.setTextFill(Color.web("BLACK"));
+
+        attention = new ImageView("/common/resources/attention.png");
+        attention.setFitHeight(15);
+        attention.setFitWidth(15);
+
+        this.notice = new HBox();
+        this.notice.getChildren().addAll(attention, noticeLabel);
+        this.notice.getStyleClass().add("viewOnlyNotice");
+
         // Fill controls into containers
         titleBar.getChildren().addAll(titleLabel, titleTextfield);
         categoryBar.getChildren().addAll(categoryLabel, categoryComboBox);
         dueDateBar.getChildren().addAll(dueDateLabel, datePicker);
         priorityBar.getChildren().addAll(priorityLabel, priorityComboBox);
-        headerBar.getChildren().addAll(newTaskLabel, tippLabel);
+        headerBar.getChildren().addAll(newTaskLabel, notice);
 
         leftPane.getChildren().addAll(titleBar, categoryBar, dueDateBar, priorityBar);
         rightPane.getChildren().addAll(messageLabel, messageTextArea);

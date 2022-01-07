@@ -14,7 +14,17 @@
 .notice {
 	-fx-background-color: #fdf8e5;
 	-fx-border-style: solid; 
-}	
+}
+
+.viewOnlyNotice {
+	-fx-background-color: #fdf8e5;
+	-fx-border-style: solid;
+
+	/* Margin workaround */
+	-fx-border-insets: 15px;
+	-fx-background-insets: 15px;
+}
+
 .newTaskLabel {
 	-fx-text-fill: #000000;
 	-fx-font-size: 20px;

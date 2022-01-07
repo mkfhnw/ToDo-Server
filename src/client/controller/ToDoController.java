@@ -81,6 +81,12 @@ public class ToDoController implements Serializable {
             this.clientNetworkPlugin.connect();
         }
 
+        // Change listView if not connected to private server
+        if(!this.clientNetworkPlugin.isConnectedToPrivateServer()) {
+            this.toDoView.getListView().getItems().clear();
+            this.toDoView.getListView().getItems().add("Geplant");
+        }
+
         // Load items from database
         this.toDoList.updateSublists();
 
@@ -95,7 +101,10 @@ public class ToDoController implements Serializable {
         this.toDoView.getBorderPane().setCenter(plannedBarView);
 
         // Register buttons EventHandling
-        this.toDoView.getListView().setOnMouseClicked(this::changeCenterBar);
+        if(this.clientNetworkPlugin.isConnectedToPrivateServer()) {
+            this.toDoView.getListView().setOnMouseClicked(this::changeCenterBar);
+        }
+
 
         // Focus timer button EventHandling
         this.toDoView.getOpenFocusTimer().setOnMouseClicked(this::createFocusTimer);
@@ -261,7 +270,7 @@ public class ToDoController implements Serializable {
 
                 // Open new dialogPane to make it editable
                 this.toDoView.setAddToDoDialog(new Dialog<ButtonType>());
-                AddToDoDialogPane updateDialogPane = new AddToDoDialogPane(this.toDoView.getListView().getItems(), itemToUpdate);
+                AddToDoDialogPane updateDialogPane = new AddToDoDialogPane(this.toDoView.getListView().getItems(), itemToUpdate, this.clientNetworkPlugin);
                 updateDialogPane.disableAllControls();
                 this.toDoView.setToDoDialogPane(updateDialogPane);
                 this.toDoView.getAddToDoDialog().setDialogPane(this.toDoView.getToDoDialogPane());
