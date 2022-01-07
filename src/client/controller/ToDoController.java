@@ -1151,9 +1151,13 @@ public class ToDoController implements Serializable {
         	this.toDoList.clearLists();
         	
             this.stage.close();
+
+            /*
             if (!this.clientNetworkPlugin.isConnected()) {
                 this.clientNetworkPlugin.connect();
             }
+             */
+            this.clientNetworkPlugin.connect();
 
             this.stage.setScene(scene1);
             stage.resizableProperty().setValue(Boolean.FALSE);
