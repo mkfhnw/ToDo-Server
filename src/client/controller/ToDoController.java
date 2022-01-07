@@ -326,7 +326,7 @@ public class ToDoController implements Serializable {
         this.clientNetworkPlugin.deleteToDo(toDo.getID());
         this.toDoList.removeToDo(toDo);
 
-        if (toDo.getCategory().equals("Papierkorb")) {
+        if (toDo.getCategory() != null && toDo.getCategory().equals("Papierkorb")) {
             this.toDoList.getGarbageList().remove(toDo);
         }
 
@@ -348,7 +348,7 @@ public class ToDoController implements Serializable {
         this.clientNetworkPlugin.deleteToDo(toDo.getID());
         this.toDoList.removeToDo(toDo);
 
-        if (toDo.getCategory().equals("Papierkorb")) {
+        if (toDo.getCategory() != null && toDo.getCategory().equals("Papierkorb")) {
             this.toDoList.getGarbageList().remove(toDo);
         }
         toDo.setCategory("Wichtig");
@@ -1046,6 +1046,15 @@ public class ToDoController implements Serializable {
             // Get each item in a separate thread
             for (String id : resultList) {
                 Thread callThread = new Thread(new LoadTasksRunnable(id, this.clientNetworkPlugin, this));
+                callThread.setName("TASK-ID-Thread: " + id);
+
+                // We need this sleep, since requests made too close to each other are not getting received by the server
+                try {
+                    Thread.sleep(50);
+                } catch (Exception e) {
+                    System.out.println("CONTROLLER: THREAD SLEEP FAILED");
+                }
+
                 callThread.setDaemon(true);
                 this.threadPool.add(callThread);
                 callThread.start();
