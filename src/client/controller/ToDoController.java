@@ -62,7 +62,6 @@ public class ToDoController implements Serializable {
     public ToDoController(ToDoView toDoView, ToDo toDo, ToDoList toDoList, Stage stage, Scene scene2,
                           LoginView loginView, Scene scene1) {
 
-
         this.toDoView = toDoView;
         this.toDo = toDo;
         this.toDoList = toDoList;

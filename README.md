@@ -1,5 +1,10 @@
 # ToDo-Server
 
+## Important Note
+> Our server listens at port 51234. This is important because **our** client identifies **our** server over this port.
+> Therefore, if you want to connect other clients to our server, please use port 51234 - or if you want to connect
+> our client to other servers, please change the port (as explained below) to the port the server is listening on.
+
 ## How to change the target server IP
 > You can find the target server IP the client connects to inside the ClientNetworkPlugin class.
 > Hence, if you want the IP the client connects to, you must update the given field inside the ClientNetworkPlugin.
