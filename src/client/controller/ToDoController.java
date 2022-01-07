@@ -105,8 +105,9 @@ public class ToDoController implements Serializable {
         // Register buttons EventHandling
         if(this.clientNetworkPlugin.isConnectedToPrivateServer()) {
             this.toDoView.getListView().setOnMouseClicked(this::changeCenterBar);
+        } else {
+            this.toDoView.getListView().setOnMouseClicked(this::changeToPlannedBarView);
         }
-
 
         // Focus timer button EventHandling
         this.toDoView.getOpenFocusTimer().setOnMouseClicked(this::createFocusTimer);
@@ -618,6 +619,17 @@ public class ToDoController implements Serializable {
                 toDoView.getBorderPane().setCenter(garbageBarView);
             }
         }
+    }
+
+    public void changeToPlannedBarView(MouseEvent event) {
+        plannedBarView = new PlannedBarView(this.toDoList.getToDoListPlanned());
+        plannedBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
+        plannedBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
+        plannedBarView.getSearchButton().setOnKeyPressed(this::searchItemAndGenerateView);
+        plannedBarView.getComboBox().setOnAction(this::changeCombo);
+        plannedBarView.getTableView().setOnMouseClicked(this::updateToDo);
+        linkTableViewListeners(plannedBarView.getTableView().getItems());
+        toDoView.getBorderPane().setCenter(plannedBarView);
     }
 
 
