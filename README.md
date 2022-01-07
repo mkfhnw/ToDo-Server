@@ -54,6 +54,7 @@
 ### Client-Side features
 - [x] Messaging Protocol was implemented as described
 - [x] Graphic user interface
+- [x] Client recognizes if connected to own server or not and adjusts functionality accordingly
 - [x] MVC  
 - [x] Show and hide passwords
 - [x] How-To Tutorial
@@ -62,6 +63,7 @@
 - [x] Categories (only with the associated server)
 - [x] Search function
 - [x] ToDo-item filter (all and today)
+
 
 ## How to connect to your server via powershell
 1. Let the ServerRunner run
