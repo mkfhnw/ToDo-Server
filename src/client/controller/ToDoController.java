@@ -280,13 +280,16 @@ public class ToDoController implements Serializable {
     /* Delete method
      * Gets a specific ToDo based on its ID and deletes it.
      */
-    public void deleteToDo(int ID) {
+    public void deleteToDo(MouseEvent e) {
 
-        // Fetch ToDo item
-        ToDo itemToRemove = this.toDoList.getToDo(ID);
-        this.toDoList.removeToDo(itemToRemove);
+        // Check if item already was deleted, purge it if so
+        ToDo toDo = toDoList.getToDo((Button) e.getSource());
 
+        // Recreate if first delete
+        this.clientNetworkPlugin.deleteToDo(toDo.getID());
+        this.toDoList.removeToDo(toDo);
 
+        this.updateInstancedSublists();
     }
 
 
@@ -520,9 +523,17 @@ public class ToDoController implements Serializable {
      */
     private void linkTableViewListeners(ObservableList<ToDo> listItems) {
         for (ToDo toDo : listItems) {
-            toDo.getDoneButton().setOnMouseClicked(this::setToDoOnDone);
-            toDo.getImportantButton().setOnMouseClicked(this::setToDoAsImportant);
-            toDo.getGarbageButton().setOnMouseClicked(this::setToDoAsGarbage);
+
+            if(this.clientNetworkPlugin.isConnectedToPrivateServer()) {
+                toDo.getDoneButton().setOnMouseClicked(this::setToDoOnDone);
+                toDo.getImportantButton().setOnMouseClicked(this::setToDoAsImportant);
+                toDo.getGarbageButton().setOnMouseClicked(this::setToDoAsGarbage);
+            } else {
+                toDo.getDoneButton().setDisable(true);
+                toDo.getImportantButton().setDisable(true);
+                toDo.getGarbageButton().setOnMouseClicked(this::deleteToDo);
+            }
+
         }
     }
 
