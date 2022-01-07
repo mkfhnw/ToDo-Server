@@ -45,3 +45,7 @@
 .badPing {
 	-fx-background-color: #FF0000;
 }
+.userLabel {
+	-fx-text-fill: #101b53;
+	-fx-font: 12pt "Verdana";
+}

@@ -33,6 +33,8 @@ public class ToDoView extends BorderPane {
 		private SplitPane splitPane;
 		private StackPane stackPane;
 		
+		private Label loggedOnUser;
+		
 		private Dialog<ButtonType> addToDoDialog;
 		private AddToDoDialogPane toDoDialogPane;
 		
@@ -78,11 +80,14 @@ public class ToDoView extends BorderPane {
 		 * Instantiates all necessary control elements
 		 * and adds them to the container
 		 */
-		public ToDoView(ToDo toDoModel, ToDoList toDoListModel) {
+		public ToDoView(ToDo toDoModel, ToDoList toDoListModel, LoginView loginView) {
 			
 			// Instantiates our classes
 			this.toDoModel = toDoModel;
 			this.toDoListModel = toDoListModel;
+			
+			this.loggedOnUser = new Label("");
+			
 			
 			// Creates a ListView with items and sets the active item		
 			this.listView = new ListView<String>();
@@ -95,6 +100,7 @@ public class ToDoView extends BorderPane {
 			
 			
 			// Creates a VBox in the BorderPane and includes the listView
+			
 			this.vBox = new VBox();
 			this.vBox.getChildren().addAll(listView);
 			this.setLeft(this.vBox);
@@ -187,7 +193,7 @@ public class ToDoView extends BorderPane {
 			hBoxContainer.setSpacing(30);
 			hBoxContainer.getChildren().addAll(openFocusTimer, pingButton, logoutButton);
 			
-			this.vBoxBottom.getChildren().add(hBoxContainer);
+			this.vBoxBottom.getChildren().addAll(loggedOnUser, hBoxContainer);
 			this.vBoxBottom.setPadding(new Insets(50.0, 00.0, 50.0, 50.0));
 			this.vBoxBottom.setSpacing(30);
 			this.vBoxBottom.setAlignment(Pos.CENTER);
@@ -205,6 +211,8 @@ public class ToDoView extends BorderPane {
 			this.pingButton.getStyleClass().add("openFocusTimer");
 			this.bc.getStylesheets().add(getClass().getResource("BarChartStyleSheet.css").toExternalForm());
 			this.logoutButton.getStyleClass().add("logoutButton");
+			this.loggedOnUser.getStyleClass().add("userLabel");
+			
 			
 	        
 			
@@ -485,6 +493,10 @@ public class ToDoView extends BorderPane {
 
 		public void setMenuBar(MenuBar menuBar) {
 			this.menuBar = menuBar;
+		}
+		
+		public Label getLoggedOnUser() {
+			return this.loggedOnUser;
 		}
 
 }
