@@ -249,7 +249,7 @@ public class ToDoController implements Serializable {
     public void updateToDo(MouseEvent e) {
 
         // Check for double click
-        if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2000) {
+        if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2) {
 
             // Get clicked item
             MainBarView activeMidView = (MainBarView) this.getActiveMidView();
@@ -262,39 +262,14 @@ public class ToDoController implements Serializable {
 
                 // Open new dialogPane to make it editable
                 this.toDoView.setAddToDoDialog(new Dialog<ButtonType>());
-                this.toDoView.setToDoDialogPane(new AddToDoDialogPane(this.toDoView.getListView().getItems(), itemToUpdate));
+                AddToDoDialogPane updateDialogPane = new AddToDoDialogPane(this.toDoView.getListView().getItems(), itemToUpdate);
+                updateDialogPane.disableAllControls();
+                this.toDoView.setToDoDialogPane(updateDialogPane);
                 this.toDoView.getAddToDoDialog().setDialogPane(this.toDoView.getToDoDialogPane());
                 Optional<ButtonType> result = this.toDoView.getAddToDoDialog().showAndWait();
 
                 // Parse only positive result, ignore CANCEL_CLOSE
-                if (result.isPresent() && result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
 
-                    // Validate user input
-                    if (this.validateUserInput()) {
-
-                        // Delete old item from arrayList
-                        // this.toDoList.removeToDo(itemToUpdate);
-
-                        // Parse out data
-                        String title = this.toDoView.getToDoDialogPane().getTitleTextfield().getText();
-                        String category = this.toDoView.getToDoDialogPane().getCategoryComboBox().getValue();
-                        String message = this.toDoView.getToDoDialogPane().getMessageTextArea().getText();
-                        String dueDateString = this.toDoView.getToDoDialogPane().getDatePicker().getValue().toString();
-                        String tags = this.toDoView.getToDoDialogPane().getTagsTextfield().getText();
-
-
-                        String[] tagArray = tags.replaceAll("\\s", "").split(";");
-                        ArrayList<String> tagArrayList = new ArrayList<String>(List.of(tagArray));
-
-                        // TODO: We're double-creating the item here
-                        // this.createToDo(title, message, LocalDate.parse(dueDateString), category, tagArrayList);
-                        ToDo updatedItem = new ToDo(itemToUpdate.getID(), title, message, LocalDate.parse(dueDateString),
-                                itemToUpdate.getDateOfCreation(), category, tagArrayList, true);
-                        this.toDoList.updateToDo(itemToUpdate, updatedItem);
-
-                    }
-
-                }
             }
 
         }

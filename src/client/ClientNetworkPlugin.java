@@ -244,6 +244,8 @@ public class ClientNetworkPlugin {
 	            createToDoData.add(toDo.getPriority().toString());
 				if(toDo.getMessage().equals("") || toDo.getMessage() == null) {
 					createToDoData.add("N/A");
+				} else {
+					createToDoData.add(toDo.getMessage());
 				}
 	            if (toDo.getDueDate() != null) { createToDoData.add(toDo.getDueDate().toString()); }
 				if (toDo.getCategory() != null && !toDo.getCategory().equals("") && !toDo.getCategory().equals(" ")) {

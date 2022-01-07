@@ -190,6 +190,9 @@ public class AddToDoDialogPane extends DialogPane {
         this.categoryComboBox.getStyleClass().add("combo-box");
         this.priorityComboBox.getStyleClass().add("comboBox");
         this.priorityComboBox.getStyleClass().add("combo-box");
+
+        // Word wrap
+        this.messageTextArea.setWrapText(true);
         
 
         // Add buttonTypes
@@ -215,20 +218,17 @@ public class AddToDoDialogPane extends DialogPane {
         categoryBar = new HBox(SPACING_CATEGORYBAR);
         dueDateBar = new HBox(SPACING_DUEDATEBAR);
         priorityBar = new HBox(SPACING_PRIORITYBAR);
-        tagsBar = new HBox(SPACING_TAGSBAR);
         headerBar = new VBox(SPACING_HEADERBAR);
 
-        newTaskLabel = new Label("Neue Aufgabe");
+        newTaskLabel = new Label(todo.getTitle());
         titleLabel = new Label("Titel");
         categoryLabel = new Label("Kategorie");
         dueDateLabel = new Label("Termin");
         messageLabel = new Label("Beschreibung");
-        tagsLabel = new Label("Tags");
         priorityLabel = new Label("Priorität");
         tippLabel = new Label("Bewegen Sie Ihren Mauszeiger über einen Schriftzug!");
 
         titleTextfield = new TextField();
-        tagsTextfield = new TextField();
 
         // Instantiate tooltips
         titleToolTip = new Tooltip("Ihr Titel muss zwischen 3 - 20 Zeichen lang sein.");
@@ -236,7 +236,6 @@ public class AddToDoDialogPane extends DialogPane {
         categoryToolTip = new Tooltip("Die Kategorie muss einen Wert enthalten.");
         dateToolTip = new Tooltip("Ihr Datum muss im Format DD.MM.YYYY sein und in der Zukunft liegen.");
         priorityTip = new Tooltip("Die Priorität muss einen Wert enthalten.");
-        tagsToolTip = new Tooltip("Ihre Tags müssen einzelne Wörter sein, separiert mit einem Semikolon (;).");
 
         // Change tooltip timers
         titleToolTip.setShowDelay(DURATION_UNTIL_SHOW);
@@ -244,7 +243,6 @@ public class AddToDoDialogPane extends DialogPane {
         categoryToolTip.setShowDelay(DURATION_UNTIL_SHOW);
         dateToolTip.setShowDelay(DURATION_UNTIL_SHOW);
         priorityTip.setShowDelay(DURATION_UNTIL_SHOW);
-        tagsToolTip.setShowDelay(DURATION_UNTIL_SHOW);
 
         // Remove Papierkorb
         ObservableList<String> copy = FXCollections.observableArrayList();
@@ -257,15 +255,19 @@ public class AddToDoDialogPane extends DialogPane {
         datePicker = new DatePicker();
         messageTextArea = new TextArea();
 
+        // Instantiate combobox
+        priorityComboBox = new ComboBox<>();
+        priorityComboBox.setItems(FXCollections.observableArrayList(Priority.values()));
+        priorityComboBox.setValue(Priority.Low);
+
         // Fill controls into containers
         titleBar.getChildren().addAll(titleLabel, titleTextfield);
         categoryBar.getChildren().addAll(categoryLabel, categoryComboBox);
         dueDateBar.getChildren().addAll(dueDateLabel, datePicker);
-        tagsBar.getChildren().addAll(tagsLabel, tagsTextfield);
         priorityBar.getChildren().addAll(priorityLabel, priorityComboBox);
         headerBar.getChildren().addAll(newTaskLabel, tippLabel);
 
-        leftPane.getChildren().addAll(titleBar, categoryBar, dueDateBar, priorityBar, tagsBar);
+        leftPane.getChildren().addAll(titleBar, categoryBar, dueDateBar, priorityBar);
         rightPane.getChildren().addAll(messageLabel, messageTextArea);
 
         // Set containers
@@ -279,7 +281,6 @@ public class AddToDoDialogPane extends DialogPane {
         categoryLabel.setTooltip(categoryToolTip);
         dueDateLabel.setTooltip(dateToolTip);
         priorityLabel.setTooltip(priorityTip);
-        tagsLabel.setTooltip(tagsToolTip);
 
         // Fill fields
         titleTextfield.setText(todo.getTitle());
@@ -287,19 +288,12 @@ public class AddToDoDialogPane extends DialogPane {
 
         // Fill category combobox depending on what category the item has
         categoryComboBox.getEditor().setText(todo.getCategory());
-        if(todo.getCategory().equals("Wichtig")) { categoryComboBox.getSelectionModel().select(0); }
-        if(todo.getCategory().equals("Geplant")) { categoryComboBox.getSelectionModel().select(1); }
-        if(todo.getCategory().equals("Erledigt")) { categoryComboBox.getSelectionModel().select(2); }
+        if(todo.getCategory() != null && todo.getCategory().equals("Wichtig")) { categoryComboBox.getSelectionModel().select(0); }
+        if(todo.getCategory() != null && todo.getCategory().equals("Geplant")) { categoryComboBox.getSelectionModel().select(1); }
+        if(todo.getCategory() != null && todo.getCategory().equals("Erledigt")) { categoryComboBox.getSelectionModel().select(2); }
 
-        // Fill tag field, create new tag string if tags are set on item
-        if(!todo.getTags().isEmpty()) {
-            StringBuilder tagString = new StringBuilder();
-            for(String tag : todo.getTags()) { tagString.append(tag).append("; "); }
-            tagsTextfield.setText(tagString.toString());
-        }
 
         // Debugging tag string - if it's empty it will insert a semicolon
-        if(tagsTextfield.getText().equals("; ")) { tagsTextfield.clear(); }
         messageTextArea.setText(todo.getMessage());
 
         // Add CSS styling
@@ -313,14 +307,17 @@ public class AddToDoDialogPane extends DialogPane {
         this.categoryLabel.getStyleClass().add("categoryLabel");
         this.dueDateLabel.getStyleClass().add("dueDateLabel");
         this.messageLabel.getStyleClass().add("messageLabel");
-        this.tagsLabel.getStyleClass().add("tagsLabel");
         this.priorityLabel.getStyleClass().add("priorityLabel");
         this.messageTextArea.getStyleClass().add("messageTextArea");
 
+        // Word wrap
+        this.messageTextArea.setWrapText(true);
+
         // Add buttonTypes
         okButtonType = new ButtonType("Erstellen", ButtonBar.ButtonData.OK_DONE);
-        this.getButtonTypes().add(new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE));
+        this.getButtonTypes().add(new ButtonType("Schliessen", ButtonBar.ButtonData.CANCEL_CLOSE));
         this.getButtonTypes().add(okButtonType);
+        this.lookupButton(okButtonType).setDisable(true);
 
         // Set content
         this.setContent(root);
@@ -333,7 +330,15 @@ public class AddToDoDialogPane extends DialogPane {
         this.categoryComboBox.valueProperty().setValue(null);
         this.datePicker.getEditor().clear();
         this.messageTextArea.clear();
-        this.tagsTextfield.clear();
+    }
+
+    // Disabled all controls
+    public void disableAllControls() {
+        this.titleTextfield.setDisable(true);
+        this.categoryComboBox.setDisable(true);
+        this.datePicker.setDisable(true);
+        this.messageTextArea.setDisable(true);
+        this.priorityComboBox.setDisable(true);
     }
 
 	public BorderPane getRoot() {
