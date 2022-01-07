@@ -1,8 +1,10 @@
 package client.model;
 
 public enum Priority {
-	
-	Low, Medium, High;
 
+	// Enum values
+	Low,
+	Medium,
+	High;
 
 }

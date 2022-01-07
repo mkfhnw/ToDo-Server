@@ -38,6 +38,12 @@ public class ServerRunnable implements Runnable {
     public ServerRunnable(Socket clientSocket, ToDoServer parent) {
 
         this.clientSocket = clientSocket;
+        try {
+            this.clientSocket.setSoTimeout(10000);
+        } catch (Exception e) {
+            System.out.println("[SERVER-RUNNABLE] Timeout");
+        }
+
         this.inputReader = this.getInputReader(this.clientSocket);
         this.outputWriter = this.getOutputWriter(this.clientSocket);
         this.parent = parent;

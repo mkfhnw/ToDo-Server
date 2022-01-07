@@ -119,7 +119,12 @@ public class Message {
 
         // If data is not empty, build messagestring
         StringBuilder stringBuilder = new StringBuilder();
-        for(String dataString : data) { stringBuilder.append(dataString).append("|"); }
+        for(String dataString : data) {
+            if(dataString.equals("")) {
+                stringBuilder.append("|");
+            }
+            stringBuilder.append(dataString).append("|");
+        }
 
         // Delete last |-char
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);

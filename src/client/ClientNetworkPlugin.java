@@ -212,7 +212,7 @@ public class ClientNetworkPlugin {
         		createLoginData.add(emailCreateLogin);
         		createLoginData.add(passwordCreateLogin);
         	
-        		sendMessage("CREATE_LOGIN", createLoginData);
+        		sendMessage("CREATELOGIN", createLoginData);
         	
         		// Receive server response case
         		Message responseLogin = this.parseResponse();
@@ -241,14 +241,14 @@ public class ClientNetworkPlugin {
 	            ArrayList<String> createToDoData = new ArrayList<>();
 	            createToDoData.add(toDo.getTitle());
 	            createToDoData.add(toDo.getPriority().toString());
-	            if (toDo.getMessage() != null && !toDo.getMessage().equals("") && !toDo.getMessage().equals(" ")) {
-					createToDoData.add(toDo.getMessage());
+				if(toDo.getMessage().equals("") || toDo.getMessage() == null) {
+					createToDoData.add("N/A");
 				}
 	            if (toDo.getDueDate() != null) { createToDoData.add(toDo.getDueDate().toString()); }
 				if (toDo.getCategory() != null && !toDo.getCategory().equals("") && !toDo.getCategory().equals(" ")) {
 					createToDoData.add(toDo.getCategory()); }
 	            
-	            sendMessage("CREATE_TODO", createToDoData, this.token);
+	            sendMessage("CREATETODO", createToDoData, this.token);
 	            
 	            // Receive server response case
         		Message responseLogin = this.parseResponse();
@@ -280,7 +280,7 @@ public class ClientNetworkPlugin {
         		// change password --> CONTROLLER
 	        	// Token valid (SERVER))
 	        	 
-	        	sendMessage("CHANGE_PASSWORD", changePasswordData, this.token);
+	        	sendMessage("CHANGEPASSWORD", changePasswordData, this.token);
 	        
 	        	// Receive server response case
 	    		Message responseLogin = this.parseResponse();
@@ -304,7 +304,7 @@ public class ClientNetworkPlugin {
         		toDoData.add(Integer.toString(ID));
             	
             	
-            	sendMessage("GET_TODO", toDoData, this.token);
+            	sendMessage("GETTODO", toDoData, this.token);
             	
             	// Receive server response case
         		Message responseLogin = this.parseResponse();
@@ -334,7 +334,7 @@ public class ClientNetworkPlugin {
 	        	
 	        	// Token-Validation --> SERVER
 	        	
-	        	sendMessage("DELETE_TODO", deletedToDoData, this.token);
+	        	sendMessage("DELETETODO", deletedToDoData, this.token);
 	        	
 	        	// Receive server response case
 	    		Message responseLogin = this.parseResponse();
@@ -358,7 +358,7 @@ public class ClientNetworkPlugin {
         		
         		ArrayList<String> listToDos = new ArrayList<>();
             	
-        	    sendMessage("LIST_TODOS", listToDos, this.token);
+        	    sendMessage("LISTTODOS", listToDos, this.token);
         	    
         	 // Receive server response case
 	    		Message responseLogin = this.parseResponse();
