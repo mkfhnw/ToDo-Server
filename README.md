@@ -8,6 +8,8 @@
 > the supported features. If the client connects to port 50002 however, we disable these features to stay compliant to the
 > defined standard. Therefore, if you want to connect other clients to our server, please use port 51234. If you want to
 > connect our client to other servers, please change the port (as explained below) to the port the server is listening on.
+> <br>
+> <br>
 > ![img.png](img.png)
 
 ## How to change the target server IP & Port
