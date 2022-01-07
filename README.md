@@ -73,3 +73,7 @@
 5. Type **test-netconnection IPADDRESS -port 50002**. Change IPADDRESS to your IP-address that you copied from the last step.
 6. The console from the ServerRunner should give you an output. test-netconnection sends a TCP-packet to your server.
 
+## Contributors
+- Margareta Karaqi
+- Nico Sträuli
+- Joel Läubin / MadMowgli
