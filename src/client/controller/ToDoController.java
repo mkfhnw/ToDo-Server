@@ -62,6 +62,7 @@ public class ToDoController implements Serializable {
     public ToDoController(ToDoView toDoView, ToDo toDo, ToDoList toDoList, Stage stage, Scene scene2,
                           LoginView loginView, Scene scene1) {
 
+
         this.toDoView = toDoView;
         this.toDo = toDo;
         this.toDoList = toDoList;
@@ -71,10 +72,15 @@ public class ToDoController implements Serializable {
         this.scene1 = scene1;
         this.focusModel = focusModel;
 
+        // Networking stuff
         this.clientNetworkPlugin = new ClientNetworkPlugin();
         this.returnItems = new ArrayList<>();
         this.threadPool = new ArrayList<>();
 
+        // Connect to server
+        if (!this.clientNetworkPlugin.isConnected()) {
+            this.clientNetworkPlugin.connect();
+        }
 
         // Load items from database
         this.toDoList.updateSublists();
@@ -94,6 +100,9 @@ public class ToDoController implements Serializable {
 
         // Focus timer button EventHandling
         this.toDoView.getOpenFocusTimer().setOnMouseClicked(this::createFocusTimer);
+
+        // Ping Button Event Handler
+        this.toDoView.getPingButton().setOnMouseClicked(this::ping);
 
         // Add focus timer dialog and model
         this.dialog = new FocusTimerDialogPane();
@@ -130,6 +139,9 @@ public class ToDoController implements Serializable {
 
         // EventHandling CheckBox to show and hide passwords in registration
         this.loginView.getRegistrationDialogPane().getShowPassword().setOnAction(this::showHideRegistrationPW);
+
+        // Ping Button Event Handler for LoginView
+        this.loginView.getPingButton().setOnMouseClicked(this::ping);
 
         // Instantiate barchart with utils
         Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(0.3), new EventHandler<ActionEvent>() {
@@ -1005,14 +1017,24 @@ public class ToDoController implements Serializable {
         }
 
         // Set up connection
-        this.clientNetworkPlugin.connect("localhost", 50002);
+        // this.clientNetworkPlugin.connect("localhost", 50002);
+        if (!this.clientNetworkPlugin.isConnected()) {
+            this.clientNetworkPlugin.connect();
+        }
+
         String emailLogin = loginView.getUserField().getText();
         String passwordLogin = loginView.getPasswordField().getText();
-        boolean result = this.clientNetworkPlugin.login(emailLogin, passwordLogin);
+
+        boolean result = false;
+        if(emailLogin != null && !emailLogin.equals("") && passwordLogin != null && !passwordLogin.equals("")) {
+            result = this.clientNetworkPlugin.login(emailLogin, passwordLogin);
+        }
 
         if (result) {
         	
         	this.loginView.getLabel().setText("");
+            this.toDoView.getPingButton().getStyleClass().remove("successfulPing");
+            this.toDoView.getPingButton().getStyleClass().remove("badPing");
             // Clear lists
             this.toDoList.clearLists();
             this.updateInstancedSublists();
@@ -1133,6 +1155,10 @@ public class ToDoController implements Serializable {
     // Signs the user out.
     public void logout(MouseEvent event) {
 
+        // Set ping button style to default
+        this.loginView.getPingButton().getStyleClass().remove("successfulPing");
+        this.loginView.getPingButton().getStyleClass().remove("badPing");
+
         boolean result = this.clientNetworkPlugin.logout();
 
         //if user logged out, show LoginView again
@@ -1141,6 +1167,10 @@ public class ToDoController implements Serializable {
         	this.toDoList.clearLists();
         	
             this.stage.close();
+            if (!this.clientNetworkPlugin.isConnected()) {
+                this.clientNetworkPlugin.connect();
+            }
+
             this.stage.setScene(scene1);
             stage.resizableProperty().setValue(Boolean.FALSE);
             this.loginView.getUserField().setText("");
@@ -1248,7 +1278,10 @@ public class ToDoController implements Serializable {
     public void openRegistration(MouseEvent event) {
 
         // Build up connection to server
-        this.clientNetworkPlugin.connect("localhost", 50002);
+        // this.clientNetworkPlugin.connect("localhost", 50002);
+        if (!this.clientNetworkPlugin.isConnected()) {
+            this.clientNetworkPlugin.connect();
+        }
 
         // Prepare Dialog Pane
         this.loginView.getRegistrationDialogPane().getEmailField().clear();
@@ -1451,6 +1484,37 @@ public class ToDoController implements Serializable {
     public synchronized void passItems(ToDo item) {
         this.toDoList.addToDo(item);
         this.updateInstancedSublists();
+    }
+
+    // Ping Button event handling
+    public void ping(MouseEvent event) {
+
+        // Clear up graphical feedback
+        this.toDoView.getPingButton().getStyleClass().add("openFocusTimer");
+        this.loginView.getPingButton().getStyleClass().add("openFocusTimer");
+
+        // Send ping command & capture response
+        boolean pingWasSuccessFull = this.clientNetworkPlugin.ping();
+
+        // Give graphical feedback
+        if(pingWasSuccessFull) {
+            if(!this.toDoView.getPingButton().getStyleClass().contains("successfulPing")) {
+                this.toDoView.getPingButton().getStyleClass().add("successfulPing");
+            }
+            if(!this.loginView.getPingButton().getStyleClass().contains("successfulPing")) {
+                this.loginView.getPingButton().getStyleClass().add("successfulPing");
+            }
+
+        } else {
+            if(!this.toDoView.getPingButton().getStyleClass().contains("badPing")) {
+                this.toDoView.getPingButton().getStyleClass().add("badPing");
+            }
+            if(!this.loginView.getPingButton().getStyleClass().contains("badPing")) {
+                this.loginView.getPingButton().getStyleClass().add("badPing");
+            }
+
+        }
+
     }
 
     

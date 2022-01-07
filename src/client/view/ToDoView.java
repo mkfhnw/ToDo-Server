@@ -46,6 +46,8 @@ public class ToDoView extends BorderPane {
 		private Dialog<ButtonType> focusDialog;
 		private FocusTimerDialogPane focusTimerDialog;
 		private Button openFocusTimer;
+
+		private Button pingButton;
 		
 		private Dialog<ButtonType> howToDialog;
 		private HowToDialogPane howToDialogPane;
@@ -174,10 +176,15 @@ public class ToDoView extends BorderPane {
 			 */
 			this.openFocusTimer = new Button("Fokus Timer");
 			this.logoutButton = new Button("Abmelden");
+			this.pingButton = new Button("Ping");
 			
 			this.vBoxBottom = new VBox();
+			HBox hBoxContainer = new HBox();
+			hBoxContainer.setAlignment(Pos.CENTER);
+			hBoxContainer.setSpacing(30);
+			hBoxContainer.getChildren().addAll(openFocusTimer, pingButton, logoutButton);
 			
-			this.vBoxBottom.getChildren().addAll(openFocusTimer, logoutButton);
+			this.vBoxBottom.getChildren().add(hBoxContainer);
 			this.vBoxBottom.setPadding(new Insets(50.0, 00.0, 50.0, 50.0));
 			this.vBoxBottom.setSpacing(30);
 			this.vBoxBottom.setAlignment(Pos.CENTER);
@@ -192,6 +199,7 @@ public class ToDoView extends BorderPane {
 			this.splitPane.getStyleClass().add("splitPane");
 			this.borderPane.getStyleClass().add("borderPane");
 			this.openFocusTimer.getStyleClass().add("openFocusTimer");
+			this.pingButton.getStyleClass().add("openFocusTimer");
 			this.bc.getStylesheets().add(getClass().getResource("BarChartStyleSheet.css").toExternalForm());
 			this.logoutButton.getStyleClass().add("logoutButton");
 			
@@ -321,6 +329,8 @@ public class ToDoView extends BorderPane {
 		public Button getLogoutButton() {
 			return logoutButton;
 		}
+
+		public Button getPingButton() { return this.pingButton; }
 
 		public HBox gethBoxHowTo() {
 			return hBoxHowTo;

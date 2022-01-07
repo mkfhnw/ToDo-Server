@@ -32,6 +32,7 @@ public class Message {
         this.sender = Addressor.valueOf(sender.toUpperCase());
         this.recipient = Addressor.valueOf(recipient.toUpperCase());
         this.messageType = MessageType.valueOf(command.toUpperCase());
+        this.token = null;
         this.messageString = this.buildMessageString(this.messageType, this.token, data);
         this.messageParts = new ArrayList<>(Arrays.asList(this.messageString.split("\\|")));
         this.dataParts = this.parseDataParts(data);

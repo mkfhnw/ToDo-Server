@@ -21,6 +21,7 @@ public class ClientNetworkPlugin {
 
     // Fields
     private final int PORT = 50002;
+	private final String IP = "147.86.8.31";
     private Socket clientSocket;
     private BufferedReader inputReader;
     private PrintWriter outputWriter;
@@ -43,9 +44,9 @@ public class ClientNetworkPlugin {
     }
 
 	// Public method to connect to server
-	public void connect(String IP, int port) {
+	public void connect() {
 		try {
-			this.clientSocket = new Socket(IP, port);
+			this.clientSocket = new Socket(this.IP, this.PORT);
 			this.inputReader = this.getInputReader(this.clientSocket);
 			this.outputWriter = this.getOutputWriter(this.clientSocket);
 			System.out.println("[CLIENT] ToDo-Client connected to server");
@@ -60,6 +61,10 @@ public class ClientNetworkPlugin {
 		} catch (Exception e) {
 			System.out.println("[CLIENT] Cannot close socket.");
 		}
+	}
+
+	public boolean isConnected() {
+		return this.clientSocket != null && this.clientSocket.isConnected();
 	}
 
     // Private helper methods to keep constructor clean of try/catch-clauses
@@ -97,6 +102,14 @@ public class ClientNetworkPlugin {
 
         // Create cient message based on input
         Message clientMessage = new Message(this.sender, this.recipient, command, data);
+
+		// Check for ping edge-case
+		if(clientMessage.getMessageString().equals("Ping|null\n")) {
+			this.outputWriter.write("Ping\n");
+			this.outputWriter.flush();
+			System.out.println("[CLIENT] Sent message: Ping");
+			return;
+		}
 
         // Send message
         this.outputWriter.write(clientMessage.getMessageString());
@@ -174,8 +187,12 @@ public class ClientNetworkPlugin {
 
                 // Parse response result
                 result = Boolean.parseBoolean(responseLogin.getMessageParts().get(1));
+
+				// Throw away token
+				this.token = null;
+
 				System.out.println("[NETWORK-PLUGIN] User logged out, shutting down socket connection.");
-				this.clientSocket.close();
+				// this.clientSocket.close();
         	
         	} catch (Exception e){
         		System.out.println("[NETWORK-PLUGIN] Exception: " + e.getMessage());
@@ -184,7 +201,6 @@ public class ClientNetworkPlugin {
         	
         	return result;
         }
-        
         
         public boolean createLogin(String emailCreateLogin, String passwordCreateLogin) {
         	 
@@ -373,7 +389,7 @@ public class ClientNetworkPlugin {
 	        	 * Ping can be sent with and without token, 
 	        	 * therefore we check if token is not "null"
 	        	 */
-	        	if (token != null) {
+	        	if (token != null && !token.equals("")) {
 	        		sendMessage("PING", pingData, this.token);
 	        	} else {
 	        		sendMessage("PING", pingData);

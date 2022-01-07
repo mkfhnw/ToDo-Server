@@ -39,3 +39,9 @@
 	-fx-background-color: #708090;
 	-fx-text-fill: #000000;
 }
+.successfulPing {
+	-fx-background-color: green;
+}
+.badPing {
+	-fx-background-color: #FF0000;
+}

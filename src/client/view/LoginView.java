@@ -49,6 +49,8 @@ public class LoginView extends BorderPane {
 	private VBox vBoxSpace;
 	private VBox changePasswordVBox;
 	private HBox signInRegister;
+
+	private Button pingButton;
 	
 	// Spacings
     private final int SPACING_BUTTON_VBOX = 30;
@@ -121,6 +123,8 @@ public class LoginView extends BorderPane {
 	this.registerButton.setPrefSize(325, 60);
 	this.registerButton.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 	this.registerButton.setTextFill(Color.web("#181C54"));
+
+	this.pingButton = new Button("Ping");
 	
 	Label label2 = new Label("");
 	
@@ -152,9 +156,16 @@ public class LoginView extends BorderPane {
 	this.passwordHBox = new HBox(SPACING_PASSWORD_HBOX);
 	this.passwordHBox.getChildren().addAll(passwordFieldVBox, eyeVBox);
 	this.passwordHBox.setAlignment(Pos.CENTER);
-	
+
+	// Spacing box for setting ping button to the right
+	HBox pingButtonBox = new HBox();
+	pingButtonBox.getChildren().add(this.pingButton);
+	pingButtonBox.setMaxWidth(290);
+	pingButtonBox.setMinHeight(30);
+	pingButtonBox.setAlignment(Pos.BOTTOM_RIGHT);
+
 	this.passwordVBox = new VBox();
-	this.passwordVBox.getChildren().addAll(passwordLabel, passwordHBox);
+	this.passwordVBox.getChildren().addAll(passwordLabel, passwordHBox, pingButtonBox);
 	this.passwordVBox.setSpacing(5);
 	this.passwordVBox.setAlignment(Pos.CENTER);
 	
@@ -192,10 +203,12 @@ public class LoginView extends BorderPane {
 	this.registrationDialog.setDialogPane(registrationDialogPane);
 	
 	this.registrationDialog.initModality(Modality.NONE);
-	
+
+	// CSS Styling
 	this.getStylesheets().add(getClass().getResource("FocusAndHowToDialogPaneStyleSheet.css").toExternalForm());
 	this.signInButton.getStyleClass().add("login");
 	this.registerButton.getStyleClass().add("login");
+	this.pingButton.getStyleClass().add("openFocusTimer");
 	
 	}
 
@@ -413,6 +426,8 @@ public class LoginView extends BorderPane {
 	public int getSPACING_PASSWORD_HBOX() {
 		return SPACING_PASSWORD_HBOX;
 	}
+
+	public Button getPingButton() { return this.pingButton; }
 
 
 	public void setEyeImage(ImageView eyeImage) {

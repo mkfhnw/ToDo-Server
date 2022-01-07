@@ -27,3 +27,10 @@
 	-fx-border-radius: 2px;
 	-fx-border-color: #101b53;
 }
+
+.successfulPing {
+	-fx-background-color: green;
+}
+.badPing {
+	-fx-background-color: #FF0000;
+}
