@@ -125,7 +125,7 @@ public class Message {
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
 
         // If message type LOGIN or CREATE_LOGIN
-        if(messageType == MessageType.LOGIN || messageType == MessageType.CREATE_LOGIN) {
+        if(messageType == MessageType.LOGIN || messageType == MessageType.CREATELOGIN) {
             return messageType.toString() + "|" + stringBuilder.toString();
         }
 
@@ -157,7 +157,7 @@ public class Message {
         if(this.messageType == MessageType.PING && this.messageParts.size() == 2) { this.token = stringParts[1]; return; }
 
         // Parses token for CREATE_LOGIN and LOGIN Message Types
-        if(this.messageType == MessageType.CREATE_LOGIN || this.messageType == MessageType.LOGIN) {
+        if(this.messageType == MessageType.CREATELOGIN || this.messageType == MessageType.LOGIN) {
             this.token = null;
         } else {this.token = stringParts[1];}
 

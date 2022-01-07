@@ -121,32 +121,32 @@ public class ServerRunnable implements Runnable {
                         this.clientSocket.close();
                     }
                     
-                    case CREATE_LOGIN -> {
+                    case CREATELOGIN -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to CREATE_LOGIN...");
                     	this.reactToCreateLogin(clientMessage);
                     }
                     
-                    case CREATE_TODO -> {
+                    case CREATETODO -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to CREATE_TODO...");
                     	this.reactToCreateToDo(clientMessage);
                     }
                     
-                    case CHANGE_PASSWORD -> {
+                    case CHANGEPASSWORD -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to CHANGE_PASSWORD...");
                     	this.reactToChangePassword(clientMessage);
                     }
                     
-                    case GET_TODO -> {
+                    case GETTODO -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to GET_TODO...");
                     	this.reactToGetToDo(clientMessage);
                     }
                     
-                    case DELETE_TODO -> {
+                    case DELETETODO -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to DELETE_TODO...");
                     	this.reactToDeleteToDo(clientMessage);
                     }
                     
-                    case LIST_TODOS -> {
+                    case LISTTODOS -> {
                         System.out.println("[SERVER-RUNNABLE] Reacting to LIST_TODOS...");
                     	this.reactToListToDos(clientMessage);
                     }

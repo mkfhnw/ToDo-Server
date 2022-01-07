@@ -5,12 +5,12 @@ public enum MessageType {
     // The following values are valid for client-to-server messages
     LOGIN("Login"),
     LOGOUT("Logout"),
-    CREATE_LOGIN("CreateLogin"),
-    CREATE_TODO("CreateToDo"),
-    CHANGE_PASSWORD("ChangePassword"),
-    GET_TODO("GetToDo"),
-    DELETE_TODO("DeleteToDo"),
-    LIST_TODOS("ListToDos"),
+    CREATELOGIN("CreateLogin"),
+    CREATETODO("CreateToDo"),
+    CHANGEPASSWORD("ChangePassword"),
+    GETTODO("GetToDo"),
+    DELETETODO("DeleteToDo"),
+    LISTTODOS("ListToDos"),
     PING("Ping"),
 
     // The following value is valid for server-to-client messages
