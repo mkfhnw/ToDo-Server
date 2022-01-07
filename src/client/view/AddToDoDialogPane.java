@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import client.ClientNetworkPlugin;
 import client.model.Priority;
 import client.model.ToDo;
 
@@ -53,6 +54,8 @@ public class AddToDoDialogPane extends DialogPane {
     private DatePicker datePicker;
     private TextArea messageTextArea;
     private ComboBox<Priority> priorityComboBox;
+    
+    private ClientNetworkPlugin clientNetworkPlugin;
 
     // Custom button type for eventhandling
     ButtonType okButtonType;
@@ -68,7 +71,9 @@ public class AddToDoDialogPane extends DialogPane {
 
 
     // Constructor
-    public AddToDoDialogPane(ObservableList<String> listViewItems) {
+    public AddToDoDialogPane(ObservableList<String> listViewItems, ClientNetworkPlugin clientNetworkPlugin) {
+    	
+    	this.clientNetworkPlugin = clientNetworkPlugin;
 
         // Instantiate components
         root = new BorderPane();
@@ -122,6 +127,16 @@ public class AddToDoDialogPane extends DialogPane {
         copy.addAll(listViewItems);
         copy.remove(3);
         categoryComboBox.setItems(copy);
+        
+        
+        // If Server is "147.86.8.31", the category CheckBox, Label and the header note will be disabled or cleared.
+        if (this.clientNetworkPlugin.getIP().equals("147.86.8.31")) {
+        	this.categoryComboBox.setDisable(true);
+        	this.categoryLabel.setDisable(true);
+            this.notice.getChildren().addAll(attention, noticeLabel);
+        	        
+        }
+                
         datePicker = new DatePicker();
         messageTextArea = new TextArea();
 
@@ -137,7 +152,6 @@ public class AddToDoDialogPane extends DialogPane {
         priorityBar.getChildren().addAll(priorityLabel, priorityComboBox);
         tagsBar.getChildren().addAll(tagsLabel, tagsTextfield);
         headerBar.getChildren().addAll(newTaskLabel, tippLabel);
-        notice.getChildren().addAll(attention, noticeLabel);
         topBar.getChildren().addAll(notice, headerBar);
         
         leftPane.getChildren().addAll(titleBar, categoryBar, dueDateBar, priorityBar);

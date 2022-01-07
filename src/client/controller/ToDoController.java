@@ -732,7 +732,7 @@ public class ToDoController implements Serializable {
 
         // Create & Customize Dialog
         this.toDoView.setAddToDoDialog(new Dialog<ButtonType>());
-        this.toDoView.setToDoDialogPane(new AddToDoDialogPane(this.toDoView.getListView().getItems()));
+        this.toDoView.setToDoDialogPane(new AddToDoDialogPane(this.toDoView.getListView().getItems(), this.clientNetworkPlugin));
         this.toDoView.getAddToDoDialog().setDialogPane(this.toDoView.getToDoDialogPane());
 
         this.toDoView.getAddToDoDialog().setTitle("Neue Aufgabe");
