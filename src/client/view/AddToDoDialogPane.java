@@ -126,7 +126,7 @@ public class AddToDoDialogPane extends DialogPane {
         tippLabel.setTextFill(Color.web("#181C54"));
         
         noticeLabel = new Label("​Kategorien für ein ToDo können nur auf dem zur Applikation dazugehörigen Server gespeichert werden.");
-        noticeLabel.setFont(Font.font("Verdana", FontWeight.NORMAL, 10));
+        noticeLabel.setFont(Font.font("Verdana", FontWeight.NORMAL, 11));
         noticeLabel.setTextFill(Color.web("BLACK"));
         
         attention = new ImageView("/common/resources/attention.png");
@@ -134,9 +134,9 @@ public class AddToDoDialogPane extends DialogPane {
 		attention.setFitWidth(15);
 
         titleTextfield = new TextField();
-        titleTextfield.setFont(Font.font("Verdana", FontWeight.NORMAL, 10));
+        titleTextfield.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
         tagsTextfield = new TextField();
-        tagsTextfield.setFont(Font.font("Verdana", FontWeight.NORMAL, 10));
+        tagsTextfield.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
 
         // Instantiate tooltips
         titleToolTip = new Tooltip("Ihr Titel muss zwischen 3 - 20 Zeichen lang sein.");
@@ -174,7 +174,7 @@ public class AddToDoDialogPane extends DialogPane {
                 
         datePicker = new DatePicker();
         messageTextArea = new TextArea();
-        messageTextArea.setFont(Font.font("Verdana", FontWeight.NORMAL, 10));
+        messageTextArea.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
 
         // ComboBox for Priority
         priorityComboBox = new ComboBox<>();
@@ -231,6 +231,7 @@ public class AddToDoDialogPane extends DialogPane {
         this.categoryComboBox.getStyleClass().add("combo-box");
         this.priorityComboBox.getStyleClass().add("comboBox");
         this.priorityComboBox.getStyleClass().add("combo-box");
+        this.datePicker.getStyleClass().add("date-picker");
 
         // Word wrap
         this.messageTextArea.setWrapText(true);
@@ -265,12 +266,32 @@ public class AddToDoDialogPane extends DialogPane {
         headerBar = new VBox(SPACING_HEADERBAR);
 
         newTaskLabel = new Label(todo.getTitle());
+        newTaskLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+        newTaskLabel.setTextFill(Color.web("#181C54"));
+        
         titleLabel = new Label("Titel");
+        titleLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        titleLabel.setTextFill(Color.web("#181C54"));
+        
         categoryLabel = new Label("Kategorie");
+        categoryLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        categoryLabel.setTextFill(Color.web("#181C54"));
+        
         dueDateLabel = new Label("Termin");
+        dueDateLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        dueDateLabel.setTextFill(Color.web("#181C54"));
+        
         messageLabel = new Label("Beschreibung");
+        messageLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        messageLabel.setTextFill(Color.web("#181C54"));
+        
         priorityLabel = new Label("Priorität");
+        priorityLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        priorityLabel.setTextFill(Color.web("#181C54"));
+        
         tippLabel = new Label("Bewegen Sie Ihren Mauszeiger über einen Schriftzug!");
+        tippLabel.setFont(Font.font("Verdana", FontWeight.NORMAL, 11));
+        tippLabel.setTextFill(Color.web("#181C54"));
 
         titleTextfield = new TextField();
 
@@ -313,7 +334,7 @@ public class AddToDoDialogPane extends DialogPane {
 
         // Notification
         noticeLabel = new Label("Diese Darstellung dient nur zur Ansicht. Informationen können nicht geändert werden.");
-        noticeLabel.setFont(Font.font("Verdana", FontWeight.NORMAL, 10));
+        noticeLabel.setFont(Font.font("Verdana", FontWeight.NORMAL, 11));
         noticeLabel.setTextFill(Color.web("BLACK"));
 
         attention = new ImageView("/common/resources/attention.png");
