@@ -105,6 +105,7 @@ public class ChangePasswordDialogPane extends DialogPane {
 	this.labelVBox = new VBox();
 	this.showPasswordHBox = new HBox();
 	this.showPassword = new CheckBox("Passwörter anzeigen");
+	this.showPassword.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	this.general = new VBox(SPACING);
 	
 	// Add Fields to Layout

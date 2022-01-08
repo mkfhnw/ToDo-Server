@@ -106,6 +106,7 @@ public class RegistrationDialogPane extends DialogPane {
 	this.repeatTextField.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	
 	this.showPassword = new CheckBox("Passwörter zeigen");
+	this.showPassword.setFont(Font.font("Verdana", FontWeight.MEDIUM, 12));
 	
 	// Layout
 	this.borderPane = new BorderPane();
