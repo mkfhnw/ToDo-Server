@@ -1366,6 +1366,8 @@ public class ToDoController implements Serializable {
         this.loginView.getRegistrationDialogPane().getEmailField().clear();
         this.loginView.getRegistrationDialogPane().getRepeatPasswordField().clear();
         this.loginView.getRegistrationDialogPane().getPasswordField().clear();
+        this.loginView.getRegistrationDialogPane().getRepeatTextField().clear();
+        this.loginView.getRegistrationDialogPane().getPasswordTextField().clear();
         this.loginView.getRegistrationDialogPane().getLabel().setText("");
         this.loginView.getRegistrationDialogPane().getShowPassword().setSelected(false);
 
