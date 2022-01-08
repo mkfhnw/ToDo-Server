@@ -1327,6 +1327,7 @@ public class ToDoController implements Serializable {
         this.loginView.getRegistrationDialogPane().getRepeatPasswordField().clear();
         this.loginView.getRegistrationDialogPane().getPasswordField().clear();
         this.loginView.getRegistrationDialogPane().getLabel().setText("");
+    	this.loginView.getRegistrationDialogPane().getShowPassword().setSelected(false);
 
         // Set up event filter on OK-button to prevent dialog from closing when user input is not valid
         Button okButton = (Button) this.loginView.getRegistrationDialogPane().lookupButton(this.loginView.getRegistrationDialogPane().getOkButtonType());
@@ -1334,25 +1335,9 @@ public class ToDoController implements Serializable {
                 anonymousEvent -> {
                     if (!validatePassword()) {
                         anonymousEvent.consume();
-                        
-                        this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().clear();
-                        this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().clear();
-
-                        this.loginView.getRegistrationDialogPane().getPasswordField().setText(
-                                this.loginView.getRegistrationDialogPane().getPasswordTextField().getText());
-
-                        this.loginView.getRegistrationDialogPane().getRepeatPasswordField().setText(
-                                this.loginView.getRegistrationDialogPane().getRepeatTextField().getText());
-
-                        this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().addAll(
-                                this.loginView.getRegistrationDialogPane().getPasswordLabel(),
-                                this.loginView.getRegistrationDialogPane().getPasswordField());
-
-                        this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().addAll(
-                                this.loginView.getRegistrationDialogPane().getRepeatPasswordLabel(),
-                                this.loginView.getRegistrationDialogPane().getRepeatPasswordField());   
-                        
                     }
+                    
+                
                 });
 
         // Wait for user input
@@ -1360,6 +1345,24 @@ public class ToDoController implements Serializable {
 
         // Catch result from the dialog
         if (result.isPresent() && result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+        	
+            this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().clear();
+            this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().clear();
+
+            this.loginView.getRegistrationDialogPane().getPasswordField().setText(
+                    this.loginView.getRegistrationDialogPane().getPasswordTextField().getText());
+
+            this.loginView.getRegistrationDialogPane().getRepeatPasswordField().setText(
+                    this.loginView.getRegistrationDialogPane().getRepeatTextField().getText());
+
+            this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().addAll(
+                    this.loginView.getRegistrationDialogPane().getPasswordLabel(),
+                    this.loginView.getRegistrationDialogPane().getPasswordField());
+
+            this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().addAll(
+                    this.loginView.getRegistrationDialogPane().getRepeatPasswordLabel(),
+                    this.loginView.getRegistrationDialogPane().getRepeatPasswordField());  
+        	
             boolean accountCreationWasSuccessful = createLogin();
             if(accountCreationWasSuccessful) {
                 Platform.runLater(() -> {
