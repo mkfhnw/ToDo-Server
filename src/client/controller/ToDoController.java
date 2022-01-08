@@ -1062,13 +1062,13 @@ public class ToDoController implements Serializable {
             this.updateInstancedSublists();
 
             // Grab Items from database
-            // Grab all IDs from database and split them across 3 sublists
             ArrayList<String> resultList = this.clientNetworkPlugin.listToDos();
 
             // Get each item in a separate thread
             for (String id : resultList) {
+
                 Thread callThread = new Thread(new LoadTasksRunnable(id, this.clientNetworkPlugin, this));
-                callThread.setName("TASK-ID-Thread: " + id);
+                // callThread.setName("TASK-ID-Thread: " + id);
 
                 // We need this sleep, since requests made too close to each other are not getting received by the server
                 try {

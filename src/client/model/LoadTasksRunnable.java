@@ -29,7 +29,7 @@ public class LoadTasksRunnable implements Runnable {
         int intID = Integer.parseInt(this.itemID);
         ArrayList<String> itemData = this.clientNetworkPlugin.getToDo(intID);
         ToDo item = this.parseItemFromMessageString(itemData);
-        item.setID(intID);
+        item.setID(Integer.parseInt(itemData.get(0)));
 
         // Stuff the contents of returnList into the controller
         parent.passItems(item);

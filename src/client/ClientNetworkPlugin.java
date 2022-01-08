@@ -312,7 +312,6 @@ public class ClientNetworkPlugin {
             ArrayList<String> toDoData = new ArrayList<>();
             toDoData.add(Integer.toString(ID));
 
-
             sendMessage("GETTODO", toDoData, this.token);
 
             // Receive server response case
