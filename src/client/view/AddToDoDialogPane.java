@@ -1,8 +1,10 @@
 package client.view;
 
+import client.ClientNetworkPlugin;
+import client.model.Priority;
+import client.model.ToDo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -12,9 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
-import client.ClientNetworkPlugin;
-import client.model.Priority;
-import client.model.ToDo;
 
 
 public class AddToDoDialogPane extends DialogPane {

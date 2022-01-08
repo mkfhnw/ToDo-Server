@@ -15,7 +15,10 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -105,6 +108,7 @@ public class ToDoController implements Serializable {
             this.toDoView.getListView().setOnMouseClicked(this::changeCenterBar);
         } else {
             this.toDoView.getListView().setOnMouseClicked(this::changeToPlannedBarView);
+            this.plannedBarView.getDateFilterCombobox().setDisable(true);
         }
 
         // Focus timer button EventHandling
@@ -634,6 +638,7 @@ public class ToDoController implements Serializable {
         plannedBarView.getTableView().setOnMouseClicked(this::updateToDo);
         linkTableViewListeners(plannedBarView.getTableView().getItems());
         toDoView.getBorderPane().setCenter(plannedBarView);
+        this.plannedBarView.getDateFilterCombobox().setDisable(true);
     }
 
 

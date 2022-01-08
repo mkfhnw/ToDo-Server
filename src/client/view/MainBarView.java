@@ -1,5 +1,6 @@
 package client.view;
 
+import client.model.ToDo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -8,7 +9,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import client.model.ToDo;
 
 /*
  * This abstract class is the super class

@@ -2,20 +2,14 @@ package client;
 
 import client.model.ToDo;
 import common.Message;
-import common.MessageType;
 import server.models.ServerRunnable;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
-import client.view.LoginView;
-import client.view.RegistrationDialogPane;
 
 public class ClientNetworkPlugin {
 

@@ -1,14 +1,14 @@
 package main;
 
 import client.controller.ToDoController;
+import client.model.ToDo;
+import client.model.ToDoList;
+import client.view.LoginView;
+import client.view.ToDoView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import client.view.LoginView;
-import client.view.ToDoView;
-import client.model.ToDo;
-import client.model.ToDoList;
 
 import java.util.ArrayList;
 

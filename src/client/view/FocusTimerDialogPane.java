@@ -1,20 +1,16 @@
 package client.view;
 
 
+import client.model.FocusTimerModel;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import client.model.FocusTimerModel;
 
 public class FocusTimerDialogPane extends DialogPane {
 	
