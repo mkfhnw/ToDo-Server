@@ -35,7 +35,7 @@ public class ChangePasswordDialogPane extends DialogPane {
 	// Layout§
 	
 	private BorderPane borderPane;
-	private VBox header;
+	private final VBox header;
 	private HBox newPasswordHBox;
 	private HBox repeatPasswordHBox;
 	private VBox general;

@@ -29,7 +29,7 @@ public class AddToDoDialogPane extends DialogPane {
     private HBox priorityBar;
     private HBox tagsBar;
     private VBox headerBar;
-    private HBox notice;
+    private final HBox notice;
     private VBox topBar;
     private VBox space;
 
@@ -41,9 +41,9 @@ public class AddToDoDialogPane extends DialogPane {
     private Label priorityLabel;
     private Label messageLabel;
     private Label tagsLabel;
-    private Label noticeLabel;
+    private final Label noticeLabel;
     
-    private ImageView attention;
+    private final ImageView attention;
 
     private TextField titleTextfield;
     private TextField tagsTextfield;
@@ -60,7 +60,7 @@ public class AddToDoDialogPane extends DialogPane {
     private TextArea messageTextArea;
     private ComboBox<Priority> priorityComboBox;
     
-    private ClientNetworkPlugin clientNetworkPlugin;
+    private final ClientNetworkPlugin clientNetworkPlugin;
 
     // Custom button type for eventhandling
     ButtonType okButtonType;

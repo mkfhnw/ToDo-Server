@@ -8,6 +8,6 @@ public enum Priority {
 	High,
 	low,
 	medium,
-	high;
+	high
 
 }

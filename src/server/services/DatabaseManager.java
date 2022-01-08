@@ -388,7 +388,7 @@ public class DatabaseManager {
     // LIST Method
     public ArrayList<String> listToDos() {
         try(Connection connection = DriverManager.getConnection(this.connectionString);
-            Statement statement = connection.createStatement();) {
+            Statement statement = connection.createStatement()) {
 
             // Prepare resultArray
             ArrayList<String> resultList = new ArrayList<>();

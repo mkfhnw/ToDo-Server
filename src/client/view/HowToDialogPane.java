@@ -36,7 +36,7 @@ public class HowToDialogPane extends DialogPane {
 	private VBox vBoxStop;
 	private VBox vBoxReplay;
 	private VBox sliderVBox;
-	private VBox spacing;
+	private final VBox spacing;
 	private VBox general;
 	
 	private Media media;

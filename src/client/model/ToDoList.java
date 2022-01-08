@@ -13,12 +13,12 @@ import java.util.HashSet;
 public class ToDoList {
 
 	// Fields
-	private volatile ArrayList <ToDo> toDoList = new ArrayList<>();
+	private final ArrayList <ToDo> toDoList = new ArrayList<>();
 	public static ArrayList<String> categoryList = new ArrayList<>(); //contains all categorys of active ToDo's
-	private volatile ObservableList<ToDo> importantList = FXCollections.observableArrayList();
-	private volatile ObservableList<ToDo> plannedList = FXCollections.observableArrayList();
-	private volatile ObservableList<ToDo> doneList = FXCollections.observableArrayList();
-	private volatile ObservableList<ToDo> garbageList = FXCollections.observableArrayList();
+	private final ObservableList<ToDo> importantList = FXCollections.observableArrayList();
+	private final ObservableList<ToDo> plannedList = FXCollections.observableArrayList();
+	private final ObservableList<ToDo> doneList = FXCollections.observableArrayList();
+	private final ObservableList<ToDo> garbageList = FXCollections.observableArrayList();
 
 	//potential list to separate categorys between done ToDo-Objects and undone
 	//protected static ArrayList<String> categoryListDoneObjects = new ArrayList<>();

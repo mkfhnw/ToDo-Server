@@ -50,7 +50,7 @@ public class LoginView extends BorderPane {
 	private VBox changePasswordVBox;
 	private HBox signInRegister;
 
-	private Button pingButton;
+	private final Button pingButton;
 	
 	// Spacings
     private final int SPACING_BUTTON_VBOX = 30;

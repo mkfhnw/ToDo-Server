@@ -36,7 +36,7 @@ public class ToDoView extends BorderPane {
 		private SplitPane splitPane;
 		private StackPane stackPane;
 		
-		private Label loggedOnUser;
+		private final Label loggedOnUser;
 		
 		private Dialog<ButtonType> addToDoDialog;
 		private AddToDoDialogPane toDoDialogPane;
@@ -54,7 +54,7 @@ public class ToDoView extends BorderPane {
 		private FocusTimerDialogPane focusTimerDialog;
 		private Button openFocusTimer;
 
-		private Button pingButton;
+		private final Button pingButton;
 		
 		private Dialog<ButtonType> howToDialog;
 		private HowToDialogPane howToDialogPane;
@@ -68,10 +68,10 @@ public class ToDoView extends BorderPane {
 		private Menu help;
 		private MenuBar menuBar;
 		
-		private ImageView imageSetting;
-		private ImageView imageHelp;
-		private ImageView imageChangePassword;
-		private ImageView imageHowTo;
+		private final ImageView imageSetting;
+		private final ImageView imageHelp;
+		private final ImageView imageChangePassword;
+		private final ImageView imageHowTo;
 		
 		private HBox hBoxHowTo;
 		private VBox vBoxBottom;

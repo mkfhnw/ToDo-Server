@@ -131,14 +131,14 @@ public class Message {
 
         // If message type LOGIN or CREATE_LOGIN
         if(messageType == MessageType.LOGIN || messageType == MessageType.CREATELOGIN) {
-            return messageType.toString() + "|" + stringBuilder.toString();
+            return messageType + "|" + stringBuilder;
         }
 
         // Check if message has a token
         if(token == null) {
-            return messageType.toString() + "|true|" + stringBuilder.toString();
+            return messageType.toString() + "|true|" + stringBuilder;
         } else {
-            return messageType.toString() + "|" + token + "|" + stringBuilder.toString();
+            return messageType.toString() + "|" + token + "|" + stringBuilder;
         }
 
     }

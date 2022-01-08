@@ -30,13 +30,13 @@ public abstract class MainBarView extends VBox {
 	private TableColumn<ToDo, String> important;
 	private TableColumn<ToDo, String> task;
 	private TableColumn<ToDo, String> dueDate;
-	private TableColumn<ToDo, String> priority;
+	private final TableColumn<ToDo, String> priority;
 	private TableColumn<ToDo, String> checkBox;
 	private TableColumn<ToDo, String> garbage;
 	protected HBox header;
 	private HBox searchBar;
 	private ObservableList<String> filter;
-	private ComboBox<String> comboBox;
+	private ComboBox<String> dateFilterCombobox;
 	
 	// Constructor
 	public MainBarView() {
@@ -75,8 +75,8 @@ public abstract class MainBarView extends VBox {
 				"Alle",
 				"Heute"
 				);
-		this.comboBox = new ComboBox<>(filter);
-		this.searchBar.getChildren().add(comboBox);		
+		this.dateFilterCombobox = new ComboBox<>(filter);
+		this.searchBar.getChildren().add(dateFilterCombobox);
 		
 		// Puts the Button and Searchfunction to the right side of the view
 		this.searchBar.setPadding(new Insets(0.0, 0.0, 30.0, 800.0));
@@ -143,13 +143,13 @@ public abstract class MainBarView extends VBox {
         this.priority.getStyleClass().add("tableColumn");
         this.checkBox.getStyleClass().add("tableColumn");
         this.garbage.getStyleClass().add("tableColumn");
-        this.comboBox.getStyleClass().add("comboBox");
-        this.comboBox.getStyleClass().add("combo-box");
+        this.dateFilterCombobox.getStyleClass().add("comboBox");
+        this.dateFilterCombobox.getStyleClass().add("combo-box");
       		
 	}
 
-	public ComboBox<String> getComboBox() {
-		return comboBox;
+	public ComboBox<String> getDateFilterCombobox() {
+		return dateFilterCombobox;
 	}
 
 	public ObservableList<ToDo> getSubSet() {
@@ -284,8 +284,8 @@ public abstract class MainBarView extends VBox {
 		this.filter = filter;
 	}
 
-	public void setComboBox(ComboBox<String> comboBox) {
-		this.comboBox = comboBox;
+	public void setDateFilterCombobox(ComboBox<String> dateFilterCombobox) {
+		this.dateFilterCombobox = dateFilterCombobox;
 	}
 
 	

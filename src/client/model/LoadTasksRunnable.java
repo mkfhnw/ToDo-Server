@@ -9,9 +9,9 @@ import java.util.ArrayList;
 public class LoadTasksRunnable implements Runnable {
 
     // Fields
-    private ClientNetworkPlugin clientNetworkPlugin;
-    private String itemID;
-    private ToDoController parent;
+    private final ClientNetworkPlugin clientNetworkPlugin;
+    private final String itemID;
+    private final ToDoController parent;
 
     // Constructor
     public LoadTasksRunnable(String itemID, ClientNetworkPlugin clientNetworkPlugin, ToDoController parent) {

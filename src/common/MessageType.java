@@ -17,7 +17,7 @@ public enum MessageType {
     RESULT("Result");
 
     // Fields of the enum values
-    private String name;
+    private final String name;
 
     // Constructor to pass the names
     MessageType(String name) {

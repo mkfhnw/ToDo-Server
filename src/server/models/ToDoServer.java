@@ -17,8 +17,8 @@ public class ToDoServer {
     private ServerSocket serverSocket;
     private final int PORT = 51234;
     private boolean isActive;
-    private ArrayList<Thread> clientThreads;
-    private volatile ArrayList<Token> activeTokens;
+    private final ArrayList<Thread> clientThreads;
+    private final ArrayList<Token> activeTokens;
 
     // Constructor
     public ToDoServer() {
