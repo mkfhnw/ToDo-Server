@@ -79,7 +79,7 @@ public abstract class MainBarView extends VBox {
 		this.searchBar.getChildren().add(comboBox);		
 		
 		// Puts the Button and Searchfunction to the right side of the view
-		this.searchBar.setPadding(new Insets(0.0, 0.0, 30.0, 650.0));
+		this.searchBar.setPadding(new Insets(0.0, 0.0, 30.0, 800.0));
 		this.searchField = new TextField();
 		this.searchButton = new Button();
 		this.searchButton.setGraphic(this.lupe);
