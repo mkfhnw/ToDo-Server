@@ -1246,35 +1246,7 @@ public class ToDoController implements Serializable {
         Button okButton = (Button) this.toDoView.getChangePasswordDialogPane().lookupButton(
         		this.toDoView.getChangePasswordDialogPane().getOkButtonType());
         okButton.addEventFilter(ActionEvent.ACTION,
-                e -> {
-                	
-                	/*
-                	 * Changes the TextField to PasswordField, when user clicks button, 
-                	 * because PasswordField is used in the further processes
-                	 */
-                	if (this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().contains(
-                			this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField()) 
-                			&& this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().contains(
-                					this.toDoView.getChangePasswordDialogPane().getRepeatPasswordTextField())) {
-                		
-                		this.toDoView.getChangePasswordDialogPane().getNewPasswordField().setText(
-                				this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField().getText());
-                		
-                		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().setText(
-                				this.toDoView.getChangePasswordDialogPane().getRepeatPasswordTextField().getText());
-                		
-                		this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().clear();
-                		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().clear();
-                		
-                		this.toDoView.getChangePasswordDialogPane().getNewPasswordHBox().getChildren().add(
-                				this.toDoView.getChangePasswordDialogPane().getNewPasswordField());
-                		
-                		this.toDoView.getChangePasswordDialogPane().getRepeatPasswordHBox().getChildren().add(
-                				this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField());
-                	}
-                	
-                	
-                	
+                e -> {	
                     if (!validateChangedPassword()) {
                         e.consume();
                     }
