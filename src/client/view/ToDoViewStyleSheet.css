@@ -13,6 +13,7 @@
 .openFocusTimer {
     	-fx-background-color: #101b53;
     	-fx-text-fill: #ffffff;
+    	-fx-font: 12px "Verdana";
 }
 .openFocusTimer:hover {
     	-fx-background-color: #1ec4dc;
@@ -20,6 +21,7 @@
 .howTo {
     	-fx-background-color: #101b53;
     	-fx-text-fill: #ffffff;
+    	-fx-font: 12px "Verdana";
 }
 .howTo:hover {
     	-fx-background-color: #1ec4dc;
@@ -27,6 +29,7 @@
 .logoutButton{
 	-fx-background-color: #FF0000;
     	-fx-text-fill: #ffffff;
+    	-fx-font: 12px "Verdana";
 }
 .logoutButton:hover {
 	-fx-text-fill: #000000;
@@ -34,6 +37,7 @@
 .changePasswordButton{
 	-fx-background-color: #2F4F4F;
     	-fx-text-fill: #ffffff;
+    	-fx-font: 12px "Verdana";
 }
 .changePasswordButton:hover {
 	-fx-background-color: #708090;
@@ -41,11 +45,17 @@
 }
 .successfulPing {
 	-fx-background-color: green;
+	-fx-font: 12px "Verdana";
 }
 .badPing {
 	-fx-background-color: #FF0000;
+	-fx-font: 12px "Verdana";
 }
 .userLabel {
 	-fx-text-fill: #101b53;
-	-fx-font: 12pt "Verdana";
+	-fx-font: 16px "Verdana";
+	-fx-font-weight: bold;
+}
+.menuBar {
+	-fx-font: 11px "Verdana";
 }
