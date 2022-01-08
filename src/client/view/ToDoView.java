@@ -13,6 +13,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -121,7 +124,7 @@ public class ToDoView extends BorderPane {
 			 */
 			this.splitPane = new SplitPane();
 			this.splitPane.getItems().addAll(vBox, borderPane);
-			this.splitPane.setDividerPositions(0.3);
+			this.splitPane.setDividerPositions(0.22);
 			this.setLeft(splitPane);
 
 			VBox buffer = new VBox();
@@ -191,7 +194,7 @@ public class ToDoView extends BorderPane {
 			HBox hBoxContainer = new HBox();
 			hBoxContainer.setAlignment(Pos.CENTER);
 			hBoxContainer.setSpacing(30);
-			hBoxContainer.getChildren().addAll(openFocusTimer, pingButton, logoutButton);
+			hBoxContainer.getChildren().addAll(openFocusTimer, logoutButton, pingButton);
 			
 			this.vBoxBottom.getChildren().addAll(loggedOnUser, hBoxContainer);
 			this.vBoxBottom.setPadding(new Insets(50.0, 00.0, 50.0, 50.0));
@@ -212,6 +215,10 @@ public class ToDoView extends BorderPane {
 			this.bc.getStylesheets().add(getClass().getResource("BarChartStyleSheet.css").toExternalForm());
 			this.logoutButton.getStyleClass().add("logoutButton");
 			this.loggedOnUser.getStyleClass().add("userLabel");
+			this.settings.getStyleClass().add("menuBar");
+			this.changePasswordItem.getStyleClass().add("menuBar");
+			this.help.getStyleClass().add("menuBar");
+			this.howToItem.getStyleClass().add("menuBar");
 			
 			
 	        
