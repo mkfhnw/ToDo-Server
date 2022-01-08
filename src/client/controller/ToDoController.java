@@ -1384,9 +1384,22 @@ public class ToDoController implements Serializable {
      */
     public boolean validatePassword() {
 
-        // Upper password
-        String upperPassword = this.loginView.getRegistrationDialogPane().getPasswordField().getText();
-        String bottomPassword = this.loginView.getRegistrationDialogPane().getRepeatPasswordField().getText();
+    	String upperPassword;
+    	String bottomPassword;
+    	
+        // If password is hidden, take passwordField, otherwise TextField
+    	
+    	if (this.loginView.getRegistrationDialogPane().getShowPassword().isSelected()) {
+    		
+    		upperPassword = this.loginView.getRegistrationDialogPane().getPasswordTextField().getText();
+    		bottomPassword = this.loginView.getRegistrationDialogPane().getRepeatTextField().getText();
+    		
+    	} else {
+    		
+    		upperPassword = this.loginView.getRegistrationDialogPane().getPasswordField().getText();
+    		bottomPassword = this.loginView.getRegistrationDialogPane().getRepeatPasswordField().getText();
+    	}
+    	
 
         // Check upper password for length
         if(upperPassword.length() >= 3 && upperPassword.length() <= 20) {
@@ -1409,7 +1422,7 @@ public class ToDoController implements Serializable {
             this.loginView.getRegistrationDialogPane().getLabel().setText("Das Passwort muss zwischen 3 und 20 Zeichen lang sein.");
             this.loginView.getRegistrationDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
             this.loginView.getRegistrationDialogPane().getLabel().setTextFill(Color.web("#C00000"));
-
+            
             return false;
 
         }
