@@ -2,6 +2,7 @@ package client.view;
 
 import client.model.ToDo;
 import client.model.ToDoList;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.chart.BarChart;
@@ -144,6 +145,14 @@ public class ToDoView extends BorderPane {
 						
 			this.vBox.getChildren().add(bc);
 			
+			setMaxCategoryWidth(100, 10);
+			bc.widthProperty().addListener((obs, b, b1) -> {
+			    Platform.runLater(() -> setMaxCategoryWidth(100, 10));
+			});
+
+			
+			
+			
 			// Menu for settings and help
 			this.changePasswordItem = new MenuItem("Passwort ändern");
 			this.imageChangePassword = new ImageView("/common/resources/change.png");
@@ -254,6 +263,12 @@ public class ToDoView extends BorderPane {
 
 
 		}
+		
+		private void setMaxCategoryWidth(double maxCategoryWidth, double minCategoryGap){
+		    double catSpace = xAxis.getCategorySpacing();
+		    bc.setCategoryGap(catSpace - Math.min(maxCategoryWidth, catSpace - minCategoryGap));
+		}
+
 
 		public ToDo getToDoModel() {
 			return toDoModel;
