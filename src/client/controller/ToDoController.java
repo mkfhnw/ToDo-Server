@@ -1433,7 +1433,13 @@ public class ToDoController implements Serializable {
     public boolean createLogin() {
 
         String emailCreateLogin = this.loginView.getRegistrationDialogPane().getEmailField().getText();
-        String passwordCreateLogin = this.loginView.getRegistrationDialogPane().getPasswordField().getText();
+        String passwordCreateLogin;
+        
+        if (this.loginView.getRegistrationDialogPane().getShowPassword().isSelected()) {
+        	passwordCreateLogin = this.loginView.getRegistrationDialogPane().getPasswordTextField().getText();
+        } else {
+        	passwordCreateLogin = this.loginView.getRegistrationDialogPane().getPasswordField().getText();
+        }
 
         boolean result = this.clientNetworkPlugin.createLogin(emailCreateLogin, passwordCreateLogin);
         return result;
