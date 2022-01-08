@@ -1242,6 +1242,8 @@ public class ToDoController implements Serializable {
 
         this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().clear();
         this.toDoView.getChangePasswordDialogPane().getNewPasswordField().clear();
+        this.toDoView.getChangePasswordDialogPane().getRepeatPasswordTextField().clear();
+        this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField().clear();
         this.toDoView.getChangePasswordDialogPane().getLabel().setText("");
         Button okButton = (Button) this.toDoView.getChangePasswordDialogPane().lookupButton(
         		this.toDoView.getChangePasswordDialogPane().getOkButtonType());
