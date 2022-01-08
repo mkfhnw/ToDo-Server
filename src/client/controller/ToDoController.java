@@ -272,8 +272,12 @@ public class ToDoController implements Serializable {
                 ToDo itemToUpdate = items.get(index);
 
                 // Open new dialogPane to make it editable
-                this.toDoView.setAddToDoDialog(new Dialog<ButtonType>());
+                Dialog<ButtonType> addDialog = new Dialog<ButtonType>();
+                this.toDoView.setAddToDoDialog(addDialog);
+                addDialog.setTitle("Aufgabe ansehen");
                 AddToDoDialogPane updateDialogPane = new AddToDoDialogPane(this.toDoView.getListView().getItems(), itemToUpdate, this.clientNetworkPlugin);
+                Stage stage5 = (Stage) toDoView.getAddToDoDialog().getDialogPane().getScene().getWindow();
+                stage5.getIcons().add(new Image(this.getClass().getResource("/common/resources/doneIcon4.png").toString()));
                 updateDialogPane.disableAllControls();
                 this.toDoView.setToDoDialogPane(updateDialogPane);
                 this.toDoView.getAddToDoDialog().setDialogPane(this.toDoView.getToDoDialogPane());
@@ -756,7 +760,7 @@ public class ToDoController implements Serializable {
         this.toDoView.getAddToDoDialog().setTitle("Neue Aufgabe");
         Stage stage = (Stage) toDoView.getAddToDoDialog().getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(this.getClass().getResource("/common/resources/doneIcon4.png").toString()));
-        stage.resizableProperty().setValue(Boolean.TRUE);
+        stage.resizableProperty().setValue(Boolean.FALSE);
 
         // Set up event filter on OK-button to prevent dialog from closing when user input is not valid
         Button okButton = (Button) this.toDoView.getToDoDialogPane().lookupButton(this.toDoView.getToDoDialogPane().getOkButtonType());
