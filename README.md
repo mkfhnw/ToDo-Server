@@ -52,21 +52,21 @@
 - [x] Tokens have a 60 minutes time to live & are somewhat robust against the [Birthday Problem](https://en.wikipedia.org/wiki/Birthday_problem)
 
 ### Client-Side features
-- [x] Messaging Protocol was implemented as described
-- [x] Graphic user interface
-- [x] Client recognizes if connected to own server or not and adjusts functionality accordingly
-- [x] MVC which supports all API features 
-- [x] Show and hide passwords
-- [x] Validation for passwords
-- [x] How-To Tutorial
-- [x] Focus-Timer (Pomodoro)
 - [x] Charting
-- [x] Categories (only with the associated server)
 - [x] Search function
+- [x] How-To Tutorial Video
+- [x] Focus-Timer (Pomodoro)
+- [x] Graphical User Interface
+- [x] Show and hide passwords
+- [x] Clientside Validation for passwords
 - [x] ToDo-item filter (all and today)
+- [x] MVC which supports all API features
+- [x] Categories (only with the associated server)
+- [x] Messaging Protocol was implemented as described
+- [x] Client recognizes if connected to own server or not and adjusts functionality accordingly
 
 
-## How to connect to your server via powershell
+## How to connect to your server via Powershell
 1. Let the ServerRunner run
 2. Open up Powershell (type Poweshell in the Windows Searchbar)
 3. Type **ipconfig** in Powershell
