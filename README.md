@@ -10,7 +10,7 @@
 > connect our client to other servers, please change the port (as explained below) to the port the server is listening on.
 > <br>
 > <br>
-> ![img.png](img.png)
+> ![Server_Client_Model.png](src/common/resources/Server_Client_Model.png)
 
 ## How to change the target server IP & Port
 > You can find the target server IP the client connects to inside the ClientNetworkPlugin class.
