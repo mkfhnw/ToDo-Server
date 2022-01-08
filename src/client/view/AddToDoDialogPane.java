@@ -369,6 +369,8 @@ public class AddToDoDialogPane extends DialogPane {
 
         // Fill fields
         titleTextfield.setText(todo.getTitle());
+        titleTextfield.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
+        
         datePicker.getEditor().setText(todo.getDueDateString());
 
         // Fill category combobox depending on what category the item has
@@ -380,6 +382,7 @@ public class AddToDoDialogPane extends DialogPane {
 
         // Debugging tag string - if it's empty it will insert a semicolon
         messageTextArea.setText(todo.getMessage());
+        messageTextArea.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
 
         // Add CSS styling
         this.getStylesheets().add(getClass().getResource("DialogPaneStyleSheet.css").toExternalForm());
@@ -394,6 +397,11 @@ public class AddToDoDialogPane extends DialogPane {
         this.messageLabel.getStyleClass().add("messageLabel");
         this.priorityLabel.getStyleClass().add("priorityLabel");
         this.messageTextArea.getStyleClass().add("messageTextArea");
+        this.datePicker.getStyleClass().add("date-picker");
+        this.categoryComboBox.getStyleClass().add("comboBox");
+        this.categoryComboBox.getStyleClass().add("combo-box");
+        this.priorityComboBox.getStyleClass().add("comboBox");
+        this.priorityComboBox.getStyleClass().add("combo-box");
 
         // Word wrap
         this.messageTextArea.setWrapText(true);
