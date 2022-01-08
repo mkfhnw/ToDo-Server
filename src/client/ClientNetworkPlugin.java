@@ -20,11 +20,13 @@ import client.view.RegistrationDialogPane;
 public class ClientNetworkPlugin {
 
     // Fields
-    private final int PORT = 50002;
-    private final String IP = "147.86.8.31";
-    
-	// private final int PORT = 51234;
-	// private final String IP = "localhost";
+    // Uncomment & adjust to connect to other servers
+    // private final int PORT = 50002;
+    // private final String IP = "147.86.8.31";
+
+    // Uncomment if connecting client to our own server
+	private final int PORT = 51234;
+	private final String IP = "localhost";
     
     private Socket clientSocket;
     private BufferedReader inputReader;
