@@ -1291,19 +1291,41 @@ public class ToDoController implements Serializable {
      */
     public boolean validateChangedPassword() {
 
+    	String upperPassword;
+    	String bottomPassword;
 
-        if (this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().length() >= 3
-                && this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().length() <= 20) {
+    	if (this.toDoView.getChangePasswordDialogPane().getShowPassword().isSelected()) {
 
-            if (this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText().equals(
-                    this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().getText())) {
+    		upperPassword = this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField().getText();
+    		bottomPassword = this.toDoView.getChangePasswordDialogPane().getRepeatPasswordTextField().getText();
+
+    	} else {
+
+    		upperPassword = this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText();
+    		bottomPassword = this.toDoView.getChangePasswordDialogPane().getRepeatPasswordField().getText();
+
+
+    	}    	
+    	
+    	 if (upperPassword.length() >= 3 && upperPassword.length() <= 20) {
+
+    		 if (upperPassword.equals(bottomPassword)) {
 
                 this.toDoView.getChangePasswordDialogPane().getLabel().setText("Passwort wurde geändert.");
                 this.toDoView.getChangePasswordDialogPane().getLabel().setFont(Font.font("Verdana", FontWeight.BOLD, 11));
                 this.toDoView.getChangePasswordDialogPane().getLabel().setTextFill(Color.web("#00B050"));
 
 
-                String password = this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText();
+                String password;
+
+                if (this.toDoView.getChangePasswordDialogPane().getShowPassword().isSelected()) {
+
+                	password = this.toDoView.getChangePasswordDialogPane().getNewPasswordTextField().getText();
+                } else {
+
+                	password = this.toDoView.getChangePasswordDialogPane().getNewPasswordField().getText();
+                }
+                
                 this.clientNetworkPlugin.changePassword(password);
 
                 return true;
