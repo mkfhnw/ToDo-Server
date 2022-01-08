@@ -586,7 +586,7 @@ public class ToDoController implements Serializable {
                 importantBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
                 linkTableViewListeners(importantBarView.getTableView().getItems());
                 importantBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
-                importantBarView.getSearchButton().setOnKeyPressed(this::searchItemAndGenerateView);
+                importantBarView.getSearchField().setOnKeyPressed(this::searchItemAndGenerateView);
                 importantBarView.getComboBox().setOnAction(this::changeCombo);
                 importantBarView.getTableView().setOnMouseClicked(this::updateToDo);
 
@@ -597,7 +597,7 @@ public class ToDoController implements Serializable {
                 plannedBarView = new PlannedBarView(this.toDoList.getToDoListPlanned());
                 plannedBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
                 plannedBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
-                plannedBarView.getSearchButton().setOnKeyPressed(this::searchItemAndGenerateView);
+                plannedBarView.getSearchField().setOnKeyPressed(this::searchItemAndGenerateView);
                 plannedBarView.getComboBox().setOnAction(this::changeCombo);
                 plannedBarView.getTableView().setOnMouseClicked(this::updateToDo);
                 linkTableViewListeners(plannedBarView.getTableView().getItems());
@@ -608,7 +608,7 @@ public class ToDoController implements Serializable {
                 doneBarView = new DoneBarView(this.toDoList.getToDoListDone());
                 doneBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
                 doneBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
-                doneBarView.getSearchButton().setOnKeyPressed(this::searchItemAndGenerateView);
+                doneBarView.getSearchField().setOnKeyPressed(this::searchItemAndGenerateView);
                 doneBarView.getComboBox().setOnAction(this::changeCombo);
                 doneBarView.getTableView().setOnMouseClicked(this::updateToDo);
                 linkTableViewListeners(doneBarView.getTableView().getItems());
@@ -618,7 +618,7 @@ public class ToDoController implements Serializable {
                 garbageBarView = new GarbageBarView(this.toDoList.getToDoListGarbage());
                 garbageBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
                 garbageBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
-                garbageBarView.getSearchButton().setOnKeyPressed(this::searchItemAndGenerateView);
+                garbageBarView.getSearchField().setOnKeyPressed(this::searchItemAndGenerateView);
                 garbageBarView.getComboBox().setOnAction(this::changeCombo);
                 garbageBarView.getTableView().setOnMouseClicked(this::updateToDo);
                 linkTableViewListeners(garbageBarView.getTableView().getItems());
@@ -631,7 +631,7 @@ public class ToDoController implements Serializable {
         plannedBarView = new PlannedBarView(this.toDoList.getToDoListPlanned());
         plannedBarView.getCreateToDo().setOnMouseClicked(this::createToDoDialog);
         plannedBarView.getSearchButton().setOnMouseClicked(this::searchItemAndGenerateView);
-        plannedBarView.getSearchButton().setOnKeyPressed(this::searchItemAndGenerateView);
+        plannedBarView.getSearchField().setOnKeyPressed(this::searchItemAndGenerateView);
         plannedBarView.getComboBox().setOnAction(this::changeCombo);
         plannedBarView.getTableView().setOnMouseClicked(this::updateToDo);
         linkTableViewListeners(plannedBarView.getTableView().getItems());
