@@ -55,8 +55,9 @@
 - [x] Messaging Protocol was implemented as described
 - [x] Graphic user interface
 - [x] Client recognizes if connected to own server or not and adjusts functionality accordingly
-- [x] MVC  
+- [x] MVC which supports all API features 
 - [x] Show and hide passwords
+- [x] Validation for passwords
 - [x] How-To Tutorial
 - [x] Focus-Timer (Pomodoro)
 - [x] Charting
