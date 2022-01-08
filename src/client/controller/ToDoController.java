@@ -1334,6 +1334,24 @@ public class ToDoController implements Serializable {
                 anonymousEvent -> {
                     if (!validatePassword()) {
                         anonymousEvent.consume();
+                        
+                        this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().clear();
+                        this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().clear();
+
+                        this.loginView.getRegistrationDialogPane().getPasswordField().setText(
+                                this.loginView.getRegistrationDialogPane().getPasswordTextField().getText());
+
+                        this.loginView.getRegistrationDialogPane().getRepeatPasswordField().setText(
+                                this.loginView.getRegistrationDialogPane().getRepeatTextField().getText());
+
+                        this.loginView.getRegistrationDialogPane().getPasswordPane().getChildren().addAll(
+                                this.loginView.getRegistrationDialogPane().getPasswordLabel(),
+                                this.loginView.getRegistrationDialogPane().getPasswordField());
+
+                        this.loginView.getRegistrationDialogPane().getRepeatPasswordPane().getChildren().addAll(
+                                this.loginView.getRegistrationDialogPane().getRepeatPasswordLabel(),
+                                this.loginView.getRegistrationDialogPane().getRepeatPasswordField());   
+                        
                     }
                 });
 
