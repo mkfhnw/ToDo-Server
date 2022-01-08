@@ -75,6 +75,6 @@
 6. The console from the ServerRunner should give you an output. test-netconnection sends a TCP-packet to your server.
 
 ## Contributors
-- Margareta Karaqi
-- Nico Sträuli
-- Joel Läubin / MadMowgli
+- [Margareta Karaqi](https://github.com/mkfhnw)
+- [Nico Sträuli](https://github.com/nicSt12)
+- [Joel Läubin](https://github.com/Joel-Laeubin) / [MadMowgli](https://github.com/MadMowgli/MadMowgli)
